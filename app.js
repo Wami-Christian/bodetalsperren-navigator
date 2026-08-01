@@ -6,7 +6,15 @@ async function init(){
   state.parkings=p;state.exploration=s;
   bindTabs();bindFilters();bindPrivateForm();
   renderAll();
-  if('serviceWorker' in navigator)navigator.serviceWorker.register('./service-worker.js');
+  if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('./service-worker.js?v=3.1').then(reg=>reg.update());
+      let refreshing=false;
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{
+        if(refreshing)return;
+        refreshing=true;
+        location.reload();
+      });
+    }
 }
 function bindTabs(){
   document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{
