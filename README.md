@@ -1,15 +1,18 @@
-# Bodetalsperren Navigator PWA 1.1
+# Bodetalsperren Navigator V3
 
 ## Neu
-- Private Angelplätze lokal speichern
-- Koordinaten manuell eintragen
-- Aktuelle GPS-Position direkt am Angelplatz übernehmen
-- Fußnavigation in Apple Karten und Google Maps
-- Fußroute vom nächstgelegenen gespeicherten öffentlichen Parkplatz
-- Entfernung zum Parkplatz als Luftlinie
+- 9 vorinstallierte Erkundungsplätze nahe bekannten Park-/Abstellpunkten
+- Fußnavigation ab aktuellem Standort
+- Fußnavigation ab zugeordnetem Parkplatz
+- Entfernung als Luftlinie
+- Status: offen, vor Ort bestätigt, ungeeignet
+- Prüfnotizen lokal speichern
+- eigene Angelplätze weiterhin lokal speichern
 
-## Aktualisierung auf GitHub
-Alle Dateien dieses Pakets in das bestehende Repository hochladen und vorhandene Dateien ersetzen.
-GitHub Pages veröffentlicht die neue Version automatisch.
+## Installation des Updates
+Alle Dateien in das vorhandene GitHub-Repository hochladen und ersetzen.
+Danach GitHub Pages kurz neu deployen lassen. Die App auf dem iPhone vollständig schließen und neu öffnen.
 
-Hinweis: Service Worker können alte Fassungen zwischenspeichern. Nach dem Update die App schließen und neu öffnen; notfalls Safari-Websitedaten löschen oder die App vom Home-Bildschirm entfernen und erneut hinzufügen.
+## Genauigkeit
+Die Erkundungsplätze sind aus der vom Nutzer bereitgestellten FPG-Merkblattkarte näherungsweise abgeleitet.
+Sie sind keine bestätigten Angelplätze und keine Garantie für legalen oder sicheren Uferzugang.

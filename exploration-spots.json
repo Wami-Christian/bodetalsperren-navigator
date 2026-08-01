@@ -1,0 +1,92 @@
+[
+  {
+    "id": "E1",
+    "name": "Rotestein – Ufererkundung West",
+    "water": "Rappbodetalsperre",
+    "lat": 51.729404,
+    "lon": 10.873333,
+    "parkingId": 4,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Steiles Gelände möglich; Zugang vor Ort prüfen."
+  },
+  {
+    "id": "E2",
+    "name": "Stemberghaus – Ufererkundung Nordwest",
+    "water": "Rappbodetalsperre",
+    "lat": 51.733218,
+    "lon": 10.87531,
+    "parkingId": 5,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Längerer Fußweg und steile Ufer möglich."
+  },
+  {
+    "id": "E3",
+    "name": "B81 – südliche Bucht",
+    "water": "Rappbodetalsperre",
+    "lat": 51.738769,
+    "lon": 10.87354,
+    "parkingId": 6,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Uferzugang und Schutzbereiche prüfen."
+  },
+  {
+    "id": "E4",
+    "name": "Rappbode Ost – Ufererkundung",
+    "water": "Rappbodetalsperre",
+    "lat": 51.740823,
+    "lon": 10.885714,
+    "parkingId": 7,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Nähe technischer Anlagen; Beschilderung besonders beachten."
+  },
+  {
+    "id": "E5",
+    "name": "Nordarm Ost – Ufererkundung",
+    "water": "Rappbodetalsperre",
+    "lat": 51.754401,
+    "lon": 10.861068,
+    "parkingId": 8,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Waldwege und tatsächliche Uferzugänglichkeit prüfen."
+  },
+  {
+    "id": "E6",
+    "name": "Nordarm West – Ufererkundung",
+    "water": "Rappbodetalsperre",
+    "lat": 51.76358,
+    "lon": 10.826655,
+    "parkingId": 9,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Entfernung und Gelände können erheblich abweichen."
+  },
+  {
+    "id": "E7",
+    "name": "Wendefurth – Ufer nahe Staumauer",
+    "water": "Talsperre Wendefurth",
+    "lat": 51.73627,
+    "lon": 10.901098,
+    "parkingId": 12,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Technische Sperrbereiche und örtliche Schilder beachten."
+  },
+  {
+    "id": "E8",
+    "name": "Hasselvorsperre – Ostufererkundung",
+    "water": "Hasselvorsperre",
+    "lat": 51.722472,
+    "lon": 10.822428,
+    "parkingId": 3,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Zufahrt nicht öffentlich; nur nach Merkblatt und Berechtigung."
+  },
+  {
+    "id": "E9",
+    "name": "Rappbodevorsperre – Nordufererkundung",
+    "water": "Rappbodevorsperre",
+    "lat": 51.742016,
+    "lon": 10.76488,
+    "parkingId": 11,
+    "source": "Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    "risk": "Zufahrt nicht öffentlich; Fußweg und Uferzugang prüfen."
+  }
+]
