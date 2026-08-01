@@ -1,36 +1,40 @@
 <!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#173f2d">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bodetalsperren">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="apple-touch-icon" href="./apple-touch-icon.png">
-<link rel="stylesheet" href="./styles.css">
-<title>Bodetalsperren Navigator</title>
-</head>
-<body>
-<header><h1>Bodetalsperren Navigator</h1><p>Installierbare PWA · private Arbeitsfassung</p></header>
+<html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#173f2d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Bodetalsperren">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><link rel="stylesheet" href="./styles.css">
+<title>Bodetalsperren Navigator</title></head><body>
+<header><h1>Bodetalsperren Navigator</h1><p>Parkplätze und private Angelplätze</p></header>
 <main>
-<section class="install">
-<strong>Auf dem iPhone installieren:</strong><br>
-In Safari auf <strong>Teilen</strong> tippen und anschließend <strong>Zum Home-Bildschirm</strong> wählen.
-</section>
-<section class="notice"><strong>Wichtig:</strong> Näherungswerte können deutlich abweichen. Das Originalmerkblatt, die rote Wegführung, Beschilderung, Schranken und aktuelle Sperrungen haben Vorrang. Karten-Apps können unzulässige Forstwege vorschlagen.</section>
-<section class="rules">
-<strong>Fahrregeln:</strong> nur rote Forstwege, maximal 30 km/h, eine Stunde vor Sonnenaufgang bis eine Stunde nach Sonnenuntergang, keine Nutzung ab Waldbrandstufe 5 und Parken nur auf gekennzeichneten Flächen.
-</section>
-<div class="controls">
-<button class="active" data-filter="all">Alle 12 Punkte</button>
-<button data-filter="public">Öffentliche Parkplätze</button>
-<button data-filter="restricted">Eingeschränkte Zufahrten</button>
-<button data-filter="approx">Noch zu prüfen</button>
+<section class="notice"><strong>Wichtig:</strong> Karten-Apps kennen die FPG-Regeln nicht. Rote Wegführung, Beschilderung, Sperrungen und sichere Uferzugänge haben Vorrang. Fußrouten können unpassierbar oder unzulässig sein.</section>
+<div class="tabs">
+<button class="active" data-view="parkings">Parkplätze & Zufahrten</button>
+<button data-view="spots">Meine Angelplätze</button>
 </div>
-<section id="points"><p class="status">Daten werden geladen …</p></section>
-</main>
-<script src="./app.js"></script>
-</body>
-</html>
+
+<section id="parkings-view" class="view">
+<section class="rules"><strong>Fahrregeln:</strong> nur rote Forstwege, maximal 30 km/h, eine Stunde vor Sonnenaufgang bis eine Stunde nach Sonnenuntergang, keine Nutzung ab Waldbrandstufe 5 und Parken nur auf gekennzeichneten Flächen.</section>
+<div class="controls">
+<button class="active" data-filter="all">Alle 12 Punkte</button><button data-filter="public">Öffentliche Parkplätze</button><button data-filter="restricted">Eingeschränkte Zufahrten</button><button data-filter="approx">Noch zu prüfen</button>
+</div>
+<section id="points"><p class="empty">Daten werden geladen …</p></section>
+</section>
+
+<section id="spots-view" class="view hidden">
+<section class="panel">
+<h2>Angelplatz speichern</h2>
+<p class="muted">Du kannst die Koordinaten eintragen oder direkt am Angelplatz deine aktuelle Position übernehmen. Die Daten bleiben nur auf diesem Gerät gespeichert.</p>
+<div class="form-grid">
+<label class="field wide"><span>Name</span><input id="spot-name" placeholder="z. B. Bucht Nordufer"></label>
+<label class="field"><span>Breitengrad</span><input id="spot-lat" inputmode="decimal" placeholder="51.123456"></label>
+<label class="field"><span>Längengrad</span><input id="spot-lon" inputmode="decimal" placeholder="10.123456"></label>
+<label class="field wide"><span>Notiz</span><textarea id="spot-note" class="note" placeholder="Zugang, Ufer, Köder, Gefahren …"></textarea></label>
+</div>
+<button id="use-location" class="secondary" type="button">Aktuelle GPS-Position übernehmen</button>
+<p id="location-status" class="muted" aria-live="polite"></p>
+<button id="save-spot" class="primary-button" type="button">Angelplatz speichern</button>
+<p id="spot-status" class="muted" aria-live="polite"></p>
+</section>
+<section id="spots"></section>
+</section>
+</main><script src="./app.js"></script></body></html>
