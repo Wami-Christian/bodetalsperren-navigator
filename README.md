@@ -1,16 +1,51 @@
-# Bodetalsperren Navigator V3.1 – Cache-Fix
+# HarzFishing Navigator V3.5
 
-Diese Version zeigt oben sichtbar **V3.1** und aktualisiert HTML, JavaScript,
-CSS und JSON bevorzugt aus dem Netz. Alte Service-Worker-Caches werden beim
-Aktivieren gelöscht.
+Umbau des Bodetalsperren-Navigators zu einer modularen Angel-Web-App.
 
-## Update
+## Funktionen
 
-1. Alle Dateien aus diesem Ordner in das vorhandene GitHub-Repository hochladen.
-2. Gleichnamige Dateien ersetzen und den Commit abschließen.
-3. Warten, bis GitHub Pages neu veröffentlicht wurde.
-4. Die Adresse zuerst direkt in Safari öffnen.
-5. Seite einmal neu laden.
-6. Erst danach wieder „Zum Home-Bildschirm“ wählen.
+- Module für Bodetalsperren, LAV Sachsen-Anhalt und Harzflüsse
+- Leaflet-Karte mit Gewässern und Spot-Markern
+- Filter nach Modul, Zielfisch und Suchtext
+- Favoriten im Local Storage
+- lokales Fangbuch
+- transparente regelbasierte Angelprognose
+- GPX-Import und GPX-Export
+- PWA-Manifest und einfacher Service Worker
+- responsive Oberfläche
 
-Wenn oben nicht **V3.1** steht, ist noch nicht die neue Veröffentlichung geladen.
+## Start
+
+```bash
+npm install
+npm run dev
+```
+
+Dann `http://localhost:3000` öffnen.
+
+## Bestehendes GitHub-Projekt aktualisieren
+
+Am sichersten in einem Branch:
+
+```bash
+git checkout -b feature/harzfishing-v3.5
+# Dateien dieses Projekts in das vorhandene Repository übernehmen
+git add .
+git commit -m "Upgrade to HarzFishing Navigator V3.5"
+git push -u origin feature/harzfishing-v3.5
+```
+
+## Wichtig zu den Gewässerdaten
+
+`data/waters.ts` enthält technische Demodaten. Koordinaten, LAV-Nummern, Grenzen,
+Fischbestände, Zugänge, Schonstrecken und Sonderbestimmungen müssen vor einer
+Veröffentlichung anhand aktueller offizieller Quellen verifiziert werden.
+
+## Nächste technische Ausbaustufen
+
+- amtliche Datenimport-Pipeline mit Prüfstatus
+- echte Wetter- und Pegel-Schnittstellen über serverseitige API-Routen
+- Nutzerkonten und Cloud-Synchronisierung
+- Kartenpakete für echten Offlinebetrieb; OpenStreetMap-Kacheln dürfen nicht
+  ungeprüft massenhaft offline gespeichert werden
+- Fotos im Fangbuch über Object Storage

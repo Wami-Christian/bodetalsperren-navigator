@@ -1,0 +1,10 @@
+{
+  "name": "HarzFishing Navigator",
+  "short_name": "HarzFishing",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eef5f1",
+  "theme_color": "#0d4d43",
+  "description": "Gewässerkarte, Fangbuch, Prognose und GPX für den Harz.",
+  "icons": []
+}
