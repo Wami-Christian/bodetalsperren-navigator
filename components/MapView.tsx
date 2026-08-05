@@ -25,16 +25,23 @@ export default function MapView({
   waters,
   spots,
   parkings,
+  selectedWater,
   onSelect
 }: {
   waters: FishingWater[];
   spots: FishingSpot[];
   parkings: ParkingSpot[];
+  selectedWater: FishingWater | null;
   onSelect: (water: FishingWater) => void;
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
+  const selectRef = useRef(onSelect);
+
+  useEffect(() => {
+    selectRef.current = onSelect;
+  }, [onSelect]);
 
   useEffect(() => {
     if (!hostRef.current || mapRef.current) return;
@@ -50,11 +57,10 @@ export default function MapView({
       maxZoom: 19
     }).addTo(map);
 
-    const layer = L.layerGroup().addTo(map);
+    layerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
-    layerRef.current = layer;
 
-    const resize = window.setTimeout(() => map.invalidateSize(), 50);
+    const resize = window.setTimeout(() => map.invalidateSize(), 100);
     return () => {
       window.clearTimeout(resize);
       map.remove();
@@ -75,10 +81,10 @@ export default function MapView({
       if (water.latitude === null || water.longitude === null) return;
       const coordinate: L.LatLngExpression = [water.latitude, water.longitude];
       bounds.push(coordinate);
-      const marker = L.marker(coordinate, { icon: waterIcon })
+      L.marker(coordinate, { icon: waterIcon })
         .bindPopup(`<strong>${water.name}</strong><br>${water.module}<br>${water.fish.join(" · ") || "Fischarten im Profil"}`)
-        .on("click", () => onSelect(water));
-      marker.addTo(layer);
+        .on("click", () => selectRef.current(water))
+        .addTo(layer);
     });
 
     parkings.forEach((parking) => {
@@ -99,9 +105,23 @@ export default function MapView({
         .addTo(layer);
     });
 
-    if (bounds.length === 1) map.setView(bounds[0], 13);
-    else if (bounds.length > 1) map.fitBounds(L.latLngBounds(bounds), { padding: [40, 40], maxZoom: 13 });
-  }, [waters, spots, parkings, onSelect]);
+    // Bei einer Auswahl immer deutlich auf das Gewässer springen.
+    if (selectedWater?.latitude !== null && selectedWater?.longitude !== null && selectedWater) {
+      const center: L.LatLngExpression = [selectedWater.latitude, selectedWater.longitude];
+      if (bounds.length > 1) {
+        map.fitBounds(L.latLngBounds(bounds), { padding: [55, 55], maxZoom: 15, animate: true });
+      } else {
+        map.flyTo(center, 14, { animate: true, duration: 0.8 });
+      }
+      window.setTimeout(() => map.invalidateSize(), 50);
+      return;
+    }
+
+    // Ohne Auswahl Übersicht aller kartierten Treffer.
+    if (bounds.length === 1) map.setView(bounds[0], 12);
+    else if (bounds.length > 1) map.fitBounds(L.latLngBounds(bounds), { padding: [40, 40], maxZoom: 10 });
+    else map.setView(DEFAULT_CENTER, 9);
+  }, [waters, spots, parkings, selectedWater?.id]);
 
   return <div ref={hostRef} className="map" role="application" aria-label="Interaktive Gewässerkarte" />;
 }
