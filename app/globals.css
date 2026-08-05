@@ -8,3 +8,5 @@
 .nav-list strong,.nav-list small{display:block}.nav-list small{margin-top:4px;color:#5c6c66;line-height:1.35}
 .mini-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.mini-actions a{font-size:.78rem;text-decoration:none;background:#0e5b4c;color:white;padding:6px 8px;border-radius:8px}
 .status.catalog{background:#eef1f3;color:#42515a}
+
+.map-note{display:flex;align-items:center;gap:8px;max-width:min(620px,calc(100% - 24px));flex-wrap:wrap}.map-note strong{color:var(--ink)}.map-note span{color:var(--muted)}.map-note button{border:0;border-radius:8px;background:var(--brand);color:#fff;padding:6px 9px;font-weight:700}.parking-marker{display:grid;place-items:center;background:#fff;border:2px solid #2674c7;border-radius:50%;box-shadow:0 5px 15px #0003;font-size:18px}

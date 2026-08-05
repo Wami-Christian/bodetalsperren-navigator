@@ -84,8 +84,10 @@ export default function MapView({
     parkings.forEach((parking) => {
       const coordinate: L.LatLngExpression = [parking.latitude, parking.longitude];
       bounds.push(coordinate);
+      const parkingLabel = parking.access === "public" ? "Öffentlicher Parkplatz" : "Eingeschränkter Ausgangspunkt";
+      const routeUrl = `https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`;
       L.marker(coordinate, { icon: parkingIcon })
-        .bindPopup(`<strong>${parking.name}</strong><br>${parking.access === "public" ? "Öffentlicher Parkplatz" : "Eingeschränkter Ausgangspunkt"}`)
+        .bindPopup(`<strong>${parking.name}</strong><br>${parkingLabel}<br><a href="${routeUrl}" target="_blank" rel="noreferrer">Auto-Navigation öffnen</a>`)
         .addTo(layer);
     });
 
