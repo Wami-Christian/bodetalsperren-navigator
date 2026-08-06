@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { waters } from "@/data/waters";
 import { calculateFishingScore } from "@/lib/forecast";
 import { parseGpx, spotsToGpx } from "@/lib/gpx";
@@ -28,6 +28,7 @@ type AtlasCategory =
   | "favorites";
 
 export default function FishingNavigator() {
+  const mainNavRef = useRef<HTMLElement | null>(null);
   const [view, setView] = useState<View>("dashboard");
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
@@ -127,24 +128,25 @@ const atlasWaters = useMemo(() => {
   const mappedCount = filtered.filter((water) => water.latitude !== null && water.longitude !== null).length;
 
   function selectAndFocus(water: FishingWater) {
-    setSelected(water);
+  setSelected(water);
 
-    setFocusedWaterId(
-      water.latitude !== null && water.longitude !== null
-        ? water.id
-        : null
-    );
+  setFocusedWaterId(
+    water.latitude !== null && water.longitude !== null
+      ? water.id
+      : null
+  );
 
-    if (window.innerWidth <= 900) {
-      window.setTimeout(() => {
-        const target = view === "atlas" ? ".atlas-details" : ".details";
-        document.querySelector(target)?.scrollIntoView({
+  if (window.innerWidth <= 900) {
+    window.setTimeout(() => {
+      document
+        .querySelector(".details")
+        ?.scrollIntoView({
           behavior: "smooth",
           block: "start"
         });
-      }, 120);
-    }
+    }, 100);
   }
+}
 
   function toggleFavorite(id: string) {
     const next = favorites.includes(id) ? favorites.filter((item) => item !== id) : [...favorites, id];
@@ -173,17 +175,69 @@ const atlasWaters = useMemo(() => {
     const anchor = document.createElement("a"); anchor.href = href; anchor.download = `${selected.id}-spots.gpx`; anchor.click(); URL.revokeObjectURL(href);
   }
 
+  function scrollMainMenu(direction: "left" | "right") {
+    mainNavRef.current?.scrollBy({
+      left: direction === "right" ? 240 : -240,
+      behavior: "smooth"
+    });
+  }
+
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>HarzFishing</strong><small>Navigator V5.2 Beta</small></div></button>
-        <nav>{([
-['dashboard','Dashboard'],
-['waters','Gewässer'],
-['atlas','🗺 Angelatlas'],
-['forecast','Prognose'],
-['diary','Fangbuch'],
-['settings','Einstellungen']] as [View,string][]).map(([id,label]) => <button key={id} className={view===id?'active':''} onClick={()=>setView(id)}>{label}</button>)}</nav>
+        <button className="brand" onClick={() => setView("dashboard")}>
+          <span>🎣</span>
+          <div>
+            <strong>HarzFishing</strong>
+            <small>Navigator V5.2 Beta</small>
+          </div>
+        </button>
+
+        <div className="main-nav-shell">
+          <button
+            type="button"
+            className="main-nav-arrow"
+            aria-label="Menü nach links bewegen"
+            onClick={() => scrollMainMenu("left")}
+          >
+            ‹
+          </button>
+
+          <nav ref={mainNavRef} className="main-nav">
+            {([
+              ["dashboard", "Dashboard"],
+              ["waters", "Gewässer"],
+              ["atlas", "🗺 Angelatlas"],
+              ["forecast", "Prognose"],
+              ["diary", "Fangbuch"],
+              ["settings", "Einstellungen"]
+            ] as [View, string][]).map(([id, label]) => (
+              <button
+                key={id}
+                className={view === id ? "active" : ""}
+                onClick={(event) => {
+                  setView(id);
+                  event.currentTarget.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "center"
+                  });
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+
+          <button
+            type="button"
+            className="main-nav-arrow"
+            aria-label="Menü nach rechts bewegen"
+            onClick={() => scrollMainMenu("right")}
+          >
+            ›
+          </button>
+        </div>
       </header>
 
       {view === "dashboard" && <section className="page dashboard">
@@ -296,92 +350,6 @@ const atlasWaters = useMemo(() => {
           </button>
         ))}
       </div>
-    </aside>
-
-    <aside className="atlas-details" aria-live="polite">
-      <div className="atlas-details-head">
-        <div>
-          <p className="eyebrow">Gewässerprofil</p>
-          <h2>{selected.name}</h2>
-          <p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p>
-        </div>
-        <button
-          type="button"
-          className="favorite atlas-favorite"
-          aria-label="Favorit umschalten"
-          onClick={() => toggleFavorite(selected.id)}
-        >
-          {favorites.includes(selected.id) ? "★" : "☆"}
-        </button>
-      </div>
-
-      <div className="atlas-detail-stats">
-        <span>🐟 {selected.fish.length} Zielfische</span>
-        <span>🅿️ {selected.parkings.length} Parkplätze</span>
-        <span>📍 {selected.spots.length} Erkundungspunkte</span>
-      </div>
-
-      {selected.latitude !== null && selected.longitude !== null ? (
-        <div className="atlas-primary-actions">
-          <a
-            href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Google Navigation
-          </a>
-          <a
-            href={`https://maps.apple.com/?daddr=${selected.latitude},${selected.longitude}&dirflg=d`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Apple Navigation
-          </a>
-        </div>
-      ) : (
-        <p className="atlas-empty-note">Für dieses Gewässer ist noch keine Kartenposition gespeichert.</p>
-      )}
-
-      {selected.parkings.length > 0 && (
-        <>
-          <h3>Parkplätze / Ausgangspunkte</h3>
-          <div className="atlas-nav-list">
-            {selected.parkings.map((parking) => (
-              <article key={parking.id}>
-                <strong>{parking.name}</strong>
-                <small>{parking.note ?? (parking.access === "public" ? "Öffentlicher Parkplatz" : "Zufahrt eingeschränkt")}</small>
-                <div className="atlas-row-actions">
-                  <a href={`https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a>
-                  <a href={`https://maps.apple.com/?daddr=${parking.latitude},${parking.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </>
-      )}
-
-      {selected.spots.length > 0 && (
-        <>
-          <h3>Erkundungspunkte</h3>
-          <div className="atlas-nav-list">
-            {selected.spots.map((spot) => {
-              const parking = selected.parkings.find((item) => item.id === spot.parkingId);
-              return (
-                <article key={spot.id}>
-                  <strong>{spot.name}</strong>
-                  <small>{spot.risk ?? spot.note ?? "Zugang vor Ort prüfen."}</small>
-                  <div className="atlas-row-actions">
-                    <a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>
-                    {parking && (
-                      <a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Ab Parkplatz</a>
-                    )}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </>
-      )}
     </aside>
 
     <div className="atlas-map">
