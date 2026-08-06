@@ -1,6 +1,6 @@
 import type { FishingWater } from "@/lib/types";
 import { lavCatalog } from "./lav-catalog";
-import { harzLavPremium } from "./harz-lav";
+import { harzPremium } from "./harz-premium";
 import { lavCoordinateIndex } from "./lav-coordinates.generated";
 import { atkisWaterMatchIndex } from "./atkis-water-matches.generated";
 
@@ -51,41 +51,91 @@ const featuredLavNumbers = new Set(
     .map((water) => water.lavNumber)
     .filter(Boolean)
 );
-const premiumLavNumbers = new Set(harzLavPremium.map((water) => water.lavNumber).filter(Boolean));
+
 
 const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
   const official = atkisWaterMatchIndex[water.id];
-  if (official?.status === "matched" && official.latitude != null && official.longitude != null) {
-    return {
-      ...water,
+  const osm = lavCoordinateIndex[water.id];
+
+  let enrichedWater: FishingWater = water;
+
+  if (
+    official?.status === "matched" &&
+    official.latitude != null &&
+    official.longitude != null
+  ) {
+    enrichedWater = {
+      ...enrichedWater,
       latitude: official.latitude,
       longitude: official.longitude,
-      notes: [...water.notes, `OSM-Mehrquellenabgleich (${Math.round((official.confidence ?? 0) * 100)} %); Lage prüfen.`]
+      notes: [
+        ...enrichedWater.notes,
+        `OSM-Mehrquellenabgleich (${Math.round(
+          (official.confidence ?? 0) * 100
+        )} %); Lage prüfen.`
+      ]
     };
-  }
-
-  const osm = lavCoordinateIndex[water.id];
-  if (osm?.status === "matched" && osm.latitude != null && osm.longitude != null) {
-    return {
-      ...water,
+  } else if (
+    osm?.status === "matched" &&
+    osm.latitude != null &&
+    osm.longitude != null
+  ) {
+    enrichedWater = {
+      ...enrichedWater,
       latitude: osm.latitude,
       longitude: osm.longitude,
-      notes: [...water.notes, `OSM/Nominatim-Zuordnung (${Math.round((osm.confidence ?? 0) * 100)} %); Lage prüfen.`]
+      notes: [
+        ...enrichedWater.notes,
+        `OSM/Nominatim-Zuordnung (${Math.round(
+          (osm.confidence ?? 0) * 100
+        )} %); Lage prüfen.`
+      ]
     };
   }
 
-  return water;
-});
+  const premium = water.lavNumber
+    ? harzPremium[water.lavNumber]
+    : undefined;
 
+  if (!premium) {
+    return enrichedWater;
+  }
+
+  return {
+    ...enrichedWater,
+
+    latitude:
+      premium.latitude !== undefined
+        ? premium.latitude
+        : enrichedWater.latitude,
+
+    longitude:
+      premium.longitude !== undefined
+        ? premium.longitude
+        : enrichedWater.longitude,
+
+    parkings:
+      premium.parkings !== undefined
+        ? premium.parkings
+        : enrichedWater.parkings,
+
+    spots:
+      premium.spots !== undefined
+        ? premium.spots
+        : enrichedWater.spots,
+
+    notes: premium.notes
+      ? [...enrichedWater.notes, ...premium.notes]
+      : enrichedWater.notes,
+
+    sourceStatus:
+      premium.sourceStatus ?? enrichedWater.sourceStatus
+  };
+});
 
 export const waters: FishingWater[] = [
   ...featured,
-
-  ...harzLavPremium,
-
   ...enrichedLavCatalog.filter(
-    (water) =>
-      !featuredLavNumbers.has(water.lavNumber) &&
-      !premiumLavNumbers.has(water.lavNumber)
+    (water) => !featuredLavNumbers.has(water.lavNumber)
   ),
 ];
