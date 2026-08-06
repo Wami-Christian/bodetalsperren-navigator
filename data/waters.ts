@@ -3,7 +3,6 @@ import { lavCatalog } from "./lav-catalog";
 import { harzLavPremium } from "./harz-lav";
 import { lavCoordinateIndex } from "./lav-coordinates.generated";
 import { atkisWaterMatchIndex } from "./atkis-water-matches.generated";
-import { harzLavPremium } from "./harz-lav";
 
 const rappbodeParkings: FishingWater["parkings"] = [
   { id:"1", name:"Alte Rübeländer Straße – Beginn Betonstraße", latitude:51.718578, longitude:10.876041, access:"restricted", accuracy:"approx", note:"Eingeschränkte Zufahrt / Abstellpunkt" },
