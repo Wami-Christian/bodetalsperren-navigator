@@ -1,5 +1,7 @@
 import type { FishingWater } from "@/lib/types";
 import { lavCatalog } from "./lav-catalog";
+import { lavCoordinateIndex } from "./lav-coordinates.generated";
+import { atkisWaterMatchIndex } from "./atkis-water-matches.generated";
 
 const rappbodeParkings: FishingWater["parkings"] = [
   { id:"1", name:"Alte Rübeländer Straße – Beginn Betonstraße", latitude:51.718578, longitude:10.876041, access:"restricted", accuracy:"approx", note:"Eingeschränkte Zufahrt / Abstellpunkt" },
@@ -59,4 +61,39 @@ const featured: FishingWater[] = [
 ];
 
 const featuredLavNumbers = new Set(featured.map(w => w.lavNumber).filter(Boolean));
-export const waters: FishingWater[] = [...featured, ...lavCatalog.filter(w => !featuredLavNumbers.has(w.lavNumber))];
+
+const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
+  const official = atkisWaterMatchIndex[water.id];
+  if (official?.status === "matched" && official.latitude != null && official.longitude != null) {
+    return {
+      ...water,
+      latitude: official.latitude,
+      longitude: official.longitude,
+      notes: [
+        ...water.notes,
+        `Amtliche ATKIS/INSPIRE-Gewässergeometrie automatisch zugeordnet (${Math.round((official.confidence ?? 0) * 100)} % Konfidenz). Zuordnung vor der Nutzung prüfen.`,
+        official.source ? `Geodatenquelle: ${official.source}` : "",
+      ].filter(Boolean),
+    };
+  }
+
+  const osm = lavCoordinateIndex[water.id];
+  if (osm?.status === "matched" && osm.latitude != null && osm.longitude != null) {
+    return {
+      ...water,
+      latitude: osm.latitude,
+      longitude: osm.longitude,
+      notes: [
+        ...water.notes,
+        `Ersatzweise mit OpenStreetMap/Nominatim zugeordnet (${Math.round((osm.confidence ?? 0) * 100)} % Konfidenz). Lage vor der Nutzung prüfen.`,
+      ],
+    };
+  }
+
+  return water;
+});
+
+export const waters: FishingWater[] = [
+  ...featured,
+  ...enrichedLavCatalog.filter(w => !featuredLavNumbers.has(w.lavNumber)),
+];

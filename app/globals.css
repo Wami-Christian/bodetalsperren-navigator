@@ -10,3 +10,34 @@
 .status.catalog{background:#eef1f3;color:#42515a}
 
 .map-note{display:flex;align-items:center;gap:8px;max-width:min(620px,calc(100% - 24px));flex-wrap:wrap}.map-note strong{color:var(--ink)}.map-note span{color:var(--muted)}.map-note button{border:0;border-radius:8px;background:var(--brand);color:#fff;padding:6px 9px;font-weight:700}.parking-marker{display:grid;place-items:center;background:#fff;border:2px solid #2674c7;border-radius:50%;box-shadow:0 5px 15px #0003;font-size:18px}
+
+.water-stats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin:18px 0;
+}
+
+.stat-card{
+background:#1f2937;
+border-radius:14px;
+padding:16px;
+text-align:center;
+border:1px solid #374151;
+}
+
+.stat-card span{
+font-size:26px;
+display:block;
+margin-bottom:8px;
+}
+
+.stat-card strong{
+display:block;
+font-size:24px;
+color:#fff;
+}
+
+.stat-card small{
+color:#9ca3af;
+}

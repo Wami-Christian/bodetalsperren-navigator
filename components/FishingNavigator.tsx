@@ -11,8 +11,13 @@ import type { CatchEntry, Fish, FishingSpot, FishingWater, ForecastInputs, Water
 const MapView = dynamic(() => import("./MapView"), { ssr: false });
 const fishOptions: Array<Fish | "Alle"> = ["Alle", "Zander", "Barsch", "Forelle", "Schleie", "Hecht", "Karpfen"];
 const moduleOptions: Array<WaterModule | "Alle"> = ["Alle", "Bodetalsperren", "LAV Sachsen-Anhalt", "Harzflüsse"];
-type View = "dashboard" | "waters" | "forecast" | "diary" | "settings";
-
+type View =
+  | "dashboard"
+  | "waters"
+  | "atlas"
+  | "forecast"
+  | "diary"
+  | "settings";
 export default function FishingNavigator() {
   const [view, setView] = useState<View>("dashboard");
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
@@ -76,7 +81,13 @@ export default function FishingNavigator() {
     <main>
       <header className="topbar">
         <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>HarzFishing</strong><small>Navigator V5.2 Beta</small></div></button>
-        <nav>{([['dashboard','Dashboard'],['waters','Gewässer'],['forecast','Prognose'],['diary','Fangbuch'],['settings','Einstellungen']] as [View,string][]).map(([id,label]) => <button key={id} className={view===id?'active':''} onClick={()=>setView(id)}>{label}</button>)}</nav>
+        <nav>{([
+['dashboard','Dashboard'],
+['waters','Gewässer'],
+['atlas','🗺 Angelatlas'],
+['forecast','Prognose'],
+['diary','Fangbuch'],
+['settings','Einstellungen']] as [View,string][]).map(([id,label]) => <button key={id} className={view===id?'active':''} onClick={()=>setView(id)}>{label}</button>)}</nav>
       </header>
 
       {view === "dashboard" && <section className="page dashboard">
@@ -89,12 +100,61 @@ export default function FishingNavigator() {
         </div>
         <div className="panel"><h2>Aktuelle Empfehlung aus deinen Eingaben</h2>{ranked[0] ? <div className="recommendation"><strong>{ranked[0].water.name}</strong><span>{ranked[0].score}/100</span><p>Für {forecast.fish}, basierend auf Uhrzeit, Wind, Bewölkung und Luftdrucktrend.</p></div> : <p>Keine passende Empfehlung.</p>}</div>
       </section>}
+{view === "atlas" && (
+  <section className="page">
+    <div className="panel">
+      <h1>🗺 HarzFishing Angelatlas</h1>
+
+      <p>
+        Hier entsteht der vollständige Angelatlas
+        für den Harz und alle LAV-Gewässer.
+      </p>
+
+      <MapView
+        waters={mapWaters}
+        spots={visibleSpots}
+        parkings={visibleParkings}
+        selectedWater={focusedWater}
+        onSelect={selectAndFocus}
+      />
+    </div>
+  </section>
+)}
 
       {view === "waters" && <section className="page">
         <div className="toolbar"><input type="search" placeholder="Gewässer suchen …" value={query} onChange={(e)=>setQuery(e.target.value)} /><select value={module} onChange={(e)=>setModule(e.target.value as WaterModule|"Alle")}>{moduleOptions.map(x=><option key={x}>{x}</option>)}</select><div className="chips">{fishOptions.map((option)=><button key={option} className={fish===option?'active':''} onClick={()=>setFish(option)}>{option}</button>)}</div></div>
         <div className="workspace"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{filtered.map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{water.fish.map(item=><span key={item}>{item} {'★'.repeat(water.rating[item]??0)}</span>)}</div></article>)}</div></aside>
           <div className="map-panel"><MapView waters={mapWaters} spots={visibleSpots} parkings={visibleParkings} selectedWater={focusedWater} onSelect={selectAndFocus}/><div className="map-note">{focusedWater ? <><strong>{selected.name}</strong><span>{visibleParkings.length} Parkplatz{visibleParkings.length === 1 ? "" : "plätze"} · {visibleSpots.length} Hotspot{visibleSpots.length === 1 ? "" : "s"}</span><button type="button" onClick={()=>setFocusedWaterId(null)}>Alle Gewässer zeigen</button></> : <>{selected.latitude === null || selected.longitude === null ? <span>Für dieses Gewässer ist noch keine geprüfte Kartenposition gespeichert.</span> : <span>{mappedCount} von {filtered.length} Treffern sind bereits kartiert. Gewässer anklicken, um Parkplätze und Hotspots zu öffnen.</span>}</>}</div></div>
-          <aside className="details"><p className="eyebrow">Gewässerprofil</p><h2>{selected.name}</h2><p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p><span className={`status ${selected.sourceStatus}`}>{selected.sourceStatus==='verified'?'Navigationsdaten vorhanden':selected.sourceStatus==='catalog'?'LAV-Katalog – Lage noch offen':'Arbeitsdaten – prüfen'}</span>{selected.areaHa && <p><strong>Fläche:</strong> {selected.areaHa} ha</p>}<h3>Zielfische</h3><div className="score-list">{selected.fish.length ? selected.fish.map(item=><div key={item}><span>{item}</span><strong>{'★'.repeat(selected.rating[item]??0)}</strong></div>) : <p>Keine deiner ausgewählten Zielfischarten im Basiskatalog erkannt.</p>}</div><h3>Hinweise</h3><ul>{selected.notes.map(note=><li key={note}>{note}</li>)}</ul>
+          <aside className="details"><p className="eyebrow">Gewässerprofil</p><div className="water-stats">
+  <div className="stat-card">
+    <span>🐟</span>
+    <strong>{selected.fish.length}</strong>
+    <small>Zielfische</small>
+  </div>
+
+  <div className="stat-card">
+    <span>📍</span>
+    <strong>{selected.spots.length}</strong>
+    <small>Hotspots</small>
+  </div>
+
+  <div className="stat-card">
+    <span>🅿️</span>
+    <strong>{selected.parkings.length}</strong>
+    <small>Parkplätze</small>
+  </div>
+
+  <div className="stat-card">
+    <span>⭐</span>
+    <strong>
+      {Math.max(
+        ...selected.fish.map((f) => selected.rating[f] ?? 0),
+        0
+      )}
+    </strong>
+    <small>Top-Fisch</small>
+  </div>
+</div><h2>{selected.name}</h2><p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p><span className={`status ${selected.sourceStatus}`}>{selected.sourceStatus==='verified'?'Navigationsdaten vorhanden':selected.sourceStatus==='catalog'?'LAV-Katalog – Lage noch offen':'Arbeitsdaten – prüfen'}</span>{selected.areaHa && <p><strong>Fläche:</strong> {selected.areaHa} ha</p>}<h3>Zielfische</h3><div className="score-list">{selected.fish.length ? selected.fish.map(item=><div key={item}><span>{item}</span><strong>{'★'.repeat(selected.rating[item]??0)}</strong></div>) : <p>Keine deiner ausgewählten Zielfischarten im Basiskatalog erkannt.</p>}</div><h3>Hinweise</h3><ul>{selected.notes.map(note=><li key={note}>{note}</li>)}</ul>
           {selected.parkings.length > 0 && <><h3>Parkplätze / Ausgangspunkte</h3><div className="nav-list">{selected.parkings.map(p=><article key={p.id}><strong>{p.name}</strong><small>{p.access==='public'?'öffentlich':'Zufahrt eingeschränkt'} · {p.accuracy==='verified'?'belegt':'Näherungswert'}</small><div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a><a href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a></div></article>)}</div></>}
           {selected.spots.length > 0 && <><h3>Hotspots / Erkundungspunkte</h3><div className="nav-list">{selected.spots.map(spot=>{const parking=selected.parkings.find(p=>p.id===spot.parkingId);return <article key={spot.id}><strong>{spot.name}</strong><small>{spot.risk ?? spot.note ?? 'Zugang vor Ort prüfen.'}</small><div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>{parking&&<a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Parkplatz</a>}</div></article>})}</div></>}
           <div className="button-row">{selected.latitude !== null && selected.longitude !== null && <a className="route-button" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`} target="_blank" rel="noreferrer">Zum Gewässer</a>}<button onClick={exportGpx} disabled={!visibleSpots.length}>GPX exportieren</button></div><label className="file-button">GPX importieren<input type="file" accept=".gpx,application/gpx+xml" onChange={importGpx}/></label></aside>

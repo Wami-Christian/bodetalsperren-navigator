@@ -1,17 +1,21 @@
 {
   "name": "harzfishing-navigator",
-  "version": "5.2.0",
+  "version": "5.2.3",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "enrich:coordinates": "node scripts/enrich-lav-coordinates.mjs",
+    "enrich:coordinates:test": "node scripts/enrich-lav-coordinates.mjs --limit=10",
+    "import:atkis": "node scripts/import-atkis-hydro.mjs",
+    "import:atkis:test": "node scripts/import-atkis-hydro.mjs --limit=10"
   },
   "dependencies": {
     "leaflet": "1.9.4",
-    "next": "^15.5.22",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "next": "15.5.22",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@types/node": "22.18.0",
