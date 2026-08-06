@@ -46,9 +46,12 @@ const featured: FishingWater[] = [
     notes:["Salmoniden-, Schon- und Sperrstrecken zwingend aktuell prüfen."], spots:[], parkings:[], sourceStatus:"demo"
   }
 ];
-
+const featuredLavNumbers = new Set(
+  featured
+    .map((water) => water.lavNumber)
+    .filter(Boolean)
+);
 const premiumLavNumbers = new Set(harzLavPremium.map((water) => water.lavNumber).filter(Boolean));
-const featuredLavNumbers = new Set(featured.map((water) => water.lavNumber).filter(Boolean));
 
 const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
   const official = atkisWaterMatchIndex[water.id];
@@ -74,11 +77,6 @@ const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
   return water;
 });
 
-const premiumLavNumbers = new Set(
-  harzLavPremium
-    .map((water) => water.lavNumber)
-    .filter(Boolean)
-);
 
 export const waters: FishingWater[] = [
   ...featured,
