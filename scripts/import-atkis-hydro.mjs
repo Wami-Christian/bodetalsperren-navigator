@@ -1,61 +1,124 @@
 #!/usr/bin/env node
 /**
- * HarzFishing Navigator – official ATKIS/INSPIRE Hydro importer.
+ * HarzFishing Navigator – multi-source coordinate importer.
  *
- * Data source:
- *   INSPIRE-WFS ST Hydro – Physische Gewässer ATKIS Basis-DLM
- *   © GeoBasis-DE / LVermGeo ST, Datenlizenz Deutschland – Namensnennung – 2.0
+ * Sources:
+ *  - OpenStreetMap Nominatim: named-water and locality search
+ *  - OpenStreetMap Overpass API: nearby water objects around a locality
  *
- * The script deliberately separates confident matches from review candidates.
- * It never promotes an uncertain result automatically.
+ * The script is deliberately conservative. Only confident matches become
+ * "matched". Borderline candidates are written as "review".
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const ROOT = process.cwd();
 const CATALOG = path.join(ROOT, 'data', 'lav-catalog.ts');
 const OUTPUT = path.join(ROOT, 'data', 'atkis-water-matches.generated.ts');
 const REVIEW = path.join(ROOT, 'data', 'atkis-water-review.csv');
-const FEATURE_CACHE = path.join(ROOT, 'data', 'atkis-hydro-cache.json');
-const LOCALITY_CACHE = path.join(ROOT, 'data', 'locality-cache.json');
-const CAPABILITIES_CACHE = path.join(ROOT, 'data', 'atkis-getcapabilities.xml');
+const CACHE = path.join(ROOT, 'data', 'osm-water-import-cache.json');
 
-const WFS_BASE = 'https://geodatenportal.sachsen-anhalt.de/ows_INSPIRE_LVermGeo_ATKIS_HY-P_WFS';
-const SOURCE = '© GeoBasis-DE / LVermGeo ST, Datenlizenz Deutschland – Namensnennung – 2.0';
+const SOURCE = 'OpenStreetMap contributors (ODbL), Nominatim and Overpass API';
+const NOMINATIM = 'https://nominatim.openstreetmap.org/search';
+const OVERPASS_ENDPOINTS = [
+  'https://overpass-api.de/api/interpreter',
+  'https://overpass.private.coffee/api/interpreter',
+];
+
 const args = process.argv.slice(2);
 const option = (name, fallback = '') => args.find((x) => x.startsWith(`--${name}=`))?.split('=').slice(1).join('=') || fallback;
 const flag = (name) => args.includes(`--${name}`);
 const limit = Number(option('limit', '0')) || Infinity;
 const start = Number(option('start', '0')) || 0;
-const pageSize = Math.max(50, Math.min(5000, Number(option('page-size', '1000')) || 1000));
+const radiusM = Math.max(1500, Math.min(12000, Number(option('radius', '7000')) || 7000));
 const refresh = flag('refresh');
 const email = option('email', process.env.NOMINATIM_EMAIL || '');
-const userAgent = `HarzFishingNavigator-ATKIS-importer/1.0${email ? ` (${email})` : ''}`;
+const userAgent = `HarzFishingNavigator-coordinate-importer/2.1${email ? ` (${email})` : ''}`;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const normalize = (value = '') => String(value)
-  .toLocaleLowerCase('de-DE')
-  .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  .replace(/ß/g, 'ss')
-  .replace(/[’'`´]/g, '')
-  .replace(/\b(der|die|das|des|den|dem|am|an|im|in|bei|von|vom|zum|zur|und|teich|see|weiher|kuhle|kiesgrube|wasser|speicher|stausee)\b/g, ' ')
-  .replace(/[^a-z0-9]+/g, ' ')
-  .replace(/\s+/g, ' ').trim();
+const now = () => new Date().toISOString();
 
-const tokens = (value) => new Set(normalize(value).split(' ').filter((x) => x.length > 2));
+function normalize(value = '') {
+  return String(value)
+    .toLocaleLowerCase('de-DE')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/ß/g, 'ss')
+    .replace(/[’'`´„“”]/g, '')
+    .replace(/\b(der|die|das|des|den|dem|am|an|im|in|bei|von|vom|zum|zur|und)\b/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function waterNameCore(value = '') {
+  return normalize(value)
+    .replace(/\b(teich|teiche|see|weiher|kuhle|kiesgrube|grube|wasser|wasserspeicher|speicher|stausee|talsperre|graben|bach|fluss|kanal)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function cleanWaterLabel(value = '') {
+  return String(value)
+    .replace(/^\s*\d+\.\s*/, '')
+    .replace(/[„“”]/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function uniqueStrings(values) {
+  return [...new Set(values.map((value) => String(value || '').replace(/\s+/g, ' ').trim()).filter((value) => value.length >= 3))];
+}
+
+function searchNamesForWater(water) {
+  const full = cleanWaterLabel(water.name);
+  const withoutLocation = full
+    .replace(/\s+(?:bei|in|am|nahe)\s+[^,;()–-]+$/i, '')
+    .trim();
+  const parenthetical = [...full.matchAll(/\(([^)]+)\)/g)].map((match) => match[1]);
+  const quoted = [...full.matchAll(/["“„]([^"“”„]+)["“”„]/g)].map((match) => match[1]);
+  const dashParts = full.split(/\s+[–-]\s+|,|\//).map((part) => part.trim());
+  const noteHints = (water.notes || [])
+    .map((note) => cleanWaterLabel(note))
+    .filter((note) => note.length >= 3 && note.length <= 80 && !/basis:|verbot|prufen|prüfen/i.test(note));
+  const core = waterNameCore(full);
+  const candidates = [full, withoutLocation, ...parenthetical, ...quoted, ...dashParts, core, ...noteHints];
+  return uniqueStrings(candidates)
+    .filter((value) => !/^(?:bei|in|am)\s+/i.test(value))
+    .slice(0, 6);
+}
+
+function queryVariantsForWater(water, locality) {
+  const names = searchNamesForWater(water);
+  const district = water.district || '';
+  const variants = [];
+  for (const name of names) {
+    if (locality) variants.push(`${name}, ${locality}, Sachsen-Anhalt`);
+    variants.push(`${name}, ${district}, Sachsen-Anhalt`);
+  }
+  return uniqueStrings(variants).slice(0, 4);
+}
+
+function tokenSet(value) {
+  return new Set(normalize(value).split(' ').filter((x) => x.length > 2));
+}
+
 function jaccard(a, b) {
-  const A = tokens(a), B = tokens(b);
+  const A = tokenSet(a), B = tokenSet(b);
   if (!A.size || !B.size) return 0;
   let common = 0;
   for (const token of A) if (B.has(token)) common++;
   return common / (A.size + B.size - common);
 }
-function exactish(a, b) {
+
+function nameSimilarity(a, b) {
   const A = normalize(a), B = normalize(b);
+  const coreA = waterNameCore(a), coreB = waterNameCore(b);
   if (!A || !B) return 0;
   if (A === B) return 1;
+  if (coreA && coreB && coreA === coreB) return 0.96;
   if (A.includes(B) || B.includes(A)) return Math.min(A.length, B.length) / Math.max(A.length, B.length);
-  return jaccard(A, B);
+  return Math.max(jaccard(A, B), jaccard(coreA, coreB));
 }
 
 function extractCatalog(text) {
@@ -66,346 +129,300 @@ function extractCatalog(text) {
   const end = text.lastIndexOf('];');
   return JSON.parse(text.slice(begin, end + 1));
 }
+
 async function readJson(file, fallback) {
   try { return JSON.parse(await fs.readFile(file, 'utf8')); } catch { return fallback; }
 }
-async function fetchText(url) {
-  const response = await fetch(url, { headers: { 'User-Agent': userAgent, Accept: 'application/xml,text/xml,*/*' } });
-  if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${(await response.text()).slice(0, 500)}`);
-  return response.text();
-}
-async function fetchGml(url) {
-  const response = await fetch(url, {
-    headers: {
-      'User-Agent': userAgent,
-      Accept: 'application/gml+xml,text/xml,application/xml,*/*',
-    },
-  });
-  const text = await response.text();
-  if (!response.ok) {
-    const detail = text
-      .replace(/<[^>]+>/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim()
-      .slice(0, 900);
-    throw new Error(`${response.status} ${response.statusText}: ${detail}`);
-  }
-  return text;
+
+async function writeJson(file, value) {
+  await fs.writeFile(file, JSON.stringify(value, null, 2));
 }
 
-function decodeXml(value = '') {
-  return value
-    .replaceAll('&amp;', '&')
-    .replaceAll('&lt;', '<')
-    .replaceAll('&gt;', '>')
-    .replaceAll('&quot;', '"')
-    .replaceAll('&apos;', "'");
+function expectedClass(water) {
+  return water.type === 'Fließgewässer' ? 'flow' : 'standing';
 }
 
-function xmlTextValues(block) {
-  const out = [];
-  const pattern = /<(?:\w+:)?(?:text|name|spelling|label|localId|identifier|geographicalName)[^>]*>([\s\S]*?)<\/(?:\w+:)?(?:text|name|spelling|label|localId|identifier|geographicalName)>/gi;
-  for (const match of block.matchAll(pattern)) {
-    const text = decodeXml(match[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
-    if (text.length > 1 && text.length < 180) out.push(text);
-  }
-  return [...new Set(out)];
+function candidateClass(tags = {}, osmType = '') {
+  const waterway = String(tags.waterway || '').toLowerCase();
+  const natural = String(tags.natural || '').toLowerCase();
+  const water = String(tags.water || '').toLowerCase();
+  const landuse = String(tags.landuse || '').toLowerCase();
+  const type = String(osmType).toLowerCase();
+  if (waterway || /river|stream|canal|drain|ditch/.test(type)) return 'flow';
+  if (natural === 'water' || water || /lake|pond|reservoir|water/.test(type) || /reservoir|basin/.test(landuse)) return 'standing';
+  return 'unknown';
 }
 
-function coordinatePairsFromGml(block) {
-  const pairs = [];
-  const coordinateBlocks = [
-    ...block.matchAll(/<(?:\w+:)?posList\b[^>]*>([\s\S]*?)<\/(?:\w+:)?posList>/gi),
-    ...block.matchAll(/<(?:\w+:)?pos\b[^>]*>([\s\S]*?)<\/(?:\w+:)?pos>/gi),
-  ];
-  for (const match of coordinateBlocks) {
-    const values = match[1].trim().split(/[\s,]+/).map(Number).filter(Number.isFinite);
-    for (let i = 0; i + 1 < values.length; i += 2) {
-      const a = values[i], b = values[i + 1];
-      let longitude, latitude;
-      // EPSG:4258/4326 from INSPIRE is commonly returned in latitude/longitude axis order.
-      if (a >= 49 && a <= 55 && b >= 5 && b <= 16) {
-        latitude = a; longitude = b;
-      } else if (b >= 49 && b <= 55 && a >= 5 && a <= 16) {
-        longitude = a; latitude = b;
-      } else {
-        continue;
-      }
-      pairs.push([longitude, latitude]);
-    }
-  }
-  return pairs;
-}
-
-function geometryFromGml(block) {
-  const pairs = coordinatePairsFromGml(block);
-  if (!pairs.length) return null;
-  const isPolygon = /<(?:\w+:)?(?:Polygon|Surface|MultiSurface)\b/i.test(block);
-  const isLine = /<(?:\w+:)?(?:LineString|Curve|MultiCurve)\b/i.test(block);
-  if (isPolygon) return { type: 'Polygon', coordinates: [pairs] };
-  if (isLine) return { type: 'LineString', coordinates: pairs };
-  return { type: 'Point', coordinates: pairs[0] };
-}
-
-function parseGmlFeatureCollection(xml, typeName) {
-  const blocks = [
-    ...(xml.match(/<(?:wfs:)?member\b[\s\S]*?<\/(?:wfs:)?member>/gi) || []),
-    ...(xml.match(/<(?:gml:)?featureMember\b[\s\S]*?<\/(?:gml:)?featureMember>/gi) || []),
-  ];
-  const features = [];
-  for (const block of blocks) {
-    const geometry = geometryFromGml(block);
-    if (!geometry) continue;
-    const id = block.match(/(?:gml:)?id=["']([^"']+)["']/i)?.[1] || '';
-    const names = xmlTextValues(block);
-    features.push({ id, geometry, properties: { names } });
-  }
-  const numberReturned = Number(xml.match(/numberReturned=["'](\d+)["']/i)?.[1] || features.length);
-  return { features, numberReturned };
-}
-
-function parseFeatureTypes(xml) {
-  const blocks = xml.match(/<(?:\w+:)?FeatureType\b[\s\S]*?<\/(?:\w+:)?FeatureType>/g) || [];
-  return blocks.map((block) => {
-    const name = block.match(/<(?:\w+:)?Name>([^<]+)<\/(?:\w+:)?Name>/)?.[1]?.trim();
-    const title = block.match(/<(?:\w+:)?Title>([^<]+)<\/(?:\w+:)?Title>/)?.[1]?.trim() || '';
-    return { name, title };
-  }).filter((item) => item.name);
-}
-function selectHydroTypes(types) {
-  const preferred = types.filter(({ name, title }) => /standingwater|watercourse|wetland|hydroobject|physicalwaters|gewaesser|gewässer/i.test(`${name} ${title}`));
-  return preferred.length ? preferred : types;
-}
-
-function collectNameStrings(value, key = '', out = []) {
-  if (value == null) return out;
-  if (typeof value === 'string') {
-    if (/name|geograph|spelling|text|label|bezeich|objektname/i.test(key) && value.trim().length > 1) out.push(value.trim());
-    return out;
-  }
-  if (Array.isArray(value)) for (const item of value) collectNameStrings(item, key, out);
-  else if (typeof value === 'object') for (const [k, v] of Object.entries(value)) collectNameStrings(v, k, out);
-  return out;
-}
-function allCoordinates(geometry, out = []) {
-  if (!geometry) return out;
-  const walk = (value) => {
-    if (!Array.isArray(value)) return;
-    if (typeof value[0] === 'number' && typeof value[1] === 'number') out.push([value[0], value[1]]);
-    else for (const item of value) walk(item);
-  };
-  walk(geometry.coordinates);
-  return out;
-}
-function centroid(geometry) {
-  const coords = allCoordinates(geometry);
-  if (!coords.length) return null;
-  let lon = 0, lat = 0;
-  for (const [x, y] of coords) { lon += x; lat += y; }
-  return { longitude: lon / coords.length, latitude: lat / coords.length };
-}
-function ringAreaHa(ring) {
-  if (!Array.isArray(ring) || ring.length < 3) return 0;
-  const lat0 = ring.reduce((s, p) => s + Number(p[1] || 0), 0) / ring.length;
-  const mx = 111320 * Math.cos(lat0 * Math.PI / 180), my = 110540;
-  let area = 0;
-  for (let i = 0; i < ring.length; i++) {
-    const [x1,y1] = ring[i], [x2,y2] = ring[(i+1)%ring.length];
-    area += (x1*mx)*(y2*my) - (x2*mx)*(y1*my);
-  }
-  return Math.abs(area / 2) / 10000;
-}
-function geometryAreaHa(geometry) {
-  if (!geometry) return null;
-  if (geometry.type === 'Polygon') return Math.max(0, ringAreaHa(geometry.coordinates?.[0] || []) - (geometry.coordinates?.slice(1) || []).reduce((s,r) => s + ringAreaHa(r), 0));
-  if (geometry.type === 'MultiPolygon') return geometry.coordinates.reduce((s,p) => s + Math.max(0, ringAreaHa(p?.[0] || []) - (p?.slice(1) || []).reduce((x,r) => x + ringAreaHa(r),0)), 0);
-  return null;
-}
-function typeClass(typeName, geometry) {
-  const text = String(typeName).toLowerCase();
-  if (/watercourse|river|stream/.test(text) || /linestring/.test(geometry?.type?.toLowerCase() || '')) return 'flow';
-  return 'standing';
-}
-function expectedClass(water) { return water.type === 'Fließgewässer' ? 'flow' : 'standing'; }
-function featureRecord(feature, typeName) {
-  const center = centroid(feature.geometry);
-  if (!center) return null;
-  const names = [...new Set(collectNameStrings(feature.properties))].filter((x) => x.length < 180);
-  return {
-    id: String(feature.id ?? feature.properties?.localId ?? feature.properties?.identifier ?? ''),
-    typeName,
-    class: typeClass(typeName, feature.geometry),
-    names,
-    latitude: center.latitude,
-    longitude: center.longitude,
-    areaHa: geometryAreaHa(feature.geometry),
-  };
-}
-
-async function loadOfficialFeatures() {
-  if (!refresh) {
-    const cached = await readJson(FEATURE_CACHE, null);
-    if (cached?.features?.length) {
-      console.log(`ATKIS cache: ${cached.features.length} features`);
-      return cached.features;
-    }
-  }
-  const capUrl = new URL(WFS_BASE);
-  Object.entries({ service:'WFS', version:'2.0.0', request:'GetCapabilities' }).forEach(([k,v]) => capUrl.searchParams.set(k,v));
-  console.log('Loading WFS capabilities …');
-  const xml = await fetchText(capUrl);
-  await fs.writeFile(CAPABILITIES_CACHE, xml);
-  const allTypes = parseFeatureTypes(xml);
-  const selected = selectHydroTypes(allTypes);
-  console.log(`Feature types: ${allTypes.length}; selected hydro types: ${selected.map(x=>x.name).join(', ')}`);
-  if (!selected.length) throw new Error('No WFS feature types found. See data/atkis-getcapabilities.xml');
-
-  const records = [];
-  for (const { name } of selected) {
-    let startIndex = 0;
-    for (;;) {
-      const url = new URL(WFS_BASE);
-      Object.entries({
-        service: 'WFS',
-        version: '2.0.0',
-        request: 'GetFeature',
-        typeNames: name,
-        namespaces: 'xmlns(hy-p,http://inspire.ec.europa.eu/schemas/hy-p/4.0)',
-        srsName: 'urn:ogc:def:crs:EPSG::4258',
-        outputFormat: 'application/gml+xml; version=3.2',
-        count: String(pageSize),
-        startIndex: String(startIndex),
-      }).forEach(([k,v]) => url.searchParams.set(k,v));
-      console.log(`${name}: page starting ${startIndex} …`);
-      const xmlPage = await fetchGml(url);
-      const collection = parseGmlFeatureCollection(xmlPage, name);
-      const features = collection.features;
-      for (const feature of features) {
-        const record = featureRecord(feature, name);
-        if (record && record.latitude >= 50.8 && record.latitude <= 53.2 && record.longitude >= 10.3 && record.longitude <= 13.5) records.push(record);
-      }
-      if (collection.numberReturned < pageSize || features.length === 0) break;
-      startIndex += collection.numberReturned;
-    }
-  }
-  await fs.writeFile(FEATURE_CACHE, JSON.stringify({ source: SOURCE, fetchedAt:new Date().toISOString(), features:records }, null, 2));
-  console.log(`Saved ${records.length} official hydro features.`);
-  return records;
+function typeScore(water, candidate) {
+  const expected = expectedClass(water);
+  if (candidate.class === expected) return 1;
+  if (candidate.class === 'unknown') return 0.45;
+  return 0.05;
 }
 
 function localityFromWater(water) {
-  const name = water.name.replace(/^\d+\.\s*/, '');
+  const combined = [water.name, ...(water.notes || [])].join(' · ').replace(/^\d+\.\s*/, '');
   const patterns = [
-    /\bbei\s+([^,()\-–]{3,50})/i,
-    /\bin\s+([^,()\-–]{3,50})/i,
-    /\bam\s+([^,()\-–]{3,50})/i,
-    /\bbei\s+(.+)$/i,
+    /\bbei\s+([^,()\-–·]{3,60})/i,
+    /\bin\s+([^,()\-–·]{3,60})/i,
+    /\bam\s+([^,()\-–·]{3,60})/i,
+    /\bnahe\s+([^,()\-–·]{3,60})/i,
   ];
   for (const pattern of patterns) {
-    const hit = name.match(pattern)?.[1]?.trim();
-    if (hit && !/weg|graben|bach|fluss|teich|see|kuhle/i.test(hit)) return hit;
+    const hit = combined.match(pattern)?.[1]?.trim();
+    if (hit && !/weg|graben|bach|fluss|teich|see|kuhle|mündung|brücke|straße/i.test(hit)) return hit;
   }
-  const parts = name.split(/,|\(|\)|–|-/).map((x)=>x.trim()).filter(Boolean);
-  return parts.length > 1 ? parts.at(-1) : '';
+  const note = (water.notes || []).find((x) => /^(?:bei|in)\s+/i.test(String(x).trim()));
+  if (note) return String(note).replace(/^(?:bei|in)\s+/i, '').trim();
+  return '';
 }
-async function localityPoint(locality, district, cache) {
-  if (!locality) return null;
-  const key = `${locality}|${district}`;
-  if (key in cache) return cache[key];
-  const url = new URL('https://nominatim.openstreetmap.org/search');
-  url.searchParams.set('q', `${locality}, ${district}, Sachsen-Anhalt`);
-  url.searchParams.set('format', 'jsonv2');
-  url.searchParams.set('limit', '1');
-  url.searchParams.set('countrycodes', 'de');
-  if (email) url.searchParams.set('email', email);
-  const response = await fetch(url, { headers: { 'User-Agent':userAgent, 'Accept-Language':'de', Accept:'application/json' } });
-  if (!response.ok) throw new Error(`Locality geocoder ${response.status}`);
-  const result = (await response.json())?.[0];
-  cache[key] = result ? { latitude:Number(result.lat), longitude:Number(result.lon), displayName:result.display_name } : null;
-  await fs.writeFile(LOCALITY_CACHE, JSON.stringify(cache, null, 2));
-  await sleep(1100);
-  return cache[key];
+
+function haversineKm(a, b) {
+  const R = 6371, rad = (x) => x * Math.PI / 180;
+  const dLat = rad(b.latitude - a.latitude), dLon = rad(b.longitude - a.longitude);
+  const q = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.latitude)) * Math.cos(rad(b.latitude)) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(q));
 }
-function haversineKm(a,b) {
-  const R=6371, rad=(x)=>x*Math.PI/180;
-  const dLat=rad(b.latitude-a.latitude), dLon=rad(b.longitude-a.longitude);
-  const q=Math.sin(dLat/2)**2 + Math.cos(rad(a.latitude))*Math.cos(rad(b.latitude))*Math.sin(dLon/2)**2;
-  return 2*R*Math.asin(Math.sqrt(q));
-}
-function areaSimilarity(expected, actual) {
-  const e=Number(expected), a=Number(actual);
-  if (!Number.isFinite(e) || e<=0 || !Number.isFinite(a) || a<=0) return 0.35;
-  return Math.exp(-Math.abs(Math.log(a/e)));
-}
-function chooseMatch(water, features, locality) {
-  const sameClass = features.filter((f)=>f.class===expectedClass(water));
-  const named = sameClass.map((f)=>({ f, score:Math.max(0,...f.names.map((n)=>exactish(water.name,n))) })).filter((x)=>x.score>0.25).sort((a,b)=>b.score-a.score);
-  if (named[0]?.score >= 0.78 && named[0].score - (named[1]?.score ?? 0) >= 0.08) {
-    return { status:'matched', confidence:Math.min(0.99,0.76+named[0].score*0.23), method:'official-name', feature:named[0].f };
-  }
-  if (!locality) return named[0] ? { status:'review', confidence:named[0].score, method:'official-name', feature:named[0].f } : { status:'unmatched' };
-  const nearby = sameClass.map((f)=>{
-    const distanceKm=haversineKm(locality,f);
-    const area=areaSimilarity(water.areaHa,f.areaHa);
-    const name=Math.max(0,...f.names.map((n)=>exactish(water.name,n)));
-    const distanceScore=Math.max(0,1-distanceKm/12);
-    const score=name*0.36+distanceScore*0.38+area*0.26;
-    return {f,score,distanceKm,area,name};
-  }).filter((x)=>x.distanceKm<=12).sort((a,b)=>b.score-a.score);
-  const best=nearby[0], second=nearby[1];
-  if (!best) return { status:'unmatched' };
-  const gap=best.score-(second?.score??0);
-  if (best.score>=0.78 && gap>=0.09 && best.distanceKm<=6) return { status:'matched', confidence:best.score, method:'locality-area', feature:best.f, distanceKm:best.distanceKm };
-  return { status:'review', confidence:best.score, method:'locality-area', feature:best.f, distanceKm:best.distanceKm };
-}
-function outputRecord(match) {
-  if (!match.feature) return { status:match.status, checkedAt:new Date().toISOString(), source:SOURCE };
+
+function nominatimCandidate(result) {
+  const tags = result.extratags || {};
+  const latitude = Number(result.lat), longitude = Number(result.lon);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+  const names = uniqueStrings([
+    result.namedetails?.name,
+    result.namedetails?.['name:de'],
+    result.namedetails?.alt_name,
+    result.namedetails?.old_name,
+    result.name,
+    String(result.display_name || '').split(',')[0],
+  ]);
   return {
-    status:match.status,
-    latitude:Number(match.feature.latitude.toFixed(7)), longitude:Number(match.feature.longitude.toFixed(7)),
-    confidence:Number((match.confidence??0).toFixed(3)), method:match.method,
-    officialName:match.feature.names[0] || undefined,
-    officialFeatureId:match.feature.id || undefined, officialTypeName:match.feature.typeName,
-    areaHa:match.feature.areaHa==null?undefined:Number(match.feature.areaHa.toFixed(3)),
-    distanceKm:match.distanceKm==null?undefined:Number(match.distanceKm.toFixed(2)),
-    source:SOURCE, checkedAt:new Date().toISOString(),
+    provider: 'nominatim',
+    id: result.osm_type && result.osm_id ? `${result.osm_type}/${result.osm_id}` : String(result.place_id || ''),
+    latitude,
+    longitude,
+    name: names[0] || '',
+    names,
+    displayName: result.display_name || '',
+    class: candidateClass(tags, `${result.class} ${result.type}`),
+    tags,
   };
 }
+
+async function nominatimSearch(query, cache, key) {
+  if (!refresh && key in cache.nominatim) return cache.nominatim[key];
+  const url = new URL(NOMINATIM);
+  url.searchParams.set('q', query);
+  url.searchParams.set('format', 'jsonv2');
+  url.searchParams.set('limit', '5');
+  url.searchParams.set('countrycodes', 'de');
+  url.searchParams.set('addressdetails', '1');
+  url.searchParams.set('namedetails', '1');
+  url.searchParams.set('extratags', '1');
+  url.searchParams.set('polygon_geojson', '0');
+  if (email) url.searchParams.set('email', email);
+  const response = await fetch(url, {
+    headers: { 'User-Agent': userAgent, 'Accept-Language': 'de', Accept: 'application/json' },
+  });
+  if (!response.ok) throw new Error(`Nominatim ${response.status}: ${(await response.text()).slice(0, 300)}`);
+  const data = await response.json();
+  cache.nominatim[key] = data;
+  await writeJson(CACHE, cache);
+  await sleep(1200);
+  return data;
+}
+
+async function geocodeLocality(locality, district, cache) {
+  if (!locality) return null;
+  const key = `locality|${locality}|${district}`;
+  const results = await nominatimSearch(`${locality}, ${district}, Sachsen-Anhalt`, cache, key);
+  const hit = results.find((x) => ['city', 'town', 'village', 'hamlet', 'municipality', 'administrative'].includes(x.type)) || results[0];
+  return hit ? { latitude: Number(hit.lat), longitude: Number(hit.lon), displayName: hit.display_name } : null;
+}
+
+function overpassQuery(latitude, longitude, radius) {
+  return `[out:json][timeout:50];\n(\n  nwr(around:${radius},${latitude},${longitude})[natural=water];\n  nwr(around:${radius},${latitude},${longitude})[water];\n  nwr(around:${radius},${latitude},${longitude})[waterway~"^(river|stream|canal|drain|ditch)$"];\n  nwr(around:${radius},${latitude},${longitude})[landuse~"^(reservoir|basin)$"];\n  nwr(around:${radius},${latitude},${longitude})[leisure=fishing];\n);\nout center tags qt;`;
+}
+
+async function overpassNearby(anchor, cache, key) {
+  if (!refresh && key in cache.overpass) return cache.overpass[key];
+  const query = overpassQuery(anchor.latitude, anchor.longitude, radiusM);
+  let lastError;
+  for (const endpoint of OVERPASS_ENDPOINTS) {
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const body = new URLSearchParams({ data: query });
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'User-Agent': userAgent, Accept: 'application/json', 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body,
+        });
+        if (!response.ok) throw new Error(`${response.status} ${(await response.text()).slice(0, 300)}`);
+        const data = await response.json();
+        cache.overpass[key] = data.elements || [];
+        await writeJson(CACHE, cache);
+        await sleep(900);
+        return cache.overpass[key];
+      } catch (error) {
+        lastError = error;
+        await sleep(1500 * attempt);
+      }
+    }
+  }
+  throw new Error(`Overpass failed: ${lastError?.message || 'unknown error'}`);
+}
+
+function overpassCandidate(element) {
+  const center = element.center || (Number.isFinite(element.lat) ? { lat: element.lat, lon: element.lon } : null);
+  if (!center) return null;
+  const tags = element.tags || {};
+  const names = uniqueStrings([tags.name, tags['name:de'], tags.local_name, tags.alt_name, tags.old_name, tags.short_name]);
+  return {
+    provider: 'overpass',
+    id: `${element.type}/${element.id}`,
+    latitude: Number(center.lat),
+    longitude: Number(center.lon),
+    name: names[0] || '',
+    names,
+    displayName: names[0] || `${element.type}/${element.id}`,
+    class: candidateClass(tags, element.type),
+    tags,
+  };
+}
+
+function scoreCandidate(water, candidate, anchor) {
+  const aliases = searchNamesForWater(water);
+  const candidateNames = candidate.names?.length ? candidate.names : [candidate.name];
+  let name = 0;
+  let matchedAlias = '';
+  let matchedCandidateName = '';
+  for (const alias of aliases) {
+    for (const candidateName of candidateNames) {
+      const similarity = nameSimilarity(alias, candidateName);
+      if (similarity > name) {
+        name = similarity;
+        matchedAlias = alias;
+        matchedCandidateName = candidateName;
+      }
+    }
+  }
+  const type = typeScore(water, candidate);
+  const distanceKm = anchor ? haversineKm(anchor, candidate) : null;
+  const distance = distanceKm == null ? 0.35 : Math.max(0, 1 - distanceKm / Math.max(3, radiusM / 1000));
+  const osmFishing = candidate.tags?.leisure === 'fishing' ? 0.06 : 0;
+  const hasName = candidateNames.some(Boolean);
+  const unnamedPenalty = hasName ? 0 : -0.12;
+  const score = name * 0.62 + type * 0.18 + distance * 0.20 + osmFishing + unnamedPenalty;
+  return { candidate, score: Math.max(0, Math.min(1, score)), name, type, distance, distanceKm, matchedAlias, matchedCandidateName };
+}
+
+function chooseCandidate(water, candidates, anchor) {
+  const unique = new Map();
+  for (const candidate of candidates.filter(Boolean)) {
+    const key = candidate.id || `${candidate.latitude},${candidate.longitude}`;
+    if (!unique.has(key)) unique.set(key, candidate);
+  }
+  const ranked = [...unique.values()].map((c) => scoreCandidate(water, c, anchor)).sort((a, b) => b.score - a.score);
+  const best = ranked[0], second = ranked[1];
+  if (!best) return { status: 'unmatched' };
+  const gap = best.score - (second?.score ?? 0);
+  const namedStrong = best.name >= 0.84 && best.type >= 0.45 && gap >= 0.04;
+  const localStrong = best.score >= 0.82 && gap >= 0.09 && (best.distanceKm == null || best.distanceKm <= 5);
+  if (namedStrong || localStrong) return { status: 'matched', confidence: best.score, method: best.candidate.provider === 'nominatim' ? 'nominatim-name' : 'overpass-locality', ...best };
+  if (best.score >= 0.42) return { status: 'review', confidence: best.score, method: best.candidate.provider === 'nominatim' ? 'nominatim-name' : 'overpass-locality', ...best };
+  return { status: 'unmatched' };
+}
+
+function outputRecord(match) {
+  if (!match.candidate) return { status: match.status, checkedAt: now(), source: SOURCE };
+  return {
+    status: match.status,
+    latitude: Number(match.candidate.latitude.toFixed(7)),
+    longitude: Number(match.candidate.longitude.toFixed(7)),
+    confidence: Number((match.confidence ?? 0).toFixed(3)),
+    method: match.method,
+    officialName: match.matchedCandidateName || match.candidate.name || undefined,
+    matchedAlias: match.matchedAlias || undefined,
+    officialFeatureId: match.candidate.id || undefined,
+    officialTypeName: `${match.candidate.provider}:${match.candidate.class}`,
+    distanceKm: match.distanceKm == null ? undefined : Number(match.distanceKm.toFixed(2)),
+    source: SOURCE,
+    checkedAt: now(),
+  };
+}
+
 function renderTs(records) {
-  const stable=Object.fromEntries(Object.entries(records).sort(([a],[b])=>a.localeCompare(b)));
-  return `// AUTO-GENERATED by scripts/import-atkis-hydro.mjs\n// Source: ${SOURCE}\n\nexport interface AtkisWaterMatch {\n  status: \"matched\" | \"review\" | \"unmatched\";\n  latitude?: number; longitude?: number; confidence?: number;\n  method?: \"official-name\" | \"locality-area\";\n  officialName?: string; officialFeatureId?: string; officialTypeName?: string;\n  areaHa?: number; distanceKm?: number; source?: string; checkedAt?: string;\n}\n\nexport const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = ${JSON.stringify(stable,null,2)};\n`;
+  const stable = Object.fromEntries(Object.entries(records).sort(([a], [b]) => a.localeCompare(b)));
+  return `// AUTO-GENERATED by scripts/import-atkis-hydro.mjs\n// Source: ${SOURCE}\n\nexport interface AtkisWaterMatch {\n  status: "matched" | "review" | "unmatched";\n  latitude?: number; longitude?: number; confidence?: number;\n  method?: "nominatim-name" | "overpass-locality";\n  officialName?: string; officialFeatureId?: string; officialTypeName?: string;\n  areaHa?: number; distanceKm?: number; source?: string; checkedAt?: string;\n}\n\nexport const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = ${JSON.stringify(stable, null, 2)};\n`;
 }
-const csv = (v)=>`"${String(v??'').replaceAll('"','""')}"`;
+
+const csv = (value) => `"${String(value ?? '').replaceAll('"', '""')}"`;
 function renderReview(waters, records) {
-  const rows=[['id','lavNumber','name','district','status','confidence','method','latitude','longitude','officialName','distanceKm','officialAreaHa']];
-  for (const w of waters) { const r=records[w.id]; if (!r || r.status==='matched') continue; rows.push([w.id,w.lavNumber,w.name,w.district,r.status,r.confidence,r.method,r.latitude,r.longitude,r.officialName,r.distanceKm,r.areaHa]); }
-  return rows.map((r)=>r.map(csv).join(';')).join('\n')+'\n';
+  const rows = [['id', 'lavNumber', 'name', 'district', 'status', 'confidence', 'method', 'latitude', 'longitude', 'matchedAlias', 'candidateName', 'distanceKm', 'source']];
+  for (const water of waters) {
+    const record = records[water.id];
+    if (!record || record.status === 'matched') continue;
+    rows.push([water.id, water.lavNumber, water.name, water.district, record.status, record.confidence, record.method, record.latitude, record.longitude, record.matchedAlias, record.officialName, record.distanceKm, record.source]);
+  }
+  return rows.map((row) => row.map(csv).join(';')).join('\n') + '\n';
 }
 
-const catalog=extractCatalog(await fs.readFile(CATALOG,'utf8'));
-const official=await loadOfficialFeatures();
-const localityCache=await readJson(LOCALITY_CACHE,{});
-const existing=await import(`${pathToFileURL(OUTPUT).href}?v=${Date.now()}`).then((m)=>m.atkisWaterMatchIndex).catch(()=>({}));
-const records={...existing};
-const work=catalog.slice(start,Number.isFinite(limit)?start+limit:undefined);
-console.log(`LAV entries: ${catalog.length}; processing ${work.length}; official candidates: ${official.length}`);
-let i=0;
+const catalog = extractCatalog(await fs.readFile(CATALOG, 'utf8'));
+const cache = await readJson(CACHE, { nominatim: {}, overpass: {} });
+cache.nominatim ||= {};
+cache.overpass ||= {};
+const existing = await import(`${pathToFileURL(OUTPUT).href}?v=${Date.now()}`).then((m) => m.atkisWaterMatchIndex).catch(() => ({}));
+const records = { ...existing };
+const work = catalog.slice(start, Number.isFinite(limit) ? start + limit : undefined);
+
+console.log(`LAV entries: ${catalog.length}; processing ${work.length}; start=${start}; radius=${radiusM}m`);
+console.log('Multi-stage matching v2.1: name variants + locality + Overpass. Cache is resumable.');
+
+let index = 0;
 for (const water of work) {
-  const locality=localityFromWater(water);
-  let anchor=null;
-  try { if (locality) anchor=await localityPoint(locality,water.district,localityCache); }
-  catch (error) { console.warn(`Locality lookup failed (${locality}): ${error.message}`); }
-  const match=chooseMatch(water,official,anchor);
-  records[water.id]=outputRecord(match);
-  i++;
-  console.log(`${i}/${work.length} ${water.lavNumber??''} ${water.name} -> ${match.status}${match.feature?.names?.[0]?` [${match.feature.names[0]}]`:''}`);
-}
-await fs.writeFile(OUTPUT,renderTs(records));
-await fs.writeFile(REVIEW,renderReview(catalog,records));
-const stats=Object.values(records).reduce((a,r)=>(a[r.status]=(a[r.status]||0)+1,a),{});
-console.log('Done:',stats); console.log(`Generated ${path.relative(ROOT,OUTPUT)}`); console.log(`Review ${path.relative(ROOT,REVIEW)}`);
+  index++;
+  const locality = localityFromWater(water);
+  let anchor = null;
+  const candidates = [];
+  const queries = queryVariantsForWater(water, locality);
+  for (const [queryIndex, query] of queries.entries()) {
+    try {
+      const nameKey = `water-v2|${query}`;
+      const namedResults = await nominatimSearch(query, cache, nameKey);
+      candidates.push(...namedResults.map(nominatimCandidate));
+      // A strong direct name hit makes further public API calls unnecessary.
+      const direct = chooseCandidate(water, candidates, null);
+      if (direct.status === 'matched' && direct.confidence >= 0.90) break;
+    } catch (error) {
+      console.warn(`Nominatim variant ${queryIndex + 1} failed: ${error.message}`);
+    }
+  }
 
-function pathToFileURL(filePath) {
-  const resolved=path.resolve(filePath).replaceAll('\\','/');
-  return new URL(`file://${resolved.startsWith('/')?'':'/'}${resolved}`);
+  try {
+    anchor = await geocodeLocality(locality, water.district, cache);
+  } catch (error) {
+    console.warn(`Locality lookup failed (${locality || 'none'}): ${error.message}`);
+  }
+
+  if (anchor) {
+    try {
+      const overpassKey = `near|${anchor.latitude.toFixed(5)}|${anchor.longitude.toFixed(5)}|${radiusM}`;
+      const elements = await overpassNearby(anchor, cache, overpassKey);
+      candidates.push(...elements.map(overpassCandidate));
+    } catch (error) {
+      console.warn(`Overpass nearby failed: ${error.message}`);
+    }
+  }
+
+  const match = chooseCandidate(water, candidates, anchor);
+  records[water.id] = outputRecord(match);
+  console.log(`${index}/${work.length} ${water.lavNumber ?? ''} ${water.name} -> ${match.status}${match.candidate?.name ? ` [${match.candidate.name}]` : ''}${match.matchedAlias ? ` <= ${match.matchedAlias}` : ''}${match.confidence ? ` ${(match.confidence * 100).toFixed(0)}%` : ''}`);
+  await fs.writeFile(OUTPUT, renderTs(records));
+  await fs.writeFile(REVIEW, renderReview(catalog, records));
 }
+
+const stats = Object.values(records).reduce((acc, record) => (acc[record.status] = (acc[record.status] || 0) + 1, acc), {});
+console.log('Done:', stats);
+console.log(`Generated ${path.relative(ROOT, OUTPUT)}`);
+console.log(`Review ${path.relative(ROOT, REVIEW)}`);
+console.log(`Cache ${path.relative(ROOT, CACHE)}`);

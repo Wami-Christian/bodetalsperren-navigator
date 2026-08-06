@@ -74,3 +74,80 @@ font-size:16px;
 .atlas-info p{
 margin:10px 0;
 }
+
+.atlas-categories {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.atlas-categories button {
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #eef4f1;
+  color: #143f35;
+  text-align: left;
+  cursor: pointer;
+}
+
+.atlas-categories button.active {
+  background: #075747;
+  color: white;
+}
+
+.atlas-result-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 18px 0 10px;
+}
+
+.atlas-result-heading small {
+  color: #6b7c76;
+}
+
+.atlas-water-list {
+  display: grid;
+  gap: 8px;
+}
+
+.atlas-water {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce7e2;
+  border-radius: 12px;
+  background: white;
+  color: #173d34;
+  text-align: left;
+  cursor: pointer;
+}
+
+.atlas-water:hover,
+.atlas-water.active {
+  border-color: #0b6957;
+  background: #edf7f3;
+}
+
+.atlas-water span,
+.atlas-water small {
+  color: #687b74;
+}
+
+@media (max-width: 900px) {
+  .atlas-page {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .atlas-sidebar {
+    max-height: 420px;
+  }
+
+  .atlas-map {
+    min-height: 520px;
+  }
+}

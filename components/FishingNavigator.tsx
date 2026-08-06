@@ -18,11 +18,25 @@ type View =
   | "forecast"
   | "diary"
   | "settings";
+
+type AtlasCategory =
+  | "all"
+  | "reservoirs"
+  | "rivers"
+  | "lakes"
+  | "parking"
+  | "favorites";
+
 export default function FishingNavigator() {
   const [view, setView] = useState<View>("dashboard");
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
   const [query, setQuery] = useState("");
+const [regionFilter, setRegionFilter] =
+  useState<"all" | "harz">("harz");
+const [atlasQuery, setAtlasQuery] = useState("");
+const [atlasCategory, setAtlasCategory] =
+  useState<AtlasCategory>("all");
   const [selected, setSelected] = useState<FishingWater>(waters[0]);
   const [focusedWaterId, setFocusedWaterId] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -33,10 +47,77 @@ export default function FishingNavigator() {
   useEffect(() => { setFavorites(loadFavorites()); setCatches(loadCatches()); }, []);
 
   const filtered = useMemo(() => waters
+    .filter((water) => {
+        if (regionFilter === "all") return true;
+
+        return (
+            water.district.includes("Harz") ||
+            water.module === "Bodetalsperren" ||
+            water.module === "Harzflüsse"
+        );
+    })
     .filter((water) => module === "Alle" || water.module === module)
     .filter((water) => fish === "Alle" || water.fish.includes(fish))
-    .filter((water) => `${water.name} ${water.lavNumber ?? ""} ${water.district} ${water.module}`.toLowerCase().includes(query.toLowerCase()))
-    .sort((a, b) => fish === "Alle" ? a.name.localeCompare(b.name, "de") : (b.rating[fish] ?? 0) - (a.rating[fish] ?? 0)), [fish, module, query]);
+    .filter((water) =>
+        `${water.name} ${water.lavNumber ?? ""} ${water.district} ${water.module}`
+            .toLowerCase()
+            .includes(query.toLowerCase())
+    )
+    .sort((a, b) =>
+        fish === "Alle"
+            ? a.name.localeCompare(b.name, "de")
+            : (b.rating[fish] ?? 0) - (a.rating[fish] ?? 0)
+    ),
+    [fish, module, query, regionFilter]);
+const atlasWaters = useMemo(() => {
+  return waters
+    .filter((water) => {
+      const searchText =
+        `${water.name} ${water.lavNumber ?? ""} ${water.district} ${water.type}`
+          .toLowerCase();
+
+      return searchText.includes(atlasQuery.toLowerCase());
+    })
+    .filter((water) => {
+      if (regionFilter === "harz") {
+        const isHarzWater =
+          water.district.includes("Harz") ||
+          water.module === "Bodetalsperren" ||
+          water.module === "Harzflüsse";
+
+        if (!isHarzWater) return false;
+      }
+
+      switch (atlasCategory) {
+        case "reservoirs":
+          return water.module === "Bodetalsperren";
+
+        case "rivers":
+          return (
+            water.module === "Harzflüsse" ||
+            water.type.toLowerCase().includes("fließ")
+          );
+
+        case "lakes":
+          return (
+            water.type.toLowerCase().includes("see") ||
+            water.type.toLowerCase().includes("teich") ||
+            water.type.toLowerCase().includes("talsperre") ||
+            water.type.toLowerCase().includes("kiesgrube")
+          );
+
+        case "parking":
+          return water.parkings.length > 0;
+
+        case "favorites":
+          return favorites.includes(water.id);
+
+        default:
+          return true;
+      }
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, "de"));
+}, [atlasQuery, atlasCategory, favorites, regionFilter]);
 
   const ranked = useMemo(() => waters.map((water) => ({ water, score: calculateFishingScore(water, forecast) })).filter((item) => item.score > 0).sort((a, b) => b.score - a.score), [forecast]);
   const focusedWater = focusedWaterId === selected.id && selected.latitude !== null && selected.longitude !== null ? selected : null;
@@ -101,45 +182,147 @@ export default function FishingNavigator() {
         <div className="panel"><h2>Aktuelle Empfehlung aus deinen Eingaben</h2>{ranked[0] ? <div className="recommendation"><strong>{ranked[0].water.name}</strong><span>{ranked[0].score}/100</span><p>Für {forecast.fish}, basierend auf Uhrzeit, Wind, Bewölkung und Luftdrucktrend.</p></div> : <p>Keine passende Empfehlung.</p>}</div>
       </section>}
 {view === "atlas" && (
-<section className="atlas-page">
+  <section className="atlas-page">
 
-  <div className="atlas-sidebar">
+    <aside className="atlas-sidebar">
+      <h2>Angelatlas</h2>
 
-    <h2>🗺 Angelatlas</h2>
+      <input
+        type="search"
+        placeholder="Gewässer oder Ort suchen …"
+        className="atlas-search"
+        value={atlasQuery}
+        onChange={(event) => setAtlasQuery(event.target.value)}
+      />
 
-    <input
-      type="text"
-      placeholder="Gewässer suchen ..."
-      className="atlas-search"
-    />
+      <div className="atlas-categories">
+        <button
+          className={atlasCategory === "all" ? "active" : ""}
+          onClick={() => setAtlasCategory("all")}
+        >
+          🗺 Alle Gewässer
+        </button>
 
-    <div className="atlas-info">
+        <button
+          className={atlasCategory === "reservoirs" ? "active" : ""}
+          onClick={() => setAtlasCategory("reservoirs")}
+        >
+          🎣 Bodetalsperren
+        </button>
 
-      <p><strong>{waters.length}</strong> Gewässer</p>
+        <button
+          className={atlasCategory === "rivers" ? "active" : ""}
+          onClick={() => setAtlasCategory("rivers")}
+        >
+          🌊 Flüsse
+        </button>
 
-      <p>{visibleParkings.length} Parkplätze</p>
+        <button
+          className={atlasCategory === "lakes" ? "active" : ""}
+          onClick={() => setAtlasCategory("lakes")}
+        >
+          🏞 Seen und Teiche
+        </button>
 
-      <p>{visibleSpots.length} Hotspots</p>
+        <button
+          className={atlasCategory === "parking" ? "active" : ""}
+          onClick={() => setAtlasCategory("parking")}
+        >
+          🅿 Mit Parkplatz
+        </button>
 
+        <button
+          className={atlasCategory === "favorites" ? "active" : ""}
+          onClick={() => setAtlasCategory("favorites")}
+        >
+          ⭐ Favoriten
+        </button>
+      </div>
+
+      <div className="atlas-result-heading">
+        <strong>{atlasWaters.length} Treffer</strong>
+        <small>
+          {
+            atlasWaters.filter(
+              (water) =>
+                water.latitude !== null &&
+                water.longitude !== null
+            ).length
+          } kartiert
+        </small>
+      </div>
+
+      <div className="atlas-water-list">
+        {atlasWaters.map((water) => (
+          <button
+            key={water.id}
+            className={
+              selected.id === water.id
+                ? "atlas-water active"
+                : "atlas-water"
+            }
+            onClick={() => selectAndFocus(water)}
+          >
+            <strong>{water.name}</strong>
+
+            <span>
+              {water.type}
+              {water.lavNumber
+                ? ` · ${water.lavNumber}`
+                : ""}
+            </span>
+
+            <small>
+              {water.latitude !== null &&
+              water.longitude !== null
+                ? "📍 kartiert"
+                : "Lage noch offen"}
+            </small>
+          </button>
+        ))}
+      </div>
+    </aside>
+
+    <div className="atlas-map">
+      <MapView
+        waters={
+          focusedWater
+            ? [focusedWater]
+            : atlasWaters
+        }
+        spots={visibleSpots}
+        parkings={visibleParkings}
+        selectedWater={focusedWater}
+        onSelect={selectAndFocus}
+      />
+
+      <div className="map-note">
+        {focusedWater ? (
+          <>
+            <strong>{selected.name}</strong>
+
+            <span>
+              {visibleParkings.length} Parkplätze ·{" "}
+              {visibleSpots.length} Hotspots
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setFocusedWaterId(null)}
+            >
+              Atlasübersicht
+            </button>
+          </>
+        ) : (
+          <span>
+            Wähle links ein kartiertes Gewässer aus.
+          </span>
+        )}
+      </div>
     </div>
 
-  </div>
-
-  <div className="atlas-map">
-
-    <MapView
-      waters={mapWaters}
-      spots={visibleSpots}
-      parkings={visibleParkings}
-      selectedWater={focusedWater}
-      onSelect={selectAndFocus}
-    />
-
-  </div>
-
-</section>
-)}
-      {view === "waters" && <section className="page">
+  </section>
+)}      {view === "waters" && <section className="page">
         <div className="toolbar"><input type="search" placeholder="Gewässer suchen …" value={query} onChange={(e)=>setQuery(e.target.value)} /><select value={module} onChange={(e)=>setModule(e.target.value as WaterModule|"Alle")}>{moduleOptions.map(x=><option key={x}>{x}</option>)}</select><div className="chips">{fishOptions.map((option)=><button key={option} className={fish===option?'active':''} onClick={()=>setFish(option)}>{option}</button>)}</div></div>
         <div className="workspace"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{filtered.map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{water.fish.map(item=><span key={item}>{item} {'★'.repeat(water.rating[item]??0)}</span>)}</div></article>)}</div></aside>
           <div className="map-panel"><MapView waters={mapWaters} spots={visibleSpots} parkings={visibleParkings} selectedWater={focusedWater} onSelect={selectAndFocus}/><div className="map-note">{focusedWater ? <><strong>{selected.name}</strong><span>{visibleParkings.length} Parkplatz{visibleParkings.length === 1 ? "" : "plätze"} · {visibleSpots.length} Hotspot{visibleSpots.length === 1 ? "" : "s"}</span><button type="button" onClick={()=>setFocusedWaterId(null)}>Alle Gewässer zeigen</button></> : <>{selected.latitude === null || selected.longitude === null ? <span>Für dieses Gewässer ist noch keine geprüfte Kartenposition gespeichert.</span> : <span>{mappedCount} von {filtered.length} Treffern sind bereits kartiert. Gewässer anklicken, um Parkplätze und Hotspots zu öffnen.</span>}</>}</div></div>
