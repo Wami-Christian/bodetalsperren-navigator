@@ -42,8 +42,8 @@ const featured: FishingWater[] = [
     parkings:[rappbodeParkings[11]], sourceStatus:"verified"
   },
   {
-    id:"kunstteich-ballenstedt",name:"Kunstteich Ballenstedt",module:"LAV Sachsen-Anhalt",type:"Teich",district:"Harz",latitude:51.704,longitude:11.215,
-    fish:["Zander","Barsch","Schleie"],rating:{Zander:4,Barsch:4,Schleie:4},notes:["Kartierter Arbeitsdatensatz; Gewässernummer und Bestimmungen aktuell im Angelatlas prüfen."],
+    id:"5-340-05-kunstteich-in-ballenstedt",name:"Kunstteich in Ballenstedt",lavNumber:"5-340-05",module:"LAV Sachsen-Anhalt",type:"Teich",district:"Harz",latitude:51.704,longitude:11.215,
+    fish:["Hecht","Karpfen","Schleie"],areaHa:"2.60",rating:{Hecht:3,Karpfen:3,Schleie:3},notes:["LAV-Katalogdaten 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen.","Kartenposition ist ein Arbeitsdatensatz und muss vor Veröffentlichung verifiziert werden."],
     spots:[],parkings:[],sourceStatus:"demo"
   },
   {
@@ -51,12 +51,12 @@ const featured: FishingWater[] = [
     fish:["Forelle"],rating:{Forelle:5},notes:["Salmoniden-, Schon- und Sperrstrecken zwingend aktuell prüfen."],spots:[],parkings:[],sourceStatus:"demo"
   },
   {
-    id:"ditfurter-kiessee",name:"Ditfurter Kiessee",module:"LAV Sachsen-Anhalt",type:"Kiesgrube",district:"Harz",latitude:51.829,longitude:11.197,
-    fish:["Zander","Barsch"],rating:{Zander:5,Barsch:4},notes:["Exakte Gewässerzuordnung, Grenzen und Zugang aktuell prüfen."],spots:[],parkings:[],sourceStatus:"demo"
+    id:"5-340-08-kiesgrube-bei-dittfurt",name:"Kiesgrube bei Dittfurt",lavNumber:"5-340-08",module:"LAV Sachsen-Anhalt",type:"Kiesgrube",district:"Harz",latitude:51.829,longitude:11.197,
+    fish:["Barsch","Zander"],areaHa:"32.05",rating:{Barsch:4,Zander:4},notes:["LAV-Katalog: Gewässer 5-340-08; aktuelle Fischarten, Grenzen und Zugänge prüfen.","Kartenposition ist ein Arbeitsdatensatz und muss vor Veröffentlichung verifiziert werden."],spots:[],parkings:[],sourceStatus:"demo"
   },
   {
-    id:"siebersteinteich",name:"Großer Siebersteinteich",module:"LAV Sachsen-Anhalt",type:"Teich",district:"Harz",latitude:51.690,longitude:11.165,
-    fish:["Schleie","Barsch"],rating:{Schleie:4,Barsch:3},notes:["Ufer-, Natur- und Schutzregeln aktuell prüfen."],spots:[],parkings:[],sourceStatus:"demo"
+    id:"5-340-10-groer-siebersteinsteich-bei-ballenstedt-a-b-bl-h-k-4-20-pl-ro-s",name:"Großer Siebersteinsteich bei Ballenstedt",lavNumber:"5-340-10",module:"LAV Sachsen-Anhalt",type:"Teich",district:"Harz",latitude:51.690,longitude:11.165,
+    fish:["Barsch","Hecht","Karpfen","Schleie"],areaHa:"4.20",rating:{Barsch:3,Hecht:3,Karpfen:3,Schleie:4},notes:["Name, Fläche und Fischcodes aus dem LAV-Katalogdatensatz bereinigt.","Ufer-, Natur- und Schutzregeln sowie die Kartenposition aktuell prüfen."],spots:[],parkings:[],sourceStatus:"demo"
   }
 ];
 
@@ -71,7 +71,7 @@ const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
       longitude: official.longitude,
       notes: [
         ...water.notes,
-        `Amtliche ATKIS/INSPIRE-Gewässergeometrie automatisch zugeordnet (${Math.round((official.confidence ?? 0) * 100)} % Konfidenz). Zuordnung vor der Nutzung prüfen.`,
+        `OSM-Mehrquellenabgleich automatisch zugeordnet (${Math.round((official.confidence ?? 0) * 100)} % Konfidenz). Zuordnung vor der Nutzung prüfen.`,
         official.source ? `Geodatenquelle: ${official.source}` : "",
       ].filter(Boolean),
     };
