@@ -27,6 +27,181 @@ const rappbodeSpots: FishingWater["spots"] = [
   { id:"E6", name:"Nordarm West – Ufererkundung", latitude:51.763580, longitude:10.826655, parkingId:"9", tags:["Erkundung"], source:"Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.", risk:"Entfernung und Gelände können erheblich abweichen." }
 ];
 
+
+const trautensteinParkings: FishingWater["parkings"] = [
+  {
+    id:"TR-P1",
+    name:"Parkplatz Dorfgemeinschaftshaus Trautenstein",
+    latitude:51.6879,
+    longitude:10.7788,
+    access:"public",
+    accuracy:"approx",
+    note:"Öffentlicher Ausgangspunkt im Ort; längerer Fußweg zur Vorsperre. Position vor Ort prüfen."
+  }
+];
+
+const trautensteinSpots: FishingWater["spots"] = [
+  {
+    id:"TR-E1",
+    name:"Vorsperrdamm Rappbode – Erkundung",
+    latitude:51.704148,
+    longitude:10.790162,
+    parkingId:"TR-P1",
+    tags:["Staumauer","Erkundung"],
+    source:"Gewässerkoordinate und öffentlich beschriebener Rundweg ab Trautenstein.",
+    risk:"Kein ausgewiesener Angel-Hotspot; Schutzbereiche, Beschilderung und tatsächlichen Uferzugang prüfen."
+  }
+];
+
+const hasselParkings: FishingWater["parkings"] = [
+  {
+    id:"HA-P1",
+    name:"Wanderparkplatz Hagenmühle / Hasselvorsperre",
+    latitude:51.697893,
+    longitude:10.843684,
+    access:"public",
+    accuracy:"approx",
+    note:"Öffentlich dokumentierter Wander- und Ausgangspunkt unterhalb der Hagenmühle; Parkregeln vor Ort beachten."
+  }
+];
+
+const hasselSpots: FishingWater["spots"] = [
+  {
+    id:"HA-E1",
+    name:"Hasselvorsperre – Staumauerbereich",
+    latitude:51.706111,
+    longitude:10.830278,
+    parkingId:"HA-P1",
+    tags:["Staumauer","Erkundung"],
+    source:"Öffentlich beschriebener Rundweg vom Wanderparkplatz zur Staumauer.",
+    risk:"Etwa 3 km Fußweg; technische Bereiche, Trinkwasserschutz und Beschilderung beachten."
+  },
+  {
+    id:"HA-E2",
+    name:"Hasselvorsperre – rechtes Ufer, Erkundung",
+    latitude:51.7019,
+    longitude:10.8370,
+    parkingId:"HA-P1",
+    tags:["Ufer","Erkundung"],
+    source:"Näherungsweise entlang des öffentlich beschriebenen Rundwegs.",
+    risk:"Kein bestätigter Angelplatz; Uferzugang und Schutzregeln vor Ort prüfen."
+  }
+];
+
+const koenigshuetteParkings: FishingWater["parkings"] = [
+  {
+    id:"KO-P1",
+    name:"Wanderparkplatz Tanner Straße / L98",
+    latitude:51.738729,
+    longitude:10.764647,
+    access:"public",
+    accuracy:"verified",
+    note:"Kostenlose Parkflächen am südlichen Ortsausgang Königshütte Richtung Tanne."
+  }
+];
+
+const koenigshuetteSpots: FishingWater["spots"] = [
+  {
+    id:"KO-E1",
+    name:"Trogfurther Brücke – Staumauer",
+    latitude:51.738611,
+    longitude:10.793333,
+    parkingId:"KO-P1",
+    tags:["Staumauer","Erkundung"],
+    source:"Öffentlich beschriebener Rundweg vom Parkplatz Tanner Straße zur Trogfurther Brücke.",
+    risk:"Mehrkilometriger Fußweg; technische Anlagen und örtliche Sperrbereiche beachten."
+  },
+  {
+    id:"KO-E2",
+    name:"Königshütter Talsperre – westliches Ufer",
+    latitude:51.7390,
+    longitude:10.7820,
+    parkingId:"KO-P1",
+    tags:["Ufer","Erkundung"],
+    source:"Näherungsweise entlang des öffentlichen Rundwegs.",
+    risk:"Kein bestätigter Angelplatz; Wege- und Uferzugang vor Ort prüfen."
+  }
+];
+
+const mandelholzParkings: FishingWater["parkings"] = [
+  {
+    id:"MA-P1",
+    name:"Parkplatz Mandelholz / Hotel Grüne Tanne",
+    latitude:51.7434,
+    longitude:10.7236,
+    access:"public",
+    accuracy:"approx",
+    note:"Öffentlich beschriebener Parkplatz gegenüber dem Hotel; Nutzungs- und Übernachtungsregeln vor Ort beachten."
+  }
+];
+
+const mandelholzSpots: FishingWater["spots"] = [
+  {
+    id:"MA-E1",
+    name:"Mandelholz – westlicher Zugang zur Kalten Bode",
+    latitude:51.7444,
+    longitude:10.7290,
+    parkingId:"MA-P1",
+    tags:["Zugang","Erkundung"],
+    source:"Näherungsweise vom öffentlich beschriebenen Parkplatz am Hotel in Richtung Staubecken.",
+    risk:"Wasserstand und Uferzugang können stark schwanken; Schutz- und Hochwasserhinweise beachten."
+  },
+  {
+    id:"MA-E2",
+    name:"Mandelholztalsperre – Dammnähe, Erkundung",
+    latitude:51.745556,
+    longitude:10.736389,
+    parkingId:"MA-P1",
+    tags:["Staudamm","Erkundung"],
+    source:"Koordinate des Hochwasserschutzbeckens; Zugang zu Fuß vor Ort prüfen.",
+    risk:"Technische Anlage; mögliche Sperrbereiche und wechselnde Wasserstände beachten."
+  }
+];
+
+const wendefurthParkings: FishingWater["parkings"] = [
+  {
+    id:"WE-P1",
+    name:"Parkplatz Bootsverleih / Seeterrasse Wendefurth",
+    latitude:51.740433,
+    longitude:10.918291,
+    access:"public",
+    accuracy:"verified",
+    note:"Öffentlich erreichbarer Ausgangspunkt Am Stausee 2; Öffnungszeiten und Parkbeschilderung beachten."
+  },
+  {
+    id:"WE-P2",
+    name:"Parkplatz nahe Rappbode-Staumauer",
+    latitude:51.743033,
+    longitude:10.897782,
+    access:"public",
+    accuracy:"approx",
+    note:"Aus Vorversion übernommener Ausgangspunkt; genaue Parkfläche und Beschilderung prüfen."
+  }
+];
+
+const wendefurthSpots: FishingWater["spots"] = [
+  {
+    id:"WE-E1",
+    name:"Wendefurth – Ufer am Bootsverleih",
+    latitude:51.74029,
+    longitude:10.91528,
+    parkingId:"WE-P1",
+    tags:["Ufer","Bootsverleih","Erkundung"],
+    source:"Öffentlich dokumentierter Bootsverleih und Seezugang.",
+    risk:"Betriebsflächen und Bootsverkehr berücksichtigen; Angel- und Bootsregeln aktuell prüfen."
+  },
+  {
+    id:"WE-E2",
+    name:"Wendefurth – Ufer nahe Rappbode-Staumauer",
+    latitude:51.736270,
+    longitude:10.901098,
+    parkingId:"WE-P2",
+    tags:["Staumauer","Erkundung"],
+    source:"Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",
+    risk:"Technische Sperrbereiche und örtliche Schilder beachten."
+  }
+];
+
 const fpgBaseNotes = [
   "Fischarten nach Fischereipachtgemeinschaft Bodetalsperren e.V.; aktuelle Gewässerordnung und Angelberechtigung prüfen.",
   "Fahrzeuge ausschließlich auf offiziellen Parkplätzen abstellen; nicht direkt ans Gewässer fahren.",
@@ -48,7 +223,7 @@ const featured: FishingWater[] = [
     fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
     rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
     notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Trinkwasser- und Schutzregeln besonders beachten."],
-    spots:[], parkings:[], sourceStatus:"verified"
+    spots:[...trautensteinSpots], parkings:[...trautensteinParkings], sourceStatus:"verified"
   },
   {
     id:"vorsperre-hassel-hasselfelde", name:"Vorsperre Hassel – Hasselfelde", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
@@ -56,7 +231,7 @@ const featured: FishingWater[] = [
     fish:["Zander","Barsch","Hecht","Karpfen","Schleie"],
     rating:{Zander:4,Barsch:4,Hecht:4,Karpfen:3,Schleie:3},
     notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal und Weißfisch.","Trinkwasser- und Schutzregeln besonders beachten."],
-    spots:[], parkings:[], sourceStatus:"verified"
+    spots:[...hasselSpots], parkings:[...hasselParkings], sourceStatus:"verified"
   },
   {
     id:"ueberleitungssperre-koenigshuette", name:"Überleitungssperre Königshütte – Trogfurther Brücke", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
@@ -64,7 +239,7 @@ const featured: FishingWater[] = [
     fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
     rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
     notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Technische Anlagen und örtliche Sperrbereiche beachten."],
-    spots:[], parkings:[], sourceStatus:"verified"
+    spots:[...koenigshuetteSpots], parkings:[...koenigshuetteParkings], sourceStatus:"verified"
   },
   {
     id:"hwr-kalte-bode-mandelholz", name:"HWR Kalte Bode – Mandelholz", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
@@ -72,7 +247,7 @@ const featured: FishingWater[] = [
     fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
     rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
     notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Hochwasserrückhaltebecken: Wasserstand, Zugänglichkeit und Sperrungen können sich ändern."],
-    spots:[], parkings:[], sourceStatus:"verified"
+    spots:[...mandelholzSpots], parkings:[...mandelholzParkings], sourceStatus:"verified"
   },
   {
     id:"wendefurther-talsperre", name:"Talsperre Wendefurth", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
@@ -80,8 +255,8 @@ const featured: FishingWater[] = [
     fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
     rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
     notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Bootsangeln nur auf Wendefurth und nur mit Booten des genannten Bootsverleihers; aktuelle Bedingungen prüfen.","Parkplatz und Uferpunkt aus der Vorversion übernommen; örtliche Sperrbereiche prüfen."],
-    spots:[{id:"E7",name:"Wendefurth – Ufer nahe Staumauer",latitude:51.736270,longitude:10.901098,parkingId:"12",tags:["Erkundung"],source:"Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",risk:"Technische Sperrbereiche und örtliche Schilder beachten."}],
-    parkings:[rappbodeParkings[11]], sourceStatus:"verified"
+    spots:[...wendefurthSpots],
+    parkings:[...wendefurthParkings], sourceStatus:"verified"
   },
   {
     id:"5-340-05-kunstteich-in-ballenstedt", name:"Kunstteich in Ballenstedt", lavNumber:"5-340-05", module:"LAV Sachsen-Anhalt", type:"Teich", district:"Harz", latitude:51.704, longitude:11.215,
