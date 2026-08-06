@@ -27,36 +27,78 @@ const rappbodeSpots: FishingWater["spots"] = [
   { id:"E6", name:"Nordarm West – Ufererkundung", latitude:51.763580, longitude:10.826655, parkingId:"9", tags:["Erkundung"], source:"Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.", risk:"Entfernung und Gelände können erheblich abweichen." }
 ];
 
+const fpgBaseNotes = [
+  "Fischarten nach Fischereipachtgemeinschaft Bodetalsperren e.V.; aktuelle Gewässerordnung und Angelberechtigung prüfen.",
+  "Fahrzeuge ausschließlich auf offiziellen Parkplätzen abstellen; nicht direkt ans Gewässer fahren.",
+  "Parkplätze und Erkundungspunkte sind nur enthalten, wenn sie bereits belastbar dokumentiert wurden."
+];
+
 const featured: FishingWater[] = [
   {
     id:"rappbodetalsperre", name:"Rappbodetalsperre", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
-    latitude:51.7376, longitude:10.8914, fish:["Zander","Barsch","Hecht"], rating:{Zander:4,Barsch:4,Hecht:4},
-    notes:["Navigationsdaten aus Bodetalsperren Navigator V3.1 übernommen.","Erkundungspunkte sind keine amtlich freigegebenen Angelstellen; Beschilderung und Zugangsregeln prüfen."],
+    latitude:51.74004, longitude:10.89342, areaHa:"390.00",
+    fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
+    rating:{Zander:4,Barsch:4,Hecht:4,Forelle:3,Karpfen:3,Schleie:3},
+    notes:[...fpgBaseNotes,"Keine Gastangelkarten für die Rappbodetalsperre.","Weitere offiziell genannte Arten: Aal, Seeforelle, Bachforelle und Weißfisch.","Keine Boote auf der Trinkwassertalsperre."],
     spots:[...rappbodeSpots], parkings:[...rappbodeParkings], sourceStatus:"verified"
   },
   {
-    id:"wendefurther-talsperre", name:"Wendefurther Talsperre", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
-    latitude:51.7385, longitude:10.9255, fish:["Barsch","Hecht","Karpfen"], rating:{Barsch:4,Hecht:4,Karpfen:3},
-    notes:["Parkplatz und Uferpunkt aus der Vorversion übernommen; örtliche Sperrbereiche prüfen."],
+    id:"vorsperre-rappbode-trautenstein", name:"Vorsperre Rappbode – Trautenstein", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
+    latitude:51.705556, longitude:10.794167,
+    fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
+    rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
+    notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Trinkwasser- und Schutzregeln besonders beachten."],
+    spots:[], parkings:[], sourceStatus:"verified"
+  },
+  {
+    id:"vorsperre-hassel-hasselfelde", name:"Vorsperre Hassel – Hasselfelde", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
+    latitude:51.706111, longitude:10.830278, areaHa:"25.00",
+    fish:["Zander","Barsch","Hecht","Karpfen","Schleie"],
+    rating:{Zander:4,Barsch:4,Hecht:4,Karpfen:3,Schleie:3},
+    notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal und Weißfisch.","Trinkwasser- und Schutzregeln besonders beachten."],
+    spots:[], parkings:[], sourceStatus:"verified"
+  },
+  {
+    id:"ueberleitungssperre-koenigshuette", name:"Überleitungssperre Königshütte – Trogfurther Brücke", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
+    latitude:51.738611, longitude:10.793333, areaHa:"32.00",
+    fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
+    rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
+    notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Technische Anlagen und örtliche Sperrbereiche beachten."],
+    spots:[], parkings:[], sourceStatus:"verified"
+  },
+  {
+    id:"hwr-kalte-bode-mandelholz", name:"HWR Kalte Bode – Mandelholz", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
+    latitude:51.745556, longitude:10.736389,
+    fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
+    rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
+    notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Hochwasserrückhaltebecken: Wasserstand, Zugänglichkeit und Sperrungen können sich ändern."],
+    spots:[], parkings:[], sourceStatus:"verified"
+  },
+  {
+    id:"wendefurther-talsperre", name:"Talsperre Wendefurth", module:"Bodetalsperren", type:"Talsperre", district:"Harz",
+    latitude:51.7385, longitude:10.9255,
+    fish:["Zander","Barsch","Hecht","Forelle","Karpfen","Schleie"],
+    rating:{Zander:4,Barsch:4,Hecht:4,Forelle:4,Karpfen:3,Schleie:3},
+    notes:[...fpgBaseNotes,"Weitere offiziell genannte Arten: Aal, Regenbogenforelle und Weißfisch.","Bootsangeln nur auf Wendefurth und nur mit Booten des genannten Bootsverleihers; aktuelle Bedingungen prüfen.","Parkplatz und Uferpunkt aus der Vorversion übernommen; örtliche Sperrbereiche prüfen."],
     spots:[{id:"E7",name:"Wendefurth – Ufer nahe Staumauer",latitude:51.736270,longitude:10.901098,parkingId:"12",tags:["Erkundung"],source:"Aus FPG-Merkblattkarte näherungsweise am Ufer abgeleitet.",risk:"Technische Sperrbereiche und örtliche Schilder beachten."}],
     parkings:[rappbodeParkings[11]], sourceStatus:"verified"
   },
   {
-    id:"5-340-05-kunstteich-in-ballenstedt",name:"Kunstteich in Ballenstedt",lavNumber:"5-340-05",module:"LAV Sachsen-Anhalt",type:"Teich",district:"Harz",latitude:51.704,longitude:11.215,
-    fish:["Hecht","Karpfen","Schleie"],areaHa:"2.60",rating:{Hecht:3,Karpfen:3,Schleie:3},notes:["LAV-Katalogdaten 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen.","Kartenposition ist ein Arbeitsdatensatz und muss vor Veröffentlichung verifiziert werden."],
-    spots:[],parkings:[],sourceStatus:"demo"
+    id:"5-340-05-kunstteich-in-ballenstedt", name:"Kunstteich in Ballenstedt", lavNumber:"5-340-05", module:"LAV Sachsen-Anhalt", type:"Teich", district:"Harz", latitude:51.704, longitude:11.215,
+    fish:["Hecht","Karpfen","Schleie"], areaHa:"2.60", rating:{Hecht:3,Karpfen:3,Schleie:3},
+    notes:["LAV-Katalogdaten 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen.","Kartenposition ist ein Arbeitsdatensatz und muss vor Veröffentlichung verifiziert werden."], spots:[], parkings:[], sourceStatus:"demo"
   },
   {
-    id:"selke-meisdorf",name:"Selke bei Meisdorf",module:"Harzflüsse",type:"Fließgewässer",district:"Harz",latitude:51.710,longitude:11.298,
-    fish:["Forelle"],rating:{Forelle:5},notes:["Salmoniden-, Schon- und Sperrstrecken zwingend aktuell prüfen."],spots:[],parkings:[],sourceStatus:"demo"
+    id:"selke-meisdorf", name:"Selke bei Meisdorf", module:"Harzflüsse", type:"Fließgewässer", district:"Harz", latitude:51.710, longitude:11.298,
+    fish:["Forelle"], rating:{Forelle:5}, notes:["Salmoniden-, Schon- und Sperrstrecken zwingend aktuell prüfen."], spots:[], parkings:[], sourceStatus:"demo"
   },
   {
-    id:"5-340-08-kiesgrube-bei-dittfurt",name:"Kiesgrube bei Dittfurt",lavNumber:"5-340-08",module:"LAV Sachsen-Anhalt",type:"Kiesgrube",district:"Harz",latitude:51.829,longitude:11.197,
-    fish:["Barsch","Zander"],areaHa:"32.05",rating:{Barsch:4,Zander:4},notes:["LAV-Katalog: Gewässer 5-340-08; aktuelle Fischarten, Grenzen und Zugänge prüfen.","Kartenposition ist ein Arbeitsdatensatz und muss vor Veröffentlichung verifiziert werden."],spots:[],parkings:[],sourceStatus:"demo"
+    id:"5-340-08-kiesgrube-bei-dittfurt", name:"Kiesgrube bei Dittfurt", lavNumber:"5-340-08", module:"LAV Sachsen-Anhalt", type:"Kiesgrube", district:"Harz", latitude:51.829, longitude:11.197,
+    fish:["Barsch","Zander"], areaHa:"32.05", rating:{Barsch:4,Zander:4}, notes:["LAV-Katalog: Gewässer 5-340-08; aktuelle Fischarten, Grenzen und Zugänge prüfen.","Kartenposition ist ein Arbeitsdatensatz und muss vor Veröffentlichung verifiziert werden."], spots:[], parkings:[], sourceStatus:"demo"
   },
   {
-    id:"5-340-10-groer-siebersteinsteich-bei-ballenstedt-a-b-bl-h-k-4-20-pl-ro-s",name:"Großer Siebersteinsteich bei Ballenstedt",lavNumber:"5-340-10",module:"LAV Sachsen-Anhalt",type:"Teich",district:"Harz",latitude:51.690,longitude:11.165,
-    fish:["Barsch","Hecht","Karpfen","Schleie"],areaHa:"4.20",rating:{Barsch:3,Hecht:3,Karpfen:3,Schleie:4},notes:["Name, Fläche und Fischcodes aus dem LAV-Katalogdatensatz bereinigt.","Ufer-, Natur- und Schutzregeln sowie die Kartenposition aktuell prüfen."],spots:[],parkings:[],sourceStatus:"demo"
+    id:"5-340-10-groer-siebersteinsteich-bei-ballenstedt-a-b-bl-h-k-4-20-pl-ro-s", name:"Großer Siebersteinsteich bei Ballenstedt", lavNumber:"5-340-10", module:"LAV Sachsen-Anhalt", type:"Teich", district:"Harz", latitude:51.690, longitude:11.165,
+    fish:["Barsch","Hecht","Karpfen","Schleie"], areaHa:"4.20", rating:{Barsch:3,Hecht:3,Karpfen:3,Schleie:4}, notes:["Name, Fläche und Fischcodes aus dem LAV-Katalogdatensatz bereinigt.","Ufer-, Natur- und Schutzregeln sowie die Kartenposition aktuell prüfen."], spots:[], parkings:[], sourceStatus:"demo"
   }
 ];
 
