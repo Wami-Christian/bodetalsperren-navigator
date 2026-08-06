@@ -178,4 +178,47 @@ export const harzLavPremium: FishingWater[] = [
     parkings: [],
     sourceStatus: "catalog"
   }
+,
+{
+  id: "5-340-22",
+  lavNumber: "5-340-22",
+  name: "Schlossteich Ballenstedt",
+  module: "LAV Sachsen-Anhalt",
+  district: "Harz",
+  type: "Teich",
+  latitude: 51.718202,
+  longitude: 11.215973,
+  fish: [],
+  fishCodes: [],
+  areaHa: "2.16",
+  rating: {},
+  notes: [
+    "Koordinaten recherchiert.",
+    "Fischarten und Parkplätze werden ergänzt."
+  ],
+  spots: [],
+  parkings: [],
+  sourceStatus: "verified"
+},
+{
+  id: "5-340-14",
+  lavNumber: "5-340-14",
+  name: "Gondelteich Thale",
+  module: "LAV Sachsen-Anhalt",
+  district: "Harz",
+  type: "Teich",
+  latitude: 51.7481,
+  longitude: 11.0417,
+  fish: [],
+  fishCodes: [],
+  areaHa: "1.93",
+  rating: {},
+  notes: [
+    "Koordinaten recherchiert.",
+    "Weitere Daten folgen."
+  ],
+  spots: [],
+  parkings: [],
+  sourceStatus: "verified"
+}
 ];
