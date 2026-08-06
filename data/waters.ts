@@ -1,5 +1,6 @@
 import type { FishingWater } from "@/lib/types";
 import { lavCatalog } from "./lav-catalog";
+import { harzLavPremium } from "./harz-lav";
 import { lavCoordinateIndex } from "./lav-coordinates.generated";
 import { atkisWaterMatchIndex } from "./atkis-water-matches.generated";
 import { harzLavPremium } from "./harz-lav";
@@ -74,12 +75,20 @@ const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
   return water;
 });
 
+const premiumLavNumbers = new Set(
+  harzLavPremium
+    .map((water) => water.lavNumber)
+    .filter(Boolean)
+);
+
 export const waters: FishingWater[] = [
   ...featured,
+
   ...harzLavPremium,
+
   ...enrichedLavCatalog.filter(
     (water) =>
       !featuredLavNumbers.has(water.lavNumber) &&
       !premiumLavNumbers.has(water.lavNumber)
-  )
+  ),
 ];
