@@ -544,3 +544,39 @@ margin:10px 0;
     max-width: none;
   }
 }
+/* Sichtbare horizontale Bildlaufleiste für das Hauptmenü */
+.topbar nav {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand) #dfe9e4;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Bildlaufleiste in Chrome, Edge und Safari */
+.topbar nav::-webkit-scrollbar {
+  height: 7px;
+}
+
+.topbar nav::-webkit-scrollbar-track {
+  background: #dfe9e4;
+  border-radius: 999px;
+}
+
+.topbar nav::-webkit-scrollbar-thumb {
+  background: var(--brand);
+  border-radius: 999px;
+}
+
+.topbar nav::-webkit-scrollbar-thumb:hover {
+  background: #17695b;
+}
+
+/* Menüpunkte dürfen nicht zusammengedrückt werden */
+.topbar nav button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
