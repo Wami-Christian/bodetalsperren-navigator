@@ -151,3 +151,130 @@ margin:10px 0;
     min-height: 520px;
   }
 }
+/* Mobile Gewässeransicht und Navigation */
+@media (max-width: 900px) {
+  .page {
+    padding: 16px;
+  }
+
+  .toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .toolbar input,
+  .toolbar select {
+    width: 100%;
+    min-height: 52px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .workspace {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    gap: 16px;
+  }
+
+  .workspace .sidebar {
+    order: 1;
+    width: 100%;
+    height: auto;
+    max-height: 58vh;
+    min-height: 320px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  .workspace .water-list {
+    max-height: calc(58vh - 65px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .workspace .details {
+    order: 2;
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    scroll-margin-top: 150px;
+    border-radius: 20px;
+    padding: 22px;
+  }
+
+  .workspace .map-panel {
+    order: 3;
+    width: 100%;
+    min-height: 440px;
+    height: 55vh;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .workspace .map-panel > div:first-child {
+    min-height: 380px;
+  }
+
+  .details .nav-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .details .nav-list article {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .details .mini-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .details .mini-actions a,
+  .details .route-button,
+  .details .button-row button,
+  .details .file-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    text-align: center;
+  }
+
+  .details .button-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .topbar nav {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+
+  .topbar nav button {
+    flex: 0 0 auto;
+  }
+}

@@ -127,9 +127,25 @@ const atlasWaters = useMemo(() => {
   const mappedCount = filtered.filter((water) => water.latitude !== null && water.longitude !== null).length;
 
   function selectAndFocus(water: FishingWater) {
-    setSelected(water);
-    setFocusedWaterId(water.latitude !== null && water.longitude !== null ? water.id : null);
+  setSelected(water);
+
+  setFocusedWaterId(
+    water.latitude !== null && water.longitude !== null
+      ? water.id
+      : null
+  );
+
+  if (window.innerWidth <= 900) {
+    window.setTimeout(() => {
+      document
+        .querySelector(".details")
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+    }, 100);
   }
+}
 
   function toggleFavorite(id: string) {
     const next = favorites.includes(id) ? favorites.filter((item) => item !== id) : [...favorites, id];
