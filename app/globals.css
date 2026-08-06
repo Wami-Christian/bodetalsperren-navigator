@@ -41,3 +41,36 @@ color:#fff;
 .stat-card small{
 color:#9ca3af;
 }
+
+.atlas-page{
+display:grid;
+grid-template-columns:320px 1fr;
+gap:20px;
+height:calc(100vh - 180px);
+}
+
+.atlas-sidebar{
+background:#ffffff;
+border-radius:18px;
+padding:20px;
+box-shadow:0 4px 18px rgba(0,0,0,.08);
+overflow:auto;
+}
+
+.atlas-map{
+border-radius:18px;
+overflow:hidden;
+}
+
+.atlas-search{
+width:100%;
+padding:12px;
+margin:16px 0;
+border-radius:10px;
+border:1px solid #ddd;
+font-size:16px;
+}
+
+.atlas-info p{
+margin:10px 0;
+}

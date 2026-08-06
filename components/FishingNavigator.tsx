@@ -101,26 +101,44 @@ export default function FishingNavigator() {
         <div className="panel"><h2>Aktuelle Empfehlung aus deinen Eingaben</h2>{ranked[0] ? <div className="recommendation"><strong>{ranked[0].water.name}</strong><span>{ranked[0].score}/100</span><p>Für {forecast.fish}, basierend auf Uhrzeit, Wind, Bewölkung und Luftdrucktrend.</p></div> : <p>Keine passende Empfehlung.</p>}</div>
       </section>}
 {view === "atlas" && (
-  <section className="page">
-    <div className="panel">
-      <h1>🗺 HarzFishing Angelatlas</h1>
+<section className="atlas-page">
 
-      <p>
-        Hier entsteht der vollständige Angelatlas
-        für den Harz und alle LAV-Gewässer.
-      </p>
+  <div className="atlas-sidebar">
 
-      <MapView
-        waters={mapWaters}
-        spots={visibleSpots}
-        parkings={visibleParkings}
-        selectedWater={focusedWater}
-        onSelect={selectAndFocus}
-      />
+    <h2>🗺 Angelatlas</h2>
+
+    <input
+      type="text"
+      placeholder="Gewässer suchen ..."
+      className="atlas-search"
+    />
+
+    <div className="atlas-info">
+
+      <p><strong>{waters.length}</strong> Gewässer</p>
+
+      <p>{visibleParkings.length} Parkplätze</p>
+
+      <p>{visibleSpots.length} Hotspots</p>
+
     </div>
-  </section>
-)}
 
+  </div>
+
+  <div className="atlas-map">
+
+    <MapView
+      waters={mapWaters}
+      spots={visibleSpots}
+      parkings={visibleParkings}
+      selectedWater={focusedWater}
+      onSelect={selectAndFocus}
+    />
+
+  </div>
+
+</section>
+)}
       {view === "waters" && <section className="page">
         <div className="toolbar"><input type="search" placeholder="Gewässer suchen …" value={query} onChange={(e)=>setQuery(e.target.value)} /><select value={module} onChange={(e)=>setModule(e.target.value as WaterModule|"Alle")}>{moduleOptions.map(x=><option key={x}>{x}</option>)}</select><div className="chips">{fishOptions.map((option)=><button key={option} className={fish===option?'active':''} onClick={()=>setFish(option)}>{option}</button>)}</div></div>
         <div className="workspace"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{filtered.map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{water.fish.map(item=><span key={item}>{item} {'★'.repeat(water.rating[item]??0)}</span>)}</div></article>)}</div></aside>
