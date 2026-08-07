@@ -1283,3 +1283,59 @@ footer {
     padding-top: max(10px, env(safe-area-inset-top));
   }
 }
+
+/* V5.4.2 – Hotspots direkt unter dem zugehörigen Parkplatz */
+.parking-groups {
+  gap: 12px;
+}
+
+.parking-group {
+  overflow: hidden;
+}
+
+.parking-hotspots {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.parking-hotspots-title {
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.parking-hotspot {
+  padding: 10px 11px;
+  border: 1px solid #dce7e2;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.parking-hotspot > strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.parking-hotspot > small {
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .parking-hotspots {
+    gap: 10px;
+  }
+
+  .parking-hotspot {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .parking-hotspot .mini-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
