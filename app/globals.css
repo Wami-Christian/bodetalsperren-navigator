@@ -279,25 +279,61 @@ margin:10px 0;
   }
 }
 
-/* Mobile Hauptnavigation mit sichtbaren Pfeiltasten */
+/* =========================================================
+   V5.3 – Mobile Hauptnavigation wie eine App
+   Keine Pfeile, horizontal wischbar, aktiver Tab zentriert
+   ========================================================= */
+
 .main-nav-shell {
-  display: flex;
-  align-items: center;
+  position: relative;
   min-width: 0;
-  gap: 6px;
+  max-width: 100%;
+}
+
+/* Randverläufe zeigen dezent: hier kann gewischt werden */
+.main-nav-shell::before,
+.main-nav-shell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 22px;
+  pointer-events: none;
+}
+
+.main-nav-shell::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,.98),
+    rgba(255,255,255,0)
+  );
+}
+
+.main-nav-shell::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(255,255,255,.98),
+    rgba(255,255,255,0)
+  );
 }
 
 .main-nav {
   display: flex;
   flex-wrap: nowrap;
+  gap: 6px;
   min-width: 0;
   max-width: min(760px, 72vw);
   overflow-x: auto;
   overflow-y: hidden;
+  padding: 3px 22px 6px;
   scroll-behavior: smooth;
-  scrollbar-width: none;
+  scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
 .main-nav::-webkit-scrollbar {
@@ -306,56 +342,94 @@ margin:10px 0;
 
 .main-nav button {
   flex: 0 0 auto;
-  white-space: nowrap;
-}
-
-.main-nav-arrow {
-  display: none;
-  flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
-  padding: 0;
-  border: 1px solid var(--line);
+  min-height: 40px;
+  padding: 9px 13px;
+  border: 1px solid transparent;
   border-radius: 999px;
-  background: #fff;
-  color: var(--brand);
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1;
-  box-shadow: 0 3px 10px rgba(13, 77, 67, 0.12);
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+  white-space: nowrap;
+  scroll-snap-align: center;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
-.main-nav-arrow:active {
-  transform: scale(0.94);
+.main-nav button:hover {
+  background: #edf5f1;
+  color: var(--ink);
+}
+
+.main-nav button:active {
+  transform: scale(.96);
+}
+
+.main-nav button.active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(13,77,67,.18);
+}
+
+/* Entfernt die gestrige Pfeillösung, falls deren CSS noch gecacht ist */
+.main-nav-arrow {
+  display: none !important;
 }
 
 @media (max-width: 900px) {
   .topbar {
     display: block;
-    padding: 12px;
+    padding: 10px 12px 8px;
   }
 
   .brand {
-    margin-bottom: 10px;
+    margin-bottom: 7px;
+  }
+
+  .brand > span {
+    font-size: 25px;
+  }
+
+  .brand strong {
+    font-size: 18px;
+  }
+
+  .brand small {
+    font-size: 11px;
   }
 
   .main-nav-shell {
     width: 100%;
-    gap: 5px;
   }
 
   .main-nav {
-    flex: 1 1 auto;
+    width: 100%;
     max-width: none;
-    scroll-snap-type: x proximity;
+    gap: 5px;
+    padding-top: 2px;
+    padding-bottom: 5px;
   }
 
   .main-nav button {
-    scroll-snap-align: center;
-  }
-
-  .main-nav-arrow {
-    display: grid;
-    place-items: center;
+    min-height: 38px;
+    padding: 8px 12px;
+    font-size: 14px;
   }
 }
+
+@media (max-width: 430px) {
+  .main-nav button {
+    font-size: 13px;
+    padding-inline: 11px;
+  }
+
+  .main-nav-shell::before,
+  .main-nav-shell::after {
+    width: 17px;
+  }
+}
+

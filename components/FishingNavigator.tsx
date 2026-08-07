@@ -47,6 +47,22 @@ const [atlasCategory, setAtlasCategory] =
 
   useEffect(() => { setFavorites(loadFavorites()); setCatches(loadCatches()); }, []);
 
+  useEffect(() => {
+    const nav = mainNavRef.current;
+    if (!nav) return;
+
+    const active = nav.querySelector<HTMLButtonElement>("button.active");
+    if (!active) return;
+
+    window.requestAnimationFrame(() => {
+      active.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center"
+      });
+    });
+  }, [view]);
+
   const filtered = useMemo(() => waters
     .filter((water) => {
         if (regionFilter === "all") return true;
@@ -175,68 +191,30 @@ const atlasWaters = useMemo(() => {
     const anchor = document.createElement("a"); anchor.href = href; anchor.download = `${selected.id}-spots.gpx`; anchor.click(); URL.revokeObjectURL(href);
   }
 
-  function scrollMainMenu(direction: "left" | "right") {
-    mainNavRef.current?.scrollBy({
-      left: direction === "right" ? 240 : -240,
-      behavior: "smooth"
-    });
-  }
-
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}>
-          <span>🎣</span>
-          <div>
-            <strong>HarzFishing</strong>
-            <small>Navigator V5.2 Beta</small>
-          </div>
-        </button>
-
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>HarzFishing</strong><small>Navigator V5.2 Beta</small></div></button>
         <div className="main-nav-shell">
-          <button
-            type="button"
-            className="main-nav-arrow"
-            aria-label="Menü nach links bewegen"
-            onClick={() => scrollMainMenu("left")}
-          >
-            ‹
-          </button>
-
-          <nav ref={mainNavRef} className="main-nav">
+          <nav ref={mainNavRef} className="main-nav" aria-label="Hauptnavigation">
             {([
-              ["dashboard", "Dashboard"],
-              ["waters", "Gewässer"],
-              ["atlas", "🗺 Angelatlas"],
-              ["forecast", "Prognose"],
-              ["diary", "Fangbuch"],
-              ["settings", "Einstellungen"]
+              ["dashboard", "🏠 Dashboard"],
+              ["waters", "🎣 Gewässer"],
+              ["atlas", "🗺 Atlas"],
+              ["forecast", "📈 Prognose"],
+              ["diary", "📖 Fangbuch"],
+              ["settings", "⚙ Einstellungen"]
             ] as [View, string][]).map(([id, label]) => (
               <button
                 key={id}
+                type="button"
                 className={view === id ? "active" : ""}
-                onClick={(event) => {
-                  setView(id);
-                  event.currentTarget.scrollIntoView({
-                    behavior: "smooth",
-                    block: "nearest",
-                    inline: "center"
-                  });
-                }}
+                onClick={() => setView(id)}
               >
                 {label}
               </button>
             ))}
           </nav>
-
-          <button
-            type="button"
-            className="main-nav-arrow"
-            aria-label="Menü nach rechts bewegen"
-            onClick={() => scrollMainMenu("right")}
-          >
-            ›
-          </button>
         </div>
       </header>
 
