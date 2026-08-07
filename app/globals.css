@@ -870,4 +870,34 @@ margin:10px 0;
     margin-top: 4px;
   }
 }
+/* PWA / iPhone Safe Areas – ans Ende von app/globals.css */
+
+html,
+body {
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+body {
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+/* Im installierten Standalone-Modus soll die App den verfügbaren
+   Bildschirm vollständig nutzen. */
+@media (display-mode: standalone) {
+  html,
+  body {
+    min-height: 100dvh;
+    overscroll-behavior-y: none;
+  }
+
+  .topbar {
+    padding-top: max(10px, env(safe-area-inset-top));
+  }
+}
+
 

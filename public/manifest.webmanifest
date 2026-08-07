@@ -1,14 +1,25 @@
 {
   "name": "HarzFishing Navigator",
   "short_name": "HarzFishing",
+  "description": "Gewässerkarte, Fangbuch, Prognose und GPX für den Harz.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#eef5f1",
   "theme_color": "#0d4d43",
-  "description": "Gewässerkarte, Fangbuch, Prognose und GPX für den Harz.",
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ]
 }
