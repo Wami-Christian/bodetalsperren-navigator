@@ -433,3 +433,234 @@ margin:10px 0;
   }
 }
 
+/* =========================================================
+   V5.3.1 – Mobile Angelatlas: Filter schmal, Karte sichtbar
+   ========================================================= */
+
+.atlas-categories-wrap {
+  position: relative;
+}
+
+/* Desktop bleibt wie bisher: Filter untereinander */
+@media (min-width: 901px) {
+  .atlas-categories-wrap {
+    margin: 16px 0;
+  }
+
+  .atlas-categories-wrap .atlas-categories {
+    margin: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Atlas wird auf Mobilgeräten bewusst in dieser Reihenfolge aufgebaut:
+     Titel -> Suche -> Filter -> Karte -> Trefferkopf -> Trefferliste */
+  .atlas-page {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: auto;
+    padding: 14px 12px 24px;
+  }
+
+  /*
+    Der Sidebar-Rahmen verschwindet mobil als eigener Block.
+    Seine Kinder können dadurch um die Karte herum einsortiert werden.
+  */
+  .atlas-sidebar {
+    display: contents;
+  }
+
+  .atlas-sidebar > h2 {
+    order: 1;
+    margin: 4px 4px 2px;
+    font-size: 29px;
+    line-height: 1.05;
+  }
+
+  .atlas-search {
+    order: 2;
+    width: auto;
+    margin: 0 4px;
+    min-height: 46px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .atlas-categories-wrap {
+    order: 3;
+    margin: 0 4px;
+    overflow: hidden;
+    border-radius: 14px;
+  }
+
+  /* Feststehender Hinweis, dass die Filter horizontal weitergehen */
+  .atlas-categories-wrap::after {
+    content: "›";
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    z-index: 8;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.94);
+    color: var(--brand);
+    font-size: 27px;
+    font-weight: 900;
+    line-height: 1;
+    pointer-events: none;
+    box-shadow: 0 2px 10px rgba(13,77,67,.18);
+  }
+
+  .atlas-categories-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 7;
+    width: 58px;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      rgba(255,255,255,0),
+      rgba(255,255,255,.96) 72%
+    );
+  }
+
+  /* Zweites Auswahlmenü wieder waagerecht und nur eine Zeile hoch */
+  .atlas-categories-wrap .atlas-categories {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 7px;
+    width: 100%;
+    margin: 0;
+    padding: 2px 44px 2px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .atlas-categories-wrap .atlas-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .atlas-categories-wrap .atlas-categories button {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #dce7e2;
+    border-radius: 999px;
+    background: #eef4f1;
+    color: #143f35;
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .atlas-categories-wrap .atlas-categories button.active {
+    border-color: var(--brand);
+    background: var(--brand);
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(13,77,67,.14);
+  }
+
+  /* Karte direkt nach den Filtern, statt ganz unten */
+  .atlas-map {
+    order: 4;
+    position: relative;
+    width: 100%;
+    height: 42vh;
+    min-height: 310px;
+    max-height: 430px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 22px rgba(13,77,67,.10);
+  }
+
+  .atlas-map .map {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .atlas-map .map-note {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    max-width: none;
+    font-size: 12px;
+  }
+
+  .atlas-result-heading {
+    order: 5;
+    margin: 2px 4px 0;
+    padding: 0;
+  }
+
+  .atlas-water-list {
+    order: 6;
+    display: grid;
+    gap: 8px;
+    margin: 0 4px;
+    padding-bottom: 8px;
+  }
+
+  /* Kompaktere Trefferkarten */
+  .atlas-water {
+    grid-template-columns: 1fr auto;
+    column-gap: 10px;
+    row-gap: 2px;
+    padding: 11px 13px;
+    border-radius: 14px;
+  }
+
+  .atlas-water strong {
+    grid-column: 1;
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .atlas-water span {
+    grid-column: 1;
+    font-size: 12px;
+  }
+
+  .atlas-water small {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 430px) {
+  .atlas-page {
+    gap: 10px;
+    padding-inline: 10px;
+  }
+
+  .atlas-map {
+    height: 39vh;
+    min-height: 290px;
+  }
+
+  .atlas-categories-wrap .atlas-categories button {
+    min-height: 38px;
+    padding: 8px 11px;
+    font-size: 12.5px;
+  }
+}
+

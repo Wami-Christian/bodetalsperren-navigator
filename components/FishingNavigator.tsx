@@ -242,7 +242,8 @@ const atlasWaters = useMemo(() => {
         onChange={(event) => setAtlasQuery(event.target.value)}
       />
 
-      <div className="atlas-categories">
+      <div className="atlas-categories-wrap">
+        <div className="atlas-categories">
         <button
           className={atlasCategory === "all" ? "active" : ""}
           onClick={() => setAtlasCategory("all")}
@@ -284,6 +285,7 @@ const atlasWaters = useMemo(() => {
         >
           ⭐ Favoriten
         </button>
+        </div>
       </div>
 
       <div className="atlas-result-heading">
