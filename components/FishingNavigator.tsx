@@ -29,6 +29,7 @@ type AtlasCategory =
 
 export default function FishingNavigator() {
   const mainNavRef = useRef<HTMLElement | null>(null);
+  const atlasCategoryRef = useRef<HTMLDivElement | null>(null);
   const [view, setView] = useState<View>("dashboard");
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
@@ -191,11 +192,34 @@ const atlasWaters = useMemo(() => {
     const anchor = document.createElement("a"); anchor.href = href; anchor.download = `${selected.id}-spots.gpx`; anchor.click(); URL.revokeObjectURL(href);
   }
 
+  function scrollMainMenu(direction: "left" | "right") {
+    mainNavRef.current?.scrollBy({
+      left: direction === "right" ? 230 : -230,
+      behavior: "smooth"
+    });
+  }
+
+  function scrollAtlasCategories(direction: "left" | "right") {
+    atlasCategoryRef.current?.scrollBy({
+      left: direction === "right" ? 210 : -210,
+      behavior: "smooth"
+    });
+  }
+
   return (
     <main>
       <header className="topbar">
         <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>HarzFishing</strong><small>Navigator V5.2 Beta</small></div></button>
         <div className="main-nav-shell">
+          <button
+            type="button"
+            className="menu-scroll-button"
+            aria-label="Menü nach links"
+            onClick={() => scrollMainMenu("left")}
+          >
+            ‹
+          </button>
+
           <nav ref={mainNavRef} className="main-nav" aria-label="Hauptnavigation">
             {([
               ["dashboard", "🏠 Dashboard"],
@@ -215,6 +239,15 @@ const atlasWaters = useMemo(() => {
               </button>
             ))}
           </nav>
+
+          <button
+            type="button"
+            className="menu-scroll-button"
+            aria-label="Menü nach rechts"
+            onClick={() => scrollMainMenu("right")}
+          >
+            ›
+          </button>
         </div>
       </header>
 
@@ -243,7 +276,16 @@ const atlasWaters = useMemo(() => {
       />
 
       <div className="atlas-categories-wrap">
-        <div className="atlas-categories">
+        <button
+          type="button"
+          className="atlas-scroll-button"
+          aria-label="Filter nach links"
+          onClick={() => scrollAtlasCategories("left")}
+        >
+          ‹
+        </button>
+
+        <div ref={atlasCategoryRef} className="atlas-categories">
         <button
           className={atlasCategory === "all" ? "active" : ""}
           onClick={() => setAtlasCategory("all")}
@@ -286,7 +328,18 @@ const atlasWaters = useMemo(() => {
           ⭐ Favoriten
         </button>
         </div>
+
+        <button
+          type="button"
+          className="atlas-scroll-button"
+          aria-label="Filter nach rechts"
+          onClick={() => scrollAtlasCategories("right")}
+        >
+          ›
+        </button>
       </div>
+
+      <div className="atlas-swipe-hint">↔ Wischen für weitere Filter</div>
 
       <div className="atlas-result-heading">
         <strong>{atlasWaters.length} Treffer</strong>
@@ -327,6 +380,10 @@ const atlasWaters = useMemo(() => {
                 ? "📍 kartiert"
                 : "Lage noch offen"}
             </small>
+
+            <span className="atlas-water-meta">
+              🅿 {water.parkings.length} · 📍 {water.spots.length}
+            </span>
           </button>
         ))}
       </div>

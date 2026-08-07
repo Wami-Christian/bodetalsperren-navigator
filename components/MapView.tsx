@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import type { FishingSpot, FishingWater, ParkingSpot } from "@/lib/types";
 
@@ -38,10 +38,19 @@ export default function MapView({
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
   const selectRef = useRef(onSelect);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     selectRef.current = onSelect;
   }, [onSelect]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      mapRef.current?.invalidateSize();
+    }, 120);
+
+    return () => window.clearTimeout(timer);
+  }, [isFullscreen]);
 
   useEffect(() => {
     if (!hostRef.current || mapRef.current) return;
@@ -123,5 +132,24 @@ export default function MapView({
     else map.setView(DEFAULT_CENTER, 9);
   }, [waters, spots, parkings, selectedWater?.id]);
 
-  return <div ref={hostRef} className="map" role="application" aria-label="Interaktive Gewässerkarte" />;
+  return (
+    <div className={isFullscreen ? "map-shell map-shell-fullscreen" : "map-shell"}>
+      <div
+        ref={hostRef}
+        className="map"
+        role="application"
+        aria-label="Interaktive Gewässerkarte"
+      />
+
+      <button
+        type="button"
+        className="map-fullscreen-button"
+        aria-label={isFullscreen ? "Vollbild schließen" : "Karte im Vollbild anzeigen"}
+        title={isFullscreen ? "Vollbild schließen" : "Vollbild anzeigen"}
+        onClick={() => setIsFullscreen((value) => !value)}
+      >
+        {isFullscreen ? "✕" : "⛶"}
+      </button>
+    </div>
+  );
 }

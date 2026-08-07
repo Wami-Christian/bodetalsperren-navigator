@@ -664,3 +664,210 @@ margin:10px 0;
   }
 }
 
+/* =========================================================
+   V5.3.2 – Menü-Pfeile ohne Überlagerung + Karten-Vollbild
+   ========================================================= */
+
+/* Hauptmenü: Pfeile bekommen eigene Spalten und liegen nie über Tabs */
+.main-nav-shell {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  align-items: center;
+  gap: 4px;
+  width: min(860px, 76vw);
+}
+
+.main-nav-shell::before,
+.main-nav-shell::after {
+  display: none !important;
+}
+
+.main-nav {
+  width: 100%;
+  max-width: none;
+  padding-inline: 2px;
+}
+
+.menu-scroll-button,
+.atlas-scroll-button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.98);
+  color: var(--brand);
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(13,77,67,.10);
+}
+
+.menu-scroll-button:active,
+.atlas-scroll-button:active {
+  transform: scale(.94);
+}
+
+/* Filtermenü: Pfeile ebenfalls außerhalb der eigentlichen Chip-Leiste */
+.atlas-categories-wrap {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 5px;
+  overflow: visible;
+}
+
+.atlas-categories-wrap::before,
+.atlas-categories-wrap::after {
+  display: none !important;
+}
+
+.atlas-categories-wrap .atlas-categories {
+  min-width: 0;
+  padding-inline: 1px !important;
+}
+
+.atlas-swipe-hint {
+  display: none;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Kartenhülle und Vollbild-Schalter */
+.map-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.map-shell > .map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-fullscreen-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 700;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(21,51,45,.14);
+  border-radius: 12px;
+  background: rgba(255,255,255,.96);
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 900;
+  box-shadow: 0 5px 18px rgba(0,0,0,.16);
+  backdrop-filter: blur(8px);
+}
+
+.map-shell-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 5000 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: #fff;
+}
+
+.map-shell-fullscreen .map-fullscreen-button {
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+}
+
+/* Vollbild soll über allen alten Karten-Containern liegen können */
+.atlas-map:has(.map-shell-fullscreen),
+.map-panel:has(.map-shell-fullscreen) {
+  overflow: visible;
+}
+
+.atlas-water-meta {
+  grid-column: 1 / -1 !important;
+  color: var(--muted) !important;
+  font-size: 11px !important;
+}
+
+@media (min-width: 901px) {
+  .menu-scroll-button {
+    display: none;
+  }
+
+  .main-nav-shell {
+    display: block;
+    width: auto;
+  }
+
+  .atlas-scroll-button {
+    display: none;
+  }
+
+  .atlas-categories-wrap {
+    display: block;
+  }
+}
+
+@media (max-width: 900px) {
+  .main-nav-shell {
+    width: 100%;
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+  }
+
+  .menu-scroll-button,
+  .atlas-scroll-button {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+  }
+
+  .atlas-categories-wrap {
+    grid-template-columns: 30px minmax(0, 1fr) 30px;
+    margin-inline: 4px;
+  }
+
+  .atlas-swipe-hint {
+    display: block;
+    order: 4;
+    margin-top: -4px;
+  }
+
+  /* nach Einfügen des Hinweises verschieben sich die folgenden Ordnungen */
+  .atlas-map {
+    order: 5;
+  }
+
+  .atlas-result-heading {
+    order: 6;
+  }
+
+  .atlas-water-list {
+    order: 7;
+  }
+
+  .map-fullscreen-button {
+    width: 39px;
+    height: 39px;
+    top: 10px;
+    right: 10px;
+    font-size: 22px;
+  }
+
+  .atlas-water {
+    grid-template-columns: 1fr auto;
+  }
+
+  .atlas-water-meta {
+    margin-top: 4px;
+  }
+}
+
