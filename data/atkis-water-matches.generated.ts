@@ -3,12 +3,19 @@
 
 export interface AtkisWaterMatch {
   status: "matched" | "review" | "unmatched";
-  latitude?: number; longitude?: number; confidence?: number;
+  latitude?: number;
+  longitude?: number;
+  confidence?: number;
   method?: "nominatim-name" | "overpass-locality";
-  officialName?: string; officialFeatureId?: string; officialTypeName?: string;
-  areaHa?: number; distanceKm?: number; source?: string; checkedAt?: string;
+  officialName?: string;
+  matchedAlias?: string;
+  officialFeatureId?: string;
+  officialTypeName?: string;
+  areaHa?: number;
+  distanceKm?: number;
+  source?: string;
+  checkedAt?: string;
 }
-
 export const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = {
   "1-160-01-bruders-teich-bei-gardelegen": {
     "status": "review",
