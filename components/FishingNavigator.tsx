@@ -35,7 +35,7 @@ export default function FishingNavigator() {
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
   const [query, setQuery] = useState("");
 const [regionFilter, setRegionFilter] =
-  useState<"all" | "harz">("harz");
+useState<"all" | "harz">("all");
 const [atlasQuery, setAtlasQuery] = useState("");
 const [atlasCategory, setAtlasCategory] =
   useState<AtlasCategory>("all");
