@@ -527,9 +527,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-210-01-kiesgrube-in-rattmannsdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.416118,
+    "candidateLongitude": 11.9547373,
+    "confidence": 0.839,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-210-02-kiesgrube-gansteich-zwintschona": {
     "status": "unmapped",
@@ -537,19 +540,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-210-03-friedrichsbad-in-zwintschona": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4499103,
+    "candidateLongitude": 12.0488239,
+    "confidence": 0.888,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-210-04-dorfteich-in-zwintschona": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4499103,
+    "candidateLongitude": 12.0488239,
+    "confidence": 0.888,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-210-05-muhlteich-in-zwintschona": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4499103,
+    "candidateLongitude": 12.0488239,
+    "confidence": 0.888,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-210-06-kiesgrube-rockendorf-bei-hohenweiden": {
     "status": "unmapped",
@@ -567,14 +579,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-210-09-muhlgraben-von-saalealtarm-hohen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5665958,
+    "longitude": 12.0665883,
+    "source": "two-source-v6.2",
+    "confidence": 0.936,
+    "sourceStatus": "verified",
+    "officialDistanceM": 27.1,
+    "officialFeatureId": "Watercourse_DESTGEOT00004Io0_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-210-10-dorfteich-plonitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5348193,
+    "candidateLongitude": 12.0593357,
+    "confidence": 0.912,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-210-11-dorfteich-hohenthurm": {
     "status": "unmapped",
@@ -582,14 +603,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-01-teiche-in-zscherneddel": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.346784,
+    "longitude": 12.1151484,
+    "source": "two-source-v6.2",
+    "confidence": 0.928,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9.9,
+    "officialFeatureId": "StandingWater_DESTGEOT0000gzKC",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-03-krugs-teich-in-schafstadt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3828756,
+    "candidateLongitude": 11.7752528,
+    "confidence": 0.925,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-05-gr-und-kl-muhlteich-schkopau": {
     "status": "unmapped",
@@ -597,9 +627,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-06-parkteich-in-braunsbedra": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.2887039,
+    "candidateLongitude": 11.8746476,
+    "confidence": 0.79,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-08-dorfteich-zollschen": {
     "status": "unmapped",
@@ -612,19 +645,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-10-kleines-kohlenloch-bei-tollwitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.2783797,
+    "candidateLongitude": 12.1074995,
+    "confidence": 0.895,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-11-pfutze-bei-tollwitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.2783797,
+    "candidateLongitude": 12.1074995,
+    "confidence": 0.895,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-12-herrenteich-bei-tollwitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.2774349,
+    "longitude": 12.1020256,
+    "source": "two-source-v6.2",
+    "confidence": 0.904,
+    "sourceStatus": "verified",
+    "officialDistanceM": 18.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00004vjZ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-13-saale-leipzig-kanal": {
     "status": "unmapped",
@@ -632,14 +677,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-14-saale-im-altkreis-merseburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3592592,
+    "candidateLongitude": 12.0032226,
+    "confidence": 0.844,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-16-kanal-wusteneutsch-km-1-32-1-62": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5180425,
+    "candidateLongitude": 12.0827055,
+    "confidence": 0.758,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-17-schenkteich-in-zweimen": {
     "status": "unmapped",
@@ -647,14 +698,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-18-hirtenteich-in-zweimen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3546752,
+    "candidateLongitude": 12.1372834,
+    "confidence": 0.885,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-19-schloteich-dolkau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.3629068,
+    "longitude": 12.1507059,
+    "source": "two-source-v6.2",
+    "confidence": 0.893,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12.9,
+    "officialFeatureId": "StandingWater_DESTGEOTR100a0Zs",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-20-kuhteich-feldsee-bei-wallendorf": {
     "status": "unmapped",
@@ -662,34 +722,55 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-21-klia-vom-ablauf-gotthardsteich": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.2987801,
+    "longitude": 12.0688659,
+    "source": "two-source-v6.2",
+    "confidence": 0.866,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10,
+    "officialFeatureId": "StandingWater_DESTGEOTR100bAFI",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-22-geisel-von-quelle-bei-mucheln-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5660773,
+    "candidateLongitude": 12.0688254,
+    "confidence": 0.887,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-23-luppe-von-landesgrenze-sachsen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6963947,
+    "candidateLongitude": 11.2059699,
+    "confidence": 0.851,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-24-weie-elster-von-landesgrenze-sachsen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6963947,
+    "candidateLongitude": 11.2059699,
+    "confidence": 0.851,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-25-umgehungskanal-merseburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3592592,
+    "candidateLongitude": 12.0032226,
+    "confidence": 0.844,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-26-saalealtarm-leuna": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3321433,
+    "candidateLongitude": 12.0140891,
+    "confidence": 0.848,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-28-vorderer-und-hinterer-gotthardsteich": {
     "status": "unmapped",
@@ -702,19 +783,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-32-schachtteich-milzau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3758149,
+    "candidateLongitude": 11.9017413,
+    "confidence": 0.908,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-34-spitzteich-zweimen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3546752,
+    "candidateLongitude": 12.1372834,
+    "confidence": 0.885,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-35-gr-teich-wolkau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.3147388,
+    "longitude": 12.0581388,
+    "source": "two-source-v6.2",
+    "confidence": 0.908,
+    "sourceStatus": "verified",
+    "officialDistanceM": 17.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00004vjK",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-36-dorfteich-oebles-schlechtewitz": {
     "status": "unmapped",
@@ -732,24 +825,45 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-41-muhlholz-kotzschau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.3138163,
+    "longitude": 12.1178613,
+    "source": "two-source-v6.2",
+    "confidence": 0.893,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00004vkq",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-42-schaferteich-kotzschau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.3138163,
+    "longitude": 12.1178613,
+    "source": "two-source-v6.2",
+    "confidence": 0.893,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00004vkq",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-43-teich-1-kotzschau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.3138163,
+    "longitude": 12.1178613,
+    "source": "two-source-v6.2",
+    "confidence": 0.893,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00004vkq",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-44-teich-in-thalschutz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.2955783,
+    "candidateLongitude": 12.1304009,
+    "confidence": 0.922,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-45-teich-in-rampitz": {
     "status": "unmapped",
@@ -757,9 +871,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-46-teich-in-gohren": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3546752,
+    "candidateLongitude": 12.1372834,
+    "confidence": 0.917,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-47-ranitzer-see-nordteil": {
     "status": "unmapped",
@@ -767,9 +884,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-48-malerteich-in-gunthersdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.337113,
+    "candidateLongitude": 12.180005,
+    "confidence": 0.906,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-49-dorfteich-krollwitz": {
     "status": "unmapped",
@@ -777,14 +897,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-50-staubecken-tollwitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.2783797,
+    "candidateLongitude": 12.1074995,
+    "confidence": 0.895,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-51-brauhausteich-schkopau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.389565,
+    "longitude": 11.9837609,
+    "source": "two-source-v6.2",
+    "confidence": 0.917,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00000ryh",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-52-geiseltalsee-teilflache": {
     "status": "unmapped",
@@ -792,9 +921,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-53-kiessee-1-wallendorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3551805,
+    "candidateLongitude": 12.0840786,
+    "confidence": 0.915,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-54-kiessee-wallendorf-sudl-gastrasse": {
     "status": "unmapped",
@@ -802,19 +934,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-290-55-kiessee-2-wallendorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3551805,
+    "candidateLongitude": 12.0840786,
+    "confidence": 0.915,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-290-56-barfuteich-bad-durrenberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.2987801,
+    "longitude": 12.0688659,
+    "source": "two-source-v6.2",
+    "confidence": 0.907,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10,
+    "officialFeatureId": "StandingWater_DESTGEOTR100bAFI",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-290-57-ockendorfer-teich-leuna": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3269353,
+    "candidateLongitude": 12.0291405,
+    "confidence": 0.854,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-351-01-froschteich-farnstadt": {
     "status": "unmapped",
@@ -832,14 +976,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-352-02-teich-thalgarten-in-querfurt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3821953,
+    "candidateLongitude": 11.6092281,
+    "confidence": 0.791,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-353-02-langer-teich-in-landgrafroda": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3512116,
+    "candidateLongitude": 11.4287773,
+    "confidence": 0.918,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-353-03-schmoner-stausee": {
     "status": "unmapped",
@@ -852,19 +1002,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-353-05-backerteich-landgrafroda": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3512116,
+    "candidateLongitude": 11.4287773,
+    "confidence": 0.918,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-01-rosts-loch-in-lieskau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5008778,
+    "candidateLongitude": 11.8448777,
+    "confidence": 0.875,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-02-grundel-teich-bei-teutschenthal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4496079,
+    "candidateLongitude": 11.8085724,
+    "confidence": 0.842,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-03-steinbruch-am-gutzer-berg-bei-landsberg-a-b-h-k-pl-ro-s-3-20": {
     "status": "unmapped",
@@ -872,19 +1031,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-04-schmiedern-am-gutzer-berg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5307052,
+    "candidateLongitude": 12.1595916,
+    "confidence": 0.837,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-05-obere-steinbreite-bei-brachwitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5392813,
+    "candidateLongitude": 11.8829435,
+    "confidence": 0.825,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-06-steinbruche-am-spitzberg-bei-landsberg-b-bl-k-pl-ro-0-85": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5307052,
+    "candidateLongitude": 12.1595916,
+    "confidence": 0.837,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-07-ihlau-bei-wettin": {
     "status": "unmapped",
@@ -912,29 +1080,47 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-13-vorderer-schacht-bei-dollnitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4061681,
+    "candidateLongitude": 12.0224734,
+    "confidence": 0.864,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-14-pappelgrund-bei-teutschenthal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4496079,
+    "candidateLongitude": 11.8085724,
+    "confidence": 0.842,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-16-erlengrund-bei-teutschenthal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4496079,
+    "candidateLongitude": 11.8085724,
+    "confidence": 0.842,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-17-saale-vom-trompeterfelsen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5361035,
+    "longitude": 11.8978799,
+    "source": "two-source-v6.2",
+    "confidence": 0.801,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.4,
+    "officialFeatureId": "Watercourse_DESTGEOTR10095ON_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-370-18-gewasser-an-der-seilbahn-i": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5473413,
+    "candidateLongitude": 11.906682,
+    "confidence": 0.879,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-20-saalealtarm-dobis-nsg-beachten": {
     "status": "unmapped",
@@ -952,14 +1138,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-23-2-dorfteiche-in-niemberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5578506,
+    "candidateLongitude": 12.1031993,
+    "confidence": 0.877,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-25-tonloch-morl": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5473413,
+    "candidateLongitude": 11.906682,
+    "confidence": 0.879,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-26-2-teiche-im-ot-hohen": {
     "status": "unmapped",
@@ -972,9 +1164,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-28-kaolingrube-gutenberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5404715,
+    "longitude": 11.9620324,
+    "source": "two-source-v6.2",
+    "confidence": 0.76,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10.2,
+    "officialFeatureId": "StandingWater_DESTGEOTR100b3Mv",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-370-29-westenteiche-brachstedt": {
     "status": "unmapped",
@@ -992,19 +1190,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-32-steinbruch-ostrau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6200395,
+    "candidateLongitude": 12.0124822,
+    "confidence": 0.886,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-33-seilbahn-iii-u-ii-bei-morl": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5473413,
+    "candidateLongitude": 11.906682,
+    "confidence": 0.879,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-35-steinbruch-wallwitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5872514,
+    "longitude": 11.912676,
+    "source": "two-source-v6.2",
+    "confidence": 0.902,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00002Qqq",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-370-38-dorfteich-schwerz": {
     "status": "unmapped",
@@ -1022,14 +1232,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-41-dorfteich-lohnsdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4987534,
+    "candidateLongitude": 12.1713851,
+    "confidence": 0.924,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-42-dorfteich-bageritz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.481308,
+    "longitude": 12.164922,
+    "source": "two-source-v6.2",
+    "confidence": 0.915,
+    "sourceStatus": "verified",
+    "officialDistanceM": 23.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00004XsB",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-370-44-teiche-am-wasserwerk": {
     "status": "unmapped",
@@ -1037,14 +1256,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-45-teich-am-rodelberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7971634,
+    "candidateLongitude": 12.2597306,
+    "confidence": 0.928,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-46-dorfteich-sietzsch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.481308,
+    "longitude": 12.164922,
+    "source": "two-source-v6.2",
+    "confidence": 0.862,
+    "sourceStatus": "verified",
+    "officialDistanceM": 23.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00004XsB",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "10-370-48-muller-s-loch-lieskau": {
     "status": "unmapped",
@@ -1057,14 +1285,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "10-370-51-napresse-dollnitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4088558,
+    "candidateLongitude": 12.0483502,
+    "confidence": 0.854,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-52-entenfang-bei-langenbogen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4848343,
+    "candidateLongitude": 11.7610091,
+    "confidence": 0.838,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "10-370-54-webersche-sandgrube-beidersee": {
     "status": "unmapped",
@@ -1082,14 +1316,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-240-03-vollert-bei-trebnitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.0932918,
+    "candidateLongitude": 12.0750421,
+    "confidence": 0.834,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-240-04-restloch-tornau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1905176,
+    "candidateLongitude": 12.1483066,
+    "confidence": 0.838,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-240-05-klarteich-taucha": {
     "status": "unmapped",
@@ -1097,19 +1337,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-240-06-feuerloschteich-gerstewitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1920387,
+    "candidateLongitude": 12.0228088,
+    "confidence": 0.806,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-241-02-mondsee-pirkau-bei-hohenmolsen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1528562,
+    "candidateLongitude": 12.1022227,
+    "confidence": 0.845,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-241-04-eisensee-bei-hohenmolsen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1528562,
+    "candidateLongitude": 12.1022227,
+    "confidence": 0.845,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-241-05-an-der-einheit-bei-grimma": {
     "status": "unmapped",
@@ -1122,14 +1371,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-300-01-parkteich-zu-grojena": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1881542,
+    "candidateLongitude": 11.7884486,
+    "confidence": 0.914,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-300-02-baggerteich-in-naumburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1557146,
+    "candidateLongitude": 11.8088372,
+    "confidence": 0.881,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-300-03-grubenteich-bei-neidschutz": {
     "status": "unmapped",
@@ -1137,14 +1392,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-300-04-schloteich-klosterhaseler": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.161763,
+    "longitude": 11.6122073,
+    "source": "two-source-v6.2",
+    "confidence": 0.903,
+    "sourceStatus": "verified",
+    "officialDistanceM": 29.4,
+    "officialFeatureId": "StandingWater_DESTGEOT000008mj",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-300-06-saale-von-landesgrenze-thuringen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.1395134,
+    "longitude": 11.7229625,
+    "source": "two-source-v6.2",
+    "confidence": 0.906,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.1,
+    "officialFeatureId": "Watercourse_DESTGEOT00000dVT_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-300-07-kl-saale-v-bad-kosen-b-almrich": {
     "status": "unmapped",
@@ -1152,9 +1419,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-300-08-herren-und-bauernteich-in": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.2097205,
+    "candidateLongitude": 11.7686241,
+    "confidence": 0.895,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-310-01-unstrutaltarm-bei-memleben": {
     "status": "unmapped",
@@ -1162,14 +1432,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-310-02-toter-arm-bei-nebra": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.28326,
+    "candidateLongitude": 11.5840475,
+    "confidence": 0.845,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-310-03-restarm-der-unstrut-unter-der-katzel": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.2957359,
+    "longitude": 11.6112561,
+    "source": "two-source-v6.2",
+    "confidence": 0.803,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.3,
+    "officialFeatureId": "Watercourse_DESTGEOT00000adC_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-310-04-unstrutflutkanal-von-landesgrenze": {
     "status": "unmapped",
@@ -1177,9 +1456,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-310-05-unstrut-von-landesgrenze-thuringen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8826486,
+    "candidateLongitude": 11.7973263,
+    "confidence": 0.789,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-310-06-weie-grube-altenroda": {
     "status": "unmapped",
@@ -1187,14 +1469,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-440-01-tagebaurestloch-bei-gostau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.2353894,
+    "candidateLongitude": 12.1158912,
+    "confidence": 0.8,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-440-02-saale-von-eisenbahnbrucke-bei-eulau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1825493,
+    "candidateLongitude": 11.8561033,
+    "confidence": 0.892,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-440-03-teich-im-rieth-schkortleben": {
     "status": "unmapped",
@@ -1202,14 +1490,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-440-04-wiesenteich-losau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.2267635,
+    "longitude": 12.0275276,
+    "source": "two-source-v6.2",
+    "confidence": 0.896,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00004tcv",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-440-05-alter-saalearm-uichteritz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1844322,
+    "candidateLongitude": 11.9072087,
+    "confidence": 0.771,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-441-01-meuchener-teich": {
     "status": "unmapped",
@@ -1232,14 +1529,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-02-naturbad-rehmsdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.0586596,
+    "candidateLongitude": 12.2122211,
+    "confidence": 0.96,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-480-03-neuer-teich-in-meineweh": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.0761794,
+    "longitude": 11.9895613,
+    "source": "two-source-v6.2",
+    "confidence": 0.926,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00000lid",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-480-04-weie-elster-im-kreisgebiet": {
     "status": "unmapped",
@@ -1247,9 +1553,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-05-strandbad-kretzschau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.0630442,
+    "longitude": 12.0825969,
+    "source": "two-source-v6.2",
+    "confidence": 0.883,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00004qJJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-480-06-kaynaer-teiche": {
     "status": "unmapped",
@@ -1267,9 +1579,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-09-phonix-nord": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.0784786,
+    "candidateLongitude": 12.2595029,
+    "confidence": 0.835,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-480-10-inselteich-thierbach": {
     "status": "unmapped",
@@ -1277,9 +1592,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-11-neue-sorge-luckenau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.0849591,
+    "longitude": 12.0697994,
+    "source": "two-source-v6.2",
+    "confidence": 0.93,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.3,
+    "officialFeatureId": "StandingWater_DESTGEOTR100fQd6",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-480-12-alter-elsterarm-profen": {
     "status": "unmapped",
@@ -1287,9 +1608,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-13-revierparkteich-profen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.1269549,
+    "candidateLongitude": 12.2176128,
+    "confidence": 0.924,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-480-14-elstermuhlgraben-elsteraue": {
     "status": "unmapped",
@@ -1297,9 +1621,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-15-elstermuhlgraben-zeitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.0384331,
+    "longitude": 12.1473494,
+    "source": "two-source-v6.2",
+    "confidence": 0.827,
+    "sourceStatus": "verified",
+    "officialDistanceM": 21.5,
+    "officialFeatureId": "Watercourse_DESTGEOTR100a6Ar_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "11-480-17-elstermuhlgraben": {
     "status": "unmapped",
@@ -1307,9 +1637,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-18-hasselteich-droyig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.0427356,
+    "candidateLongitude": 12.0259026,
+    "confidence": 0.913,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-480-19-teich-in-altgroitzschen": {
     "status": "unmapped",
@@ -1317,19 +1650,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-480-20-wal-in-gobitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.0852901,
+    "candidateLongitude": 12.1850361,
+    "confidence": 0.935,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-482-01-hainbergsee-sachsen-anhalt-bereich-a-b-h-k-s-z-6-30": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4784373,
+    "candidateLongitude": 11.8854531,
+    "confidence": 0.865,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-482-02-muhlgraben-wetterzeube": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.0096261,
+    "candidateLongitude": 12.0181537,
+    "confidence": 0.87,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-482-03-muhlgraben-gobitz-ostrau": {
     "status": "unmapped",
@@ -1337,14 +1679,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "11-482-04-grasteich-spora": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.027054,
+    "candidateLongitude": 12.26299,
+    "confidence": 0.878,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "11-482-05-flograben-von-lg-thuringen-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6571329,
+    "candidateLongitude": 12.3058934,
+    "confidence": 0.784,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "12-140-01-scholitzer-see-und-hintersee": {
     "status": "unmapped",
@@ -1362,14 +1710,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "12-140-04-stillinge-nord": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9081688,
+    "candidateLongitude": 12.2480566,
+    "confidence": 0.924,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "12-140-05-rehsumpf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8509086,
+    "candidateLongitude": 12.2699735,
+    "confidence": 0.864,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "12-140-06-wallwitzsee-im-beckerbruch-sudseite-a-bl-h-k-pl-ro-z-4-00": {
     "status": "unmapped",
@@ -1377,19 +1731,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "12-140-07-mulde-von-ca-150-m-unterhalb-abzweig-a-b-bl-d-h-pl-20-00-jonitzer-mulde-bis-tiergartenbrucke-und-q-z-von-unterhalb-brucke-b185-bis-250m-oberhalb-einmundung-jonitzer-mulde-und-von-einmundung-lorkgraben-bis-tannenhagerbrucke-sowie-jonitzer-mulde-von-abzweig-aus-der-mulde-bis-oberhalb-brucke-jonitzer-muhle": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8372597,
+    "candidateLongitude": 12.2666661,
+    "confidence": 0.923,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "12-140-08-peisker-an-der-strae-zum-ot-rolau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8844454,
+    "candidateLongitude": 12.2422782,
+    "confidence": 0.869,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "12-140-09-fahrsee-an-der-strae-zum-ot-rolau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8844454,
+    "candidateLongitude": 12.2422782,
+    "confidence": 0.869,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "12-140-10-die-bach-hofsee-bei-kleutsch": {
     "status": "unmapped",
@@ -1397,9 +1760,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "12-140-11-zoberbergsee-1-im-ot-mosigkau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.804734,
+    "candidateLongitude": 12.1514431,
+    "confidence": 0.896,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "12-140-12-zoberbergsee-2-inkl-kleiner-see": {
     "status": "unmapped",
@@ -1422,14 +1788,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "12-183-03-kiessandtagebaurestloch-sollnitz-3": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7670384,
+    "longitude": 12.3056969,
+    "source": "two-source-v6.2",
+    "confidence": 0.845,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.6,
+    "officialFeatureId": "StandingWater_DESTGEOTR10082Dl",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "12-360-02-karpfenteich-biethe-im-ot-rolau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8844454,
+    "candidateLongitude": 12.2422782,
+    "confidence": 0.869,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-01-neustadter-see-i": {
     "status": "unmapped",
@@ -1462,9 +1837,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-07-neustadter-see-ii-schonstrecke-beachten-a-b-bl-h-k-pl-s-28-00": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4784373,
+    "candidateLongitude": 11.8854531,
+    "confidence": 0.873,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-08-erdkuhle-bei-rothensee": {
     "status": "unmapped",
@@ -1472,9 +1850,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-09-zuwachs-stadtischer-teil": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0969317,
+    "longitude": 11.568379,
+    "source": "two-source-v6.2",
+    "confidence": 0.923,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00002hHZ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "13-280-10-2-baggerlocher-waldseen": {
     "status": "unmapped",
@@ -1487,14 +1871,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-12-dreier-kolke-bei-zipkeleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.1044068,
+    "longitude": 11.7066423,
+    "source": "two-source-v6.2",
+    "confidence": 0.905,
+    "sourceStatus": "verified",
+    "officialDistanceM": 23.1,
+    "officialFeatureId": "StandingWater_DESTGEOT00002hHV",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "13-280-13-else-kolke-bei-zipkeleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1053454,
+    "candidateLongitude": 11.7070766,
+    "confidence": 0.892,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-14-4-kolke-am-klusdamm": {
     "status": "unmapped",
@@ -1502,14 +1895,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-15-prester-see-3-teile": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1567927,
+    "candidateLongitude": 11.6143314,
+    "confidence": 0.81,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-16-kiesbaggerloch-fermersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0998801,
+    "longitude": 11.6672,
+    "source": "two-source-v6.2",
+    "confidence": 0.776,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00002la6",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "13-280-17-barleber-see-i": {
     "status": "unmapped",
@@ -1517,9 +1919,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-18-alte-elbe-kreuzhorst": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0806166,
+    "candidateLongitude": 11.726241,
+    "confidence": 0.767,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-19-zipkeleber-see": {
     "status": "unmapped",
@@ -1537,14 +1942,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-23-elbe-und-alte-elbe": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1297774,
+    "candidateLongitude": 11.6441168,
+    "confidence": 0.865,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-24-zollelbe-vom-elb-km-325-60-327-40": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5659531,
+    "candidateLongitude": 11.9753686,
+    "confidence": 0.78,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-25-obere-vorhafen-von-elb-km-330-331-2-b-bl-pl-z-1-20-sudliche-schleusenkammer": {
     "status": "unmapped",
@@ -1567,14 +1978,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-29-groer-barrosee-teil-1": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7062698,
+    "longitude": 12.4675448,
+    "source": "two-source-v6.2",
+    "confidence": 0.905,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.6,
+    "officialFeatureId": "StandingWater_DESTGEOT0000daFY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "13-280-30-sternsee-olvenstedt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1538177,
+    "candidateLongitude": 11.5673175,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-31-barrosee-dreieck": {
     "status": "unmapped",
@@ -1582,9 +2002,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-280-32-siel-zipkeleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1053454,
+    "candidateLongitude": 11.7070766,
+    "confidence": 0.892,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-280-33-ruckhaltebecken-diesdorfer-graseweg": {
     "status": "unmapped",
@@ -1607,59 +2030,95 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "13-400-01-wolter-1-und-2-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-02-riemer-1-2-und-3-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-03-schloteich-in-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-04-langer-see-groer-see-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-05-gelbes-loch-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0806166,
+    "candidateLongitude": 11.726241,
+    "confidence": 0.782,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-06-alte-elbe-bei-randau-calenberge": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0708256,
+    "candidateLongitude": 11.6870362,
+    "confidence": 0.758,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-07-kiesbaggerloch-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-08-schwarzer-kruger-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-09-kaltes-loch-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-10-butz-bei-randau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0620744,
+    "candidateLongitude": 11.7222911,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "13-400-11-3-teiche-hinter-der-3-bogenbrucke": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.083217,
+    "longitude": 11.7259052,
+    "source": "two-source-v6.2",
+    "confidence": 0.915,
+    "sourceStatus": "verified",
+    "officialDistanceM": 7.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00002EVw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "14-210-01-saalealtarm-hohenweiden": {
     "status": "unmapped",
@@ -1667,9 +2126,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "14-210-02-obere-aue-fkk": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4829557,
+    "candidateLongitude": 11.8903884,
+    "confidence": 0.845,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "14-210-03-kleines-posthorn-rechtsseitig": {
     "status": "unmapped",
@@ -1692,9 +2154,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "14-210-07-heidesee-in-nietleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4861324,
+    "longitude": 11.895458,
+    "source": "two-source-v6.2",
+    "confidence": 0.92,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00002KPf",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "14-210-08-osendorfer-see": {
     "status": "unmapped",
@@ -1707,14 +2175,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "14-210-10-kirchteich-in-neustadt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4715384,
+    "candidateLongitude": 11.9324365,
+    "confidence": 0.86,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "14-210-11-bruchsee-in-neustadt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4830216,
+    "candidateLongitude": 11.9173156,
+    "confidence": 0.911,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "14-210-12-untere-aue-neuer-kanal": {
     "status": "unmapped",
@@ -1722,9 +2196,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "14-210-13-friedhofsteich-neustadt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4882195,
+    "candidateLongitude": 11.9257035,
+    "confidence": 0.787,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "14-210-14-hufeisensee-in-kanena": {
     "status": "unmapped",
@@ -1747,14 +2224,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "14-210-18-weie-elster-von-straenbrucke": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5056019,
+    "candidateLongitude": 11.9639648,
+    "confidence": 0.843,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "14-210-19-teich-an-der-gellertstrae": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.477222,
+    "longitude": 11.9049254,
+    "source": "two-source-v6.2",
+    "confidence": 0.885,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00002KOL",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "14-210-20-teich-am-passendorfer-damm": {
     "status": "unmapped",
@@ -1787,9 +2273,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "14-212-01-groes-posthorn-linksseitig-am": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4958021,
+    "candidateLongitude": 11.983865,
+    "confidence": 0.878,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-160-01-kolk-in-bismark": {
     "status": "unmapped",
@@ -1977,104 +2466,191 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-330-24-der-haken-am-hausberg-bei": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.8248843,
+    "candidateLongitude": 12.0618073,
+    "confidence": 0.803,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-330-25-schonberger-baggerloch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1518012,
+    "candidateLongitude": 11.7302445,
+    "confidence": 0.861,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-330-26-blauer-see-sandauerholz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.7894193,
+    "longitude": 12.0060073,
+    "source": "two-source-v6.2",
+    "confidence": 0.896,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12,
+    "officialFeatureId": "StandingWater_DESTGEOT000067BK",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-330-27-schonberger-bagerloch-ii": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.8260115,
+    "longitude": 12.0587343,
+    "source": "two-source-v6.2",
+    "confidence": 0.882,
+    "sourceStatus": "verified",
+    "officialDistanceM": 28.1,
+    "officialFeatureId": "StandingWater_DESTGEOT000067Cx",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-330-28-baggerloch-wendemark": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.8713643,
+    "longitude": 11.9544297,
+    "source": "two-source-v6.2",
+    "confidence": 0.765,
+    "sourceStatus": "verified",
+    "officialDistanceM": 17.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00004ncY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-330-29-bodenentnahmestelle-losenrade-1": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.9644864,
+    "candidateLongitude": 11.7651059,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-330-30-bodenentnahmestelle-kruden": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.9098255,
+    "longitude": 11.697833,
+    "source": "two-source-v6.2",
+    "confidence": 0.826,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.3,
+    "officialFeatureId": "Watercourse_DESTGEOT000040MI_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-330-31-baggersee-feldneuendorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.9092071,
+    "candidateLongitude": 11.750001,
+    "confidence": 0.873,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-332-01-milde-biese-von-einmundung-des": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.6966051,
+    "longitude": 11.4629179,
+    "source": "two-source-v6.2",
+    "confidence": 0.787,
+    "sourceStatus": "verified",
+    "officialDistanceM": 21.1,
+    "officialFeatureId": "Watercourse_DESTGEOT00003MUs_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-334-01-bleichwehl-bei-werben-elbe": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.8619083,
+    "longitude": 11.9797307,
+    "source": "two-source-v6.2",
+    "confidence": 0.91,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.7,
+    "officialFeatureId": "Watercourse_DESTGEOT00004m3f_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-334-02-marschners-loch-bei-werben-elbe": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.8619083,
+    "longitude": 11.9797307,
+    "source": "two-source-v6.2",
+    "confidence": 0.91,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.7,
+    "officialFeatureId": "Watercourse_DESTGEOT00004m3f_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-334-03-wasserkuhle-langes-loch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.8639319,
+    "candidateLongitude": 11.9812891,
+    "confidence": 0.89,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-334-05-kiesgrube-schwimmbad-bei": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.8248843,
+    "candidateLongitude": 12.0618073,
+    "confidence": 0.803,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-334-06-volkes-locher-in-rabel": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.8404028,
+    "candidateLongitude": 12.024885,
+    "confidence": 0.859,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-420-01-kohnsee-kladen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.6332939,
+    "candidateLongitude": 11.6570417,
+    "confidence": 0.903,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-420-02-schludenlanke-elbnebengewasser": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.6778001,
+    "candidateLongitude": 12.0018182,
+    "confidence": 0.876,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-420-03-schwanenteich-in-stendal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.6064489,
+    "longitude": 11.8669834,
+    "source": "two-source-v6.2",
+    "confidence": 0.912,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00004juH",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-420-04-stadtsee-in-stendal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.597681,
+    "longitude": 11.8470551,
+    "source": "two-source-v6.2",
+    "confidence": 0.855,
+    "sourceStatus": "verified",
+    "officialDistanceM": 26.4,
+    "officialFeatureId": "StandingWater_DESTGEOT000045Tt",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-420-05-kiesgrube-schernikau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.6398302,
+    "candidateLongitude": 11.7965615,
+    "confidence": 0.782,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-420-07-ziegeleiteich-charlottenhof-bei": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.8248843,
+    "candidateLongitude": 12.0618073,
+    "confidence": 0.803,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-420-08-elbe-km-392-402-linksseitig": {
     "status": "unmapped",
@@ -2082,9 +2658,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-420-09-uchte-von-strae-tornau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5844966,
+    "candidateLongitude": 11.7915987,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-420-10-dahlener-kiessee": {
     "status": "unmapped",
@@ -2092,19 +2671,34 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-420-11-fieber-in-stendal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.6005401,
+    "candidateLongitude": 11.8540908,
+    "confidence": 0.838,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-420-12-elbnebengewasser-bei-hamerten": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.5895903,
+    "longitude": 11.9923774,
+    "source": "two-source-v6.2",
+    "confidence": 0.886,
+    "sourceStatus": "verified",
+    "officialDistanceM": 25.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00004gNR",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-420-13-bauernwiehl-bei-fischbeck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.542202,
+    "longitude": 12.0066643,
+    "source": "two-source-v6.2",
+    "confidence": 0.831,
+    "sourceStatus": "verified",
+    "officialDistanceM": 25.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1008zm0",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-421-01-dollgraben": {
     "status": "unmapped",
@@ -2112,14 +2706,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-421-02-schloteich-briest": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4369666,
+    "longitude": 11.8422796,
+    "source": "two-source-v6.2",
+    "confidence": 0.925,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.9,
+    "officialFeatureId": "StandingWater_DESTGEOT000044fJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-421-03-gr-und-kl-parkteich-in-tangerhutte": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.4277796,
+    "candidateLongitude": 11.822457,
+    "confidence": 0.839,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-421-05-bertinger-see": {
     "status": "unmapped",
@@ -2127,29 +2730,53 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-421-06-ziegeleiteich-in-klein-schwarzlosen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4850311,
+    "longitude": 11.7889912,
+    "source": "two-source-v6.2",
+    "confidence": 0.857,
+    "sourceStatus": "verified",
+    "officialDistanceM": 28.8,
+    "officialFeatureId": "StandingWater_DESTGEOT000044fG",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-421-07-lehmkuhle-in-cobbel": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3937425,
+    "candidateLongitude": 11.8622872,
+    "confidence": 0.916,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-421-08-kreutzkolk-in-uetz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.3644013,
+    "longitude": 11.8450651,
+    "source": "two-source-v6.2",
+    "confidence": 0.915,
+    "sourceStatus": "verified",
+    "officialDistanceM": 5.6,
+    "officialFeatureId": "StandingWater_DESTGEOT0000hthe",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-421-09-winkelwiesenteich-uchtdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.4197635,
+    "candidateLongitude": 11.7487224,
+    "confidence": 0.857,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-421-10-uetzer-spring": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.6693443,
+    "longitude": 12.2007126,
+    "source": "two-source-v6.2",
+    "confidence": 0.913,
+    "sourceStatus": "verified",
+    "officialDistanceM": 30.3,
+    "officialFeatureId": "StandingWater_DESTGEOTR100gA8s",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-421-11-elbe-km-372-4-km-378-linksseitig": {
     "status": "unmapped",
@@ -2157,34 +2784,61 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-422-01-fichtenwiehl-bei-fischbeck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.542202,
+    "longitude": 12.0066643,
+    "source": "two-source-v6.2",
+    "confidence": 0.831,
+    "sourceStatus": "verified",
+    "officialDistanceM": 25.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1008zm0",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-422-02-altes-kiesloch-bei-tangermunde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5388554,
+    "candidateLongitude": 11.9763018,
+    "confidence": 0.85,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-422-03-neues-kiesloch-bei-tangermunde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5388554,
+    "candidateLongitude": 11.9763018,
+    "confidence": 0.85,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-422-04-hartsteinwerke-bei-tangermunde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5388554,
+    "candidateLongitude": 11.9763018,
+    "confidence": 0.85,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-422-10-tankstellenloch-bei-fischbeck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.542202,
+    "longitude": 12.0066643,
+    "source": "two-source-v6.2",
+    "confidence": 0.831,
+    "sourceStatus": "verified",
+    "officialDistanceM": 25.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1008zm0",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-422-11-junkerwiehl-bei-fischbeck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.542202,
+    "longitude": 12.0066643,
+    "source": "two-source-v6.2",
+    "confidence": 0.831,
+    "sourceStatus": "verified",
+    "officialDistanceM": 25.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1008zm0",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-422-12-elbe-km-386-392-beidseitig-km-391-392": {
     "status": "unmapped",
@@ -2192,44 +2846,80 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-422-13-bolsdorfer-tanger": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.516045,
+    "candidateLongitude": 11.9426673,
+    "confidence": 0.875,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-422-14-hafenbecken-tangermunde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5388554,
+    "candidateLongitude": 11.9763018,
+    "confidence": 0.85,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-423-01-baggerloch-buch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.48451,
+    "longitude": 11.965852,
+    "source": "two-source-v6.2",
+    "confidence": 0.849,
+    "sourceStatus": "verified",
+    "officialDistanceM": 16.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00004ghh",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-423-02-bucher-kl-lanke": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5302465,
+    "candidateLongitude": 11.9594105,
+    "confidence": 0.858,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-423-03-bucher-lanke": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.5302465,
+    "candidateLongitude": 11.9594105,
+    "confidence": 0.858,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "2-423-04-trollsee-bei-bolsdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.5083823,
+    "longitude": 11.9281141,
+    "source": "two-source-v6.2",
+    "confidence": 0.924,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19,
+    "officialFeatureId": "StandingWater_DESTGEOT00004gga",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-424-01-groer-gluming-in-grieben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4419114,
+    "longitude": 11.9665047,
+    "source": "two-source-v6.2",
+    "confidence": 0.79,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.1,
+    "officialFeatureId": "StandingWater_DESTGEOT00004ggn",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-424-02-kleiner-gluming-in-grieben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4419114,
+    "longitude": 11.9665047,
+    "source": "two-source-v6.2",
+    "confidence": 0.79,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.1,
+    "officialFeatureId": "StandingWater_DESTGEOT00004ggn",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "2-424-03-griebener-see": {
     "status": "unmapped",
@@ -2237,29 +2927,44 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "2-426-01-jaeneckes-teiche-bei-stendal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.6005401,
+    "candidateLongitude": 11.8540908,
+    "confidence": 0.838,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-01-sieben-insel-teich-in-flechtingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3315217,
+    "candidateLongitude": 11.2375789,
+    "confidence": 0.916,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-02-holzmuhlenteich-in-flechtingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3315217,
+    "candidateLongitude": 11.2375789,
+    "confidence": 0.916,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-03-muhlenteich-flechtingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3315217,
+    "candidateLongitude": 11.2375789,
+    "confidence": 0.916,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-04-schloteich-in-flechtingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3289406,
+    "candidateLongitude": 11.2382684,
+    "confidence": 0.927,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-05-dorfteich-in-nordgermersleben": {
     "status": "unmapped",
@@ -2267,29 +2972,47 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-06-muhlenteich-flechtingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3315217,
+    "candidateLongitude": 11.2375789,
+    "confidence": 0.916,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-08-muhlenteich-bodendorf-bei-suplingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.291776,
+    "longitude": 11.3145388,
+    "source": "two-source-v6.2",
+    "confidence": 0.903,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.2,
+    "officialFeatureId": "Watercourse_DESTGEOT00001MoA_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-09-nachtwiese-bei-bebertal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2428216,
+    "candidateLongitude": 11.3410155,
+    "confidence": 0.884,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-10-haidteich-bei-bebertal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2428216,
+    "candidateLongitude": 11.3410155,
+    "confidence": 0.884,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-11-steinbruche-nordhusen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2461969,
+    "candidateLongitude": 11.3807624,
+    "confidence": 0.9,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-12-ehemalige-schweineweide-bei": {
     "status": "unmapped",
@@ -2297,24 +3020,42 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-13-hofteich-bodendorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2877324,
+    "candidateLongitude": 11.2823173,
+    "confidence": 0.849,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-16-neuer-teich-in-bebertal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2428216,
+    "candidateLongitude": 11.3410155,
+    "confidence": 0.884,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-17-konigsee-bei-bebertal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.2472696,
+    "longitude": 11.3423937,
+    "source": "two-source-v6.2",
+    "confidence": 0.904,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00001LM9",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-19-1-teich-des-doppelstaubeckens-am": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0356215,
+    "longitude": 11.1014779,
+    "source": "two-source-v6.2",
+    "confidence": 0.919,
+    "sourceStatus": "verified",
+    "officialDistanceM": 18.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00001bjJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-22-nonnenspringteich-haldensleben": {
     "status": "unmapped",
@@ -2322,9 +3063,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-23-gutsteich-kleinsantersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.2060958,
+    "longitude": 11.4048587,
+    "source": "two-source-v6.2",
+    "confidence": 0.838,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00001LaO",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-24-gutsteich-brumby-2-teile": {
     "status": "unmapped",
@@ -2337,9 +3084,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-26-schaferteich-bei-horsingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.2815363,
+    "longitude": 11.1596724,
+    "source": "two-source-v6.2",
+    "confidence": 0.917,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00001vGY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-27-tongrube-bei-ivenrode": {
     "status": "unmapped",
@@ -2347,14 +3100,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-28-heckenrosensteinbruch-polkenbruch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.2629769,
+    "longitude": 11.2555956,
+    "source": "two-source-v6.2",
+    "confidence": 0.914,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00001vHf",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-30-wiemeckenbruch-bei-belsdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3422407,
+    "candidateLongitude": 11.1520265,
+    "confidence": 0.796,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-31-speicher-an-der-speetze-bei-everingen-a-h-k-s-1-00": {
     "status": "unmapped",
@@ -2362,14 +3124,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-32-wegenstedter-teich-bei-calvorde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.3936762,
+    "longitude": 11.2840741,
+    "source": "two-source-v6.2",
+    "confidence": 0.881,
+    "sourceStatus": "verified",
+    "officialDistanceM": 18.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00003wkY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-33-mittelllandkanal-bereich": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8510015,
+    "longitude": 12.2490817,
+    "source": "two-source-v6.2",
+    "confidence": 0.802,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.7,
+    "officialFeatureId": "Watercourse_DESTGEOTR100beUF_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-34-ohre-von-straenbrucke-calvorde": {
     "status": "unmapped",
@@ -2382,24 +3156,42 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-37-schafbade-bei-erxleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2192712,
+    "candidateLongitude": 11.2411831,
+    "confidence": 0.925,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-39-torner-see-bei-bulstringen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.3179241,
+    "longitude": 11.3421313,
+    "source": "two-source-v6.2",
+    "confidence": 0.92,
+    "sourceStatus": "verified",
+    "officialDistanceM": 30.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00001LLJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-40-silbersee-bei-calvorde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3958691,
+    "candidateLongitude": 11.3057448,
+    "confidence": 0.84,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-41-schweineweide-kathendorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.3981302,
+    "longitude": 11.1473377,
+    "source": "two-source-v6.2",
+    "confidence": 0.83,
+    "sourceStatus": "verified",
+    "officialDistanceM": 17.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00003lgd",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-42-aller-von-bab-2-bis-landesgrenze": {
     "status": "unmapped",
@@ -2417,29 +3209,47 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-45-beber-von-einmundung-der-rie": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4773429,
+    "candidateLongitude": 11.9782414,
+    "confidence": 0.818,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-46-wanneweh-von-einmundung-des": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2733724,
+    "candidateLongitude": 11.0612403,
+    "confidence": 0.849,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-47-markgrafenteich-bei-bebertal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2428216,
+    "candidateLongitude": 11.3410155,
+    "confidence": 0.884,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-48-papenteich-bei-emden": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2619885,
+    "candidateLongitude": 11.2855712,
+    "confidence": 0.875,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-49-teich-am-siekweg-in-rottmersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.2060958,
+    "longitude": 11.4048587,
+    "source": "two-source-v6.2",
+    "confidence": 0.846,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00001LaO",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-50-speicher-an-der-krummbeck": {
     "status": "unmapped",
@@ -2447,14 +3257,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-52-regenruckhaltebecken-in-hermsdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1867944,
+    "candidateLongitude": 11.4815856,
+    "confidence": 0.873,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "3-200-53-speicher-am-butterberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.2628318,
+    "longitude": 11.2232058,
+    "source": "two-source-v6.2",
+    "confidence": 0.816,
+    "sourceStatus": "verified",
+    "officialDistanceM": 31.1,
+    "officialFeatureId": "StandingWater_DESTGEOT00001vH5",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-56-waldsteinbruch-hundisburg": {
     "status": "unmapped",
@@ -2472,9 +3291,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "3-200-61-gartenteich-ratzlingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4063985,
+    "longitude": 11.1186335,
+    "source": "two-source-v6.2",
+    "confidence": 0.789,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00003lg8",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "3-200-62-rohrteichwiese-altenhausen": {
     "status": "unmapped",
@@ -2992,9 +3817,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-130-34-flickschuhteich-burg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2711281,
+    "candidateLongitude": 11.8607563,
+    "confidence": 0.916,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-130-36-mittellandkanal-km-322-82-km-324-46-a-bl-k-pl-z-5-31-nordufer": {
     "status": "unmapped",
@@ -3002,14 +3830,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-170-01-lehmkuhlengraben-bei-parchen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.3567771,
+    "longitude": 12.0650882,
+    "source": "two-source-v6.2",
+    "confidence": 0.85,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.3,
+    "officialFeatureId": "Watercourse_DESTGEOT0000601u_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-170-03-zernau-see-bei-mutzel": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.3901605,
+    "longitude": 12.140709,
+    "source": "two-source-v6.2",
+    "confidence": 0.737,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00005ZgY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-170-04-muhlengraben-bei-mutzel": {
     "status": "unmapped",
@@ -3017,9 +3857,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-170-06-kiesgrube-brettiner-chaussee-ein": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1700956,
+    "candidateLongitude": 11.6109462,
+    "confidence": 0.905,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-170-08-altenplatower-altkanal": {
     "status": "unmapped",
@@ -3027,9 +3870,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-170-09-rodorfer-altkanal-km-0-0-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4196991,
+    "longitude": 12.1471119,
+    "source": "two-source-v6.2",
+    "confidence": 0.868,
+    "sourceStatus": "verified",
+    "officialDistanceM": 18.7,
+    "officialFeatureId": "Watercourse_DESTGEOT0000601t_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-170-10-kiesgrube-zabakuck": {
     "status": "unmapped",
@@ -3047,9 +3896,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-170-13-fiener-hauptvorfluter-vom-wehr": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3884409,
+    "candidateLongitude": 11.9684783,
+    "confidence": 0.833,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-170-14-hauptstremme-vom-rodorfer-altkanal-a-b-bl-h-pl-s-8-00-bis-zur-einmundung-des-galmer-grabens": {
     "status": "unmapped",
@@ -3057,19 +3909,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-170-15-schlagenthiner-stremme-vom-rodorfer-a-b-bl-h-pl-s-7-00-altkanal-bis-zur-hauptstremme": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.4822552,
+    "candidateLongitude": 12.2398619,
+    "confidence": 0.835,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-170-16-elbe-havel-kanal-von-km-360-bis-364-5-a-b-bl-h-k-71-92-brucke-b1-ortsausgang-genthin-und": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.4087394,
+    "candidateLongitude": 12.139385,
+    "confidence": 0.904,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-170-17-2-teiche-im-parchener-park": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.4096458,
+    "candidateLongitude": 12.1525042,
+    "confidence": 0.881,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-01-kiesgrube-netzband-bei-derben": {
     "status": "unmapped",
@@ -3077,9 +3938,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-171-02-kiesschacht-wenzlau-bei-derben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4096612,
+    "longitude": 11.9955837,
+    "source": "two-source-v6.2",
+    "confidence": 0.837,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00004eNS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-03-muhlenlanke-herrenseegraben-bei-parey-a-b-bl-gu-h-pl-ro-1-00": {
     "status": "unmapped",
@@ -3087,9 +3954,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-171-04-kiesgrube-an-der-mts-in-parey": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3773864,
+    "candidateLongitude": 11.9850074,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-05-alte-elbe-mit-tunnel-und": {
     "status": "unmapped",
@@ -3097,9 +3967,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-171-07-badeteich-bei-gusen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.3473585,
+    "longitude": 11.9715853,
+    "source": "two-source-v6.2",
+    "confidence": 0.893,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00004eN7",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-08-feuerloschteich-bei-ferchland": {
     "status": "unmapped",
@@ -3107,19 +3983,37 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-171-09-kiesloch-born-bei-derben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4096612,
+    "longitude": 11.9955837,
+    "source": "two-source-v6.2",
+    "confidence": 0.837,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00004eNS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-10-wulsch-kieslocher-bei-derben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4096612,
+    "longitude": 11.9955837,
+    "source": "two-source-v6.2",
+    "confidence": 0.837,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00004eNS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-11-alte-und-neue-kieslocher-bei-derben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4096612,
+    "longitude": 11.9955837,
+    "source": "two-source-v6.2",
+    "confidence": 0.837,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00004eNS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-12-baggerelbe-bei-derben": {
     "status": "unmapped",
@@ -3127,14 +4021,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-171-13-kieslocher-derben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4096612,
+    "longitude": 11.9955837,
+    "source": "two-source-v6.2",
+    "confidence": 0.837,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00004eNS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-14-stromelbe-von-km-372-4": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.74643,
+    "candidateLongitude": 11.0094452,
+    "confidence": 0.883,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-15-pareyer-verbindungskanal": {
     "status": "unmapped",
@@ -3142,34 +4045,52 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-171-16-zerbener-altarm-am": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7589429,
+    "candidateLongitude": 13.0912271,
+    "confidence": 0.906,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-18-waldmuhlenlanke-bei-parey": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3773864,
+    "candidateLongitude": 11.9850074,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-19-pappelloch-bei-parey": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3773864,
+    "candidateLongitude": 11.9850074,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-20-wolfsloch-1-und-2-bei-parey": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3773864,
+    "candidateLongitude": 11.9850074,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-21-erdegraben-bei-parey": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3818511,
+    "candidateLongitude": 11.9911974,
+    "confidence": 0.87,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-22-hemslake-bei-parey": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3773864,
+    "candidateLongitude": 11.9850074,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-23-badingslanke-bei-zerben": {
     "status": "unmapped",
@@ -3177,29 +4098,50 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-171-24-lemmerweide-bei-derben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4096612,
+    "longitude": 11.9955837,
+    "source": "two-source-v6.2",
+    "confidence": 0.837,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00004eNS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-25-groes-wasserloch-parey-kuhn-s-loch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3894247,
+    "candidateLongitude": 11.984425,
+    "confidence": 0.945,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-171-26-elbe-havel-kanal-von-km-344-bis-km-353": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.4196991,
+    "longitude": 12.1471119,
+    "source": "two-source-v6.2",
+    "confidence": 0.868,
+    "sourceStatus": "verified",
+    "officialDistanceM": 18.7,
+    "officialFeatureId": "Watercourse_DESTGEOT0000601t_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-171-27-herrensee-parey": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.3773864,
+    "candidateLongitude": 11.9850074,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-172-01-elbe-havel-kanal-von-km-364-5": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 53.6879895,
+    "candidateLongitude": 9.1814549,
+    "confidence": 0.848,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-172-03-rodorfer-altkanal-von": {
     "status": "unmapped",
@@ -3212,9 +4154,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-173-02-elbe-havel-kanal-von-km-353-km-360": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.4967467,
+    "candidateLongitude": 12.0194681,
+    "confidence": 0.785,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-280-01-umflutehle-von-einmundung-der": {
     "status": "unmapped",
@@ -3227,9 +4172,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-490-03-schloteich-und-2-nebenteiche-in": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.2638312,
+    "candidateLongitude": 11.8326902,
+    "confidence": 0.885,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-490-04-dornburger-see": {
     "status": "unmapped",
@@ -3237,9 +4185,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-490-07-dorfteich-in-ladeburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0802341,
+    "longitude": 11.9351159,
+    "source": "two-source-v6.2",
+    "confidence": 0.875,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.6,
+    "officialFeatureId": "StandingWater_DESTGEOT000030ZA",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "4-491-01-prodeler-see-2-teiche": {
     "status": "unmapped",
@@ -3247,9 +4201,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-491-02-griebensee-bei-prodel": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0381599,
+    "candidateLongitude": 11.9134129,
+    "confidence": 0.885,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-491-03-lubser-see": {
     "status": "unmapped",
@@ -3267,14 +4224,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-492-03-kleiner-teich-bei-dalchau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.1124461,
+    "candidateLongitude": 11.9896018,
+    "confidence": 0.924,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-492-04-teich-in-gobel": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0753173,
+    "candidateLongitude": 12.0140574,
+    "confidence": 0.918,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "4-492-05-kiesgrube-loburg": {
     "status": "unmapped",
@@ -3282,9 +4245,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "4-492-06-rosianer-stau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.6075216,
+    "longitude": 11.4869597,
+    "source": "two-source-v6.2",
+    "confidence": 0.892,
+    "sourceStatus": "verified",
+    "officialDistanceM": 27.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00003MMb",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "5-100-02-ellernteich-in-reinstedt": {
     "status": "unmapped",
@@ -3292,9 +4261,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "5-101-01-kiesgrube-zwischen-aschersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8200904,
+    "candidateLongitude": 11.1442594,
+    "confidence": 0.732,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-101-02-pappelteich-ermsleben": {
     "status": "unmapped",
@@ -3307,9 +4279,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "5-190-01-krummer-teich-bei-dingelstedt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9739839,
+    "candidateLongitude": 10.9796613,
+    "confidence": 0.901,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-190-02-parkteich-mahndorf": {
     "status": "unmapped",
@@ -3332,14 +4307,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "5-190-08-halberstadter-see-ii": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6575633,
+    "candidateLongitude": 11.1495517,
+    "confidence": 0.769,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-191-01-fischteich-osterwieck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9646992,
+    "candidateLongitude": 10.7055165,
+    "confidence": 0.821,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-191-02-muhlenteich-deersheim": {
     "status": "unmapped",
@@ -3347,44 +4328,80 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "5-191-03-turmteich-eilenstedt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9851521,
+    "candidateLongitude": 11.0418283,
+    "confidence": 0.76,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-191-04-steinbachteich-deersheim": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9809516,
+    "longitude": 10.78052,
+    "source": "two-source-v6.2",
+    "confidence": 0.897,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00000Jzp",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "5-230-01-untere-schwenneckestau-bei-pansfelde-a-k-pl-ro-s-0-50": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6575356,
+    "longitude": 11.2779405,
+    "source": "two-source-v6.2",
+    "confidence": 0.921,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.2,
+    "officialFeatureId": "StandingWater_DESTGEOTR100cxM7",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "5-230-03-oberer-teich-pansfelde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6575356,
+    "longitude": 11.2779405,
+    "source": "two-source-v6.2",
+    "confidence": 0.921,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.2,
+    "officialFeatureId": "StandingWater_DESTGEOTR100cxM7",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "5-230-04-unterer-teich-pansfelde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6575356,
+    "longitude": 11.2779405,
+    "source": "two-source-v6.2",
+    "confidence": 0.921,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.2,
+    "officialFeatureId": "StandingWater_DESTGEOTR100cxM7",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "5-340-01-erichsburger-teich-bei-friedrichsbrunn": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6969464,
+    "candidateLongitude": 11.0261575,
+    "confidence": 0.901,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-02-bergrat-muller-teich-bei-gernrode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7255993,
+    "candidateLongitude": 11.1418533,
+    "confidence": 0.894,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-03-neuer-teich-bei-gernrode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7255993,
+    "candidateLongitude": 11.1418533,
+    "confidence": 0.894,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-05-kunstteich-in-ballenstedt": {
     "status": "mapped",
@@ -3396,9 +4413,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Manuelle Premium-Koordinate hat Vorrang vor automatisch erzeugten Daten."
   },
   "5-340-06-hauptseegraben-von-kreisgrenze": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.686505,
+    "candidateLongitude": 11.2910271,
+    "confidence": 0.793,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-07-groer-dachsteich-bei-ballenstedt": {
     "status": "mapped",
@@ -3442,14 +4462,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Manuelle Premium-Koordinate hat Vorrang vor automatisch erzeugten Daten."
   },
   "5-340-12-gondelteich-in-friedrichsbrunn": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6969464,
+    "candidateLongitude": 11.0261575,
+    "confidence": 0.901,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-13-selke-von-kreisgrenze": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0409719,
+    "candidateLongitude": 11.2349334,
+    "confidence": 0.843,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-14-gondelteich-thale": {
     "status": "mapped",
@@ -3470,9 +4496,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Manuelle Premium-Koordinate hat Vorrang vor automatisch erzeugten Daten."
   },
   "5-340-16-flottenteich-weddersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7741237,
+    "candidateLongitude": 11.0705289,
+    "confidence": 0.851,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-17-kiessandtagebau-ditfurt-i": {
     "status": "unmapped",
@@ -3480,19 +4509,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "5-340-18-kiessandtagebau-ditfurt-ii": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8371656,
+    "candidateLongitude": 11.2039636,
+    "confidence": 0.845,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-19-petersstichel-thale": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7554484,
+    "candidateLongitude": 11.0496748,
+    "confidence": 0.796,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-20-muhlgraben-thale-0-25": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4708382,
+    "candidateLongitude": 11.8860993,
+    "confidence": 0.752,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-340-21-dorfteich-opperode": {
     "status": "mapped",
@@ -3518,14 +4556,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "5-450-02-groer-schachtteich-bei-wienrode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7636161,
+    "candidateLongitude": 10.9835211,
+    "confidence": 0.778,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-450-03-brockenstedter-muhle": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8379782,
+    "candidateLongitude": 10.9616178,
+    "confidence": 0.86,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-450-04-mulmker-parkteiche": {
     "status": "unmapped",
@@ -3533,14 +4577,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "5-450-05-kleiner-schachtteich-bei-wienrode-a-b-h-k-pl-s-z-0-47": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7636161,
+    "candidateLongitude": 10.9835211,
+    "confidence": 0.778,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "5-450-06-wiesenteich-bei-wienrode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7636161,
+    "candidateLongitude": 10.9835211,
+    "confidence": 0.778,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-100-01-bruchfeldsee-wilslebener-see": {
     "status": "unmapped",
@@ -3558,9 +4608,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-100-06-tonkuhle-nahry-aschersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7519805,
+    "candidateLongitude": 11.4451652,
+    "confidence": 0.844,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-100-07-hauptseegraben-von-einmundung": {
     "status": "unmapped",
@@ -3568,9 +4621,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-100-08-heckenteich-in-gatersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8157237,
+    "candidateLongitude": 11.2912113,
+    "confidence": 0.928,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-100-10-wipper-von-letzter-brucke-klein": {
     "status": "unmapped",
@@ -3578,19 +4634,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-100-11-gondelteich-aschersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7519805,
+    "candidateLongitude": 11.4451652,
+    "confidence": 0.844,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-100-12-kiesgrube-an-der-froser-strae": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7519805,
+    "candidateLongitude": 11.4451652,
+    "confidence": 0.775,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-01-flanschenteich-bebitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7204392,
+    "candidateLongitude": 11.7566212,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-02-dammloch-beesenlaublingen": {
     "status": "unmapped",
@@ -3598,14 +4663,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-110-03-neues-tonloch-beesenlaublingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7130818,
+    "candidateLongitude": 11.6964286,
+    "confidence": 0.919,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-04-altes-tonloch-beesenlaublingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7130818,
+    "candidateLongitude": 11.6964286,
+    "confidence": 0.919,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-05-alter-tagebau-gerlebogk": {
     "status": "unmapped",
@@ -3613,34 +4684,52 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-110-06-sportplatzteich-gerlebogk": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7034028,
+    "candidateLongitude": 11.8243895,
+    "confidence": 0.836,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-07-villa-teich-gerlebogk": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7034028,
+    "candidateLongitude": 11.8243895,
+    "confidence": 0.836,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-08-lettenloch-bei-konnern": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6724745,
+    "candidateLongitude": 11.7526287,
+    "confidence": 0.843,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-10-tonloch-hanse-leau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7328563,
+    "candidateLongitude": 11.7953964,
+    "confidence": 0.938,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-11-mariensee-preulitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7337659,
+    "candidateLongitude": 11.7992721,
+    "confidence": 0.89,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-12-saalealtarm-zwischen-plotzkau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.753923,
+    "candidateLongitude": 11.6866785,
+    "confidence": 0.76,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-13-saalealtarm-aderstedt": {
     "status": "unmapped",
@@ -3648,9 +4737,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-110-14-saale-von-kreisgrenze-saalekreis-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6571329,
+    "candidateLongitude": 12.3058934,
+    "confidence": 0.784,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-15-groer-wiendorfer-teich": {
     "status": "unmapped",
@@ -3658,14 +4750,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-110-16-kringel-alsleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6927408,
+    "longitude": 11.6933563,
+    "source": "two-source-v6.2",
+    "confidence": 0.83,
+    "sourceStatus": "verified",
+    "officialDistanceM": 34.5,
+    "officialFeatureId": "StandingWater_DESTGEOT000028v0",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-110-17-saalealtarm-gnolbzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6727008,
+    "longitude": 11.7234583,
+    "source": "two-source-v6.2",
+    "confidence": 0.912,
+    "sourceStatus": "verified",
+    "officialDistanceM": 7.4,
+    "officialFeatureId": "Watercourse_DESTGEOT000028Sj_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-110-18-fuhne-vom-viadukt-bei-kleinwirschleben-a-b-bl-h-k-pl-ro-4-00-bis-mundung-in-die-saale": {
     "status": "unmapped",
@@ -3673,34 +4777,55 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-110-19-taiga-in-grona": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7672127,
+    "candidateLongitude": 11.7117624,
+    "confidence": 0.842,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-20-schwefelteich-bebitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7204392,
+    "candidateLongitude": 11.7566212,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-21-tonloch-huhn-leau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7328563,
+    "candidateLongitude": 11.7953964,
+    "confidence": 0.938,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-22-kiesgrube-beesenlaublingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7130818,
+    "candidateLongitude": 11.6964286,
+    "confidence": 0.919,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-23-die-strenge-bei-aderstedt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7791234,
+    "longitude": 11.6982272,
+    "source": "two-source-v6.2",
+    "confidence": 0.828,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00002beF",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-110-24-alter-ziegeleiteich-baalberge": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7485332,
+    "candidateLongitude": 11.7997753,
+    "confidence": 0.785,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-110-25-bebitzer-dorfteich": {
     "status": "unmapped",
@@ -3713,9 +4838,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-111-04-bode-vom-beginn-des-muhlgrabens": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.729417,
+    "candidateLongitude": 11.8097803,
+    "confidence": 0.885,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-111-05-saalealtarm-nienburg": {
     "status": "unmapped",
@@ -3723,14 +4851,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-111-08-schlammteich-gerbitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.843002,
+    "longitude": 11.8215451,
+    "source": "two-source-v6.2",
+    "confidence": 0.913,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00002yVC",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-111-11-schachtsee-neugattersleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.850437,
+    "candidateLongitude": 11.701479,
+    "confidence": 0.921,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-111-12-alter-schacht-pauline-neugatersleben-h-k-ro-s-4-00": {
     "status": "unmapped",
@@ -3738,9 +4875,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-111-13-saale-von-einmundung-der-fuhne-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6571329,
+    "candidateLongitude": 12.3058934,
+    "confidence": 0.784,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-112-01-dorfteich-brundel": {
     "status": "unmapped",
@@ -3748,29 +4888,50 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-112-02-dorfteich-plotzkau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7469157,
+    "longitude": 11.6886414,
+    "source": "two-source-v6.2",
+    "confidence": 0.881,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00002beT",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-112-03-saalealtarm-lesewitz-bei-plotzkau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.753923,
+    "candidateLongitude": 11.6866785,
+    "confidence": 0.76,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-113-01-fahrt-in-preulitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7301578,
+    "longitude": 11.8107312,
+    "source": "two-source-v6.2",
+    "confidence": 0.896,
+    "sourceStatus": "verified",
+    "officialDistanceM": 22.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00002wcb",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-113-02-groer-teich-hinter-der-fahrt-in-preulitz-a-h-k-ro-s-0-30": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7337659,
+    "candidateLongitude": 11.7992721,
+    "confidence": 0.89,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-113-03-tonloch-preulitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7337659,
+    "candidateLongitude": 11.7992721,
+    "confidence": 0.919,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-230-01-schloteiche-freckleben": {
     "status": "unmapped",
@@ -3778,14 +4939,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-01-schacht-9-bei-eggersdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9690772,
+    "candidateLongitude": 11.6958208,
+    "confidence": 0.808,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-02-seehof-bei-wespen-barby": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9583545,
+    "candidateLongitude": 11.8286441,
+    "confidence": 0.92,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-03-jagerschacht-bei-glothe-brumby": {
     "status": "unmapped",
@@ -3793,14 +4960,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-05-parkteich-bei-brumby": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.89944,
+    "candidateLongitude": 11.6800784,
+    "confidence": 0.729,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-06-kohls-see-bei-biere": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.979803,
+    "candidateLongitude": 11.6572328,
+    "confidence": 0.827,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-07-erdkuten-grune-lungen-bei-calbe": {
     "status": "unmapped",
@@ -3813,19 +4986,34 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-09-griebehner-teiche-bei-calbe": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8997679,
+    "candidateLongitude": 11.7824601,
+    "confidence": 0.842,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-10-erlenteich-bei-kleinmuhlingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9515041,
+    "longitude": 11.7613271,
+    "source": "two-source-v6.2",
+    "confidence": 0.835,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00002AAB",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-11-pfingstwiesen-bei-kleinmuhlingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9515041,
+    "longitude": 11.7613271,
+    "source": "two-source-v6.2",
+    "confidence": 0.835,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00002AAB",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-12-pfannenpfutze-bei-plotzky": {
     "status": "unmapped",
@@ -3833,29 +5021,50 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-13-beamtenteich-bei-tornitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9285398,
+    "candidateLongitude": 11.8472597,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-14-gruner-teich-bei-tornitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9285398,
+    "candidateLongitude": 11.8472597,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-15-pappelteich-bei-tornitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9285398,
+    "candidateLongitude": 11.8472597,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-16-liesekuhle-bei-grunewalde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0433981,
+    "longitude": 11.7632756,
+    "source": "two-source-v6.2",
+    "confidence": 0.919,
+    "sourceStatus": "verified",
+    "officialDistanceM": 5.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPc",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-17-fahrlake-bei-grunewalde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0433981,
+    "longitude": 11.7632756,
+    "source": "two-source-v6.2",
+    "confidence": 0.919,
+    "sourceStatus": "verified",
+    "officialDistanceM": 5.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPc",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-18-rothe-bei-schonebeck": {
     "status": "unmapped",
@@ -3863,14 +5072,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-19-kiesgrube-1-und-2-bei-schonebeck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0188435,
+    "longitude": 11.749548,
+    "source": "two-source-v6.2",
+    "confidence": 0.81,
+    "sourceStatus": "verified",
+    "officialDistanceM": 6.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPl",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-20-saale-im-altkreis-schonebeck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0208074,
+    "longitude": 11.7468121,
+    "source": "two-source-v6.2",
+    "confidence": 0.845,
+    "sourceStatus": "verified",
+    "officialDistanceM": 22.1,
+    "officialFeatureId": "Watercourse_DESTGEOT00002CLn_pol",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-21-norderney-in-schwarz": {
     "status": "unmapped",
@@ -3883,14 +5104,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-23-kiessandtagebau-pommelter-strae": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0143767,
+    "candidateLongitude": 11.7756628,
+    "confidence": 0.835,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-24-saalealtarm-tippelskirchen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8826486,
+    "candidateLongitude": 11.7973263,
+    "confidence": 0.819,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-25-elbumflut-von-alte-fahre-bis": {
     "status": "unmapped",
@@ -3898,34 +5125,67 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-26-hoher-teich-bei-glinde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0080668,
+    "longitude": 11.8465023,
+    "source": "two-source-v6.2",
+    "confidence": 0.876,
+    "sourceStatus": "verified",
+    "officialDistanceM": 27,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPk",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-27-pfaffenbruch-bei-glinde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0080668,
+    "longitude": 11.8465023,
+    "source": "two-source-v6.2",
+    "confidence": 0.876,
+    "sourceStatus": "verified",
+    "officialDistanceM": 27,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPk",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-28-kiesbaggerloch-bei-glinde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0080668,
+    "longitude": 11.8465023,
+    "source": "two-source-v6.2",
+    "confidence": 0.876,
+    "sourceStatus": "verified",
+    "officialDistanceM": 27,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPk",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-29-heiliger-see-bei-plotzky": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0565566,
+    "longitude": 11.811046,
+    "source": "two-source-v6.2",
+    "confidence": 0.832,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BOC",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-30-kuchenpfuhl-elbenau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.049093,
+    "candidateLongitude": 11.7624151,
+    "confidence": 0.928,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-31-pfeiffersee-plotzky": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0565566,
+    "longitude": 11.811046,
+    "source": "two-source-v6.2",
+    "confidence": 0.832,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BOC",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-32-3-locher-bei-ranies": {
     "status": "unmapped",
@@ -3933,14 +5193,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-33-stilles-wasser-elbenau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.049093,
+    "candidateLongitude": 11.7624151,
+    "confidence": 0.928,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-34-kiessee-tornitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9285398,
+    "candidateLongitude": 11.8472597,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-35-elbealtarm-grunewalde": {
     "status": "unmapped",
@@ -3948,24 +5214,42 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-36-angerteich-in-glothe": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9012252,
+    "candidateLongitude": 11.664212,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-37-worth-in-plotzky": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0565566,
+    "longitude": 11.811046,
+    "source": "two-source-v6.2",
+    "confidence": 0.832,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BOC",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-38-kiesgrube-an-der-magdeburger-strae": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0188435,
+    "longitude": 11.749548,
+    "source": "two-source-v6.2",
+    "confidence": 0.81,
+    "sourceStatus": "verified",
+    "officialDistanceM": 6.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPl",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-39-tilsschacht-brumby": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8967879,
+    "candidateLongitude": 11.6894225,
+    "confidence": 0.793,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-40-awg-seen-1-2-und-3-gommern-plotzky": {
     "status": "unmapped",
@@ -3973,19 +5257,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-41-salinekanal-schonebeck": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0208074,
+    "longitude": 11.7468121,
+    "source": "two-source-v6.2",
+    "confidence": 0.845,
+    "sourceStatus": "verified",
+    "officialDistanceM": 22.1,
+    "officialFeatureId": "Watercourse_DESTGEOT00002CLn_pol",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-400-43-schachtteich-eggersdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9690772,
+    "candidateLongitude": 11.6958208,
+    "confidence": 0.808,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-44-kirchbreite-bei-barby": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9639384,
+    "candidateLongitude": 11.884897,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-45-gotzenthiegraben": {
     "status": "unmapped",
@@ -3998,14 +5294,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-400-47-tonlocher-glothe": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9012252,
+    "candidateLongitude": 11.664212,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-400-48-kiessee-pommelte": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0040547,
+    "longitude": 11.8124119,
+    "source": "two-source-v6.2",
+    "confidence": 0.824,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00002BPi",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-401-01-bruch-1-bei-breitenhagen": {
     "status": "unmapped",
@@ -4013,59 +5318,98 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-401-02-bruch-2-bei-breitenhagen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9227195,
+    "candidateLongitude": 11.9340061,
+    "confidence": 0.893,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-401-03-bruch-3-bei-breitenhagen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9227195,
+    "candidateLongitude": 11.9340061,
+    "confidence": 0.893,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-401-04-badebruch-bei-breitenhagen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9224946,
+    "candidateLongitude": 11.9354344,
+    "confidence": 0.9,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-401-05-drahningensee-bei-breitenhagen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9312095,
+    "longitude": 11.9457918,
+    "source": "two-source-v6.2",
+    "confidence": 0.814,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00002Yv1",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-401-06-krugersee-bei-breitenhagen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9312095,
+    "longitude": 11.9457918,
+    "source": "two-source-v6.2",
+    "confidence": 0.814,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00002Yv1",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-401-07-kleiner-dorfsee-gro-rosenburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9192744,
+    "candidateLongitude": 11.8942849,
+    "confidence": 0.86,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-401-08-landgraben-von-einmundung-des": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9109962,
+    "candidateLongitude": 11.678006,
+    "confidence": 0.849,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-401-09-taube-von-700m-oberhalb-der": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6966288,
+    "candidateLongitude": 11.5442764,
+    "confidence": 0.771,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-402-01-dolphus-bei-barby": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9639384,
+    "candidateLongitude": 11.884897,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-402-02-barbyer-landgraben-von": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.0217743,
+    "candidateLongitude": 11.668936,
+    "confidence": 0.731,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-402-03-hafen-barby": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9639384,
+    "candidateLongitude": 11.884897,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-402-04-kiesgrube-barby-sud": {
     "status": "unmapped",
@@ -4073,9 +5417,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-402-06-restloch-konigsaue": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8273451,
+    "longitude": 11.4076887,
+    "source": "two-source-v6.2",
+    "confidence": 0.851,
+    "sourceStatus": "verified",
+    "officialDistanceM": 7.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00001GLH",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-402-07-saale-von-werkleitz-bis-elbmundung": {
     "status": "unmapped",
@@ -4083,9 +5433,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-410-01-schachte-bei-tarthun": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9238268,
+    "longitude": 11.4749636,
+    "source": "two-source-v6.2",
+    "confidence": 0.903,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00001Zg9",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-410-02-warmsdorfer-teich": {
     "status": "unmapped",
@@ -4093,19 +5449,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-410-03-ritterflurteich-bei-stafurt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8493784,
+    "candidateLongitude": 11.5856065,
+    "confidence": 0.849,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-04-stockscher-teich-bei-wolmirsleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9507054,
+    "longitude": 11.4729245,
+    "source": "two-source-v6.2",
+    "confidence": 0.769,
+    "sourceStatus": "verified",
+    "officialDistanceM": 34.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00001ZfY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-410-05-tiefbau-jacobsgrube-bei-gro-bornecke-a-b-bl-h-k-pl-s-z-8-12": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8864851,
+    "candidateLongitude": 11.4983029,
+    "confidence": 0.754,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-06-salzteich-bei-loderburg": {
     "status": "unmapped",
@@ -4118,44 +5486,71 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-410-08-badeteteich-bei-westeregeln": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9581172,
+    "candidateLongitude": 11.3910919,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-09-3-kulke-bei-westeregeln": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9581172,
+    "candidateLongitude": 11.3910919,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-10-tagebau-bei-westeregeln": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9581172,
+    "candidateLongitude": 11.3910919,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-11-groer-schachtsee-bei-wolmirsleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9543283,
+    "candidateLongitude": 11.4607953,
+    "confidence": 0.785,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-12-im-todtleben-bei-wolmirsleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9507054,
+    "longitude": 11.4729245,
+    "source": "two-source-v6.2",
+    "confidence": 0.769,
+    "sourceStatus": "verified",
+    "officialDistanceM": 34.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00001ZfY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "6-410-14-bode-vom-wehr-egeln-nord": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9638934,
+    "candidateLongitude": 11.4260338,
+    "confidence": 0.92,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-15-bode-vom-wehr-rothenforde": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9054306,
+    "candidateLongitude": 11.5163125,
+    "confidence": 0.827,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-17-seemann-bei-loderburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8846144,
+    "candidateLongitude": 11.5429027,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-18-steinbruch-borne": {
     "status": "unmapped",
@@ -4163,19 +5558,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-410-19-muhlgraben-von-egeln-nord": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9644973,
+    "candidateLongitude": 11.431551,
+    "confidence": 0.835,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-20-undank-in-loderburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8846144,
+    "candidateLongitude": 11.5429027,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-21-kiesschacht-gusten": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8008209,
+    "candidateLongitude": 11.6052567,
+    "confidence": 0.917,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-410-22-regenruckhaltebecken-am": {
     "status": "unmapped",
@@ -4188,14 +5592,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-410-25-wassergraben-bei-hohenerxleben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.856242,
+    "candidateLongitude": 11.6431266,
+    "confidence": 0.839,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-411-01-laake-bei-loderburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8799935,
+    "candidateLongitude": 11.5458709,
+    "confidence": 0.869,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-411-02-loderburger-see": {
     "status": "unmapped",
@@ -4203,9 +5613,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "6-411-03-kreuzteich-loderburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8846144,
+    "candidateLongitude": 11.5429027,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "6-411-04-athenslebener-seen-lsg-beachten": {
     "status": "unmapped",
@@ -4218,19 +5631,34 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-02-schmiedeteich-schwemsal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6243851,
+    "longitude": 12.5599593,
+    "source": "two-source-v6.2",
+    "confidence": 0.911,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005t6j",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-03-badeteich-schwemsal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6243851,
+    "longitude": 12.5599593,
+    "source": "two-source-v6.2",
+    "confidence": 0.911,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005t6j",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-04-alte-mulde-roitzschjora": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5968684,
+    "candidateLongitude": 12.482236,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-05-kurr-pouch": {
     "status": "unmapped",
@@ -4238,19 +5666,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-06-unterer-ziegeleiteich-muldenstein": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6773853,
+    "candidateLongitude": 12.3270411,
+    "confidence": 0.812,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-07-steinbruch-bei-burgkemnitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6706634,
+    "longitude": 12.388582,
+    "source": "two-source-v6.2",
+    "confidence": 0.799,
+    "sourceStatus": "verified",
+    "officialDistanceM": 18.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005gT2",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-08-strandbad-sandersdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.630661,
+    "candidateLongitude": 12.2339895,
+    "confidence": 0.836,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-10-ehemalige-kiesgrube-sandersdorf": {
     "status": "unmapped",
@@ -4263,14 +5703,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-12-spittelwasser-jenitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7009112,
+    "candidateLongitude": 12.2963931,
+    "confidence": 0.812,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-13-muldestausee": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6224036,
+    "longitude": 12.4024975,
+    "source": "two-source-v6.2",
+    "confidence": 0.889,
+    "sourceStatus": "verified",
+    "officialDistanceM": 3.4,
+    "officialFeatureId": "Watercourse_DESTGEOT00005hGu_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-14-leipziger-teich-zorbig": {
     "status": "unmapped",
@@ -4278,19 +5727,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-15-grube-theodor-bei-roitzsch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5744151,
+    "candidateLongitude": 12.2681017,
+    "confidence": 0.908,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-16-burgermeisterteich-jenitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6820736,
+    "candidateLongitude": 12.2944564,
+    "confidence": 0.871,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-17-lober-bei-jenitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6820736,
+    "candidateLongitude": 12.2944564,
+    "confidence": 0.871,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-18-groer-richard-bei-sandersdorf": {
     "status": "unmapped",
@@ -4303,9 +5761,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-20-altes-wasser-priorau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7485628,
+    "candidateLongitude": 12.3023578,
+    "confidence": 0.949,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-21-mulde-v-landesgr-sachsen-bis-stausee": {
     "status": "unmapped",
@@ -4318,19 +5779,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-23-mulde-von-ca-500m-oberhalb-brucke": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9735125,
+    "candidateLongitude": 11.9166926,
+    "confidence": 0.854,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-24-tagebaurestloch-richard-i": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6277647,
+    "candidateLongitude": 12.2660986,
+    "confidence": 0.909,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-25-teich-neben-klaranlage-holzweiig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5999745,
+    "longitude": 12.3046955,
+    "source": "two-source-v6.2",
+    "confidence": 0.908,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007Rsj",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-26-pappelloch-rosa": {
     "status": "unmapped",
@@ -4338,14 +5811,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-27-kiesgrube-salzfurtkapelle": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6940546,
+    "candidateLongitude": 12.1774283,
+    "confidence": 0.751,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-28-flutungsgewasser-goitzsche": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5999745,
+    "longitude": 12.3046955,
+    "source": "two-source-v6.2",
+    "confidence": 0.825,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007Rsj",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-29-tagebaurestloch-kockern": {
     "status": "unmapped",
@@ -4353,14 +5835,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-30-feuchtbiotop-holzweiig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5999745,
+    "longitude": 12.3046955,
+    "source": "two-source-v6.2",
+    "confidence": 0.908,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007Rsj",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-31-kiesgrube-loberitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6566928,
+    "candidateLongitude": 12.1623036,
+    "confidence": 0.83,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-32-luthers-linde-muldenstein": {
     "status": "unmapped",
@@ -4368,19 +5859,34 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-34-alte-mulde-in-friedersdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6482387,
+    "longitude": 12.3629096,
+    "source": "two-source-v6.2",
+    "confidence": 0.906,
+    "sourceStatus": "verified",
+    "officialDistanceM": 34.5,
+    "officialFeatureId": "Watercourse_DESTGEOT00005hHo_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-35-leine-in-bitterfeld-privatstrecke-beachten-ad-d-h-1-66": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7138485,
+    "candidateLongitude": 12.2875305,
+    "confidence": 0.855,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-36-auensee-bei-holzweiig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5999745,
+    "longitude": 12.3046955,
+    "source": "two-source-v6.2",
+    "confidence": 0.908,
+    "sourceStatus": "verified",
+    "officialDistanceM": 2.4,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007Rsj",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-38-geerensee-friedersdorf": {
     "status": "unmapped",
@@ -4388,14 +5894,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-39-teich-seegarten-schierau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7619467,
+    "longitude": 12.2751637,
+    "source": "two-source-v6.2",
+    "confidence": 0.829,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10.5,
+    "officialFeatureId": "StandingWater_DESTGEOT0000fLRI",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-40-groer-teich-bitterfeld": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6192197,
+    "candidateLongitude": 12.3325537,
+    "confidence": 0.85,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-41-waldteich-thalheim": {
     "status": "unmapped",
@@ -4408,34 +5923,67 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-43-dorfteich-thalheim": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6480236,
+    "candidateLongitude": 12.2284216,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-44-schulteich-schwemsal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6243851,
+    "longitude": 12.5599593,
+    "source": "two-source-v6.2",
+    "confidence": 0.911,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005t6j",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-45-mescheders-teich-schwemsal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6243851,
+    "longitude": 12.5599593,
+    "source": "two-source-v6.2",
+    "confidence": 0.911,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005t6j",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-46-schwemme-schwemsal": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6243851,
+    "longitude": 12.5599593,
+    "source": "two-source-v6.2",
+    "confidence": 0.911,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005t6j",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-47-pferdeteich-glebitzsch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5954495,
+    "longitude": 12.1900864,
+    "source": "two-source-v6.2",
+    "confidence": 0.922,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.3,
+    "officialFeatureId": "StandingWater_DESTGEOTR100eoUJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-48-inselteich-glebitzsch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5954495,
+    "longitude": 12.1900864,
+    "source": "two-source-v6.2",
+    "confidence": 0.922,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.3,
+    "officialFeatureId": "StandingWater_DESTGEOTR100eoUJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-120-50-dorfteich-beyersdorf": {
     "status": "unmapped",
@@ -4453,24 +6001,36 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-120-53-teich-am-park-schrenz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5953834,
+    "candidateLongitude": 12.0811945,
+    "confidence": 0.77,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-54-teich-am-etp-schrenz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5953834,
+    "candidateLongitude": 12.0811945,
+    "confidence": 0.77,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-55-kragenteich-roitzsch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5744151,
+    "candidateLongitude": 12.2681017,
+    "confidence": 0.908,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-120-56-tonkiete-schortewitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6489287,
+    "candidateLongitude": 12.0292168,
+    "confidence": 0.96,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-121-01-vergimeinnicht-postgrube": {
     "status": "unmapped",
@@ -4488,19 +6048,34 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-140-01-moster-altes-wasser": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7662703,
+    "candidateLongitude": 12.2893034,
+    "confidence": 0.934,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-140-02-niesauer-stillinge": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7618708,
+    "longitude": 12.2931412,
+    "source": "two-source-v6.2",
+    "confidence": 0.957,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10.5,
+    "officialFeatureId": "StandingWater_DESTGEOTR100fCxK",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-271-01-hausteich-in-reupzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7377073,
+    "longitude": 12.0685873,
+    "source": "two-source-v6.2",
+    "confidence": 0.931,
+    "sourceStatus": "verified",
+    "officialDistanceM": 17.2,
+    "officialFeatureId": "StandingWater_DESTGEOT0000dgtL",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-271-02-zuckerteich-bei-osternienburg": {
     "status": "unmapped",
@@ -4508,19 +6083,37 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-271-03-elsdorfer-sandkiete": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7836693,
+    "longitude": 11.9625626,
+    "source": "two-source-v6.2",
+    "confidence": 0.954,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.2,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007KKO",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-271-04-strandbad-gutersee-in-kothen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7490341,
+    "longitude": 11.9764182,
+    "source": "two-source-v6.2",
+    "confidence": 0.892,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.7,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007MnD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-271-06-baggerkiethe-kothen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7490341,
+    "longitude": 11.9764182,
+    "source": "two-source-v6.2",
+    "confidence": 0.892,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.7,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007MnD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-272-01-magdalenenteich-in-aken": {
     "status": "unmapped",
@@ -4528,19 +6121,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-272-02-nachthainichte-bei-aken": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8543298,
+    "candidateLongitude": 12.0582917,
+    "confidence": 0.817,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-272-03-groe-kabel-langes-loch-bei-aken": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8543298,
+    "candidateLongitude": 12.0582917,
+    "confidence": 0.817,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-272-04-kleine-kabel-bei-aken": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8543298,
+    "candidateLongitude": 12.0582917,
+    "confidence": 0.817,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-272-05-taube-von-700m-unterhalb-einmundung": {
     "status": "unmapped",
@@ -4548,9 +6150,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-272-06-burgersee-in-aken": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8561627,
+    "longitude": 12.0702549,
+    "source": "two-source-v6.2",
+    "confidence": 0.822,
+    "sourceStatus": "verified",
+    "officialDistanceM": 23.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00004NMN",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-273-01-baufeld-worbzig-1-groe-kiesgrube": {
     "status": "unmapped",
@@ -4563,24 +6171,39 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-273-03-baufeld-worbzig-3-kiesgrube-rechts": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7945407,
+    "candidateLongitude": 10.8310263,
+    "confidence": 0.855,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-04-feldschlochen-bei-piethen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.675812,
+    "longitude": 11.9411837,
+    "source": "two-source-v6.2",
+    "confidence": 0.916,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00002SlL",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-273-05-karoline-bei-piethen-boote-ohne-motor": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6703744,
+    "candidateLongitude": 11.9352208,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-06-sohl-bei-piethen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6703744,
+    "candidateLongitude": 11.9352208,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-07-betonwerkteich-3-4-bei-grobzig": {
     "status": "unmapped",
@@ -4593,19 +6216,28 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-273-09-sandkiete-ii-bei-grobzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6794837,
+    "candidateLongitude": 11.8739599,
+    "confidence": 0.864,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-10-schachtteich-bei-piethen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6703744,
+    "candidateLongitude": 11.9352208,
+    "confidence": 0.889,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-11-fuhne-von-einmundung-der-riede": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5953834,
+    "candidateLongitude": 12.0811945,
+    "confidence": 0.837,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-12-sportplatzteich-in-gorzig": {
     "status": "unmapped",
@@ -4613,14 +6245,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-273-15-augustateich-in-pfaffendorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7038233,
+    "longitude": 11.9016973,
+    "source": "two-source-v6.2",
+    "confidence": 0.808,
+    "sourceStatus": "verified",
+    "officialDistanceM": 17.9,
+    "officialFeatureId": "StandingWater_DESTGEOTR100bdaQ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-273-17-dorfteich-reinsdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6602206,
+    "candidateLongitude": 12.0017972,
+    "confidence": 0.816,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-18-pelzteich-gorzig": {
     "status": "unmapped",
@@ -4628,9 +6269,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-273-19-betonwerkteich-v-bei-grobzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6851011,
+    "longitude": 11.8859843,
+    "source": "two-source-v6.2",
+    "confidence": 0.897,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9,
+    "officialFeatureId": "StandingWater_DESTGEOT00002Sm8",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-273-20-teich-in-weddershausen": {
     "status": "unmapped",
@@ -4638,34 +6285,64 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-273-21-dorfteich-gnetsch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6786012,
+    "longitude": 12.0797739,
+    "source": "two-source-v6.2",
+    "confidence": 0.816,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.1,
+    "officialFeatureId": "StandingWater_DESTGEOT00004Lit",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-273-22-fischteich-gnetsch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6786012,
+    "longitude": 12.0797739,
+    "source": "two-source-v6.2",
+    "confidence": 0.816,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.1,
+    "officialFeatureId": "StandingWater_DESTGEOT00004Lit",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-273-23-kiessandtagebau-gnetsch-riesdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6786012,
+    "longitude": 12.0797739,
+    "source": "two-source-v6.2",
+    "confidence": 0.816,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.1,
+    "officialFeatureId": "StandingWater_DESTGEOT00004Lit",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-273-24-gutsteich-gorzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6602206,
+    "candidateLongitude": 12.0017972,
+    "confidence": 0.815,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-273-25-molkereiteich-maasdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6821731,
+    "longitude": 11.9623991,
+    "source": "two-source-v6.2",
+    "confidence": 0.897,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11,
+    "officialFeatureId": "StandingWater_DESTGEOT00002SlG",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-00-ackermannsteich-elsnigk": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.785869,
+    "candidateLongitude": 12.0570474,
+    "confidence": 0.898,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-275-01-grubenteich-bei-osternienburg": {
     "status": "unmapped",
@@ -4678,19 +6355,34 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-275-03-bruckmannsteich-und-pumpenteich-bei": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8733238,
+    "candidateLongitude": 12.0764048,
+    "confidence": 0.92,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-275-04-groe-sandfurchen-bei-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-05-lochmannsteich-bei-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-06-baggerteich-bei-trebbichau-aken": {
     "status": "unmapped",
@@ -4703,9 +6395,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-275-08-drei-locher-in-micheln": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8126905,
+    "candidateLongitude": 11.9951105,
+    "confidence": 0.853,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-275-09-entfallt": {
     "status": "unmapped",
@@ -4713,44 +6408,86 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-275-10-sonntalteich-bei-micheln": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8126905,
+    "candidateLongitude": 11.9951105,
+    "confidence": 0.853,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-275-11-hasenteich-bei-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7984866,
+    "candidateLongitude": 12.0403478,
+    "confidence": 0.875,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "7-275-12-teich-ii-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-13-kleiner-ruteich-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-14-muhlenteich-wulfen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8390621,
+    "longitude": 11.933822,
+    "source": "two-source-v6.2",
+    "confidence": 0.775,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.1,
+    "officialFeatureId": "StandingWater_DESTGEOTR100ckV8",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-15-kapellenteich-wulfen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8390621,
+    "longitude": 11.933822,
+    "source": "two-source-v6.2",
+    "confidence": 0.775,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.1,
+    "officialFeatureId": "StandingWater_DESTGEOTR100ckV8",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-16-angerteich-wulfen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8390621,
+    "longitude": 11.933822,
+    "source": "two-source-v6.2",
+    "confidence": 0.775,
+    "sourceStatus": "verified",
+    "officialDistanceM": 13.1,
+    "officialFeatureId": "StandingWater_DESTGEOTR100ckV8",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-17-holzplatzteich-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-18-maxdorfer-teich": {
     "status": "unmapped",
@@ -4758,29 +6495,59 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-275-19-roter-teich-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-20-salzteich-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-21-groer-ruteich-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-22-strutwiesen-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-23-teich-am-alten-sportplatz-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.815,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-24-busch-raten-dornbock": {
     "status": "unmapped",
@@ -4788,44 +6555,92 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-275-25-backerteich-diebzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8654162,
+    "longitude": 11.93949,
+    "source": "two-source-v6.2",
+    "confidence": 0.931,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00002Wob",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-26-mullerteich-diebzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8654162,
+    "longitude": 11.93949,
+    "source": "two-source-v6.2",
+    "confidence": 0.931,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00002Wob",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-27-schmiedeteich-diebzig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8654162,
+    "longitude": 11.93949,
+    "source": "two-source-v6.2",
+    "confidence": 0.931,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.5,
+    "officialFeatureId": "StandingWater_DESTGEOT00002Wob",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-28-dorfteich-pidorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7997798,
+    "longitude": 12.0109328,
+    "source": "two-source-v6.2",
+    "confidence": 0.818,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.1,
+    "officialFeatureId": "StandingWater_DESTGEOTR100fdXK",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-29-schaferteich-pidorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7997798,
+    "longitude": 12.0109328,
+    "source": "two-source-v6.2",
+    "confidence": 0.818,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.1,
+    "officialFeatureId": "StandingWater_DESTGEOTR100fdXK",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-30-kuhteich-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-275-31-straucherteich-osternienburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7927009,
+    "longitude": 12.0425874,
+    "source": "two-source-v6.2",
+    "confidence": 0.791,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-276-01-stadionteich-in-kothen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7490341,
+    "longitude": 11.9764182,
+    "source": "two-source-v6.2",
+    "confidence": 0.892,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.7,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007MnD",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-276-02-schulteich-bei-trebbichau-aken": {
     "status": "unmapped",
@@ -4833,14 +6648,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-276-03-teich-kleinbadegast": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7301216,
+    "longitude": 12.0257652,
+    "source": "two-source-v6.2",
+    "confidence": 0.84,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXp",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-276-04-schulzenteich-grobadegast": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7334123,
+    "longitude": 12.029457,
+    "source": "two-source-v6.2",
+    "confidence": 0.876,
+    "sourceStatus": "verified",
+    "officialDistanceM": 16.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00004LXq",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-276-05-teich-am-kulturzentrum-grobadegast": {
     "status": "unmapped",
@@ -4853,9 +6680,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-360-01-stauanlage-klein-leitzkau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.003441,
+    "longitude": 12.2418319,
+    "source": "two-source-v6.2",
+    "confidence": 0.728,
+    "sourceStatus": "verified",
+    "officialDistanceM": 16.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00005brV",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-400-01-alte-elbe-bei-dornburg": {
     "status": "unmapped",
@@ -4863,14 +6696,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-490-02-kiesgrube-waldfrieden-bei-zerbst": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9729097,
+    "longitude": 12.0649051,
+    "source": "two-source-v6.2",
+    "confidence": 0.817,
+    "sourceStatus": "verified",
+    "officialDistanceM": 8.9,
+    "officialFeatureId": "StandingWater_DESTGEOTR100aYyI",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-490-03-stauanlage-golbogen-bei-straguth": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0275685,
+    "longitude": 12.1883985,
+    "source": "two-source-v6.2",
+    "confidence": 0.804,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005brC",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-490-04-nuthe-im-landkreis-anhalt-bitterfeld-a-a-b-bf-d-h-k-pl-19-50-bis-walternienburg-mit-ausnahme-der-strecke-brucke-kameritz-bis-ca-3-km-flussaufwarts-salmostrecken-beachten": {
     "status": "unmapped",
@@ -4893,9 +6738,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-490-09-kiesgrube-ost-bei-zerbst-5-00-gesperrt-bis-31-12-2022": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.978815,
+    "longitude": 12.0224599,
+    "source": "two-source-v6.2",
+    "confidence": 0.856,
+    "sourceStatus": "verified",
+    "officialDistanceM": 3.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00004S49",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-491-01-godnitzer-see": {
     "status": "unmapped",
@@ -4903,9 +6754,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-491-02-groes-loch-bei-steutz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8740088,
+    "longitude": 12.0754045,
+    "source": "two-source-v6.2",
+    "confidence": 0.85,
+    "sourceStatus": "verified",
+    "officialDistanceM": 8.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00004NMO",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-491-03-pfaffensee-bei-steckby": {
     "status": "unmapped",
@@ -4913,14 +6770,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "7-491-04-groer-wehl-bei-steutz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8788247,
+    "longitude": 12.0812892,
+    "source": "two-source-v6.2",
+    "confidence": 0.847,
+    "sourceStatus": "verified",
+    "officialDistanceM": 4.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00004NO1",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "7-492-01-groer-cassinteich-bei-lindau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 52.0436751,
+    "longitude": 12.1100734,
+    "source": "two-source-v6.2",
+    "confidence": 0.776,
+    "sourceStatus": "verified",
+    "officialDistanceM": 8.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00004S4i",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-180-02-ehemaliger-badeteich-an-der": {
     "status": "unmapped",
@@ -4928,24 +6797,36 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-180-03-birnbaummuhlenteich-grafenhainichen-a-b-bl-h-k-pl-ro-s-0-53": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 52.4901938,
+    "candidateLongitude": 11.7037949,
+    "confidence": 0.81,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-180-04-strohwalder-teich-grafenhainichen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.733025,
+    "candidateLongitude": 12.4521901,
+    "confidence": 0.855,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-180-05-affenteich-grafenhainichen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.733025,
+    "candidateLongitude": 12.4521901,
+    "confidence": 0.855,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-180-06-buchholzteich-grafenhainichen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.733025,
+    "candidateLongitude": 12.4521901,
+    "confidence": 0.855,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-181-01-reudener-grube": {
     "status": "unmapped",
@@ -4968,9 +6849,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-181-05-tagebaurestloch-druschplatzteich": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7196249,
+    "candidateLongitude": 12.3986165,
+    "confidence": 0.847,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-181-06-jagerteich-bei-sollichau": {
     "status": "unmapped",
@@ -4978,9 +6862,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-181-07-unterer-dorfteich-sollichau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6357095,
+    "candidateLongitude": 12.6383932,
+    "confidence": 0.827,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-181-08-muhlteich-in-tornau": {
     "status": "unmapped",
@@ -4988,24 +6875,42 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-181-09-ganseteich-in-sollichau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6357095,
+    "candidateLongitude": 12.6383932,
+    "confidence": 0.827,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-181-10-lehmkeite-bei-uthausen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7568922,
+    "longitude": 12.5540878,
+    "source": "two-source-v6.2",
+    "confidence": 0.88,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00005uYB",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-181-11-neuer-teich-bei-uthausen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7568922,
+    "longitude": 12.5540878,
+    "source": "two-source-v6.2",
+    "confidence": 0.88,
+    "sourceStatus": "verified",
+    "officialDistanceM": 20.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00005uYB",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-181-12-schleifbach-bei-sollichau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6357095,
+    "candidateLongitude": 12.6383932,
+    "confidence": 0.827,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-181-13-barbarasee-bei-grafenhainichen-boote": {
     "status": "unmapped",
@@ -5013,9 +6918,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-181-14-dorfteich-schleesen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.782501,
+    "longitude": 12.4867909,
+    "source": "two-source-v6.2",
+    "confidence": 0.847,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005uYS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-182-01-alte-grube-mohlau": {
     "status": "unmapped",
@@ -5028,9 +6939,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-182-03-3-steinbruchteiche-in-mohlau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.731982,
+    "longitude": 12.3634973,
+    "source": "two-source-v6.2",
+    "confidence": 0.919,
+    "sourceStatus": "verified",
+    "officialDistanceM": 27,
+    "officialFeatureId": "StandingWater_DESTGEOT00005k8x",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-183-01-badeteich-vockerode": {
     "status": "unmapped",
@@ -5048,29 +6965,44 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-183-04-margaretenhofteich-bei-oranienbaum": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.800217,
+    "candidateLongitude": 12.4017377,
+    "confidence": 0.888,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-05-talkenloch-bei-kakau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8028305,
+    "candidateLongitude": 12.4298212,
+    "confidence": 0.899,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-06-alter-graben-worlitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8403817,
+    "candidateLongitude": 12.4122004,
+    "confidence": 0.851,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-07-am-fliegraben-diestelsee-bei-worlitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8403817,
+    "candidateLongitude": 12.4122004,
+    "confidence": 0.851,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-08-fuhrtgraben-bei-worlitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8403817,
+    "candidateLongitude": 12.4122004,
+    "confidence": 0.851,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-09-stammhainigte-bei-worlitz": {
     "status": "unmapped",
@@ -5078,9 +7010,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-183-10-groe-brage-bei-worlitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8392199,
+    "candidateLongitude": 12.4247973,
+    "confidence": 0.871,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-11-groes-hakenloch-bei-vockerode": {
     "status": "unmapped",
@@ -5088,9 +7023,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-183-12-schiffinge-bei-vockerode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8421383,
+    "candidateLongitude": 12.3472439,
+    "confidence": 0.877,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-13-kapengraben-von-ehem-b107-bis-zur": {
     "status": "unmapped",
@@ -5103,14 +7041,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-183-16-hauptgraben-von-worlitz-bis-kakau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8069817,
+    "candidateLongitude": 12.4327648,
+    "confidence": 0.89,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-183-17-4-wallstiche-an-den-mittelholzern": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8392199,
+    "candidateLongitude": 12.4247973,
+    "confidence": 0.871,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-184-01-roter-see-bei-rotta": {
     "status": "unmapped",
@@ -5118,9 +7062,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-184-02-see-am-waldrand-bei-rotta": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7558382,
+    "longitude": 12.5967094,
+    "source": "two-source-v6.2",
+    "confidence": 0.882,
+    "sourceStatus": "verified",
+    "officialDistanceM": 12.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005CdP",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-184-03-bergwitzsee": {
     "status": "unmapped",
@@ -5133,19 +7083,31 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-250-05-saulug-bei-jessen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7889189,
+    "candidateLongitude": 12.9639886,
+    "confidence": 0.845,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-250-06-schweinitzer-flie-von-landesgrenze-bis-a-b-bl-h-pl-ro-s-9-50-einlauf-morgengraben-bei-zwuschen-dixforda": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8226742,
+    "longitude": 13.0485515,
+    "source": "two-source-v6.2",
+    "confidence": 0.818,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.2,
+    "officialFeatureId": "Watercourse_DESTGEOTR100b9a0_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-250-07-neuer-arm-in-jessen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7889189,
+    "candidateLongitude": 12.9639886,
+    "confidence": 0.845,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-250-08-schwarze-elster-von-lg-bis-zur-ein": {
     "status": "unmapped",
@@ -5163,24 +7125,39 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-250-12-neugraben-von-landesgrenze-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6571329,
+    "candidateLongitude": 12.3058934,
+    "confidence": 0.784,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-250-13-landlache-vom-plossiger-graben-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6571329,
+    "candidateLongitude": 12.3058934,
+    "confidence": 0.784,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-250-14-baggerteich-bei-brandis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.3742077,
+    "candidateLongitude": 11.9890859,
+    "confidence": 0.879,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-250-15-rieke-premsendorf-annaburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7545908,
+    "longitude": 13.1361279,
+    "source": "two-source-v6.2",
+    "confidence": 0.887,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Vh2",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-250-16-hufeisenteich-jessen-grabo": {
     "status": "unmapped",
@@ -5188,14 +7165,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-250-18-kremnitz-holzdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7617936,
+    "candidateLongitude": 13.1081107,
+    "confidence": 0.769,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-251-01-kiestagebau-elbekies-bei-prettin": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6591039,
+    "candidateLongitude": 12.9310159,
+    "confidence": 0.881,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-251-02-kiestagbau-badesee-bei-prettin": {
     "status": "unmapped",
@@ -5208,29 +7191,56 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-252-01-alte-elbe-in-iserbegka-bei-elster": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8252467,
+    "candidateLongitude": 12.8383738,
+    "confidence": 0.801,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-252-02-rotlache-bei-elster": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8247355,
+    "longitude": 12.8207271,
+    "source": "two-source-v6.2",
+    "confidence": 0.849,
+    "sourceStatus": "verified",
+    "officialDistanceM": 7.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NaJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-252-03-fischteich-bei-elster": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8247355,
+    "longitude": 12.8207271,
+    "source": "two-source-v6.2",
+    "confidence": 0.849,
+    "sourceStatus": "verified",
+    "officialDistanceM": 7.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NaJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-252-04-kleiner-klinker-bei-elster": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8247355,
+    "longitude": 12.8207271,
+    "source": "two-source-v6.2",
+    "confidence": 0.849,
+    "sourceStatus": "verified",
+    "officialDistanceM": 7.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NaJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-252-05-spitzenlocher-in-elster": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8247355,
+    "longitude": 12.8207271,
+    "source": "two-source-v6.2",
+    "confidence": 0.849,
+    "sourceStatus": "verified",
+    "officialDistanceM": 7.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NaJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-253-01-das-loch-annaburg": {
     "status": "unmapped",
@@ -5238,14 +7248,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-253-02-hertha-bei-loben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7673303,
+    "longitude": 13.079398,
+    "source": "two-source-v6.2",
+    "confidence": 0.893,
+    "sourceStatus": "verified",
+    "officialDistanceM": 6,
+    "officialFeatureId": "StandingWater_DESTGEOT0000hrIa",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-253-03-gewasser-schwertfeger-stander": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7673303,
+    "longitude": 13.079398,
+    "source": "two-source-v6.2",
+    "confidence": 0.893,
+    "sourceStatus": "verified",
+    "officialDistanceM": 6,
+    "officialFeatureId": "StandingWater_DESTGEOT0000hrIa",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-253-04-gewasser-meiner-lehrmann": {
     "status": "unmapped",
@@ -5258,29 +7280,50 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-360-02-dorfteich-klieken": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8881487,
+    "candidateLongitude": 12.3691807,
+    "confidence": 0.948,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-360-03-silbersee-bei-zieko": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9151337,
+    "candidateLongitude": 12.4107055,
+    "confidence": 0.857,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-360-05-kohlenschacht-brasen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.9595301,
+    "longitude": 12.3905877,
+    "source": "two-source-v6.2",
+    "confidence": 0.959,
+    "sourceStatus": "verified",
+    "officialDistanceM": 8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005oUV",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-360-06-waldmuhlenteich-bei-coswig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8792505,
+    "longitude": 12.45821,
+    "source": "two-source-v6.2",
+    "confidence": 0.839,
+    "sourceStatus": "verified",
+    "officialDistanceM": 6.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00005xdU",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-360-07-steinmuhlenteich-bei-duben": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.9229512,
+    "candidateLongitude": 12.3909361,
+    "confidence": 0.863,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-360-09-tongrube-mollensdorf": {
     "status": "unmapped",
@@ -5288,14 +7331,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-361-01-lehmausstiche-bei-coswig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8792505,
+    "longitude": 12.45821,
+    "source": "two-source-v6.2",
+    "confidence": 0.839,
+    "sourceStatus": "verified",
+    "officialDistanceM": 6.4,
+    "officialFeatureId": "StandingWater_DESTGEOT00005xdU",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-361-02-kohlengrube-coswig-flamingbad": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8953884,
+    "candidateLongitude": 12.4275045,
+    "confidence": 0.834,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-01-klinkerteich-bei-bad-schmiedeberg": {
     "status": "unmapped",
@@ -5303,44 +7355,86 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-02-brauteich-schlograben-und": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.961923,
+    "candidateLongitude": 12.7437947,
+    "confidence": 0.932,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-03-streitlache-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-04-1-flutbrucke-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-05-forstereiteich-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-06-kuhlienteich-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-07-sandekolk-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-08-durchstich-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-10-fleischerwerder-bei-dabrun": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8287999,
+    "candidateLongitude": 12.7242829,
+    "confidence": 0.83,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-11-booser-ri-im-ot-boos-dabrun": {
     "status": "unmapped",
@@ -5358,34 +7452,58 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-14-teich-bleddin": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7876459,
+    "candidateLongitude": 12.784032,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-15-schluft-bei-bleddin": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7876459,
+    "candidateLongitude": 12.784032,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-16-bleddiner-ri": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7910406,
+    "candidateLongitude": 12.7924639,
+    "confidence": 0.954,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-17-sandkolk-bleddin": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7876459,
+    "candidateLongitude": 12.784032,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-20-flutbrucke-2-bude-100-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-22-1-brucke-graben-zum-groen-loch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8536385,
+    "longitude": 12.5274506,
+    "source": "two-source-v6.2",
+    "confidence": 0.843,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11,
+    "officialFeatureId": "Watercourse_DESTGEOTR1008nNq_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-23-moschkolk-bei-wartenburg": {
     "status": "unmapped",
@@ -5398,14 +7516,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-25-streng-alte-elbe-bleesern-bei-seegrehna-a-b-bl-h-pl-0-72": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8332802,
+    "longitude": 13.1318475,
+    "source": "two-source-v6.2",
+    "confidence": 0.804,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.2,
+    "officialFeatureId": "Watercourse_DESTGEOT00005XpD_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-26-groer-merkwitzer-teich": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7662184,
+    "longitude": 12.6757947,
+    "source": "two-source-v6.2",
+    "confidence": 0.913,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Cea",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-27-kolk-in-den-krebshornwiesen": {
     "status": "unmapped",
@@ -5413,34 +7543,64 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-28-kleiner-ri-bei-dabrun-schleienloch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8287999,
+    "candidateLongitude": 12.7242829,
+    "confidence": 0.83,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-29-falkenwaiden-bei-wartenburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8132285,
+    "longitude": 12.7769031,
+    "source": "two-source-v6.2",
+    "confidence": 0.888,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NbV",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-30-ri-neue-wiese-wartenburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8132285,
+    "longitude": 12.7769031,
+    "source": "two-source-v6.2",
+    "confidence": 0.888,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NbV",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-31-pfahlen-bei-wartenburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8132285,
+    "longitude": 12.7769031,
+    "source": "two-source-v6.2",
+    "confidence": 0.888,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NbV",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-32-rothekolk-bei-wartenburg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8132285,
+    "longitude": 12.7769031,
+    "source": "two-source-v6.2",
+    "confidence": 0.888,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005NbV",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-33-schluft-priesitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.707121,
+    "candidateLongitude": 12.83869,
+    "confidence": 0.89,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-35-3-weinbergeiche-abtsdorf": {
     "status": "unmapped",
@@ -5453,9 +7613,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-37-sandekolk-bei-dabrun": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8287999,
+    "candidateLongitude": 12.7242829,
+    "confidence": 0.83,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-38-fliegraben-vom-wachsdorfer": {
     "status": "unmapped",
@@ -5473,14 +7636,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-41-tiefe-lache-mit-graben-und-loch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8536385,
+    "longitude": 12.5274506,
+    "source": "two-source-v6.2",
+    "confidence": 0.843,
+    "sourceStatus": "verified",
+    "officialDistanceM": 11,
+    "officialFeatureId": "Watercourse_DESTGEOTR1008nNq_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-42-krummer-see-bodemar-bei-seegrehna-a-bl-h-k-pl-s-1-24": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4708382,
+    "candidateLongitude": 11.8860993,
+    "confidence": 0.755,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-43-blumenwinkel-bei-seegrehna": {
     "status": "unmapped",
@@ -5508,9 +7680,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-48-hohndorfer-rinne-bei-muhlanger": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8537237,
+    "longitude": 12.7475957,
+    "source": "two-source-v6.2",
+    "confidence": 0.913,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Na9",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-49-groer-see-bleesern-bei-seegrehna": {
     "status": "unmapped",
@@ -5533,14 +7711,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-54-alte-badeanstalt-kemberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7716825,
+    "candidateLongitude": 12.625912,
+    "confidence": 0.924,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-55-wendel-wittenberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8620156,
+    "candidateLongitude": 12.6926851,
+    "confidence": 0.894,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-56-booser-graben-vom-booser-ri-zur-elbe": {
     "status": "unmapped",
@@ -5548,29 +7732,50 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-57-espenkolk-i-und-ii-bei-gallin-muhlanger": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8384308,
+    "candidateLongitude": 12.7623931,
+    "confidence": 0.865,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-58-wilde-kolke-i-bei-dabrun-melzwig": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8287999,
+    "candidateLongitude": 12.7242829,
+    "confidence": 0.854,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-59-tiefes-loch-bleddin": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.7876459,
+    "candidateLongitude": 12.784032,
+    "confidence": 0.902,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-61-groen-lache-bei-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-62-wasserruckhaltebecken": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.93392,
+    "longitude": 12.5963269,
+    "source": "two-source-v6.2",
+    "confidence": 0.84,
+    "sourceStatus": "verified",
+    "officialDistanceM": 22.7,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Hgx",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-63-schwarzes-loch-1-3": {
     "status": "unmapped",
@@ -5578,19 +7783,37 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-64-alter-see-bei-trebitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7587087,
+    "longitude": 12.7558475,
+    "source": "two-source-v6.2",
+    "confidence": 0.822,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00005LlI",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-65-braken-bei-trebitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7587087,
+    "longitude": 12.7558475,
+    "source": "two-source-v6.2",
+    "confidence": 0.822,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00005LlI",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-66-das-tiefe-loch-bei-trebitz": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.7587087,
+    "longitude": 12.7558475,
+    "source": "two-source-v6.2",
+    "confidence": 0.822,
+    "sourceStatus": "verified",
+    "officialDistanceM": 9.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00005LlI",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-67-katzenergel-bei-seegrehna": {
     "status": "unmapped",
@@ -5598,9 +7821,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-72-angerteich-korgau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.669343,
+    "longitude": 12.7496915,
+    "source": "two-source-v6.2",
+    "confidence": 0.85,
+    "sourceStatus": "verified",
+    "officialDistanceM": 24,
+    "officialFeatureId": "StandingWater_DESTGEOT00005JtY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-73-zahna-von-der-strae-zahna": {
     "status": "unmapped",
@@ -5608,14 +7837,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-74-drostekolk-pratau": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "8-460-75-rehkolk-apollensdorf": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.8720593,
+    "candidateLongitude": 12.5418473,
+    "confidence": 0.895,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "8-460-76-wolfskolk-seegrehna": {
     "status": "unmapped",
@@ -5623,14 +7861,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "8-460-77-kl-und-gr-loch-bei-pratau-3-eichen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.8460287,
+    "longitude": 12.6452708,
+    "source": "two-source-v6.2",
+    "confidence": 0.874,
+    "sourceStatus": "verified",
+    "officialDistanceM": 32.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00005Ffw",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-150-01-dorfteich-klosterrode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4980318,
+    "longitude": 11.4446973,
+    "source": "two-source-v6.2",
+    "confidence": 0.914,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.6,
+    "officialFeatureId": "StandingWater_DESTGEOTR1007PMU",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-150-02-monchsteich-hausbergteich-bischofrode-a-k-ro-s-0-50": {
     "status": "unmapped",
@@ -5643,14 +7893,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-150-04-parkbad-anna-helbra": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5613221,
+    "candidateLongitude": 11.4800467,
+    "confidence": 0.915,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-150-05-ottilienteich-bei-roblingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4535698,
+    "candidateLongitude": 11.6731185,
+    "confidence": 0.789,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-150-06-marthateich-bei-wansleben": {
     "status": "unmapped",
@@ -5668,9 +7924,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-150-11-minnabad-volkstedt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5696092,
+    "candidateLongitude": 11.5423583,
+    "confidence": 0.847,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-150-12-kleinwasserspeicher-ziegelrode": {
     "status": "unmapped",
@@ -5683,14 +7942,23 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-150-14-schaferteich-in-stedten": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4395334,
+    "longitude": 11.7025817,
+    "source": "two-source-v6.2",
+    "confidence": 0.88,
+    "sourceStatus": "verified",
+    "officialDistanceM": 21,
+    "officialFeatureId": "StandingWater_DESTGEOT000025EO",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-150-15-mittelgraben-v-stollengraben-bis": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.6571329,
+    "candidateLongitude": 12.3058934,
+    "confidence": 0.784,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-150-17-sudlicher-ringkanal-von": {
     "status": "unmapped",
@@ -5698,9 +7966,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-150-18-tonloch-lauraberg-roblingen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4535698,
+    "candidateLongitude": 11.6731185,
+    "confidence": 0.789,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-150-19-helmsdorfer-teiche": {
     "status": "unmapped",
@@ -5718,9 +7989,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-151-01-rudels-teich-bei-helfta": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5056173,
+    "candidateLongitude": 11.5730922,
+    "confidence": 0.866,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-230-01-parkteich-in-wiederstedt": {
     "status": "unmapped",
@@ -5733,9 +8007,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-230-03-olgrundteich-bei-hettstedt": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6673855,
+    "longitude": 11.5026252,
+    "source": "two-source-v6.2",
+    "confidence": 0.787,
+    "sourceStatus": "verified",
+    "officialDistanceM": 25.8,
+    "officialFeatureId": "StandingWater_DESTGEOT00001U3A",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-230-05-mansfelder-teich": {
     "status": "unmapped",
@@ -5748,14 +8028,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-230-08-schaferteich-sylda": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.679334,
+    "candidateLongitude": 11.4230811,
+    "confidence": 0.908,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-230-09-dorfteich-sylda": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.679334,
+    "candidateLongitude": 11.4230811,
+    "confidence": 0.908,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-230-11-amtsteich-bei-vatterode": {
     "status": "unmapped",
@@ -5763,9 +8049,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-230-13-huttenteich-sylda": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.679334,
+    "candidateLongitude": 11.4230811,
+    "confidence": 0.908,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-230-14-dorfteich-greifenhagen": {
     "status": "unmapped",
@@ -5773,9 +8062,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-230-15-ochsenpfuhlbachteich-vatterode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5992349,
+    "candidateLongitude": 11.426009,
+    "confidence": 0.854,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-351-01-unterer-hofteich-in-sittichenbach": {
     "status": "unmapped",
@@ -5793,9 +8085,15 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-390-01-melmensee-bei-tilleda": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.408355,
+    "longitude": 11.1717997,
+    "source": "two-source-v6.2",
+    "confidence": 0.749,
+    "sourceStatus": "verified",
+    "officialDistanceM": 30.5,
+    "officialFeatureId": "StandingWater_DESTGEOT000000JJ",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-02-see-hackpuffel": {
     "status": "unmapped",
@@ -5808,19 +8106,37 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-390-04-toter-arm-eichgraben-bei-wallhausen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4615643,
+    "longitude": 11.2101301,
+    "source": "two-source-v6.2",
+    "confidence": 0.908,
+    "sourceStatus": "verified",
+    "officialDistanceM": 1.3,
+    "officialFeatureId": "Watercourse_DESTGEOT00001ePU_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-06-groer-und-kleiner-see-uftrungen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.498844,
+    "longitude": 10.9835133,
+    "source": "two-source-v6.2",
+    "confidence": 0.903,
+    "sourceStatus": "verified",
+    "officialDistanceM": 26.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00000KxY",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-07-dorfteich-passbruch": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5533313,
+    "longitude": 11.1259526,
+    "source": "two-source-v6.2",
+    "confidence": 0.926,
+    "sourceStatus": "verified",
+    "officialDistanceM": 19.2,
+    "officialFeatureId": "StandingWater_DESTGEOT0000103V",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-08-schloteich-rottleberode": {
     "status": "unmapped",
@@ -5833,9 +8149,12 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-390-10-altarm-am-hornissenberg-bei-kelbra": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4390267,
+    "candidateLongitude": 11.0361459,
+    "confidence": 0.856,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-390-11-neuvorwerksteich-bei-allstedt": {
     "status": "unmapped",
@@ -5848,44 +8167,80 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-390-14-huttenteich-in-breitenstein": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6200826,
+    "longitude": 10.9417426,
+    "source": "two-source-v6.2",
+    "confidence": 0.898,
+    "sourceStatus": "verified",
+    "officialDistanceM": 14.2,
+    "officialFeatureId": "StandingWater_DESTGEOT00000OHL",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-15-ganseteich-in-breitenstein": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.6193365,
+    "longitude": 10.9501164,
+    "source": "two-source-v6.2",
+    "confidence": 0.933,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.9,
+    "officialFeatureId": "StandingWater_DESTGEOT00000OHM",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-16-toter-helmearm-bei-rola": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4574698,
+    "longitude": 11.0800421,
+    "source": "two-source-v6.2",
+    "confidence": 0.825,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.1,
+    "officialFeatureId": "StandingWater_DESTGEOTR100cMqr",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-17-muhlgraben-vom-wehr-hornissenberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4569268,
+    "longitude": 11.2065659,
+    "source": "two-source-v6.2",
+    "confidence": 0.873,
+    "sourceStatus": "verified",
+    "officialDistanceM": 15.3,
+    "officialFeatureId": "Watercourse_DESTGEOT00001eRV_lin",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-18-feuerloschteich-in-dittichenrode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4689026,
+    "candidateLongitude": 11.1009878,
+    "confidence": 0.831,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-390-19-dorfteich-rotha": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5409166,
+    "candidateLongitude": 11.1474381,
+    "confidence": 0.937,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-390-20-kunstteich-bei-wettelrode": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5142656,
+    "candidateLongitude": 11.2755607,
+    "confidence": 0.824,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-390-21-zweier-und-dreierteich-am-rosarium": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.474971,
+    "candidateLongitude": 11.3099336,
+    "confidence": 0.837,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-390-22-helme-ab-200m-unterhalb-straen": {
     "status": "unmapped",
@@ -5893,14 +8248,20 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-390-23-3-tonlocher-bei-morungen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.5082876,
+    "candidateLongitude": 11.2316396,
+    "confidence": 0.788,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-390-24-alte-kiesgrube-berga": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4572795,
+    "candidateLongitude": 11.0018156,
+    "confidence": 0.87,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   },
   "9-390-25-teich-in-beyernaumburg-othal": {
     "status": "unmapped",
@@ -5908,14 +8269,26 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-390-26-sackteich-in-sangerhausen": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4833779,
+    "longitude": 11.3124136,
+    "source": "two-source-v6.2",
+    "confidence": 0.824,
+    "sourceStatus": "verified",
+    "officialDistanceM": 10.6,
+    "officialFeatureId": "StandingWater_DESTGEOT00001xvS",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-27-kiesgrube-bei-rola": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.4574698,
+    "longitude": 11.0800421,
+    "source": "two-source-v6.2",
+    "confidence": 0.825,
+    "sourceStatus": "verified",
+    "officialDistanceM": 0.1,
+    "officialFeatureId": "StandingWater_DESTGEOTR100cMqr",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-28-toter-helmearm-bei-bennungen": {
     "status": "unmapped",
@@ -5928,13 +8301,22 @@ export const productionWaterCenterIndex: Record<string, ProductionWaterCenter> =
     "note": "Noch keine belastbare Kartenposition vorhanden."
   },
   "9-390-31-schloteich-grillenberg": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "mapped",
+    "latitude": 51.5285688,
+    "longitude": 11.3122889,
+    "source": "two-source-v6.2",
+    "confidence": 0.851,
+    "sourceStatus": "verified",
+    "officialDistanceM": 26.3,
+    "officialFeatureId": "StandingWater_DESTGEOT00001Afe",
+    "note": "OSM-Kandidat durch amtliche HY-P-Geometrie aus dem Basis-DLM bestätigt."
   },
   "9-390-32-stausee-kelbra": {
-    "status": "unmapped",
-    "confidence": 0,
-    "note": "Noch keine belastbare Kartenposition vorhanden."
+    "status": "review",
+    "candidateSource": "two-source-v6.2-review",
+    "candidateLatitude": 51.4390267,
+    "candidateLongitude": 11.0361459,
+    "confidence": 0.856,
+    "note": "Kandidat vorhanden, aber bewusst nicht als kartiert veröffentlicht."
   }
 };
