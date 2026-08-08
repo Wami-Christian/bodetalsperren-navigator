@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<schema targetNamespace="http://inspire.ec.europa.eu/schemas/hy-p/4.0" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:hy-p="http://inspire.ec.europa.eu/schemas/hy-p/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gn="http://inspire.ec.europa.eu/schemas/gn/4.0" xmlns:hy="http://inspire.ec.europa.eu/schemas/hy/4.0" xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3" xmlns:gmd="http://www.isotc211.org/2005/gmd">
+<import namespace="http://inspire.ec.europa.eu/schemas/base/3.3" schemaLocation="https://geodatenportal.sachsen-anhalt.de/ows_INSPIRE_LVermGeo_ATKIS_HY-P_WFS?SERVICE=WFS&amp;OUTPUTFORMAT=text%2fxml%3b%20subtype%3dgml%2f3%2e2%2e1&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAMES=ns:IdentifierPropertyType&amp;II_CHECKTYPENAMES=FALSE&amp;NAMESPACES=xmlns(ns,http%3a%2f%2finspire%2eec%2eeuropa%2eeu%2fschemas%2fbase%2f3%2e3)&amp;"/>
+<import namespace="http://inspire.ec.europa.eu/schemas/gn/4.0" schemaLocation="https://geodatenportal.sachsen-anhalt.de/ows_INSPIRE_LVermGeo_ATKIS_HY-P_WFS?SERVICE=WFS&amp;OUTPUTFORMAT=text%2fxml%3b%20subtype%3dgml%2f3%2e2%2e1&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAMES=ns:GeographicalName&amp;II_CHECKTYPENAMES=FALSE&amp;NAMESPACES=xmlns(ns,http%3a%2f%2finspire%2eec%2eeuropa%2eeu%2fschemas%2fgn%2f4%2e0)&amp;"/>
+<import namespace="http://inspire.ec.europa.eu/schemas/hy/4.0" schemaLocation="https://geodatenportal.sachsen-anhalt.de/ows_INSPIRE_LVermGeo_ATKIS_HY-P_WFS?SERVICE=WFS&amp;OUTPUTFORMAT=text%2fxml%3b%20subtype%3dgml%2f3%2e2%2e1&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAMES=ns:HydroIdentifier&amp;II_CHECKTYPENAMES=FALSE&amp;NAMESPACES=xmlns(ns,http%3a%2f%2finspire%2eec%2eeuropa%2eeu%2fschemas%2fhy%2f4%2e0)&amp;"/>
+<import namespace="http://www.isotc211.org/2005/gmd" schemaLocation="https://geodatenportal.sachsen-anhalt.de/ows_INSPIRE_LVermGeo_ATKIS_HY-P_WFS?SERVICE=WFS&amp;OUTPUTFORMAT=text%2fxml%3b%20subtype%3dgml%2f3%2e2%2e1&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAMES=ns:LocalisedCharacterString%5fPropertyType,ns:MD%5fResolution&amp;II_CHECKTYPENAMES=FALSE&amp;NAMESPACES=xmlns(ns,http%3a%2f%2fwww%2eisotc211%2eorg%2f2005%2fgmd)&amp;"/>
+<import namespace="http://www.opengis.net/gml/3.2" schemaLocation="https://geodatenportal.sachsen-anhalt.de/aaa-suite/schema/ogc/gml/3.2.1/gml.xsd"/>
+<element name="StandingWater" substitutionGroup="hy-p:SurfaceWater" type="hy-p:StandingWaterType"/>
+<element abstract="true" name="SurfaceWater" substitutionGroup="gml:AbstractFeature" type="hy-p:SurfaceWaterType"/>
+<complexType name="StandingWaterType">
+<complexContent>
+<extension base="hy-p:SurfaceWaterType">
+<sequence>
+<element name="elevation" nillable="true">
+<complexType>
+<simpleContent>
+<extension base="gml:LengthType">
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</extension>
+</simpleContent>
+</complexType>
+</element>
+<element name="meanDepth" nillable="true">
+<complexType>
+<simpleContent>
+<extension base="gml:LengthType">
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</extension>
+</simpleContent>
+</complexType>
+</element>
+<element name="surfaceArea" nillable="true">
+<complexType>
+<simpleContent>
+<extension base="gml:AreaType">
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</extension>
+</simpleContent>
+</complexType>
+</element>
+</sequence>
+</extension>
+</complexContent>
+</complexType>
+<complexType abstract="true" name="SurfaceWaterType">
+<complexContent>
+<extension base="gml:AbstractFeatureType">
+<sequence>
+<element maxOccurs="unbounded" minOccurs="0" name="geographicalName" nillable="true">
+<complexType>
+<sequence>
+<element ref="gn:GeographicalName"/>
+</sequence>
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</complexType>
+</element>
+<element maxOccurs="unbounded" minOccurs="0" name="hydroId" nillable="true">
+<complexType>
+<sequence>
+<element ref="hy:HydroIdentifier"/>
+</sequence>
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</complexType>
+</element>
+<element maxOccurs="unbounded" minOccurs="0" name="relatedHydroObject" type="gml:ReferenceType"/>
+<element name="beginLifespanVersion" nillable="true">
+<complexType>
+<simpleContent>
+<extension base="dateTime">
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</extension>
+</simpleContent>
+</complexType>
+</element>
+<element minOccurs="0" name="endLifespanVersion" nillable="true">
+<complexType>
+<simpleContent>
+<extension base="dateTime">
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</extension>
+</simpleContent>
+</complexType>
+</element>
+<element name="geometry" type="gml:GeometricPrimitivePropertyType"/>
+<element name="inspireId" type="base:IdentifierPropertyType"/>
+<element minOccurs="0" name="levelOfDetail">
+<complexType>
+<complexContent>
+<extension base="gml:AbstractMetadataPropertyType">
+<sequence>
+<element ref="gmd:MD_Resolution"/>
+</sequence>
+</extension>
+</complexContent>
+</complexType>
+</element>
+<element minOccurs="0" name="localType" nillable="true" type="gmd:LocalisedCharacterString_PropertyType"/>
+<element name="origin" nillable="true">
+<complexType>
+<simpleContent>
+<extension base="hy-p:OriginValueType">
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</extension>
+</simpleContent>
+</complexType>
+</element>
+<element name="persistence" nillable="true" type="gml:ReferenceType"/>
+<element name="tidal" nillable="true">
+<complexType>
+<simpleContent>
+<extension base="boolean">
+<attribute name="nilReason" type="gml:NilReasonType"/>
+</extension>
+</simpleContent>
+</complexType>
+</element>
+<element maxOccurs="unbounded" minOccurs="0" name="bank" nillable="true" type="gml:ReferenceType"/>
+<element maxOccurs="unbounded" name="drainsBasin" nillable="true" type="gml:ReferenceType"/>
+<element maxOccurs="unbounded" minOccurs="0" name="neighbour" nillable="true" type="gml:ReferenceType"/>
+</sequence>
+</extension>
+</complexContent>
+</complexType>
+<simpleType name="OriginValueType">
+<restriction base="string">
+<enumeration value="natural"/>
+<enumeration value="manMade"/>
+</restriction>
+</simpleType>
+</schema>

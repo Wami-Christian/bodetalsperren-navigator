@@ -1,5 +1,6 @@
 import type { FishingWater } from "@/lib/types";
 import { lavCatalog } from "./lav-catalog";
+import { productionWaterCenterIndex } from "./water-centers.production.generated";
 import { harzPremium } from "./harz-premium";
 import { lavCoordinateIndex } from "./lav-coordinates.generated";
 import { atkisWaterMatchIndex } from "./atkis-water-matches.generated";
@@ -322,12 +323,37 @@ const featuredLavNumbers = new Set(
 );
 
 const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
+  const production = productionWaterCenterIndex[water.id];
   const official = atkisWaterMatchIndex[water.id];
   const osm = lavCoordinateIndex[water.id];
 
   let enrichedWater: FishingWater = water;
 
   if (
+    production?.status === "mapped" &&
+    production.latitude != null &&
+    production.longitude != null
+  ) {
+    enrichedWater = {
+      ...enrichedWater,
+      latitude: production.latitude,
+      longitude: production.longitude,
+      notes: [
+        ...enrichedWater.notes,
+        production.source === "two-source-v6.2"
+          ? `Lage durch OSM + amtliche HY-P-Gewässergeometrie bestätigt${
+              production.officialDistanceM != null
+                ? ` (${Math.round(production.officialDistanceM)} m Abweichung)`
+                : ""
+            }.`
+          : production.source === "premium-manual"
+            ? "Manuell geprüfte Premium-Lage."
+            : production.source === "catalog-existing"
+              ? "Bereits vorhandene Kartenlage übernommen."
+              : `Bestehende Kartenlage aus ${production.source ?? "Datenabgleich"} übernommen.`
+      ]
+    };
+  } else if (
     official?.status === "matched" &&
     official.latitude != null &&
     official.longitude != null
@@ -371,31 +397,25 @@ const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
 
   return {
     ...enrichedWater,
-
     latitude:
       premium.latitude !== undefined
         ? premium.latitude
         : enrichedWater.latitude,
-
     longitude:
       premium.longitude !== undefined
         ? premium.longitude
         : enrichedWater.longitude,
-
     parkings:
       premium.parkings !== undefined
         ? premium.parkings
         : enrichedWater.parkings,
-
     spots:
       premium.spots !== undefined
         ? premium.spots
         : enrichedWater.spots,
-
     notes: premium.notes
       ? [...enrichedWater.notes, ...premium.notes]
       : enrichedWater.notes,
-
     sourceStatus:
       premium.sourceStatus ?? enrichedWater.sourceStatus
   };

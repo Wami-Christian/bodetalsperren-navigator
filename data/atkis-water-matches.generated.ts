@@ -6,14 +6,23 @@ export interface AtkisWaterMatch {
   latitude?: number; longitude?: number; confidence?: number;
   method?: "nominatim-name" | "overpass-locality";
   officialName?: string; officialFeatureId?: string; officialTypeName?: string;
-  areaHa?: number; distanceKm?: number; source?: string; checkedAt?: string; matchedAlias?: string;
+  areaHa?: number; distanceKm?: number; source?: string; checkedAt?: string;
 }
 
 export const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = {
   "1-160-01-bruders-teich-bei-gardelegen": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:45:53.124Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+    "status": "review",
+    "latitude": 52.5217857,
+    "longitude": 11.4842104,
+    "confidence": 0.462,
+    "method": "overpass-locality",
+    "officialName": "Jävenitzer Teich",
+    "matchedAlias": "Brüders Teich",
+    "officialFeatureId": "way/29144783",
+    "officialTypeName": "overpass:standing",
+    "distanceKm": 6.21,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:48:44.329Z"
   },
   "1-160-02-wasserspeicher-luffingen": {
     "status": "review",
@@ -26,18 +35,18 @@ export const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = {
     "officialFeatureId": "relation/5298560",
     "officialTypeName": "nominatim:unknown",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:45:55.892Z"
+    "checkedAt": "2026-08-08T07:48:47.078Z"
   },
   "1-160-03-kieskuhle-die-lange-wohrde": {
     "status": "unmatched",
-    "checkedAt": "2026-08-06T11:46:01.868Z",
+    "checkedAt": "2026-08-08T07:49:10.206Z",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
   },
   "1-160-04-stadtgraben-in-gardelegen": {
-    "status": "review",
+    "status": "matched",
     "latitude": 52.5252862,
     "longitude": 11.3885876,
-    "confidence": 0.819,
+    "confidence": 0.822,
     "method": "nominatim-name",
     "officialName": "Stadtgraben",
     "matchedAlias": "Stadtgraben",
@@ -45,28 +54,37 @@ export const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = {
     "officialTypeName": "nominatim:standing",
     "distanceKm": 0.34,
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:46:08.101Z"
+    "checkedAt": "2026-08-08T07:49:53.504Z"
   },
   "1-160-05-lindenthaler-teich-bei-gardelegen": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:46:13.614Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+    "status": "review",
+    "latitude": 52.5217857,
+    "longitude": 11.4842104,
+    "confidence": 0.462,
+    "method": "overpass-locality",
+    "officialName": "Jävenitzer Teich",
+    "matchedAlias": "Lindenthaler Teich",
+    "officialFeatureId": "way/29144783",
+    "officialTypeName": "overpass:standing",
+    "distanceKm": 6.21,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:50:21.608Z"
   },
   "1-160-06-wilhelmskanal-von-strae": {
     "status": "unmatched",
-    "checkedAt": "2026-08-06T11:46:19.176Z",
+    "checkedAt": "2026-08-08T07:50:28.989Z",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
   },
   "1-160-07-rotzen-s-loch-bei-breiteiche": {
     "status": "unmatched",
-    "checkedAt": "2026-08-06T11:46:23.769Z",
+    "checkedAt": "2026-08-08T07:50:33.097Z",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
   },
   "1-160-08-kiessee-gade-bei-solpke": {
     "status": "matched",
     "latitude": 52.4834015,
     "longitude": 11.281997,
-    "confidence": 0.932,
+    "confidence": 0.952,
     "method": "nominatim-name",
     "officialName": "Kiessee Gäde",
     "matchedAlias": "Kiessee Gäde",
@@ -74,7 +92,7 @@ export const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = {
     "officialTypeName": "nominatim:standing",
     "distanceKm": 2.38,
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:46:29.331Z"
+    "checkedAt": "2026-08-08T07:51:02.959Z"
   },
   "1-160-09-5-teiche-am-ipser-weg": {
     "status": "review",
@@ -87,163 +105,332 @@ export const atkisWaterMatchIndex: Record<string, AtkisWaterMatch> = {
     "officialFeatureId": "way/41111937",
     "officialTypeName": "nominatim:unknown",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:46:34.123Z"
+    "checkedAt": "2026-08-08T07:51:07.703Z"
   },
   "1-160-12-mahlbusen-heidberg-bei-estedt": {
     "status": "unmatched",
-    "checkedAt": "2026-08-06T11:46:58.924Z",
+    "checkedAt": "2026-08-08T07:51:47.926Z",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
   },
-  "6-401-02-bruch-2-bei-breitenhagen": {
-    "status": "review",
-    "latitude": 51.9227195,
-    "longitude": 11.9340061,
-    "confidence": 0.978,
-    "method": "overpass-locality",
-    "officialName": "Bruch 1",
-    "matchedAlias": "Bruch 2",
-    "officialFeatureId": "way/95936511",
-    "officialTypeName": "overpass:standing",
-    "distanceKm": 0.75,
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:47:51.668Z"
+  "1-160-13-forsterteich-bei-jerchel": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:52:31.215Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
   },
-  "6-401-03-bruch-3-bei-breitenhagen": {
-    "status": "review",
-    "latitude": 51.9227195,
-    "longitude": 11.9340061,
-    "confidence": 0.978,
-    "method": "overpass-locality",
-    "officialName": "Bruch 1",
-    "matchedAlias": "Bruch 3",
-    "officialFeatureId": "way/95936511",
-    "officialTypeName": "overpass:standing",
-    "distanceKm": 0.75,
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:47:58.680Z"
+  "1-160-14-milde-von-gardelegen": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:52:38.003Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
   },
-  "6-401-04-badebruch-bei-breitenhagen": {
+  "1-160-15-blechbudenteich-bei": {
     "status": "matched",
-    "latitude": 51.9224582,
-    "longitude": 11.9352462,
-    "confidence": 0.981,
+    "latitude": 52.4468332,
+    "longitude": 11.216048,
+    "confidence": 0.771,
     "method": "nominatim-name",
-    "officialName": "Badebruch",
-    "matchedAlias": "Badebruch",
-    "officialFeatureId": "way/95936509",
-    "officialTypeName": "nominatim:standing",
-    "distanceKm": 0.68,
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:48:05.236Z"
-  },
-  "6-401-05-drahningensee-bei-breitenhagen": {
-    "status": "review",
-    "latitude": 51.9195745,
-    "longitude": 11.9527659,
-    "confidence": 0.497,
-    "method": "overpass-locality",
-    "officialName": "Graben von Breitenhagen",
-    "matchedAlias": "Drähningensee bei Breitenhagen",
-    "officialFeatureId": "way/1526121027",
-    "officialTypeName": "overpass:flow",
-    "distanceKm": 0.77,
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:48:12.277Z"
-  },
-  "6-401-06-krugersee-bei-breitenhagen": {
-    "status": "matched",
-    "latitude": 51.9055235,
-    "longitude": 11.9390952,
-    "confidence": 0.939,
-    "method": "nominatim-name",
-    "officialName": "Krügersee",
-    "matchedAlias": "Krügersee",
-    "officialFeatureId": "way/23874630",
-    "officialTypeName": "nominatim:standing",
-    "distanceKm": 2.13,
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:48:19.059Z"
-  },
-  "6-401-07-kleiner-dorfsee-gro-rosenburg": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:48:22.523Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-401-08-landgraben-von-einmundung-des": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:48:29.983Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-401-09-taube-von-700m-oberhalb-der": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:48:34.936Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-402-01-dolphus-bei-barby": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:48:52.221Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-402-02-barbyer-landgraben-von": {
-    "status": "review",
-    "latitude": 52.0479521,
-    "longitude": 11.7413616,
-    "confidence": 0.5,
-    "method": "overpass-locality",
-    "officialName": "Elbenauer Landgraben",
-    "matchedAlias": "Barbyer Landgraben von",
-    "officialFeatureId": "way/38568595",
-    "officialTypeName": "overpass:flow",
-    "distanceKm": 3.02,
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:49:23.101Z"
-  },
-  "6-402-03-hafen-barby": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:49:27.968Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-402-04-kiesgrube-barby-sud": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:49:30.985Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-402-06-restloch-konigsaue": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:49:33.835Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-402-07-saale-von-werkleitz-bis-elbmundung": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:49:38.591Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-410-01-schachte-bei-tarthun": {
-    "status": "unmatched",
-    "checkedAt": "2026-08-06T11:50:06.626Z",
-    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
-  },
-  "6-410-02-warmsdorfer-teich": {
-    "status": "review",
-    "latitude": 51.781474,
-    "longitude": 11.5874465,
-    "confidence": 0.606,
-    "method": "nominatim-name",
-    "officialName": "Warmsdorfer Weg",
-    "matchedAlias": "warmsdorfer",
-    "officialFeatureId": "way/33889900",
+    "officialName": "Mieste-Breiteiche",
+    "matchedAlias": "Mieste/Breiteiche",
+    "officialFeatureId": "way/40731037",
     "officialTypeName": "nominatim:unknown",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
-    "checkedAt": "2026-08-06T11:50:09.700Z"
+    "checkedAt": "2026-08-08T07:52:42.360Z"
   },
-  "6-410-03-ritterflurteich-bei-stafurt": {
+  "1-160-16-untere-milde-von-wegebrucke": {
+    "status": "review",
+    "latitude": 52.6966051,
+    "longitude": 11.4629179,
+    "confidence": 0.456,
+    "method": "overpass-locality",
+    "officialName": "Milde",
+    "matchedAlias": "Untere Milde von Wegebrücke",
+    "officialFeatureId": "way/6169898",
+    "officialTypeName": "overpass:flow",
+    "distanceKm": 2.94,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:53:11.674Z"
+  },
+  "1-160-17-kellerbuschteiche-lindstedt": {
     "status": "unmatched",
-    "checkedAt": "2026-08-06T11:50:38.973Z",
+    "checkedAt": "2026-08-08T07:53:14.868Z",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
   },
-  "6-410-04-stockscher-teich-bei-wolmirsleben": {
+  "1-160-18-untere-milde-von-straenbrucke": {
     "status": "unmatched",
-    "checkedAt": "2026-08-06T11:53:37.087Z",
+    "checkedAt": "2026-08-08T07:53:19.069Z",
     "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-160-19-teich-faule-breite-bei-letzlingen": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:53:46.612Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-160-20-konigsgraben-vom-abschlag": {
+    "status": "review",
+    "latitude": 52.6414489,
+    "longitude": 11.4198591,
+    "confidence": 0.54,
+    "method": "overpass-locality",
+    "officialName": "Königsgraben",
+    "matchedAlias": "Königsgraben vom Abschlag",
+    "officialFeatureId": "way/92305199",
+    "officialTypeName": "overpass:flow",
+    "distanceKm": 9.73,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:55:21.513Z"
+  },
+  "1-160-21-kiesgrube-wernitz": {
+    "status": "review",
+    "latitude": 52.4855462,
+    "longitude": 11.2320531,
+    "confidence": 0.771,
+    "method": "nominatim-name",
+    "officialName": "Wernitz",
+    "matchedAlias": "wernitz",
+    "officialFeatureId": "relation/5289203",
+    "officialTypeName": "nominatim:unknown",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:55:24.409Z"
+  },
+  "1-160-22-secantsgraben-von-str-br-kalbe-m": {
+    "status": "review",
+    "latitude": 52.6407072,
+    "longitude": 11.4643875,
+    "confidence": 0.511,
+    "method": "overpass-locality",
+    "officialName": "Secantsgraben",
+    "matchedAlias": "Secantsgraben von Str.-Br. Kalbe",
+    "officialFeatureId": "way/38437544",
+    "officialTypeName": "overpass:flow",
+    "distanceKm": 8.96,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:55:49.735Z"
+  },
+  "1-160-23-grube-minna-bei-kassieck": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:56:14.335Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-161-01-teich-am-anglerheim-burggraben": {
+    "status": "review",
+    "latitude": 52.6538607,
+    "longitude": 11.3946487,
+    "confidence": 0.699,
+    "method": "nominatim-name",
+    "officialName": "Burggraben",
+    "matchedAlias": "Burggraben",
+    "officialFeatureId": "way/92147090",
+    "officialTypeName": "nominatim:standing",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:56:21.374Z"
+  },
+  "1-161-02-milde-von-kalbe-straenbrucke": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:56:26.876Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-161-03-untere-milde-von-winkelstedt": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:56:31.172Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-01-dorfteich-miesterhorst": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:56:33.891Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-02-anglerteiche-apenburg": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:56:38.569Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-03-wasserbecken-am-schlammgraben": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:57:11.885Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-04-prozebusch-in-dannefeld": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:57:30.736Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-05-sauergrund-bei-dannefeld": {
+    "status": "review",
+    "latitude": 52.4939276,
+    "longitude": 11.1329799,
+    "confidence": 0.872,
+    "method": "nominatim-name",
+    "officialName": "Sauergrund",
+    "matchedAlias": "Sauergrund",
+    "officialFeatureId": "node/10827603153",
+    "officialTypeName": "nominatim:unknown",
+    "distanceKm": 1.46,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T07:58:29.342Z"
+  },
+  "1-260-07-beregnungsteich-bei-lockstedt": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:58:55.184Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-08-langer-teich-immekath": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:58:58.035Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-09-neues-gewasser-in-klotze": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T07:59:40.840Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-10-teich-am-ehemaligen": {
+    "status": "review",
+    "latitude": 52.6090579,
+    "longitude": 11.1375925,
+    "confidence": 0.537,
+    "method": "overpass-locality",
+    "officialName": "Angelteich",
+    "matchedAlias": "Teich",
+    "officialFeatureId": "way/34022694",
+    "officialTypeName": "overpass:standing",
+    "distanceKm": 7.63,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T08:00:12.287Z"
+  },
+  "1-260-11-jeetze-von-dorfstrae-im-amt": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:00:16.612Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-12-alte-badeanstalt-bei-jahrstedt": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:00:59.891Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-13-dorfteich-steimke": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:01:02.719Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-14-ohre-in-steimke": {
+    "status": "review",
+    "latitude": 52.6021446,
+    "longitude": 10.9490976,
+    "confidence": 0.961,
+    "method": "overpass-locality",
+    "officialName": "Ohre",
+    "matchedAlias": "Ohre",
+    "officialFeatureId": "way/164088814",
+    "officialTypeName": "overpass:flow",
+    "distanceKm": 1.96,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T08:01:28.915Z"
+  },
+  "1-260-15-ohre-in-jahrstedt": {
+    "status": "review",
+    "latitude": 52.6021446,
+    "longitude": 10.9490976,
+    "confidence": 0.901,
+    "method": "overpass-locality",
+    "officialName": "Ohre",
+    "matchedAlias": "Ohre",
+    "officialFeatureId": "way/164088814",
+    "officialTypeName": "overpass:flow",
+    "distanceKm": 4.97,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T08:03:39.847Z"
+  },
+  "1-260-16-ehemalige-klarteiche-in-kusey": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:04:12.782Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-17-radestucken-neuekrug": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:04:15.594Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-18-dorfteich-dannefeld": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:04:18.369Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-19-groe-rothe-neuferchau": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:04:21.183Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-20-untere-milde-cheinitz": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:04:24.033Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-21-brookbuschteich-immekath": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:04:27.301Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-260-22-moorgraben-cheinitz-bruchau": {
+    "status": "review",
+    "latitude": 52.6844516,
+    "longitude": 11.2530654,
+    "confidence": 0.771,
+    "method": "nominatim-name",
+    "officialName": "Brüchau",
+    "matchedAlias": "Brüchau",
+    "officialFeatureId": "relation/5299115",
+    "officialTypeName": "nominatim:unknown",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T08:04:33.662Z"
+  },
+  "1-380-01-plattensee-bei-winterfeld": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:04:59.350Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-380-02-pfefferteich-bei-salzwedel": {
+    "status": "matched",
+    "latitude": 52.8502463,
+    "longitude": 11.1465758,
+    "confidence": 0.989,
+    "method": "nominatim-name",
+    "officialName": "Pfefferteich",
+    "matchedAlias": "Pfefferteich",
+    "officialFeatureId": "way/88273618",
+    "officialTypeName": "nominatim:standing",
+    "distanceKm": 0.57,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T08:05:25.258Z"
+  },
+  "1-380-03-1-tonstich-in-den-beekwiesen": {
+    "status": "unmatched",
+    "checkedAt": "2026-08-08T08:06:59.280Z",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API"
+  },
+  "1-380-04-brietzer-teiche": {
+    "status": "review",
+    "latitude": 52.8560875,
+    "longitude": 11.1259824,
+    "confidence": 0.564,
+    "method": "nominatim-name",
+    "officialName": "Brietzer Weg",
+    "matchedAlias": "brietzer",
+    "officialFeatureId": "way/29244209",
+    "officialTypeName": "nominatim:unknown",
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T08:07:04.258Z"
+  },
+  "1-380-05-teich-in-langenapel": {
+    "status": "review",
+    "latitude": 52.7441525,
+    "longitude": 10.8859639,
+    "confidence": 0.443,
+    "method": "overpass-locality",
+    "officialName": "Museumsteich",
+    "matchedAlias": "Teich",
+    "officialFeatureId": "way/88855371",
+    "officialTypeName": "overpass:standing",
+    "distanceKm": 9.77,
+    "source": "OpenStreetMap contributors (ODbL), Nominatim and Overpass API",
+    "checkedAt": "2026-08-08T08:07:26.776Z"
   }
 };
