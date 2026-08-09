@@ -1398,15 +1398,33 @@ footer {
     overflow: hidden;
   }
 
-  /* Mobil keine zusätzliche Gewässer-Vorauswahlliste:
-     Filter/Suche steuern direkt die Karte. */
-  .atlas-result-heading,
+  /* Treffer direkt unter der Karte:
+     genau etwa eine Gewässerkarte hoch, vertikal scrollbar. */
+  .atlas-result-heading {
+    order: 3;
+    display: flex;
+    margin: 0;
+  }
+
   .atlas-water-list {
-    display: none;
+    order: 4;
+    display: block;
+    max-height: 94px;
+    overflow-y: auto;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .atlas-water {
+    min-height: 88px;
+    margin: 0 0 6px;
   }
 
   .atlas-details {
-    order: 3;
+    order: 5;
     width: 100%;
     max-height: none;
     overflow: visible;
