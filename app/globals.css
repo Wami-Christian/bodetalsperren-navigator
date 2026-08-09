@@ -1826,3 +1826,36 @@ footer {
     right: calc(env(safe-area-inset-right) + 12px) !important;
   }
 }
+
+
+/* ---------- Atlas v9: Schließen im mobilen Vollbild ----------
+   Wichtig: absolut IN der Vollbild-Hülle statt fixed am Browser-Viewport.
+   So bleibt das Kreuz beim Karten-Zoomen an derselben Stelle. */
+.map-shell-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  overflow: hidden !important;
+}
+
+.map-shell-fullscreen .map-fullscreen-close {
+  position: absolute !important;
+  top: 16px !important;
+  right: 14px !important;
+  bottom: auto !important;
+  left: auto !important;
+  z-index: 2147483647 !important;
+}
+
+@media (max-width: 900px) {
+  .map-shell-fullscreen .map-fullscreen-close {
+    /* Im normalen iPhone-Browser liegt die Statusleiste oberhalb der
+       visuellen Karte. Deshalb bewusst etwas tiefer als nur safe-area. */
+    top: max(62px, calc(env(safe-area-inset-top) + 14px)) !important;
+    right: max(12px, calc(env(safe-area-inset-right) + 12px)) !important;
+  }
+
+  .map-shell-fullscreen .map-zoom-controls {
+    top: max(62px, calc(env(safe-area-inset-top) + 14px)) !important;
+    left: max(12px, calc(env(safe-area-inset-left) + 12px)) !important;
+  }
+}
