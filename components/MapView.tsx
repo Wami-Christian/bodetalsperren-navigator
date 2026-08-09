@@ -45,24 +45,18 @@ export default function MapView({
   }, [onSelect]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      mapRef.current?.invalidateSize();
-    }, 120);
-
-    return () => window.clearTimeout(timer);
-  }, [isFullscreen]);
-
-  useEffect(() => {
     if (!hostRef.current || mapRef.current) return;
 
     const map = L.map(hostRef.current, {
       center: DEFAULT_CENTER,
       zoom: 9,
-      scrollWheelZoom: true
+      scrollWheelZoom: true,
+      zoomControl: false
     });
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 19
     }).addTo(map);
 
@@ -70,6 +64,7 @@ export default function MapView({
     mapRef.current = map;
 
     const resize = window.setTimeout(() => map.invalidateSize(), 100);
+
     return () => {
       window.clearTimeout(resize);
       map.remove();
@@ -88,52 +83,131 @@ export default function MapView({
 
     waters.forEach((water) => {
       if (water.latitude === null || water.longitude === null) return;
-      const coordinate: L.LatLngExpression = [water.latitude, water.longitude];
+
+      const coordinate: L.LatLngExpression = [
+        water.latitude,
+        water.longitude
+      ];
+
       bounds.push(coordinate);
+
       L.marker(coordinate, { icon: waterIcon })
-        .bindPopup(`<strong>${water.name}</strong><br>${water.module}<br>${water.fish.join(" · ") || "Fischarten im Profil"}`)
+        .bindPopup(
+          `<strong>${water.name}</strong><br>${water.module}<br>${
+            water.fish.join(" · ") || "Fischarten im Profil"
+          }`
+        )
         .on("click", () => selectRef.current(water))
         .addTo(layer);
     });
 
     parkings.forEach((parking) => {
-      const coordinate: L.LatLngExpression = [parking.latitude, parking.longitude];
+      const coordinate: L.LatLngExpression = [
+        parking.latitude,
+        parking.longitude
+      ];
+
       bounds.push(coordinate);
-      const parkingLabel = parking.access === "public" ? "Öffentlicher Parkplatz" : "Eingeschränkter Ausgangspunkt";
-      const routeUrl = `https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`;
+
+      const parkingLabel =
+        parking.access === "public"
+          ? "Öffentlicher Parkplatz"
+          : "Eingeschränkter Ausgangspunkt";
+
+      const routeUrl =
+        `https://www.google.com/maps/dir/?api=1&destination=` +
+        `${parking.latitude},${parking.longitude}&travelmode=driving`;
+
       L.marker(coordinate, { icon: parkingIcon })
-        .bindPopup(`<strong>${parking.name}</strong><br>${parkingLabel}<br><a href="${routeUrl}" target="_blank" rel="noreferrer">Auto-Navigation öffnen</a>`)
+        .bindPopup(
+          `<strong>${parking.name}</strong><br>${parkingLabel}` +
+          `<br><a href="${routeUrl}" target="_blank" rel="noreferrer">` +
+          `Auto-Navigation öffnen</a>`
+        )
         .addTo(layer);
     });
 
     spots.forEach((spot) => {
-      const coordinate: L.LatLngExpression = [spot.latitude, spot.longitude];
+      const coordinate: L.LatLngExpression = [
+        spot.latitude,
+        spot.longitude
+      ];
+
       bounds.push(coordinate);
+
       L.marker(coordinate, { icon: spotIcon })
-        .bindPopup(`<strong>${spot.name}</strong><br>${spot.tags.join(" · ")}<br>${spot.risk ?? spot.note ?? "Zugang prüfen"}`)
+        .bindPopup(
+          `<strong>${spot.name}</strong><br>${spot.tags.join(" · ")}` +
+          `<br>${spot.risk ?? spot.note ?? "Zugang prüfen"}`
+        )
         .addTo(layer);
     });
 
-    // Bei einer Auswahl immer deutlich auf das Gewässer springen.
-    if (selectedWater?.latitude !== null && selectedWater?.longitude !== null && selectedWater) {
-      const center: L.LatLngExpression = [selectedWater.latitude, selectedWater.longitude];
+    if (
+      selectedWater &&
+      selectedWater.latitude !== null &&
+      selectedWater.longitude !== null
+    ) {
+      const center: L.LatLngExpression = [
+        selectedWater.latitude,
+        selectedWater.longitude
+      ];
+
       if (bounds.length > 1) {
-        map.fitBounds(L.latLngBounds(bounds), { padding: [55, 55], maxZoom: 15, animate: true });
+        map.fitBounds(L.latLngBounds(bounds), {
+          padding: [55, 55],
+          maxZoom: 15,
+          animate: true
+        });
       } else {
-        map.flyTo(center, 14, { animate: true, duration: 0.8 });
+        map.flyTo(center, 14, {
+          animate: true,
+          duration: 0.8
+        });
       }
+
       window.setTimeout(() => map.invalidateSize(), 50);
       return;
     }
 
-    // Ohne Auswahl Übersicht aller kartierten Treffer.
-    if (bounds.length === 1) map.setView(bounds[0], 12);
-    else if (bounds.length > 1) map.fitBounds(L.latLngBounds(bounds), { padding: [40, 40], maxZoom: 10 });
-    else map.setView(DEFAULT_CENTER, 9);
+    if (bounds.length === 1) {
+      map.setView(bounds[0], 12);
+    } else if (bounds.length > 1) {
+      map.fitBounds(L.latLngBounds(bounds), {
+        padding: [40, 40],
+        maxZoom: 10
+      });
+    } else {
+      map.setView(DEFAULT_CENTER, 9);
+    }
   }, [waters, spots, parkings, selectedWater?.id]);
 
+  useEffect(() => {
+    window.setTimeout(() => {
+      mapRef.current?.invalidateSize();
+    }, 80);
+  }, [isFullscreen]);
+
+  function zoomIn() {
+    mapRef.current?.zoomIn();
+  }
+
+  function zoomOut() {
+    mapRef.current?.zoomOut();
+  }
+
+  function toggleFullscreen() {
+    setIsFullscreen((value) => !value);
+  }
+
   return (
-    <div className={isFullscreen ? "map-shell map-shell-fullscreen" : "map-shell"}>
+    <div
+      className={
+        isFullscreen
+          ? "map-shell map-shell-fullscreen"
+          : "map-shell"
+      }
+    >
       <div
         ref={hostRef}
         className="map"
@@ -141,14 +215,39 @@ export default function MapView({
         aria-label="Interaktive Gewässerkarte"
       />
 
+      <div className="map-zoom-controls" aria-label="Kartenzoom">
+        <button
+          type="button"
+          onClick={zoomIn}
+          aria-label="Karte vergrößern"
+        >
+          +
+        </button>
+        <button
+          type="button"
+          onClick={zoomOut}
+          aria-label="Karte verkleinern"
+        >
+          −
+        </button>
+      </div>
+
       <button
         type="button"
         className="map-fullscreen-button"
-        aria-label={isFullscreen ? "Vollbild schließen" : "Karte im Vollbild anzeigen"}
-        title={isFullscreen ? "Vollbild schließen" : "Vollbild anzeigen"}
-        onClick={() => setIsFullscreen((value) => !value)}
+        onClick={toggleFullscreen}
+        aria-label={
+          isFullscreen
+            ? "Gesamtansicht schließen"
+            : "Karte in Gesamtansicht öffnen"
+        }
+        title={
+          isFullscreen
+            ? "Gesamtansicht schließen"
+            : "Gesamtansicht"
+        }
       >
-        {isFullscreen ? "✕" : "⛶"}
+        {isFullscreen ? "×" : "⛶"}
       </button>
     </div>
   );
