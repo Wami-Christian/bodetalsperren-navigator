@@ -27,6 +27,36 @@ type AtlasCategory =
   | "parking"
   | "favorites";
 
+
+type AtlasPlace = {
+  latitude: number;
+  longitude: number;
+  label: string;
+};
+
+const ATLAS_RADIUS_KM = 10;
+
+function distanceKm(
+  latitudeA: number,
+  longitudeA: number,
+  latitudeB: number,
+  longitudeB: number
+) {
+  const toRad = (value: number) => (value * Math.PI) / 180;
+  const earthRadiusKm = 6371;
+
+  const dLat = toRad(latitudeB - latitudeA);
+  const dLon = toRad(longitudeB - longitudeA);
+  const lat1 = toRad(latitudeA);
+  const lat2 = toRad(latitudeB);
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 export default function FishingNavigator() {
   const mainNavRef = useRef<HTMLElement | null>(null);
   const atlasCategoryRef = useRef<HTMLDivElement | null>(null);
@@ -35,8 +65,11 @@ export default function FishingNavigator() {
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
   const [query, setQuery] = useState("");
 const [regionFilter, setRegionFilter] =
-useState<"all" | "harz">("all");
+  useState<"all" | "harz">("harz");
 const [atlasQuery, setAtlasQuery] = useState("");
+const [atlasPlace, setAtlasPlace] = useState<AtlasPlace | null>(null);
+const [atlasSearchBusy, setAtlasSearchBusy] = useState(false);
+const [atlasSearchError, setAtlasSearchError] = useState("");
 const [atlasCategory, setAtlasCategory] =
   useState<AtlasCategory>("all");
   const [selected, setSelected] = useState<FishingWater>(waters[0]);
@@ -90,6 +123,21 @@ const [atlasCategory, setAtlasCategory] =
 const atlasWaters = useMemo(() => {
   return waters
     .filter((water) => {
+      if (atlasPlace) {
+        if (water.latitude === null || water.longitude === null) {
+          return false;
+        }
+
+        return (
+          distanceKm(
+            atlasPlace.latitude,
+            atlasPlace.longitude,
+            water.latitude,
+            water.longitude
+          ) <= ATLAS_RADIUS_KM
+        );
+      }
+
       const searchText =
         `${water.name} ${water.lavNumber ?? ""} ${water.district} ${water.type}`
           .toLowerCase();
@@ -134,8 +182,87 @@ const atlasWaters = useMemo(() => {
           return true;
       }
     })
-    .sort((a, b) => a.name.localeCompare(b.name, "de"));
-}, [atlasQuery, atlasCategory, favorites, regionFilter]);
+    .sort((a, b) => {
+      if (
+        atlasPlace &&
+        a.latitude !== null &&
+        a.longitude !== null &&
+        b.latitude !== null &&
+        b.longitude !== null
+      ) {
+        return (
+          distanceKm(
+            atlasPlace.latitude,
+            atlasPlace.longitude,
+            a.latitude,
+            a.longitude
+          ) -
+          distanceKm(
+            atlasPlace.latitude,
+            atlasPlace.longitude,
+            b.latitude,
+            b.longitude
+          )
+        );
+      }
+
+      return a.name.localeCompare(b.name, "de");
+    });
+}, [atlasQuery, atlasPlace, atlasCategory, favorites, regionFilter]);
+
+  async function searchAtlasPlace() {
+    const term = atlasQuery.trim();
+
+    if (!term) {
+      setAtlasPlace(null);
+      setAtlasSearchError("");
+      return;
+    }
+
+    setAtlasSearchBusy(true);
+    setAtlasSearchError("");
+
+    try {
+      const response = await fetch(
+        `/api/geocode?q=${encodeURIComponent(term)}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Ortssuche fehlgeschlagen");
+      }
+
+      const result = (await response.json()) as {
+        latitude?: number;
+        longitude?: number;
+        label?: string;
+      };
+
+      if (
+        typeof result.latitude !== "number" ||
+        typeof result.longitude !== "number"
+      ) {
+        setAtlasPlace(null);
+        setAtlasSearchError(
+          "Ort nicht gefunden – normale Gewässersuche bleibt aktiv."
+        );
+        return;
+      }
+
+      setAtlasPlace({
+        latitude: result.latitude,
+        longitude: result.longitude,
+        label: result.label || term
+      });
+      setFocusedWaterId(null);
+    } catch {
+      setAtlasPlace(null);
+      setAtlasSearchError(
+        "Ortssuche derzeit nicht verfügbar – normale Gewässersuche bleibt aktiv."
+      );
+    } finally {
+      setAtlasSearchBusy(false);
+    }
+  }
 
   const ranked = useMemo(() => waters.map((water) => ({ water, score: calculateFishingScore(water, forecast) })).filter((item) => item.score > 0).sort((a, b) => b.score - a.score), [forecast]);
   const focusedWater = focusedWaterId === selected.id && selected.latitude !== null && selected.longitude !== null ? selected : null;
@@ -272,8 +399,56 @@ const atlasWaters = useMemo(() => {
         placeholder="Gewässer oder Ort suchen …"
         className="atlas-search"
         value={atlasQuery}
-        onChange={(event) => setAtlasQuery(event.target.value)}
+        enterKeyHint="search"
+        onChange={(event) => {
+          setAtlasQuery(event.target.value);
+          setAtlasPlace(null);
+          setAtlasSearchError("");
+        }}
+        onKeyDown={(event) => {
+          if (event.key !== "Enter") return;
+
+          event.preventDefault();
+          event.currentTarget.blur();
+          void searchAtlasPlace();
+        }}
       />
+
+      {atlasPlace && (
+        <small
+          style={{
+            display: "block",
+            margin: "-10px 0 12px",
+            color: "var(--muted)"
+          }}
+        >
+          Umkreis {ATLAS_RADIUS_KM} km um {atlasPlace.label}
+        </small>
+      )}
+
+      {atlasSearchBusy && (
+        <small
+          style={{
+            display: "block",
+            margin: "-10px 0 12px",
+            color: "var(--muted)"
+          }}
+        >
+          Ort wird gesucht …
+        </small>
+      )}
+
+      {atlasSearchError && (
+        <small
+          style={{
+            display: "block",
+            margin: "-10px 0 12px",
+            color: "var(--danger)"
+          }}
+        >
+          {atlasSearchError}
+        </small>
+      )}
 
       <div className="atlas-categories-wrap">
         <button
@@ -462,166 +637,9 @@ const atlasWaters = useMemo(() => {
     <small>Top-Fisch</small>
   </div>
 </div><h2>{selected.name}</h2><p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p><span className={`status ${selected.sourceStatus}`}>{selected.sourceStatus==='verified'?'Navigationsdaten vorhanden':selected.sourceStatus==='catalog'?'LAV-Katalog – Lage noch offen':'Arbeitsdaten – prüfen'}</span>{selected.areaHa && <p><strong>Fläche:</strong> {selected.areaHa} ha</p>}<h3>Zielfische</h3><div className="score-list">{selected.fish.length ? selected.fish.map(item=><div key={item}><span>{item}</span><strong>{'★'.repeat(selected.rating[item]??0)}</strong></div>) : <p>Keine deiner ausgewählten Zielfischarten im Basiskatalog erkannt.</p>}</div><h3>Hinweise</h3><ul>{selected.notes.map(note=><li key={note}>{note}</li>)}</ul>
-          {selected.parkings.length > 0 && (
-            <>
-              <h3>Parkplätze / Ausgangspunkte</h3>
-              <div className="nav-list parking-groups">
-                {selected.parkings.map((p) => {
-                  const parkingSpots = selected.spots.filter(
-                    (spot) => spot.parkingId === p.id
-                  );
-
-                  return (
-                    <article key={p.id} className="parking-group">
-                      <strong>{p.name}</strong>
-                      <small>
-                        {p.access === "public"
-                          ? "öffentlich"
-                          : "Zufahrt eingeschränkt"}{" "}
-                        ·{" "}
-                        {p.accuracy === "verified"
-                          ? "belegt"
-                          : "Näherungswert"}
-                      </small>
-
-                      <div className="mini-actions">
-                        <a
-                          href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Google Auto
-                        </a>
-                        <a
-                          href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Apple Auto
-                        </a>
-                      </div>
-
-                      {parkingSpots.length > 0 && (
-                        <div className="parking-hotspots">
-                          <span className="parking-hotspots-title">
-                            🎣 Zugehörige Hotspots
-                          </span>
-
-                          {parkingSpots.map((spot) => (
-                            <div
-                              key={spot.id}
-                              className="parking-hotspot"
-                            >
-                              <strong>{spot.name}</strong>
-                              <small>
-                                {spot.risk ??
-                                  spot.note ??
-                                  "Zugang vor Ort prüfen."}
-                              </small>
-
-                              <div className="mini-actions">
-                                <a
-                                  href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                >
-                                  Zu Fuß ab Standort
-                                </a>
-
-                                <a
-                                  href={`https://www.google.com/maps/dir/?api=1&origin=${p.latitude},${p.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                >
-                                  Zu Fuß ab Parkplatz
-                                </a>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </article>
-                  );
-                })}
-              </div>
-            </>
-          )}
-
-          {selected.spots.some(
-            (spot) =>
-              !spot.parkingId ||
-              !selected.parkings.some((p) => p.id === spot.parkingId)
-          ) && (
-            <>
-              <h3>Weitere Hotspots / Erkundungspunkte</h3>
-              <div className="nav-list">
-                {selected.spots
-                  .filter(
-                    (spot) =>
-                      !spot.parkingId ||
-                      !selected.parkings.some(
-                        (p) => p.id === spot.parkingId
-                      )
-                  )
-                  .map((spot) => (
-                    <article key={spot.id}>
-                      <strong>{spot.name}</strong>
-                      <small>
-                        {spot.risk ??
-                          spot.note ??
-                          "Zugang vor Ort prüfen."}
-                      </small>
-                      <div className="mini-actions">
-                        <a
-                          href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Zu Fuß ab Standort
-                        </a>
-                      </div>
-                    </article>
-                  ))}
-              </div>
-            </>
-          )}
-          <div className="button-row">
-            {selected.latitude !== null && selected.longitude !== null && (
-              <>
-                <a
-                  className="route-button"
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Google Maps
-                </a>
-
-                <a
-                  className="route-button"
-                  href={`https://maps.apple.com/?daddr=${selected.latitude},${selected.longitude}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Apple Karten
-                </a>
-              </>
-            )}
-
-            <button onClick={exportGpx} disabled={!visibleSpots.length}>
-              GPX exportieren
-            </button>
-          </div>
-
-          <label className="file-button">
-            GPX importieren
-            <input
-              type="file"
-              accept=".gpx,application/gpx+xml"
-              onChange={importGpx}
-            />
-          </label>
-        </aside>
+          {selected.parkings.length > 0 && <><h3>Parkplätze / Ausgangspunkte</h3><div className="nav-list">{selected.parkings.map(p=><article key={p.id}><strong>{p.name}</strong><small>{p.access==='public'?'öffentlich':'Zufahrt eingeschränkt'} · {p.accuracy==='verified'?'belegt':'Näherungswert'}</small><div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a><a href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a></div></article>)}</div></>}
+          {selected.spots.length > 0 && <><h3>Hotspots / Erkundungspunkte</h3><div className="nav-list">{selected.spots.map(spot=>{const parking=selected.parkings.find(p=>p.id===spot.parkingId);return <article key={spot.id}><strong>{spot.name}</strong><small>{spot.risk ?? spot.note ?? 'Zugang vor Ort prüfen.'}</small><div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>{parking&&<a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Parkplatz</a>}</div></article>})}</div></>}
+          <div className="button-row">{selected.latitude !== null && selected.longitude !== null && <a className="route-button" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`} target="_blank" rel="noreferrer">Zum Gewässer</a>}<button onClick={exportGpx} disabled={!visibleSpots.length}>GPX exportieren</button></div><label className="file-button">GPX importieren<input type="file" accept=".gpx,application/gpx+xml" onChange={importGpx}/></label></aside>
         </div>
       </section>}
 
