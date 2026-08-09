@@ -1998,3 +1998,48 @@ footer {
     z-index: 2147483000 !important;
   }
 }
+
+
+/* ============================================================
+   Atlas v12 – Vollbild aus dem Atlas-Stacking-Context lösen
+   ============================================================ */
+@media (max-width: 900px) {
+  /* Der Atlas-Container hatte einen eigenen Stacking-Context.
+     Im Vollbild muss er selbst über der Topbar liegen. */
+  .atlas-map:has(.map-shell-fullscreen) {
+    position: relative !important;
+    z-index: 2147482990 !important;
+    isolation: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Während Karten-Vollbild ist die normale App-Navigation bewusst weg.
+     So kann auf iPhone/Safari nichts die Kartenbuttons verdecken. */
+  body:has(.map-shell-fullscreen) .topbar {
+    display: none !important;
+  }
+
+  body:has(.map-shell-fullscreen) footer {
+    display: none !important;
+  }
+
+  .map-shell.map-shell-fullscreen {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483000 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+  }
+
+  .map-shell.map-shell-fullscreen .map-zoom-controls {
+    top: calc(env(safe-area-inset-top, 0px) + 14px) !important;
+    left: calc(env(safe-area-inset-left, 0px) + 14px) !important;
+    z-index: 2147483646 !important;
+  }
+
+  .map-shell.map-shell-fullscreen .map-fullscreen-close {
+    top: calc(env(safe-area-inset-top, 0px) + 14px) !important;
+    right: calc(env(safe-area-inset-right, 0px) + 14px) !important;
+    z-index: 2147483647 !important;
+  }
+}
