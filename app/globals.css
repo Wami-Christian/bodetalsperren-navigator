@@ -1779,3 +1779,50 @@ footer {
 .map-shell-fullscreen .leaflet-bottom {
   z-index: 1000 !important;
 }
+
+
+/* ---------- Atlas v8: eigener Schließen-Button nur in Gesamtansicht ---------- */
+.map-fullscreen-close {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top) + 16px) !important;
+  right: calc(env(safe-area-inset-right) + 16px) !important;
+  z-index: 2147483647 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 122px !important;
+  height: 48px !important;
+  padding: 0 16px !important;
+  border: 2px solid rgba(7, 87, 71, 0.22) !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  color: #075747 !important;
+  box-shadow: 0 6px 22px rgba(0,0,0,.28) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  font: inherit !important;
+}
+
+.map-fullscreen-close span {
+  display: block !important;
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+.map-fullscreen-close strong {
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 900px) {
+  .map-shell-fullscreen .map-fullscreen-close {
+    top: calc(env(safe-area-inset-top) + 14px) !important;
+    right: calc(env(safe-area-inset-right) + 12px) !important;
+  }
+}

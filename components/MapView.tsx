@@ -232,25 +232,30 @@ export default function MapView({
         </button>
       </div>
 
-      <button
-        type="button"
-        className="map-fullscreen-button"
-        onClick={toggleFullscreen}
-        aria-label={
-          isFullscreen
-            ? "Gesamtansicht schließen"
-            : "Karte in Gesamtansicht öffnen"
-        }
-        title={
-          isFullscreen
-            ? "Gesamtansicht schließen"
-            : "Gesamtansicht"
-        }
-      >
-        <span aria-hidden="true">
-          {isFullscreen ? "✕" : "⛶"}
-        </span>
-      </button>
+      {!isFullscreen && (
+        <button
+          type="button"
+          className="map-fullscreen-button"
+          onClick={toggleFullscreen}
+          aria-label="Karte in Gesamtansicht öffnen"
+          title="Gesamtansicht"
+        >
+          <span aria-hidden="true">⛶</span>
+        </button>
+      )}
+
+      {isFullscreen && (
+        <button
+          type="button"
+          className="map-fullscreen-close"
+          onClick={() => setIsFullscreen(false)}
+          aria-label="Gesamtansicht schließen"
+          title="Gesamtansicht schließen"
+        >
+          <span aria-hidden="true">✕</span>
+          <strong>Schließen</strong>
+        </button>
+      )}
     </div>
   );
 }
