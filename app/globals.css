@@ -942,8 +942,23 @@ footer {
     padding: 16px;
   }
 
+  /* Dashboard auf kleinen Displays exakt im verfügbaren Seitenbereich halten */
+  .dashboard {
+    width: 100%;
+    min-width: 0;
+    margin-inline: auto;
+  }
+
+  .dashboard > *,
+  .dashboard-grid,
+  .dashboard-grid article {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   .hero-card {
-    padding: 30px 22px;
+    padding: 24px 22px;
   }
 
   .dashboard-grid {
