@@ -275,13 +275,12 @@ const atlasWaters = useMemo(() => {
 
   if (window.innerWidth <= 900) {
     window.setTimeout(() => {
-      document
-        .querySelector(".details")
-        ?.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-    }, 100);
+      const target = view === "atlas" ? ".atlas-details" : ".details";
+      document.querySelector(target)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 120);
   }
 }
 
@@ -555,6 +554,73 @@ const atlasWaters = useMemo(() => {
           </button>
         ))}
       </div>
+    </aside>
+
+    <aside className="atlas-details" aria-live="polite">
+      <div className="atlas-details-head">
+        <div>
+          <p className="eyebrow">Gewässerprofil</p>
+          <h2>{selected.name}</h2>
+          <p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p>
+        </div>
+        <button type="button" className="favorite atlas-favorite" aria-label="Favorit umschalten" onClick={() => toggleFavorite(selected.id)}>
+          {favorites.includes(selected.id) ? "★" : "☆"}
+        </button>
+      </div>
+
+      <div className="atlas-detail-stats">
+        <span>🐟 {selected.fish.length} Zielfische</span>
+        <span>🅿️ {selected.parkings.length} Parkplätze</span>
+        <span>📍 {selected.spots.length} Erkundungspunkte</span>
+      </div>
+
+      {selected.latitude !== null && selected.longitude !== null ? (
+        <div className="atlas-primary-actions">
+          <a href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`} target="_blank" rel="noreferrer">Google Navigation</a>
+          <a href={`https://maps.apple.com/?daddr=${selected.latitude},${selected.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Navigation</a>
+        </div>
+      ) : (
+        <p className="atlas-empty-note">Für dieses Gewässer ist noch keine Kartenposition gespeichert.</p>
+      )}
+
+      {selected.parkings.length > 0 && (
+        <>
+          <h3>Parkplätze / Ausgangspunkte</h3>
+          <div className="atlas-nav-list">
+            {selected.parkings.map((parking) => (
+              <article key={parking.id}>
+                <strong>{parking.name}</strong>
+                <small>{parking.note ?? (parking.access === "public" ? "Öffentlicher Parkplatz" : "Zufahrt eingeschränkt")}</small>
+                <div className="atlas-row-actions">
+                  <a href={`https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a>
+                  <a href={`https://maps.apple.com/?daddr=${parking.latitude},${parking.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </>
+      )}
+
+      {selected.spots.length > 0 && (
+        <>
+          <h3>Erkundungspunkte</h3>
+          <div className="atlas-nav-list">
+            {selected.spots.map((spot) => {
+              const parking = selected.parkings.find((item) => item.id === spot.parkingId);
+              return (
+                <article key={spot.id}>
+                  <strong>{spot.name}</strong>
+                  <small>{spot.risk ?? spot.note ?? "Zugang vor Ort prüfen."}</small>
+                  <div className="atlas-row-actions">
+                    <a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>
+                    {parking && <a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Ab Parkplatz</a>}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </>
+      )}
     </aside>
 
     <div className="atlas-map">
