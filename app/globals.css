@@ -1388,33 +1388,21 @@ footer {
 
   .atlas-map {
     order: 2;
-    height: 336px;
-    min-height: 336px;
+    height: 270px;
+    min-height: 270px;
     border-radius: 16px;
     overflow: hidden;
   }
 
-  .atlas-result-heading {
-    order: 3;
-    margin: 0;
-  }
-
+  /* Mobil keine zusätzliche Gewässer-Vorauswahlliste:
+     Filter/Suche steuern direkt die Karte. */
+  .atlas-result-heading,
   .atlas-water-list {
-    order: 4;
-    display: block;
-    max-height: 94px;
-    overflow-y: auto;
-    padding: 0;
-    border: 0;
-  }
-
-  .atlas-water {
-    min-height: 88px;
-    margin: 0 0 6px;
+    display: none;
   }
 
   .atlas-details {
-    order: 5;
+    order: 3;
     width: 100%;
     max-height: none;
     overflow: visible;
