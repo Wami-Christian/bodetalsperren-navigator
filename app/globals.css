@@ -1859,3 +1859,36 @@ footer {
     left: max(12px, calc(env(safe-area-inset-left) + 12px)) !important;
   }
 }
+
+
+/* ---------- Atlas v10: Vollbild wirklich über der mobilen Navigation ---------- */
+/* Die gesamte Vollbild-Kartenhülle muss über Header/Nav liegen.
+   Ein hoher z-index nur am Schließen-Button reicht nicht, wenn dessen
+   Eltern-Stacking-Context unter dem Menü liegt. */
+.map-shell-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 900px) {
+  .map-shell-fullscreen {
+    z-index: 2147483000 !important;
+  }
+
+  .map-shell-fullscreen .map-fullscreen-close {
+    position: absolute !important;
+    top: max(14px, env(safe-area-inset-top)) !important;
+    right: max(12px, env(safe-area-inset-right)) !important;
+    z-index: 2147483647 !important;
+  }
+
+  .map-shell-fullscreen .map-zoom-controls {
+    position: absolute !important;
+    top: max(14px, env(safe-area-inset-top)) !important;
+    left: max(12px, env(safe-area-inset-left)) !important;
+    z-index: 2147483646 !important;
+  }
+}
