@@ -1581,3 +1581,59 @@ footer {
   }
 }
 
+
+
+/* ---------- Mobile Atlas v5: Kartensteuerung bleibt innerhalb der Karte ---------- */
+@media (max-width: 900px) {
+  /* Leaflet bekommt einen eigenen, niedrigen Stacking-Kontext. */
+  .atlas-map {
+    position: relative;
+    isolation: isolate;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .atlas-map .leaflet-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Leaflet-Controls dürfen nicht über die App-Navigation steigen. */
+  .atlas-map .leaflet-top,
+  .atlas-map .leaflet-bottom {
+    z-index: 400;
+    pointer-events: none;
+  }
+
+  .atlas-map .leaflet-control {
+    pointer-events: auto;
+  }
+
+  /* Zoomtasten fest innerhalb der linken oberen Kartenecke. */
+  .atlas-map .leaflet-top.leaflet-left {
+    top: 10px;
+    left: 10px;
+  }
+
+  .atlas-map .leaflet-control-zoom {
+    margin: 0;
+    z-index: 450;
+  }
+
+  /* Gesamtansicht/Vollbild bleibt fest rechts oben sichtbar. */
+  .atlas-map .map-fullscreen-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 700;
+    margin: 0;
+  }
+
+  /* App-Kopf und Menü liegen immer oberhalb der Karte. */
+  .app-header,
+  .topbar,
+  .main-nav-shell {
+    position: relative;
+    z-index: 2000;
+  }
+}
