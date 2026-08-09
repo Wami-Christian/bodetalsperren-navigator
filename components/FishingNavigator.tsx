@@ -203,6 +203,36 @@ const atlasWaters = useMemo(() => {
     });
 }, [atlasQuery, atlasPlace, atlasCategory, favorites]);
 
+  useEffect(() => {
+    if (view !== "atlas") return;
+
+    const currentStillVisible = atlasWaters.some(
+      (water) => water.id === selected.id
+    );
+
+    if (currentStillVisible) return;
+
+    const firstMapped =
+      atlasWaters.find(
+        (water) =>
+          water.latitude !== null &&
+          water.longitude !== null
+      ) ?? atlasWaters[0];
+
+    if (!firstMapped) {
+      setFocusedWaterId(null);
+      return;
+    }
+
+    setSelected(firstMapped);
+    setFocusedWaterId(
+      firstMapped.latitude !== null &&
+      firstMapped.longitude !== null
+        ? firstMapped.id
+        : null
+    );
+  }, [atlasWaters, selected.id, view]);
+
   async function searchAtlasPlace() {
     const term = atlasQuery.trim();
 

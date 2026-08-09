@@ -1382,9 +1382,13 @@ footer {
   .atlas-sidebar { display: contents; }
 
   .atlas-sidebar > h2,
-  .atlas-search,
+  .atlas-search { order: 1; }
+
+  /* Auf Mobil keine horizontale Vorauswahl unter dem Suchfeld */
   .atlas-categories-wrap,
-  .atlas-swipe-hint { order: 1; }
+  .atlas-swipe-hint {
+    display: none !important;
+  }
 
   .atlas-map {
     order: 2;
