@@ -190,7 +190,7 @@ button {
 }
 
 .hero-card {
-  padding: 52px;
+  padding: 42px 52px;
   border-radius: 28px;
   background: linear-gradient(125deg, #0d4d43, #236e60);
   color: white;
@@ -243,6 +243,11 @@ button {
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 20px;
+}
+
+/* Dashboard-Kacheln ca. 20 % niedriger, ohne andere Panels zu verändern */
+.dashboard-grid article {
+  padding: 16px 20px;
 }
 
 .dashboard-grid article span {
