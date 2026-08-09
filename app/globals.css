@@ -755,6 +755,132 @@ button {
   box-shadow: var(--shadow);
 }
 
+
+/* ---------- Atlas Details / Navigation ---------- */
+
+/* Desktop: Liste | Karte | kompakte Navigation */
+.atlas-page {
+  grid-template-columns: 320px minmax(0, 1fr) 340px;
+}
+
+.atlas-map {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.atlas-details {
+  grid-column: 3;
+  grid-row: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.atlas-details-head {
+  position: relative;
+  padding-right: 42px;
+}
+
+.atlas-details-head h2 {
+  margin: 5px 0 8px;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.atlas-details-head p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.atlas-favorite {
+  right: 0;
+  top: 0;
+}
+
+.atlas-detail-stats {
+  display: grid;
+  gap: 7px;
+  margin: 16px 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--brand-soft);
+  font-size: 13px;
+}
+
+.atlas-primary-actions,
+.atlas-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.atlas-primary-actions {
+  margin: 14px 0 22px;
+}
+
+.atlas-primary-actions a,
+.atlas-row-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: var(--brand);
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.atlas-primary-actions a {
+  flex: 1 1 130px;
+  min-height: 42px;
+}
+
+.atlas-details h3 {
+  margin: 22px 0 10px;
+  font-size: 16px;
+}
+
+.atlas-nav-list {
+  display: grid;
+  gap: 9px;
+}
+
+.atlas-nav-list article {
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f8fbf9;
+}
+
+.atlas-nav-list strong,
+.atlas-nav-list small {
+  display: block;
+}
+
+.atlas-nav-list strong {
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.atlas-nav-list small {
+  margin: 5px 0 9px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.atlas-empty-note {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 /* ---------- Karten-Vollbild ---------- */
 
 .map-shell {
@@ -1240,6 +1366,60 @@ footer {
   .atlas-water-meta {
     grid-column: 1 / -1 !important;
     margin-top: 4px;
+  }
+
+
+  /* Atlas mobil: Suche/Filter -> Navigation -> Karte -> Treffer */
+  .atlas-details {
+    order: 5;
+    grid-column: auto;
+    grid-row: auto;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    scroll-margin-top: 135px;
+  }
+
+  .atlas-details-head h2 {
+    font-size: 22px;
+  }
+
+  .atlas-detail-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .atlas-primary-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .atlas-primary-actions a {
+    min-height: 46px;
+  }
+
+  .atlas-row-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .atlas-row-actions a {
+    min-height: 42px;
+  }
+
+  .atlas-map {
+    order: 6;
+  }
+
+  .atlas-result-heading {
+    order: 7;
+  }
+
+  .atlas-water-list {
+    order: 8;
   }
 
   .map-fullscreen-button {
