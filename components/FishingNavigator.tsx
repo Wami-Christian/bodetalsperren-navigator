@@ -275,7 +275,7 @@ const atlasWaters = useMemo(() => {
 
   if (window.innerWidth <= 900) {
     window.setTimeout(() => {
-      const target = view === "atlas" ? ".atlas-details" : ".details";
+      const target = view === "atlas" ? ".atlas-map" : ".details";
       document.querySelector(target)?.scrollIntoView({
         behavior: "smooth",
         block: "start"
@@ -587,7 +587,7 @@ const atlasWaters = useMemo(() => {
         <>
           <h3>Parkplätze / Ausgangspunkte</h3>
           <div className="atlas-nav-list">
-            {selected.parkings.map((parking) => (
+            {selected.parkings.slice(0, 1).map((parking) => (
               <article key={parking.id}>
                 <strong>{parking.name}</strong>
                 <small>{parking.note ?? (parking.access === "public" ? "Öffentlicher Parkplatz" : "Zufahrt eingeschränkt")}</small>
