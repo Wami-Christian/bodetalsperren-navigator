@@ -1892,3 +1892,109 @@ footer {
     z-index: 2147483646 !important;
   }
 }
+
+
+/* ============================================================
+   Atlas v11 – echtes mobiles Karten-Vollbild
+   ============================================================ */
+.map-shell.map-shell-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  overflow: hidden !important;
+  isolation: isolate !important;
+  z-index: 2147483000 !important;
+  background: #e8f0eb !important;
+}
+
+.map-shell.map-shell-fullscreen > .map {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  z-index: 1 !important;
+}
+
+/* Controls gehören zum Vollbild und liegen garantiert über der Karte. */
+.map-shell.map-shell-fullscreen .map-zoom-controls {
+  position: absolute !important;
+  top: calc(env(safe-area-inset-top, 0px) + 14px) !important;
+  left: calc(env(safe-area-inset-left, 0px) + 14px) !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 2147483646 !important;
+}
+
+.map-shell.map-shell-fullscreen .map-fullscreen-close {
+  position: absolute !important;
+  top: calc(env(safe-area-inset-top, 0px) + 14px) !important;
+  right: calc(env(safe-area-inset-right, 0px) + 14px) !important;
+  bottom: auto !important;
+  left: auto !important;
+  z-index: 2147483647 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+
+  min-width: 116px !important;
+  height: 46px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+
+  border: 2px solid rgba(7, 87, 71, .22) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.97) !important;
+  color: #075747 !important;
+  box-shadow: 0 5px 18px rgba(0,0,0,.24) !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
+}
+
+/* iOS/Safari: im Vollbild dürfen Elterncontainer die Karte nicht clippen. */
+@media (max-width: 900px) {
+  body:has(.map-shell-fullscreen) {
+    overflow: hidden !important;
+  }
+
+  .atlas-page:has(.map-shell-fullscreen),
+  .atlas-map:has(.map-shell-fullscreen) {
+    overflow: visible !important;
+    transform: none !important;
+    filter: none !important;
+    perspective: none !important;
+  }
+
+  .map-shell.map-shell-fullscreen {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    z-index: 2147483000 !important;
+  }
+}
