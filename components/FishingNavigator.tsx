@@ -145,15 +145,8 @@ const atlasWaters = useMemo(() => {
       return searchText.includes(atlasQuery.toLowerCase());
     })
     .filter((water) => {
-      if (regionFilter === "harz") {
-        const isHarzWater =
-          water.district.includes("Harz") ||
-          water.module === "Bodetalsperren" ||
-          water.module === "Harzflüsse";
-
-        if (!isHarzWater) return false;
-      }
-
+      // Im Atlas kein versteckter Regionsfilter:
+      // "Alle Gewässer" bedeutet wirklich der vollständige Katalog.
       switch (atlasCategory) {
         case "reservoirs":
           return water.module === "Bodetalsperren";
@@ -208,7 +201,7 @@ const atlasWaters = useMemo(() => {
 
       return a.name.localeCompare(b.name, "de");
     });
-}, [atlasQuery, atlasPlace, atlasCategory, favorites, regionFilter]);
+}, [atlasQuery, atlasPlace, atlasCategory, favorites]);
 
   async function searchAtlasPlace() {
     const term = atlasQuery.trim();
