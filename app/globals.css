@@ -1740,3 +1740,42 @@ footer {
   top: max(14px, env(safe-area-inset-top)) !important;
   right: max(14px, env(safe-area-inset-right)) !important;
 }
+
+
+/* ---------- Atlas v7: Schließen-Schalter im Vollbild immer sichtbar ---------- */
+.map-shell-fullscreen .map-fullscreen-button {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top) + 14px) !important;
+  right: calc(env(safe-area-inset-right) + 14px) !important;
+  z-index: 2147483647 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  border: 2px solid rgba(7, 87, 71, 0.22) !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #075747 !important;
+  font-size: 28px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.24) !important;
+  transform: none !important;
+}
+
+.map-shell-fullscreen .map-fullscreen-button span {
+  display: block !important;
+  line-height: 1 !important;
+  transform: translateY(-1px);
+}
+
+.map-shell-fullscreen .leaflet-top,
+.map-shell-fullscreen .leaflet-bottom {
+  z-index: 1000 !important;
+}

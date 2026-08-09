@@ -247,7 +247,9 @@ export default function MapView({
             : "Gesamtansicht"
         }
       >
-        {isFullscreen ? "×" : "⛶"}
+        <span aria-hidden="true">
+          {isFullscreen ? "✕" : "⛶"}
+        </span>
       </button>
     </div>
   );
