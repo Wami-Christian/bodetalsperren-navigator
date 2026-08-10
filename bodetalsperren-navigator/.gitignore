@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.env*
+!.env.example
+.DS_Store
+npm-debug.log*
+data/atkis-hydro-cache.json
+data/locality-cache.json
+data/atkis-getcapabilities.xml
