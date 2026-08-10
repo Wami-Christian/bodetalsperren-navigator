@@ -2043,3 +2043,6 @@ footer {
     z-index: 2147483647 !important;
   }
 }
+
+/* Prognose V1 – Ort + 20 km + automatische Wetterdaten */
+.forecast-controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-top:20px}.forecast-search{display:flex;gap:8px}.forecast-search input{flex:1}.forecast-search button{min-width:100px}.forecast-meta{display:flex;justify-content:space-between;gap:12px;margin-top:18px;padding:14px;border-radius:12px;background:#eef8f4;flex-wrap:wrap}.forecast-meta span{color:#526b65}.forecast-error{color:#9b3b2d}.forecast-ranking article{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center}.forecast-rank{font-weight:800;font-size:1.1rem}.forecast-water small{color:#60736f}.weather-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}.weather-grid span{background:#eef8f4;padding:10px;border-radius:10px}.forecast-note{font-size:.9rem;color:#60736f}@media(max-width:760px){.forecast-controls{grid-template-columns:1fr}.weather-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.forecast-ranking article{grid-template-columns:28px 1fr auto}}

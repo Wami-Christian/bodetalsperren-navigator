@@ -1,0 +1,7 @@
+HarzFishing Prognose V1.2 – Datumsauswahl
+
+- Prognosezeitraum auf bis zu 16 Tage erweitert (Open-Meteo Forecast API).
+- Datumsauswahlfeld in der Prognose.
+- Ranking und beste Angelzeit werden ausschließlich aus den Stunden des gewählten Tages berechnet.
+- Min/Max des Datumsfelds entsprechen automatisch den tatsächlich geladenen Vorhersagetagen.
+- Ortsradius und LAV-Zielfischfilter bleiben unverändert.

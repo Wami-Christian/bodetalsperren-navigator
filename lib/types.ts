@@ -1,4 +1,4 @@
-export type Fish = "Zander" | "Barsch" | "Forelle" | "Schleie" | "Hecht" | "Karpfen";
+export type Fish = "Aal" | "Barsch" | "Blei" | "Forelle" | "Hecht" | "Karpfen" | "Plötze" | "Rotfeder" | "Schleie" | "Zander";
 export type WaterType = "Talsperre" | "See" | "Teich" | "Fließgewässer" | "Kiesgrube";
 export type WaterModule = "Bodetalsperren" | "LAV Sachsen-Anhalt" | "Harzflüsse";
 export type SourceStatus = "demo" | "verified" | "catalog";

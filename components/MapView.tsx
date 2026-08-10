@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import type { FishingSpot, FishingWater, ParkingSpot } from "@/lib/types";
+import { waterTargetFish } from "@/lib/fish";
 
 const DEFAULT_CENTER: L.LatLngExpression = [51.72, 11.1];
 
@@ -94,7 +95,7 @@ export default function MapView({
       L.marker(coordinate, { icon: waterIcon })
         .bindPopup(
           `<strong>${water.name}</strong><br>${water.module}<br>${
-            water.fish.join(" · ") || "Fischarten im Profil"
+            waterTargetFish(water).join(" · ") || "Fischarten im Profil"
           }`
         )
         .on("click", () => selectRef.current(water))

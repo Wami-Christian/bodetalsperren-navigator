@@ -1,0 +1,20 @@
+HarzFishing V5.2 – Prognose V1.1 / LAV-Zielfische
+
+Neu:
+- LAV-Fischcodes werden als authoritative Zielfisch-Angaben genutzt:
+  A = Aal
+  B = Barsch
+  Bl = Blei
+  H = Hecht
+  K = Karpfen
+  Pl = Plötze
+  Ro = Rotfeder
+  S = Schleie
+  Z = Zander
+- Zielfisch-Auswahl in Prognose, Gewässerliste, Detailansicht und Fangbuch erweitert.
+- Ein LAV-Gewässer wird in der Prognose nur berücksichtigt, wenn der gewählte Zielfisch laut fishCodes/LAV-Daten geführt wird.
+- Bestehende Fischangaben außerhalb des LAV-Katalogs bleiben erhalten (z. B. Forelle).
+- Erste artspezifische Prognoseprofile ergänzt für Aal, Blei, Plötze und Rotfeder.
+
+Hinweis:
+Die LAV-Codes bestimmen, ob eine Fischart am Gewässer als Zielfisch geführt wird. Sie sind keine Aussage über Fanggarantie oder Bestandsstärke.
