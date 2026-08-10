@@ -85,6 +85,8 @@ const [atlasCategory, setAtlasCategory] =
   const [forecastError, setForecastError] = useState("");
   const [forecastHours, setForecastHours] = useState<ForecastHour[]>([]);
   const [forecastDate, setForecastDate] = useState("");
+  const [forecastSort, setForecastSort] = useState<"score" | "distance" | "name">("score");
+  const [showAllForecast, setShowAllForecast] = useState(false);
 
   useEffect(() => { setFavorites(loadFavorites()); setCatches(loadCatches()); }, []);
 
@@ -312,6 +314,27 @@ const atlasWaters = useMemo(() => {
     const best = scored.sort((a,b) => b.result.score-a.result.score)[0];
     return { water, distance, best };
   }).filter(item => item.best).sort((a,b) => b.best.result.score-a.best.result.score), [forecastWaters, selectedForecastHours, forecastFish, forecastPlace]);
+
+  const sortedForecast = useMemo(() => {
+    const next = [...ranked];
+    if (forecastSort === "distance") return next.sort((a,b) => a.distance-b.distance);
+    if (forecastSort === "name") return next.sort((a,b) => a.water.name.localeCompare(b.water.name, "de"));
+    return next.sort((a,b) => b.best.result.score-a.best.result.score);
+  }, [ranked, forecastSort]);
+
+  const bestForecast = ranked[0] ?? null;
+  const otherForecast = sortedForecast.filter((item) => item.water.id !== bestForecast?.water.id);
+  const visibleOtherForecast = showAllForecast ? otherForecast : otherForecast.slice(0, 4);
+
+  function openForecastWaterInAtlas(water: FishingWater) {
+    setSelected(water);
+    setAtlasCategory("all");
+    setAtlasPlace(null);
+    setAtlasSearchError("");
+    setAtlasQuery(water.name);
+    setFocusedWaterId(water.latitude !== null && water.longitude !== null ? water.id : null);
+    setView("atlas");
+  }
 
   async function loadForecast() {
     const term = forecastQuery.trim();
@@ -777,23 +800,84 @@ const atlasWaters = useMemo(() => {
         </div>
       </section>}
 
-      {view === "forecast" && <section className="page narrow forecast-page">
-        <div className="panel">
-          <p className="eyebrow">Automatische Angelprognose</p><h1>Wo lohnt es sich?</h1>
-          <p>Ort, Zielfisch und Datum wählen – HarzFishing bewertet automatisch alle passenden, kartierten Gewässer im Umkreis von 20 km für den gewählten Vorhersagetag.</p>
-          <div className="forecast-controls">
-            <label>Ort<div className="forecast-search"><input value={forecastQuery} onChange={(e)=>setForecastQuery(e.target.value)} onKeyDown={(e)=>{if(e.key==='Enter') void loadForecast();}}/><button onClick={()=>void loadForecast()} disabled={forecastBusy}>{forecastBusy?'Lädt…':'Suchen'}</button></div></label>
-            <label>Zielfisch<select value={forecastFish} onChange={(e)=>setForecastFish(e.target.value as Fish)}>{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select></label>
-            <label>Datum<input type="date" value={forecastDate} min={forecastDates[0] || undefined} max={forecastDates[forecastDates.length-1] || undefined} onChange={(e)=>setForecastDate(e.target.value)} disabled={!forecastDates.length}/></label>
+      {view === "forecast" && <section className="page forecast-page forecast-page-modern">
+        <div className="panel forecast-head-card">
+          <div className="forecast-head-copy">
+            <p className="eyebrow">Automatische Angelprognose</p>
+            <h1>Wo lohnt es sich?</h1>
+            <p className="forecast-intro">Ort, Zielfisch und Datum wählen – bewertet werden passende kartierte Gewässer im 20-km-Umkreis.</p>
           </div>
+
+          <div className="forecast-controls-modern">
+            <div className="forecast-control forecast-location-control">
+              <span className="forecast-control-icon" aria-hidden="true">⌖</span>
+              <input aria-label="Ort" value={forecastQuery} onChange={(e)=>setForecastQuery(e.target.value)} onKeyDown={(e)=>{if(e.key==='Enter') void loadForecast();}} placeholder="Ort"/>
+              <button className="forecast-search-compact" type="button" onClick={()=>void loadForecast()} disabled={forecastBusy}>{forecastBusy?'…':'Suchen'}</button>
+            </div>
+            <div className="forecast-control">
+              <span className="forecast-control-icon" aria-hidden="true">🐟</span>
+              <select aria-label="Zielfisch" value={forecastFish} onChange={(e)=>{setForecastFish(e.target.value as Fish);setShowAllForecast(false);}}>{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select>
+            </div>
+            <div className="forecast-control">
+              <span className="forecast-control-icon" aria-hidden="true">▣</span>
+              <input aria-label="Datum" type="date" value={forecastDate} min={forecastDates[0] || undefined} max={forecastDates[forecastDates.length-1] || undefined} onChange={(e)=>{setForecastDate(e.target.value);setShowAllForecast(false);}} disabled={!forecastDates.length}/>
+            </div>
+            <div className="forecast-control forecast-radius" aria-label="Umkreis 20 Kilometer">
+              <span className="forecast-control-icon" aria-hidden="true">◎</span><strong>20 km</strong>
+            </div>
+          </div>
+
           {forecastError && <p className="forecast-error">⚠ {forecastError}</p>}
-          {forecastPlace && <div className="forecast-meta"><strong>{forecastFish} rund um {forecastPlace.label}</strong><span>20 km · {forecastWaters.length} passende Gewässer · {forecastDate ? new Date(`${forecastDate}T12:00:00`).toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'}) : 'Datum wählen'} · Wetter automatisch</span></div>}
+          {forecastPlace && <div className="forecast-meta-modern">
+            <div className="forecast-fish-badge" aria-hidden="true">🐟</div>
+            <div><strong>{forecastFish} rund um {forecastPlace.label}</strong><span>20 km · {forecastWaters.length} passende Gewässer · {forecastDate ? new Date(`${forecastDate}T12:00:00`).toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'}) : 'Datum wählen'} · Wetter automatisch</span></div>
+            {bestForecast && <span className="forecast-meta-weather">☁ {Math.round(bestForecast.best.hour.cloudCover)} % · {bestForecast.best.hour.temperature.toFixed(0)} °C</span>}
+          </div>}
         </div>
-        {ranked.length > 0 && <div className="ranking forecast-ranking">{ranked.map(({water,distance,best},index)=><article key={water.id} onClick={()=>{setSelected(water);setView('waters')}}>
-          <div className="forecast-rank">{index+1}</div><div className="forecast-water"><strong>{water.name}</strong><p>{distance.toFixed(1)} km · {water.type} · beste Zeit {new Date(best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</p><small>{best.result.reasons.slice(0,3).join(' · ')}</small></div><span>{best.result.score}/100</span>
-        </article>)}</div>}
+
         {forecastPlace && !forecastBusy && ranked.length===0 && <div className="panel"><p>Keine passenden kartierten Gewässer mit {forecastFish} im 20-km-Umkreis gefunden.</p></div>}
-        {ranked[0] && <div className="panel forecast-detail"><h2>Beste Bedingungen</h2><p><strong>{ranked[0].water.name}</strong> · {ranked[0].best.result.score}/100</p><div className="weather-grid"><span>🌡️ {ranked[0].best.hour.temperature.toFixed(1)} °C</span><span>💨 {Math.round(ranked[0].best.hour.windSpeed)} km/h</span><span>☁️ {Math.round(ranked[0].best.hour.cloudCover)} %</span><span>🌧️ {ranked[0].best.hour.precipitation.toFixed(1)} mm</span><span>📊 {Math.round(ranked[0].best.hour.pressure)} hPa</span><span>💧 Wasser ~{ranked[0].best.result.waterTemperature.toFixed(1)} °C</span><span>☀️ {ranked[0].best.result.dayPhase}</span><span>🌙 {ranked[0].best.result.moonPhase}</span></div><p className="forecast-note">Wassertemperatur ist derzeit eine gekennzeichnete Schätzung; die übrigen Wetterwerte stammen aus der automatischen Vorhersage.</p></div>}
+
+        {bestForecast && <section className="forecast-best-section">
+          <div className="forecast-section-title"><span>★</span><strong>Beste Bedingungen</strong></div>
+          <article className="forecast-best-card forecast-clickable" role="button" tabIndex={0} onClick={()=>openForecastWaterInAtlas(bestForecast.water)} onKeyDown={(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForecastWaterInAtlas(bestForecast.water);}}}>
+            <div className="forecast-best-rank">1</div>
+            <div className="forecast-best-main">
+              <div className="forecast-water-icon" aria-hidden="true">🌊</div>
+              <div className="forecast-best-copy">
+                <strong>{bestForecast.water.name}</strong>
+                <p>⌖ {bestForecast.distance.toFixed(1)} km · {bestForecast.water.type}</p>
+                <b>Beste Zeit: {new Date(bestForecast.best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</b>
+              </div>
+            </div>
+            <span className="forecast-score">{bestForecast.best.result.score}/100</span>
+            <span className="forecast-open-arrow" aria-hidden="true">›</span>
+            <div className="forecast-best-weather">
+              <span><i>☾</i><b>{bestForecast.best.result.dayPhase}</b><small>günstig</small></span>
+              <span><i>☁</i><b>{Math.round(bestForecast.best.hour.cloudCover)} %</b><small>Bewölkung</small></span>
+              <span><i>≋</i><b>{Math.round(bestForecast.best.hour.windSpeed)} km/h</b><small>Wind</small></span>
+              <span><i>♨</i><b>{bestForecast.best.hour.temperature.toFixed(0)} °C</b><small>Temperatur</small></span>
+              <span><i>◴</i><b>{Math.round(bestForecast.best.hour.pressure)} hPa</b><small>Luftdruck {bestForecast.best.hour.pressureTrend >= 1.5 ? '↗' : bestForecast.best.hour.pressureTrend <= -1.5 ? '↘' : '→'}</small></span>
+            </div>
+          </article>
+        </section>}
+
+        {otherForecast.length > 0 && <section className="forecast-other-section">
+          <div className="forecast-other-head"><div><p className="eyebrow">Weitere Kandidaten</p></div><label>Sortierung:<select value={forecastSort} onChange={(e)=>setForecastSort(e.target.value as "score"|"distance"|"name")}><option value="score">Beste Bewertung</option><option value="distance">Entfernung</option><option value="name">Name</option></select></label></div>
+          <div className="forecast-other-list">
+            {visibleOtherForecast.map(({water,distance,best})=>{
+              const rank = ranked.findIndex((item)=>item.water.id===water.id)+1;
+              return <article key={water.id} className="forecast-other-card forecast-clickable" role="button" tabIndex={0} onClick={()=>openForecastWaterInAtlas(water)} onKeyDown={(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForecastWaterInAtlas(water);}}}>
+                <div className="forecast-rank-small">{rank}</div>
+                <div className="forecast-water-icon small" aria-hidden="true">🌊</div>
+                <div className="forecast-other-copy"><strong>{water.name}</strong><p>⌖ {distance.toFixed(1)} km · {water.type} · Beste Zeit: {new Date(best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</p><div className="forecast-reason-pills"><span>{best.result.dayPhase} günstig</span><span>{Math.round(best.hour.cloudCover)} % Bewölkung</span><span>{Math.round(best.hour.windSpeed)} km/h Wind</span></div></div>
+                <span className="forecast-score small">{best.result.score}/100</span><span className="forecast-open-arrow" aria-hidden="true">›</span>
+              </article>
+            })}
+          </div>
+          {otherForecast.length > 4 && <button className="forecast-show-all" type="button" onClick={()=>setShowAllForecast((value)=>!value)}>{showAllForecast ? 'Weniger Gewässer anzeigen' : `Alle ${ranked.length} Gewässer anzeigen`} <span>{showAllForecast?'⌃':'⌄'}</span></button>}
+        </section>}
+
+        {bestForecast && <p className="forecast-disclaimer">ⓘ Bewertungen basieren auf Wettervorhersage, Sonnen- & Mondphasen und artspezifischen Faktoren. Keine Garantie – Petri Heil!</p>}
       </section>}
       {view === "diary" && <section className="page diary"><form className="panel" onSubmit={addCatch}><p className="eyebrow">Lokales Fangbuch</p><h1>Fang eintragen</h1><div className="form-grid"><label>Datum und Uhrzeit<input name="caughtAt" type="datetime-local" required/></label><label>Gewässer<select name="waterId">{waters.map(w=><option value={w.id} key={w.id}>{w.name}</option>)}</select></label><label>Fisch<select name="fish">{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select></label><label>Länge cm<input name="lengthCm" type="number" min="0" step="0.1"/></label><label>Gewicht kg<input name="weightKg" type="number" min="0" step="0.01"/></label><label>Köder<input name="lure" placeholder="z. B. 10 cm Gummifisch"/></label><label className="wide">Notiz<textarea name="note" rows={3}/></label></div><button type="submit">Fang speichern</button></form><div className="catch-list">{catches.map(entry=><article key={entry.id}><div><strong>{entry.fish}</strong><p>{waters.find(w=>w.id===entry.waterId)?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString('de-DE')}</p><small>{entry.lure}{entry.note?` · ${entry.note}`:''}</small></div><span>{entry.lengthCm?`${entry.lengthCm} cm`:''}{entry.weightKg?` · ${entry.weightKg} kg`:''}</span></article>)}{!catches.length&&<p>Noch keine Fänge gespeichert.</p>}</div></section>}
 

@@ -1,0 +1,13 @@
+HarzFishing Prognose V1.3 UI
+
+- Responsive PC-/Mobile-Prognose gemäß den finalen Entwürfen
+- Kompakte, gerundete Eingabefelder für Ort, Zielfisch, Datum und 20-km-Radius
+- Beste Bedingungen direkt unter der Eingabe
+- Wetterdaten direkt in der Top-Kachel (Tagesphase, Bewölkung, Wind, Temperatur, Luftdrucktrend)
+- Weitere Kandidaten kompakt darunter
+- Sortierung nach Bewertung, Entfernung oder Name
+- Standardmäßig Top 5, optional alle Gewässer
+- Jede Ergebnis-Kachel ist klickbar und öffnet den Atlas direkt gefiltert/fokussiert auf dieses Gewässer
+- Kein separater „Im Atlas anzeigen“-Button
+
+Hinweis: In der Build-Umgebung konnte npm install wegen eines internen Registry-404 nicht abgeschlossen werden. Bitte lokal einmal npm install und npm run build ausführen.

@@ -1,6 +1,6 @@
 {
   "name": "harzfishing-navigator",
-  "version": "5.2.3",
+  "version": "5.2.3-prognose-v1.3-ui",
   "private": true,
   "scripts": {
     "dev": "next dev",
