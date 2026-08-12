@@ -2508,3 +2508,12 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     flex:0 0 auto;
   }
 }
+/* MOBILE V1.10.10
+   Nur Kachel 1: beide Info-Knöpfe 3 mm nach links.
+   Gilt ausschließlich bis 700 px; Desktop bleibt unverändert. */
+@media (max-width: 700px){
+  .forecast-best-info-shift-mobile-v2 .forecast-catch-compact-row > .forecast-catch-info,
+  .forecast-best-info-shift-mobile-v2 .forecast-catch-compact-row > .forecast-activity-diagnostic{
+    transform: translateX(-3mm);
+  }
+}
