@@ -1,6 +1,6 @@
 {
   "name": "harzfishing-navigator",
-  "version": "5.2.3-prognose-v1.10-final-fangdaten",
+  "version": "5.2.3-prognose-v1.10.1-mobile-fix",
   "private": true,
   "scripts": {
     "dev": "next dev",

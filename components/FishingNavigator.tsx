@@ -348,10 +348,11 @@ const atlasWaters = useMemo(() => {
     return <details className={`forecast-activity-diagnostic${compact ? " compact" : ""}`} onClick={(e)=>e.stopPropagation()}>
       <summary aria-label="Fangaktivitäts-Treffer im Umkreis anzeigen" title="Fangaktivitäts-Treffer im Umkreis anzeigen">ⓘ</summary>
       <div className="forecast-activity-popover">
+        <button type="button" className="forecast-activity-close" aria-label="Fanginfo schließen" onClick={(e) => { e.preventDefault(); e.stopPropagation(); e.currentTarget.closest("details")?.removeAttribute("open"); }}>×</button>
         <b>Dokumentierte {forecastFish}aktivität im 20-km-Umkreis</b>
         <div className="forecast-activity-direct-check">Aktuelles Gewässer: <strong>{activityEvidence.direct ? `${activityEvidence.direct.activityLabel} · ${activityEvidence.direct.lavNumber}` : `kein direkter LAV-Treffer · ${water.lavNumber ?? "ohne LAV-Nr."}`}</strong></div>
         {activityEvidence.nearby.length ? <ul>{activityEvidence.nearby.map((item) => <li key={`${water.id}-${item.lavNumber}`}>
-          <span><strong>{item.matchedWaterName || item.waterName}</strong><small>{item.lavNumber} · {item.activityLabel} · {item.provider}</small></span>
+          <span><strong>{item.matchedWaterName || item.waterName}</strong><small>{item.lavNumber} · {item.activityLabel}</small></span>
           <b>{item.km.toFixed(1)} km</b>
         </li>)}</ul> : <p>Keine dokumentierten Fangaktivitäts-Gewässer innerhalb von 20 km.</p>}
         <small className="forecast-activity-note">Diagnose: Distanz wird von diesem Kandidaten aus berechnet. Qualitätsklasse E, kein Score-Einfluss.</small>

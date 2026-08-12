@@ -2108,3 +2108,24 @@ footer {
 .forecast-catch-mini-line .forecast-activity-diagnostic{flex:0 0 auto}
 .forecast-activity-diagnostic.compact .forecast-activity-popover{right:auto;left:0}
 @media(max-width:700px){.forecast-activity-popover{position:fixed;left:12px!important;right:12px!important;top:auto;bottom:18px;width:auto;max-height:65vh;overflow:auto}.forecast-activity-popover ul{max-height:32vh}}
+
+
+/* V1.10.1 – Mobile: kompaktere Wetterdaten & klarere Fanginfo */
+.forecast-activity-close{display:none;position:absolute;top:10px;right:10px;width:30px;height:30px;border:1px solid #0b604d;border-radius:9px;background:#fff;color:#0b604d;font-size:1.35rem;line-height:1;align-items:center;justify-content:center;cursor:pointer;z-index:2}
+@media(max-width:700px){
+  .forecast-best-weather span{min-height:52px;padding:4px 2px}
+  .forecast-best-weather i{font-size:.88rem;line-height:1}
+  .forecast-best-weather b{font-size:.64rem;line-height:1.08}
+  .forecast-best-weather small{font-size:.57rem;line-height:1.08}
+  .forecast-activity-diagnostic summary{display:grid;place-items:center;width:23px;height:23px;border:1.5px solid #0b604d;border-radius:50%;background:#fff;color:#0b604d;font-size:.84rem;cursor:pointer}
+  .forecast-activity-diagnostic[open] summary{background:#eef8f4}
+  .forecast-activity-popover{padding:14px 13px 12px;padding-right:48px}
+  .forecast-activity-close{display:flex}
+  .forecast-activity-popover>b{padding-right:4px;font-size:.8rem}
+}
+@media(max-width:520px){
+  .forecast-best-weather span{min-height:48px;padding:3px 1px}
+  .forecast-best-weather i{font-size:.8rem}
+  .forecast-best-weather b{font-size:.59rem}
+  .forecast-best-weather small{font-size:.53rem}
+}
