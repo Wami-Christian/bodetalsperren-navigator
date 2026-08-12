@@ -2517,3 +2517,13 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     transform: translateX(-3mm);
   }
 }
+
+/* MOBILE V1.10.11
+   Nur Kachel 1: Pfeil/Häkchen neben „Warum diese Bewertung?“ 3 mm nach links.
+   Ausschließlich Mobilansicht; Desktop bleibt unverändert. */
+@media (max-width: 700px){
+  .forecast-best-info-shift-mobile-v2 .forecast-explain > summary::after{
+    position:relative;
+    right:3mm;
+  }
+}

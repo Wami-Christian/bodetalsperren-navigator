@@ -942,7 +942,7 @@ const atlasWaters = useMemo(() => {
 
         {bestForecast && <section className="forecast-best-section">
           <div className="forecast-section-title"><span>★</span><strong>Beste Bedingungen</strong></div>
-          {/* MOBILE V1.10.10: Kachel 1 – beide Info-Knöpfe 3 mm nach links; Desktop unverändert */}
+          {/* MOBILE V1.10.11: Kachel 1 – Info-Knöpfe und Bewertungs-Pfeil mobil angepasst; Desktop unverändert */}
           <article className="forecast-best-card forecast-clickable forecast-best-info-shift-mobile-v2" role="button" tabIndex={0} onClick={()=>openForecastWaterInAtlas(bestForecast.water)} onKeyDown={(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForecastWaterInAtlas(bestForecast.water);}}}>
             <div className="forecast-best-rank">1</div>
             <div className="forecast-best-main">
