@@ -2374,3 +2374,47 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   .forecast-best-weather .forecast-weather-moon b{font-size:.46rem}
   .forecast-best-weather .forecast-weather-moon small{font-size:.42rem}
 }
+
+
+/* =========================================================
+   V1.10.6 – Fanginfo mobil klar und kompakt
+   - genau zwei Zeilen je Kachel
+   - je Zeile genau ein Info-Button rechts
+   ========================================================= */
+.forecast-catch-compact-row,
+.forecast-catch-mini-line{
+  position:relative;
+}
+.forecast-catch-compact-row > .forecast-catch-info,
+.forecast-catch-compact-row > .forecast-activity-diagnostic{
+  margin-left:auto;
+}
+@media(max-width:700px){
+  .forecast-catch-compact-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:nowrap;
+    min-height:30px;
+  }
+  .forecast-catch-compact-row > b{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .forecast-other-card .forecast-catch-mini-line{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    min-height:30px;
+    padding-right:34px;
+    line-height:1.2;
+  }
+  .forecast-other-card .forecast-catch-mini-line > b{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+}
