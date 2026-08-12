@@ -2287,3 +2287,90 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     font-size:.43rem;
   }
 }
+
+/* =========================================================
+   V1.10.5 – Mobile final: 2 Info-Buttons je Kandidat
+   ========================================================= */
+@media(max-width:700px){
+  /* Die beiden Fangzeilen reservieren rechts einen festen Platz
+     für jeweils genau EINEN Info-Button. */
+  .forecast-other-card .forecast-catch-mini{
+    width:100%;
+    min-width:0;
+    padding-right:0;
+  }
+
+  .forecast-other-card .forecast-catch-mini-line{
+    position:relative;
+    display:block;
+    width:100%;
+    min-width:0;
+    padding-right:34px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    line-height:28px;
+  }
+
+  .forecast-other-card .forecast-catch-mini-line > .forecast-catch-info,
+  .forecast-other-card .forecast-catch-mini-line > .forecast-activity-diagnostic{
+    position:absolute;
+    right:2px;
+    top:50%;
+    margin:0;
+    transform:translateY(-50%);
+    z-index:3;
+  }
+
+  .forecast-other-card .forecast-catch-info,
+  .forecast-other-card .forecast-activity-info-button{
+    display:grid;
+    place-items:center;
+    width:26px;
+    height:26px;
+    min-width:26px;
+    min-height:26px;
+    padding:0;
+    border:1.5px solid #0b604d;
+    border-radius:50%;
+    background:#fff;
+    color:#0b604d;
+    font-size:14px;
+    font-weight:800;
+    line-height:1;
+  }
+
+  /* Score der besten Kachel ca. 2 mm vom rechten Rand nach innen. */
+  .forecast-best-card > .forecast-score{
+    transform:translateX(-8px);
+  }
+
+  /* Mondphase bleibt ausgeschrieben und vollständig sichtbar. */
+  .forecast-best-weather{
+    grid-template-columns:repeat(5,minmax(0,1fr)) minmax(62px,1.18fr);
+  }
+  .forecast-best-weather .forecast-weather-moon{
+    min-width:62px;
+    overflow:visible;
+  }
+  .forecast-best-weather .forecast-weather-moon b{
+    font-size:.50rem;
+    line-height:1;
+    white-space:nowrap;
+  }
+  .forecast-best-weather .forecast-weather-moon small{
+    margin-top:2px;
+    font-size:.46rem;
+    line-height:1;
+    white-space:nowrap;
+  }
+}
+
+@media(max-width:420px){
+  .forecast-best-weather{
+    grid-template-columns:repeat(5,minmax(0,1fr)) minmax(60px,1.18fr);
+  }
+  .forecast-best-weather .forecast-weather-moon{min-width:60px}
+  .forecast-best-weather .forecast-weather-moon b{font-size:.46rem}
+  .forecast-best-weather .forecast-weather-moon small{font-size:.42rem}
+}
