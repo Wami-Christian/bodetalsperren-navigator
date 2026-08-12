@@ -1,0 +1,8 @@
+species,waterName,lavNumber,provider,url,totalReports,speciesReports,speciesRank,activityLabel,observedAt,confidence
+Zander,Elbe und Alte Elbe,13-280-23,ALLE ANGELN,https://www.alleangeln.de/gewaesser/elbe-magdeburg,3727,,1,sehr hoch,2026-08-11,0.85
+Zander,Industriehafen Magdeburg,13-280-05,ALLE ANGELN,https://www.alleangeln.de/gewaesser/industriehafen-magdeburg,,,1,hoch,2026-08-11,0.90
+Zander,Elbe von km 305 - km 320 beidseitig,6-400-22,ALLE ANGELN,https://www.alleangeln.de/gewaesser/elbe-sch%C3%B6nebeck,998,,1,sehr hoch,2026-08-11,0.85
+Zander,Elbe km 334-350 beidseitig,4-130-18,ALLE ANGELN,https://www.alleangeln.de/gewaesser/elbe-hohenwarthe,504,,1,hoch,2026-08-11,0.80
+Zander,Elbe-Havel-Kanal km 326, 67- km 344,4-130-15,ALLE ANGELN,https://www.alleangeln.de/gewaesser/elbe-havel-kanal-niegripp,,,1,hoch,2026-08-11,0.80
+Zander,Saale von Straßenbrücke B 91,14-210-16,ALLE ANGELN,https://www.alleangeln.de/gewaesser/saale-halle-saale,2335,,,mittel,2026-08-11,0.65
+Zander,Saale von Kreisgrenze Saalekreis bis,6-110-14,ALLE ANGELN,https://www.alleangeln.de/gewaesser/saale-alsleben-saale,,,,hoch,2026-08-11,0.75

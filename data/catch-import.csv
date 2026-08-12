@@ -1,0 +1,2 @@
+id,species,waterName,lavNumber,date,time,timePrecision,lengthCm,weightKg,method,bait,provider,url,externalId,accessMode,confidence,region,notes
+example-001,Zander,Halberstädter See II,5-190-08,2026-07-15,21:00,hour,54.5,,Spinnfischen,Gummifisch,manual-test,https://example.invalid/fang/1,,manual,0.80,Sachsen-Anhalt,Beispielzeile - vor echtem Import ersetzen

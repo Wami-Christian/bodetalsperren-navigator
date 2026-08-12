@@ -1,0 +1,21 @@
+[
+  {
+    "id": "sample-zander-001",
+    "species": "Zander",
+    "waterName": null,
+    "lavNumber": null,
+    "region": "Sachsen-Anhalt",
+    "latitude": null,
+    "longitude": null,
+    "caughtAt": "2026-07-15T21:00:00+02:00",
+    "timePrecision": "daypart",
+    "lengthCm": 54.5,
+    "weightKg": null,
+    "method": null,
+    "bait": null,
+    "source": {"provider":"manual-test","url":"https://example.invalid/fang/1","externalId":null,"accessMode":"manual"},
+    "confidence": 0.55,
+    "weather": null,
+    "notes": "Beispieldatensatz – nicht für die Prognose verwenden."
+  }
+]

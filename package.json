@@ -1,6 +1,6 @@
 {
   "name": "harzfishing-navigator",
-  "version": "5.2.3-prognose-v1.3-ui",
+  "version": "5.2.3-prognose-v1.10-final-fangdaten",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,7 +9,13 @@
     "enrich:coordinates": "node scripts/enrich-lav-coordinates.mjs",
     "enrich:coordinates:test": "node scripts/enrich-lav-coordinates.mjs --limit=10",
     "import:atkis": "node scripts/import-atkis-hydro.mjs",
-    "import:atkis:test": "node scripts/import-atkis-hydro.mjs --limit=10"
+    "import:atkis:test": "node scripts/import-atkis-hydro.mjs --limit=10",
+    "catch:weather": "node scripts/enrich-catch-weather.mjs",
+    "catch:analyze": "node scripts/analyze-catch-events.mjs",
+    "catch:import": "node scripts/import-catch-events.mjs",
+    "catch:quality": "node scripts/classify-catch-data.mjs",
+    "catch:activity": "node scripts/import-catch-activity.mjs",
+    "catch:pilot": "node scripts/import-catch-activity.mjs data/catch-activity-import.csv"
   },
   "dependencies": {
     "leaflet": "1.9.4",

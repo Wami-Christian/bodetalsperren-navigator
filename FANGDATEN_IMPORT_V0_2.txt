@@ -1,0 +1,10 @@
+HarzFishing Fangdaten-Importer V0.2
+
+1. data/catch-import.csv mit zulässig erhobenen strukturierten Fangmeldungen befüllen.
+   Keine kopierten Beitragstexte speichern. Quelle/URL zur Nachvollziehbarkeit angeben.
+2. npm run catch:import
+3. data/catch-import-review.csv prüfen. Nur eindeutige LAV-/Namensmatches werden als usable markiert.
+4. npm run catch:weather
+5. npm run catch:analyze
+
+Die Prognose selbst wird weiterhin NICHT durch diese Lab-Daten verändert.

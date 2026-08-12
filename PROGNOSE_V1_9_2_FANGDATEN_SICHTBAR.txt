@@ -1,0 +1,7 @@
+HarzFishing Prognose V1.9.2
+
+- Fangdaten-Evidenz bei jedem Top-Kandidaten sichtbar
+- Klare Kennzeichnung, wenn noch keine Pilotdaten vorliegen
+- Pilot-Abdeckung im Prognosekopf
+- Aufklappbarer Bereich „Warum diese Bewertung?“
+- Externe Fangaktivität bleibt Qualitätsklasse E und beeinflusst den 0–100-Score nicht

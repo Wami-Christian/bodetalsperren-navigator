@@ -3,6 +3,8 @@
 import dynamic from "next/dynamic";
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { waters } from "@/data/waters";
+import { catchActivity } from "@/data/catch-activity";
+import catchEventsRaw from "@/data/catch-events.json";
 import { calculateAutomaticFishingScore, type ForecastHour, type ScoreResult } from "@/lib/forecast";
 import { targetFishRating, waterHasTargetFish, waterTargetFish } from "@/lib/fish";
 import { parseGpx, spotsToGpx } from "@/lib/gpx";
@@ -321,6 +323,79 @@ const atlasWaters = useMemo(() => {
     if (forecastSort === "name") return next.sort((a,b) => a.water.name.localeCompare(b.water.name, "de"));
     return next.sort((a,b) => b.best.result.score-a.best.result.score);
   }, [ranked, forecastSort]);
+
+  const activityFor = (water: FishingWater) => catchActivity.find((item) => item.species === forecastFish && item.lavNumber === water.lavNumber);
+
+  const activityEvidenceFor = (water: FishingWater) => {
+    const direct = activityFor(water);
+    const nearby = catchActivity
+      .filter((item) => item.species === forecastFish && item.lavNumber !== water.lavNumber)
+      .map((item) => {
+        const activityWater = waters.find((candidate) => candidate.lavNumber === item.lavNumber);
+        if (activityWater?.latitude == null || activityWater.longitude == null || water.latitude == null || water.longitude == null) return null;
+        const km = distanceKm(water.latitude, water.longitude, activityWater.latitude, activityWater.longitude);
+        if (km > 20) return null;
+        return { ...item, km, matchedWaterName: activityWater.name };
+      })
+      .filter((item): item is NonNullable<typeof item> => Boolean(item))
+      .sort((a,b) => a.km-b.km);
+    const nearbyByLav = Array.from(new Map(nearby.map((item) => [item.lavNumber, item])).values());
+    return { direct, nearbyCount: nearbyByLav.length, nearby: nearbyByLav };
+  };
+
+  const ActivityDiagnostic = ({ water, compact = false }: { water: FishingWater; compact?: boolean }) => {
+    const activityEvidence = activityEvidenceFor(water);
+    return <details className={`forecast-activity-diagnostic${compact ? " compact" : ""}`} onClick={(e)=>e.stopPropagation()}>
+      <summary aria-label="Fangaktivitäts-Treffer im Umkreis anzeigen" title="Fangaktivitäts-Treffer im Umkreis anzeigen">ⓘ</summary>
+      <div className="forecast-activity-popover">
+        <b>Dokumentierte {forecastFish}aktivität im 20-km-Umkreis</b>
+        <div className="forecast-activity-direct-check">Aktuelles Gewässer: <strong>{activityEvidence.direct ? `${activityEvidence.direct.activityLabel} · ${activityEvidence.direct.lavNumber}` : `kein direkter LAV-Treffer · ${water.lavNumber ?? "ohne LAV-Nr."}`}</strong></div>
+        {activityEvidence.nearby.length ? <ul>{activityEvidence.nearby.map((item) => <li key={`${water.id}-${item.lavNumber}`}>
+          <span><strong>{item.matchedWaterName || item.waterName}</strong><small>{item.lavNumber} · {item.activityLabel} · {item.provider}</small></span>
+          <b>{item.km.toFixed(1)} km</b>
+        </li>)}</ul> : <p>Keine dokumentierten Fangaktivitäts-Gewässer innerhalb von 20 km.</p>}
+        <small className="forecast-activity-note">Diagnose: Distanz wird von diesem Kandidaten aus berechnet. Qualitätsklasse E, kein Score-Einfluss.</small>
+      </div>
+    </details>;
+  };
+
+  type EvidenceEvent = {
+    species?: string; waterName?: string | null; lavNumber?: string | null; latitude?: number | null; longitude?: number | null;
+    caughtAt?: string | null; timePrecision?: string | null; confidence?: number | null; notes?: string | null;
+    source?: { provider?: string | null };
+    weather?: { temperatureC?: number | null; pressureHpa?: number | null; windKmh?: number | null; cloudCoverPct?: number | null } | null;
+  };
+  const catchEvents = catchEventsRaw as EvidenceEvent[];
+
+  const evidenceFor = (water: FishingWater, hour: ForecastHour) => {
+    const eligible = catchEvents.filter((event) =>
+      event.species === forecastFish &&
+      event.weather &&
+      event.caughtAt &&
+      (event.confidence ?? 0) >= 0.6 &&
+      event.source?.provider !== "manual-test" &&
+      !event.notes?.toLowerCase().includes("beispieldatensatz")
+    );
+    const similar = eligible.filter((event) => {
+      const w = event.weather!;
+      return Math.abs((w.temperatureC ?? hour.temperature) - hour.temperature) <= 4 &&
+        Math.abs((w.pressureHpa ?? hour.pressure) - hour.pressure) <= 8 &&
+        Math.abs((w.windKmh ?? hour.windSpeed) - hour.windSpeed) <= 8 &&
+        Math.abs((w.cloudCoverPct ?? hour.cloudCover) - hour.cloudCover) <= 30;
+    });
+    const local = similar.filter((event) =>
+      (water.lavNumber && event.lavNumber === water.lavNumber) ||
+      (!!event.waterName && event.waterName.toLowerCase() === water.name.toLowerCase())
+    );
+    const regional = similar.filter((event) =>
+      event.latitude != null && event.longitude != null && water.latitude != null && water.longitude != null &&
+      distanceKm(water.latitude, water.longitude, event.latitude, event.longitude) <= 20 &&
+      !local.includes(event)
+    );
+    return { local: local.length, regional: regional.length, eligible: eligible.length };
+  };
+
+  const forecastActivityMatches = useMemo(() => ranked.filter((item) => activityFor(item.water)).length, [ranked, forecastFish]);
 
   const bestForecast = ranked[0] ?? null;
   const otherForecast = sortedForecast.filter((item) => item.water.id !== bestForecast?.water.id);
@@ -831,7 +906,7 @@ const atlasWaters = useMemo(() => {
           {forecastPlace && <div className="forecast-meta-modern">
             <div className="forecast-fish-badge" aria-hidden="true">🐟</div>
             <div><strong>{forecastFish} rund um {forecastPlace.label}</strong><span>20 km · {forecastWaters.length} passende Gewässer · {forecastDate ? new Date(`${forecastDate}T12:00:00`).toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'}) : 'Datum wählen'} · Wetter automatisch</span></div>
-            {bestForecast && <span className="forecast-meta-weather">☁ {Math.round(bestForecast.best.hour.cloudCover)} % · {bestForecast.best.hour.temperature.toFixed(0)} °C</span>}
+            {bestForecast && <span className="forecast-meta-weather">☁ {Math.round(bestForecast.best.hour.cloudCover)} % · {bestForecast.best.hour.temperature.toFixed(0)} °C · 🎣 Pilotdaten {forecastActivityMatches}/{ranked.length}</span>}
           </div>}
         </div>
 
@@ -857,7 +932,37 @@ const atlasWaters = useMemo(() => {
               <span><i>≋</i><b>{Math.round(bestForecast.best.hour.windSpeed)} km/h</b><small>Wind</small></span>
               <span><i>♨</i><b>{bestForecast.best.hour.temperature.toFixed(0)} °C</b><small>Temperatur</small></span>
               <span><i>◴</i><b>{Math.round(bestForecast.best.hour.pressure)} hPa</b><small>Luftdruck {bestForecast.best.hour.pressureTrend >= 1.5 ? '↗' : bestForecast.best.hour.pressureTrend <= -1.5 ? '↘' : '→'}</small></span>
+              <span><i>◐</i><b>{bestForecast.best.result.moonPhase}</b><small>Mond · {bestForecast.best.result.moonIllumination} %</small></span>
             </div>
+            <details className="forecast-explain" onClick={(e)=>e.stopPropagation()}>
+              <summary>Warum diese Bewertung?</summary>
+              <div className="forecast-explain-grid">
+                <div><b>Prognose {bestForecast.best.result.score}/100</b><ul>{bestForecast.best.result.reasons.length ? bestForecast.best.result.reasons.map((reason)=><li key={reason}>{reason}</li>) : <li>Keine zusätzlichen Bonusfaktoren erkannt.</li>}</ul></div>
+                <div><b>Fangdaten-Evidenz</b>{activityFor(bestForecast.water) ? (() => { const activity = activityFor(bestForecast.water)!; return <p><strong>{activity.activityLabel}</strong> · {activity.provider}{activity.totalReports ? ` · ${activity.totalReports.toLocaleString("de-DE")} Gesamtmeldungen` : ""}{activity.speciesRank ? ` · ${forecastFish} Rang #${activity.speciesRank}` : ""}<br/><small>Qualitätsklasse E · kein Einfluss auf den 0–100-Score</small></p>; })() : <p>Für dieses Gewässer liegen im aktuellen 7-Gewässer-Pilotbestand noch keine externen Fangaktivitätsdaten vor.<br/><small>Kein Nachteil im 0–100-Score.</small></p>}</div>
+              </div>
+            </details>
+            {(() => {
+              const evidence = evidenceFor(bestForecast.water, bestForecast.best.hour);
+              const activityEvidence = activityEvidenceFor(bestForecast.water);
+              return <div className="forecast-catch-compact">
+                <div className="forecast-catch-compact-row">
+                  <span aria-hidden="true">🎣</span>
+                  <b>Ähnliche {forecastFish}fänge:</b>
+                  <span>Gewässer <strong>{evidence.local}</strong></span>
+                  <span>·</span>
+                  <span>Umkreis 20 km <strong>{evidence.regional}</strong></span>
+                  <span className="forecast-catch-info" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %).">ⓘ</span>
+                </div>
+                <div className="forecast-catch-compact-row">
+                  <span aria-hidden="true">📊</span>
+                  <b>Dokumentierte Fangaktivität:</b>
+                  <span>Gewässer <strong>{activityEvidence.direct?.activityLabel ?? "–"}</strong></span>
+                  <span>·</span>
+                  <span>Umkreis <strong>{activityEvidence.nearbyCount}</strong> {activityEvidence.nearbyCount === 1 ? "Gewässer" : "Gewässer"}</span>
+                  <ActivityDiagnostic water={bestForecast.water} />
+                </div>
+              </div>;
+            })()}
           </article>
         </section>}
 
@@ -869,7 +974,19 @@ const atlasWaters = useMemo(() => {
               return <article key={water.id} className="forecast-other-card forecast-clickable" role="button" tabIndex={0} onClick={()=>openForecastWaterInAtlas(water)} onKeyDown={(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForecastWaterInAtlas(water);}}}>
                 <div className="forecast-rank-small">{rank}</div>
                 <div className="forecast-water-icon small" aria-hidden="true">🌊</div>
-                <div className="forecast-other-copy"><strong>{water.name}</strong><p>⌖ {distance.toFixed(1)} km · {water.type} · Beste Zeit: {new Date(best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</p><div className="forecast-reason-pills"><span>{best.result.dayPhase} günstig</span><span>{Math.round(best.hour.cloudCover)} % Bewölkung</span><span>{Math.round(best.hour.windSpeed)} km/h Wind</span></div></div>
+                <div className="forecast-other-copy">
+                  <strong>{water.name}</strong>
+                  <p>⌖ {distance.toFixed(1)} km · {water.type} · Beste Zeit: {new Date(best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</p>
+                  <div className="forecast-reason-pills"><span>{best.result.dayPhase} günstig</span><span>{Math.round(best.hour.cloudCover)} % Bewölkung</span><span>{Math.round(best.hour.windSpeed)} km/h Wind</span><span>◐ {best.result.moonPhase} · {best.result.moonIllumination} %</span></div>
+                  {(() => {
+                    const evidence = evidenceFor(water, best.hour);
+                    const activityEvidence = activityEvidenceFor(water);
+                    return <div className="forecast-catch-mini">
+                      <span>🎣 Ähnliche {forecastFish}fänge: Gewässer <b>{evidence.local}</b> · Umkreis <b>{evidence.regional}</b></span>
+                      <span className="forecast-catch-mini-line">📊 Fangaktivität: Gewässer <b>{activityEvidence.direct?.activityLabel ?? "–"}</b> · Umkreis <b>{activityEvidence.nearbyCount}</b> Gewässer <ActivityDiagnostic water={water} compact /></span>
+                    </div>;
+                  })()}
+                </div>
                 <span className="forecast-score small">{best.result.score}/100</span><span className="forecast-open-arrow" aria-hidden="true">›</span>
               </article>
             })}
@@ -877,7 +994,7 @@ const atlasWaters = useMemo(() => {
           {otherForecast.length > 4 && <button className="forecast-show-all" type="button" onClick={()=>setShowAllForecast((value)=>!value)}>{showAllForecast ? 'Weniger Gewässer anzeigen' : `Alle ${ranked.length} Gewässer anzeigen`} <span>{showAllForecast?'⌃':'⌄'}</span></button>}
         </section>}
 
-        {bestForecast && <p className="forecast-disclaimer">ⓘ Bewertungen basieren auf Wettervorhersage, Sonnen- & Mondphasen und artspezifischen Faktoren. Keine Garantie – Petri Heil!</p>}
+        {bestForecast && <p className="forecast-disclaimer">ⓘ Bewertungen basieren auf Wettervorhersage, Sonnen- & Mondphasen und artspezifischen Faktoren. Community-Fangaktivität wird separat angezeigt und verändert den 0–100-Score noch nicht. Keine Garantie – Petri Heil!</p>}
       </section>}
       {view === "diary" && <section className="page diary"><form className="panel" onSubmit={addCatch}><p className="eyebrow">Lokales Fangbuch</p><h1>Fang eintragen</h1><div className="form-grid"><label>Datum und Uhrzeit<input name="caughtAt" type="datetime-local" required/></label><label>Gewässer<select name="waterId">{waters.map(w=><option value={w.id} key={w.id}>{w.name}</option>)}</select></label><label>Fisch<select name="fish">{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select></label><label>Länge cm<input name="lengthCm" type="number" min="0" step="0.1"/></label><label>Gewicht kg<input name="weightKg" type="number" min="0" step="0.01"/></label><label>Köder<input name="lure" placeholder="z. B. 10 cm Gummifisch"/></label><label className="wide">Notiz<textarea name="note" rows={3}/></label></div><button type="submit">Fang speichern</button></form><div className="catch-list">{catches.map(entry=><article key={entry.id}><div><strong>{entry.fish}</strong><p>{waters.find(w=>w.id===entry.waterId)?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString('de-DE')}</p><small>{entry.lure}{entry.note?` · ${entry.note}`:''}</small></div><span>{entry.lengthCm?`${entry.lengthCm} cm`:''}{entry.weightKg?` · ${entry.weightKg} kg`:''}</span></article>)}{!catches.length&&<p>Noch keine Fänge gespeichert.</p>}</div></section>}
 
