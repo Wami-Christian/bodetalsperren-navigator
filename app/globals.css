@@ -2189,3 +2189,101 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 .forecast-best-weather span{min-width:0;min-height:51px;padding:4px 1px}.forecast-best-weather i{font-size:.78rem;line-height:1}.forecast-best-weather b{font-size:.60rem;line-height:1.05}.forecast-best-weather small{font-size:.51rem;line-height:1.05}.forecast-best-weather .forecast-weather-moon b{font-size:.52rem;line-height:1}.forecast-best-weather .forecast-weather-moon small{margin-top:2px;font-size:.46rem;line-height:1}
 }
 @media(max-width:420px){.forecast-best-weather .forecast-weather-moon b{font-size:.48rem}.forecast-best-weather .forecast-weather-moon small{font-size:.43rem}.forecast-activity-modal-backdrop{padding:12px}.forecast-activity-modal{padding:16px}}
+
+
+/* =========================================================
+   V1.10.4 – Mobile Feinschliff
+   - Top-Score ca. 2 mm nach innen
+   - zwei Info-Buttons je Folgekandidat sichtbar
+   - Mondphase vollständig lesbar
+   ========================================================= */
+.forecast-catch-info{
+  display:inline-grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  flex:0 0 24px;
+  margin-left:4px;
+  border:1.5px solid #0b604d;
+  border-radius:50%;
+  background:#fff;
+  color:#0b604d;
+  font-size:14px;
+  font-weight:800;
+  font-style:normal;
+  line-height:1;
+  cursor:help;
+  vertical-align:middle;
+}
+.forecast-catch-info:focus-visible{
+  outline:2px solid rgba(11,96,77,.24);
+  outline-offset:2px;
+}
+.forecast-catch-mini-line{
+  min-width:0;
+}
+.forecast-catch-mini-line .forecast-catch-info,
+.forecast-catch-mini-line .forecast-activity-diagnostic{
+  flex:0 0 auto;
+}
+
+@media(max-width:700px){
+  /* 2 mm ≈ 8 px bei typischer CSS-Pixeldichte */
+  .forecast-best-card > .forecast-score{
+    transform:translateX(-8px);
+  }
+
+  .forecast-best-weather{
+    grid-template-columns:repeat(5,minmax(0,1fr)) minmax(58px,1.16fr);
+  }
+  .forecast-best-weather .forecast-weather-moon{
+    min-width:58px;
+    overflow:visible;
+  }
+  .forecast-best-weather .forecast-weather-moon b{
+    font-size:.50rem;
+    letter-spacing:-.01em;
+    white-space:nowrap;
+  }
+  .forecast-best-weather .forecast-weather-moon small{
+    font-size:.46rem;
+    white-space:nowrap;
+  }
+
+  .forecast-catch-mini{
+    padding-right:2px;
+  }
+  .forecast-catch-mini-line{
+    display:flex;
+    align-items:center;
+    gap:3px;
+    overflow:visible;
+    white-space:normal;
+  }
+  .forecast-catch-mini-line > .forecast-catch-info,
+  .forecast-catch-mini-line > .forecast-activity-diagnostic{
+    margin-left:auto;
+  }
+  .forecast-catch-info,
+  .forecast-activity-info-button{
+    width:26px;
+    height:26px;
+    flex-basis:26px;
+    font-size:14px;
+  }
+}
+
+@media(max-width:420px){
+  .forecast-best-weather{
+    grid-template-columns:repeat(5,minmax(0,1fr)) minmax(56px,1.14fr);
+  }
+  .forecast-best-weather .forecast-weather-moon{
+    min-width:56px;
+  }
+  .forecast-best-weather .forecast-weather-moon b{
+    font-size:.47rem;
+  }
+  .forecast-best-weather .forecast-weather-moon small{
+    font-size:.43rem;
+  }
+}

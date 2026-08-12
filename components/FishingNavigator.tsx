@@ -979,7 +979,7 @@ const atlasWaters = useMemo(() => {
                   <span>Gewässer <strong>{evidence.local}</strong></span>
                   <span>·</span>
                   <span>Umkreis 20 km <strong>{evidence.regional}</strong></span>
-                  <span className="forecast-catch-info" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %).">ⓘ</span>
+                  <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span>
                 </div>
                 <div className="forecast-catch-compact-row">
                   <span aria-hidden="true">📊</span>
@@ -1010,7 +1010,7 @@ const atlasWaters = useMemo(() => {
                     const evidence = evidenceFor(water, best.hour);
                     const activityEvidence = activityEvidenceFor(water);
                     return <div className="forecast-catch-mini">
-                      <span>🎣 Ähnliche {forecastFish}fänge: Gewässer <b>{evidence.local}</b> · Umkreis <b>{evidence.regional}</b></span>
+                      <span className="forecast-catch-mini-line">🎣 Ähnliche {forecastFish}fänge: Gewässer <b>{evidence.local}</b> · Umkreis <b>{evidence.regional}</b> <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span></span>
                       <span className="forecast-catch-mini-line">📊 Fangaktivität: Gewässer <b>{activityEvidence.direct?.activityLabel ?? "–"}</b> · Umkreis <b>{activityEvidence.nearbyCount}</b> Gewässer <ActivityDiagnostic water={water} compact /></span>
                     </div>;
                   })()}
