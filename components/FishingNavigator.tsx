@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { waters } from "@/data/waters";
 import { catchActivity } from "@/data/catch-activity";
 import catchEventsRaw from "@/data/catch-events.json";
@@ -344,20 +345,46 @@ const atlasWaters = useMemo(() => {
   };
 
   const ActivityDiagnostic = ({ water, compact = false }: { water: FishingWater; compact?: boolean }) => {
+    const [open, setOpen] = useState(false);
     const activityEvidence = activityEvidenceFor(water);
-    return <details className={`forecast-activity-diagnostic${compact ? " compact" : ""}`} onClick={(e)=>{e.stopPropagation(); if(e.target===e.currentTarget && e.currentTarget.open){e.currentTarget.removeAttribute("open");}}}>
-      <summary aria-label="Fangaktivitäts-Treffer im Umkreis anzeigen" title="Fangaktivitäts-Treffer im Umkreis anzeigen">ⓘ</summary>
-      <div className="forecast-activity-popover">
-        <button type="button" className="forecast-activity-close" aria-label="Fanginfo schließen" onClick={(e) => { e.preventDefault(); e.stopPropagation(); e.currentTarget.closest("details")?.removeAttribute("open"); }}>×</button>
-        <b>Dokumentierte {forecastFish}aktivität im 20-km-Umkreis</b>
-        <div className="forecast-activity-direct-check">Aktuelles Gewässer: <strong>{activityEvidence.direct ? `${activityEvidence.direct.activityLabel} · ${activityEvidence.direct.lavNumber}` : `kein direkter LAV-Treffer · ${water.lavNumber ?? "ohne LAV-Nr."}`}</strong></div>
-        {activityEvidence.nearby.length ? <ul>{activityEvidence.nearby.map((item) => <li key={`${water.id}-${item.lavNumber}`}>
-          <span><strong>{item.matchedWaterName || item.waterName}</strong><small>{item.lavNumber} · {item.activityLabel}</small></span>
-          <b>{item.km.toFixed(1)} km</b>
-        </li>)}</ul> : <p>Keine dokumentierten Fangaktivitäts-Gewässer innerhalb von 20 km.</p>}
-        <small className="forecast-activity-note">Diagnose: Distanz wird von diesem Kandidaten aus berechnet. Qualitätsklasse E, kein Score-Einfluss.</small>
-      </div>
-    </details>;
+
+    useEffect(() => {
+      if (!open) return;
+      const oldOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") setOpen(false);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = oldOverflow;
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [open]);
+
+    const modal = open && typeof document !== "undefined"
+      ? createPortal(
+          <div className="forecast-activity-modal-backdrop" onClick={() => setOpen(false)}>
+            <div className="forecast-activity-modal" role="dialog" aria-modal="true" aria-label={`Dokumentierte ${forecastFish}aktivität im 20-km-Umkreis`} onClick={(event) => event.stopPropagation()}>
+              <button type="button" className="forecast-activity-close" aria-label="Fanginfo schließen" onClick={() => setOpen(false)}>×</button>
+              <h3>Dokumentierte {forecastFish}aktivität<br />im 20-km-Umkreis</h3>
+              <div className="forecast-activity-direct-check">Aktuelles Gewässer: <strong>{activityEvidence.direct ? `${activityEvidence.direct.activityLabel} · ${activityEvidence.direct.lavNumber}` : `kein direkter LAV-Treffer · ${water.lavNumber ?? "ohne LAV-Nr."}`}</strong></div>
+              <b className="forecast-activity-count">{activityEvidence.nearby.length} Gewässer im Umkreis</b>
+              {activityEvidence.nearby.length ? <ul className="forecast-activity-modal-list">{activityEvidence.nearby.map((item) => <li key={`${water.id}-${item.lavNumber}`}>
+                <span><strong>{item.matchedWaterName || item.waterName}</strong><small>{item.lavNumber} · {item.activityLabel}</small></span>
+                <b>{item.km.toFixed(1)} km</b>
+              </li>)}</ul> : <p>Keine dokumentierten Fangaktivitäts-Gewässer innerhalb von 20 km.</p>}
+              <div className="forecast-activity-note"><span>ⓘ</span><small>Diagnose: Distanz wird von diesem Kandidaten aus berechnet. Qualitätsklasse E, kein Score-Einfluss.</small></div>
+            </div>
+          </div>, document.body)
+      : null;
+
+    return <>
+      <span className={`forecast-activity-diagnostic${compact ? " compact" : ""}`} onClick={(event) => event.stopPropagation()}>
+        <button type="button" className="forecast-activity-info-button" aria-label="Fangaktivitäts-Treffer im Umkreis anzeigen" title="Fangaktivitäts-Treffer im Umkreis anzeigen" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setOpen(true); }}>i</button>
+      </span>
+      {modal}
+    </>;
   };
 
   type EvidenceEvent = {
@@ -933,7 +960,7 @@ const atlasWaters = useMemo(() => {
               <span><i>≋</i><b>{Math.round(bestForecast.best.hour.windSpeed)} km/h</b><small>Wind</small></span>
               <span><i>♨</i><b>{bestForecast.best.hour.temperature.toFixed(0)} °C</b><small>Temperatur</small></span>
               <span><i>◴</i><b>{Math.round(bestForecast.best.hour.pressure)} hPa</b><small>Luftdruck {bestForecast.best.hour.pressureTrend >= 1.5 ? '↗' : bestForecast.best.hour.pressureTrend <= -1.5 ? '↘' : '→'}</small></span>
-              <span><i>◐</i><b>{bestForecast.best.result.moonPhase}</b><small>Mond · {bestForecast.best.result.moonIllumination} %</small></span>
+              <span className="forecast-weather-moon"><i>◐</i><b>{bestForecast.best.result.moonPhase}</b><small>{bestForecast.best.result.moonIllumination} %</small></span>
             </div>
             <details className="forecast-explain" onClick={(e)=>e.stopPropagation()}>
               <summary>Warum diese Bewertung?</summary>

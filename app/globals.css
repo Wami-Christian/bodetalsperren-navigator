@@ -2166,3 +2166,26 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   .forecast-best-weather span:last-child b{font-size:.50rem}
   .forecast-best-weather span:last-child small{font-size:.46rem}
 }
+
+/* V1.10.3 FINAL – echtes Portal-Modal + kompakte Mondphase */
+.forecast-activity-diagnostic{display:inline-flex;align-items:center;margin-left:4px;vertical-align:middle;position:relative}
+.forecast-activity-info-button{display:grid;place-items:center;width:24px;height:24px;padding:0;border:1.5px solid #0b604d;border-radius:50%;background:#fff;color:#0b604d;font-size:14px;font-weight:800;line-height:1;cursor:pointer}
+.forecast-activity-info-button:hover,.forecast-activity-info-button:focus-visible{background:#edf8f4;outline:none}
+.forecast-activity-modal-backdrop{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(13,30,27,.58);overscroll-behavior:contain}
+.forecast-activity-modal{position:relative;width:min(440px,100%);max-height:min(72vh,650px);overflow-y:auto;padding:22px;border:1px solid #d8e4e0;border-radius:22px;background:#fff;color:#173f36;box-shadow:0 28px 80px rgba(0,0,0,.30),0 5px 20px rgba(0,0,0,.12)}
+.forecast-activity-modal h3{margin:0 50px 18px 0;color:#102f29;font-size:1.18rem;line-height:1.22}
+.forecast-activity-modal .forecast-activity-close{position:absolute;top:15px;right:15px;display:grid;width:38px;height:38px;padding:0;border:1px solid #d4dfdc;border-radius:50%;background:#fff;color:#183f36;font-size:1.7rem;font-weight:400;line-height:1;place-items:center;cursor:pointer;z-index:1}
+.forecast-activity-modal .forecast-activity-close:hover{background:#edf7f3}
+.forecast-activity-modal .forecast-activity-direct-check{display:flex;flex-direction:column;gap:3px;margin-bottom:18px;padding:12px 14px;border-radius:14px;background:#eff7f4;color:#526b65}
+.forecast-activity-modal .forecast-activity-direct-check strong{color:#07594a;font-size:1rem}
+.forecast-activity-count{display:block;margin-bottom:10px;color:#183e35;font-size:.9rem}
+.forecast-activity-modal-list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.forecast-activity-modal-list li{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:11px 12px;border:1px solid #dce6e2;border-radius:12px;background:#fff}
+.forecast-activity-modal-list li span{min-width:0}.forecast-activity-modal-list li span strong,.forecast-activity-modal-list li span small{display:block}.forecast-activity-modal-list li span strong{color:#204d43}.forecast-activity-modal-list li span small{margin-top:2px;color:#6d7f7a;font-size:.73rem}.forecast-activity-modal-list li>b{white-space:nowrap;color:#07594a}
+.forecast-activity-modal .forecast-activity-note{display:grid;grid-template-columns:auto 1fr;gap:9px;margin-top:14px;padding-top:12px;border-top:1px dashed #d6e2de;color:#71827d}.forecast-activity-modal .forecast-activity-note>span{color:#07594a;font-size:1.15rem}.forecast-activity-modal .forecast-activity-note small{font-size:.72rem;line-height:1.45}
+.forecast-weather-moon b,.forecast-weather-moon small{white-space:nowrap}
+@media(max-width:700px){
+.forecast-activity-info-button{width:27px;height:27px;font-size:15px}.forecast-activity-modal-backdrop{padding:18px}.forecast-activity-modal{width:100%;max-height:72dvh;padding:18px;border-radius:20px}.forecast-activity-modal h3{margin-right:44px;font-size:1.05rem}.forecast-activity-modal .forecast-activity-close{top:12px;right:12px;width:36px;height:36px}
+.forecast-best-weather span{min-width:0;min-height:51px;padding:4px 1px}.forecast-best-weather i{font-size:.78rem;line-height:1}.forecast-best-weather b{font-size:.60rem;line-height:1.05}.forecast-best-weather small{font-size:.51rem;line-height:1.05}.forecast-best-weather .forecast-weather-moon b{font-size:.52rem;line-height:1}.forecast-best-weather .forecast-weather-moon small{margin-top:2px;font-size:.46rem;line-height:1}
+}
+@media(max-width:420px){.forecast-best-weather .forecast-weather-moon b{font-size:.48rem}.forecast-best-weather .forecast-weather-moon small{font-size:.43rem}.forecast-activity-modal-backdrop{padding:12px}.forecast-activity-modal{padding:16px}}
