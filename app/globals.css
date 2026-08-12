@@ -2129,3 +2129,40 @@ footer {
   .forecast-best-weather b{font-size:.59rem}
   .forecast-best-weather small{font-size:.53rem}
 }
+
+
+/* V1.10.2 – Fanginfo als echtes Modal + mobile Mondanzeige kompakt */
+.forecast-activity-diagnostic summary{
+  display:grid;place-items:center;width:23px;height:23px;
+  border:1.5px solid #0b604d;border-radius:50%;background:#fff;
+  color:#0b604d;font-size:.84rem;cursor:pointer;position:relative;z-index:10003;
+}
+.forecast-activity-diagnostic[open] summary{background:#eef8f4}
+.forecast-activity-diagnostic[open]::before{
+  content:"";position:fixed;inset:0;background:rgba(15,38,33,.36);
+  z-index:10000;cursor:pointer;
+}
+.forecast-activity-popover,
+.forecast-activity-diagnostic.compact .forecast-activity-popover{
+  position:fixed!important;left:50%!important;right:auto!important;top:50%!important;bottom:auto!important;
+  transform:translate(-50%,-50%);z-index:10002!important;
+  width:min(430px,calc(100vw - 36px));max-height:min(72vh,620px);overflow:auto;
+  padding:16px 15px 13px;padding-right:50px;
+  box-shadow:0 22px 70px rgba(12,39,33,.32);
+}
+.forecast-activity-close{display:flex;z-index:10004}
+body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
+
+@media(max-width:700px){
+  .forecast-activity-popover,
+  .forecast-activity-diagnostic.compact .forecast-activity-popover{
+    left:14px!important;right:14px!important;top:50%!important;bottom:auto!important;
+    transform:translateY(-50%);width:auto;max-height:70vh;
+  }
+  .forecast-best-weather span:last-child b{font-size:.55rem;line-height:1.02;white-space:nowrap}
+  .forecast-best-weather span:last-child small{font-size:.49rem;line-height:1.02;white-space:nowrap}
+}
+@media(max-width:520px){
+  .forecast-best-weather span:last-child b{font-size:.50rem}
+  .forecast-best-weather span:last-child small{font-size:.46rem}
+}

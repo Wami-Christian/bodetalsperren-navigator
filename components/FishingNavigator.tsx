@@ -345,7 +345,7 @@ const atlasWaters = useMemo(() => {
 
   const ActivityDiagnostic = ({ water, compact = false }: { water: FishingWater; compact?: boolean }) => {
     const activityEvidence = activityEvidenceFor(water);
-    return <details className={`forecast-activity-diagnostic${compact ? " compact" : ""}`} onClick={(e)=>e.stopPropagation()}>
+    return <details className={`forecast-activity-diagnostic${compact ? " compact" : ""}`} onClick={(e)=>{e.stopPropagation(); if(e.target===e.currentTarget && e.currentTarget.open){e.currentTarget.removeAttribute("open");}}}>
       <summary aria-label="Fangaktivitäts-Treffer im Umkreis anzeigen" title="Fangaktivitäts-Treffer im Umkreis anzeigen">ⓘ</summary>
       <div className="forecast-activity-popover">
         <button type="button" className="forecast-activity-close" aria-label="Fanginfo schließen" onClick={(e) => { e.preventDefault(); e.stopPropagation(); e.currentTarget.closest("details")?.removeAttribute("open"); }}>×</button>
@@ -939,7 +939,7 @@ const atlasWaters = useMemo(() => {
               <summary>Warum diese Bewertung?</summary>
               <div className="forecast-explain-grid">
                 <div><b>Prognose {bestForecast.best.result.score}/100</b><ul>{bestForecast.best.result.reasons.length ? bestForecast.best.result.reasons.map((reason)=><li key={reason}>{reason}</li>) : <li>Keine zusätzlichen Bonusfaktoren erkannt.</li>}</ul></div>
-                <div><b>Fangdaten-Evidenz</b>{activityFor(bestForecast.water) ? (() => { const activity = activityFor(bestForecast.water)!; return <p><strong>{activity.activityLabel}</strong> · {activity.provider}{activity.totalReports ? ` · ${activity.totalReports.toLocaleString("de-DE")} Gesamtmeldungen` : ""}{activity.speciesRank ? ` · ${forecastFish} Rang #${activity.speciesRank}` : ""}<br/><small>Qualitätsklasse E · kein Einfluss auf den 0–100-Score</small></p>; })() : <p>Für dieses Gewässer liegen im aktuellen 7-Gewässer-Pilotbestand noch keine externen Fangaktivitätsdaten vor.<br/><small>Kein Nachteil im 0–100-Score.</small></p>}</div>
+                <div><b>Fangdaten-Evidenz</b>{activityFor(bestForecast.water) ? (() => { const activity = activityFor(bestForecast.water)!; return <p><strong>{activity.activityLabel}</strong>{activity.totalReports ? ` · ${activity.totalReports.toLocaleString("de-DE")} Gesamtmeldungen` : ""}{activity.speciesRank ? ` · ${forecastFish} Rang #${activity.speciesRank}` : ""}<br/><small>Qualitätsklasse E · kein Einfluss auf den 0–100-Score</small></p>; })() : <p>Für dieses Gewässer liegen noch keine dokumentierten Fangaktivitätsdaten vor.<br/><small>Kein Nachteil im 0–100-Score.</small></p>}</div>
               </div>
             </details>
             {(() => {
