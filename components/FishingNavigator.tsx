@@ -996,12 +996,24 @@ const atlasWaters = useMemo(() => {
                   <strong>{water.name}</strong>
                   <p>⌖ {distance.toFixed(1)} km · {water.type} · Beste Zeit: {new Date(best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</p>
                   <div className="forecast-reason-pills"><span>{best.result.dayPhase} günstig</span><span>{Math.round(best.hour.cloudCover)} % Bewölkung</span><span>{Math.round(best.hour.windSpeed)} km/h Wind</span><span>◐ {best.result.moonPhase} · {best.result.moonIllumination} %</span></div>
-                  <div className="forecast-catch-mini">
+                  <div className="forecast-catch-mini forecast-catch-desktop">
                     <span className="forecast-catch-mini-line">🎣 <b>Ähnliche Fänge Gewässer</b> <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen im Gewässer" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span></span>
                     <span className="forecast-catch-mini-line">📊 <b>Ähnliche Fänge Umkreis 20 km</b> <ActivityDiagnostic water={water} compact /></span>
                   </div>
                 </div>
                 <span className="forecast-score small">{best.result.score}/100</span><span className="forecast-open-arrow" aria-hidden="true">›</span>
+                <div className="forecast-catch-compact forecast-other-catch-mobile">
+                  <div className="forecast-catch-compact-row">
+                    <span aria-hidden="true">🎣</span>
+                    <b>Ähnliche Fänge Gewässer</b>
+                    <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen im Gewässer" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span>
+                  </div>
+                  <div className="forecast-catch-compact-row">
+                    <span aria-hidden="true">📊</span>
+                    <b>Ähnliche Fänge Umkreis 20 km</b>
+                    <ActivityDiagnostic water={water} compact />
+                  </div>
+                </div>
               </article>
             })}
           </div>

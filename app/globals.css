@@ -2418,3 +2418,93 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     white-space:nowrap;
   }
 }
+
+/* =========================================================
+   V1.10.7 – Prognose Mobile: Kandidaten ab Rang 2
+   Desktop bleibt unverändert.
+   - keine Wetterdaten/Pills ab Rang 2 auf Mobilgeräten
+   - Fanginfo-Zeilen wie in Kachel 1, über die volle Kartenbreite
+   - einzelne, abgerundete Kandidatenkarten
+   ========================================================= */
+.forecast-other-catch-mobile{
+  display:none;
+}
+
+@media(max-width:700px){
+  .forecast-other-list{
+    display:grid;
+    gap:10px;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    overflow:visible;
+  }
+
+  .forecast-other-card{
+    grid-template-columns:22px 50px minmax(0,1fr) auto 10px;
+    gap:6px;
+    padding:8px 6px 0;
+    border:1px solid #d5e4df;
+    border-radius:16px;
+    background:#fff;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(17,65,55,.05);
+  }
+
+  .forecast-other-card:last-child{
+    border-bottom:1px solid #d5e4df;
+  }
+
+  /* Ab Rang 2 werden auf Mobilgeräten keine Wetterdaten gezeigt. */
+  .forecast-other-card .forecast-reason-pills,
+  .forecast-other-card .forecast-catch-desktop{
+    display:none;
+  }
+
+  .forecast-other-card .forecast-other-copy{
+    align-self:center;
+    min-width:0;
+    padding-bottom:8px;
+  }
+
+  .forecast-other-card .forecast-other-copy p{
+    margin-bottom:0;
+  }
+
+  /* Mobile Fanginfo übernimmt exakt die breite Zeilenlogik von Kachel 1. */
+  .forecast-other-card .forecast-other-catch-mobile{
+    grid-column:1 / -1;
+    display:grid;
+    width:calc(100% + 12px);
+    margin-left:-6px;
+    padding:7px 14px;
+    border-top:1px solid #e1e9e6;
+    background:#fbfdfc;
+    gap:3px;
+    color:#536d66;
+    font-size:.67rem;
+    line-height:1.25;
+  }
+
+  .forecast-other-card .forecast-other-catch-mobile .forecast-catch-compact-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:nowrap;
+    min-height:30px;
+  }
+
+  .forecast-other-card .forecast-other-catch-mobile .forecast-catch-compact-row > b{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    color:#254f46;
+  }
+
+  .forecast-other-card .forecast-other-catch-mobile .forecast-catch-info,
+  .forecast-other-card .forecast-other-catch-mobile .forecast-activity-diagnostic{
+    margin-left:auto;
+    flex:0 0 auto;
+  }
+}
