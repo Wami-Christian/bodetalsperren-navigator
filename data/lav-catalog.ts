@@ -5798,12 +5798,22 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "3-200-31-speicher-an-der-speetze-bei-everingen-a-h-k-s-1-00",
-    "name": "Speicher an der Speetze bei Everingen A, H, K, S 1,00",
+    "name": "Speicher an der Speetze bei Everingen",
     "lavNumber": "3-200-31",
     "district": "Börde",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Hecht",
+      "Karpfen",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "H",
+      "K",
+      "S"
+    ],
+    "areaHa": "1.00",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -5811,7 +5821,12 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -10396,12 +10411,27 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "4-171-03-muhlenlanke-herrenseegraben-bei-parey-a-b-bl-gu-h-pl-ro-1-00",
-    "name": "Mühlenlanke-Herrenseegraben bei Parey A, B, Bl, Gü, H, Pl, Ro 1,00",
+    "name": "Mühlenlanke-Herrenseegraben bei Parey",
     "lavNumber": "4-171-03",
     "district": "Jerichower Land",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Blei",
+      "Hecht",
+      "Plötze",
+      "Rotfeder"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "Bl",
+      "Gü",
+      "H",
+      "Pl",
+      "Ro"
+    ],
+    "areaHa": "1.00",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -10409,7 +10439,14 @@ export const lavCatalog: FishingWater[] = [
     "type": "Fließgewässer",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Plötze": 3,
+      "Rotfeder": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -12176,12 +12213,24 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "5-230-01-untere-schwenneckestau-bei-pansfelde-a-k-pl-ro-s-0-50",
-    "name": "Untere Schwenneckestau bei Pansfelde A, K, Pl, Ro, S 0,50",
+    "name": "Untere Schwenneckestau bei Pansfelde",
     "lavNumber": "5-230-01",
     "district": "Harz",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Karpfen",
+      "Plötze",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "K",
+      "Pl",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "0.50",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -12189,7 +12238,13 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -12510,12 +12565,30 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "5-340-10-groer-siebersteinsteich-bei-ballenstedt-a-b-bl-h-k-4-20-pl-ro-s",
-    "name": "Großer Siebersteinsteich bei Ballenstedt A, B, Bl, H, K, 4,20 Pl, Ro, S",
+    "name": "Großer Siebersteinsteich bei Ballenstedt",
     "lavNumber": "5-340-10",
     "district": "Harz",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Blei",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "Bl",
+      "H",
+      "K",
+      "Pl",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "4.20",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -12523,19 +12596,42 @@ export const lavCatalog: FishingWater[] = [
     "type": "Teich",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
   },
   {
     "id": "5-340-11-kleiner-siebersteinsteich-bei-ballenstedt-b-h-k-pl-s-z-1-80",
-    "name": "Kleiner Siebersteinsteich bei Ballenstedt B, H, K, Pl, S, Z 1,80",
+    "name": "Kleiner Siebersteinsteich bei Ballenstedt",
     "lavNumber": "5-340-11",
     "district": "Harz",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Barsch",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Schleie",
+      "Zander"
+    ],
+    "fishCodes": [
+      "B",
+      "H",
+      "K",
+      "Pl",
+      "S",
+      "Z"
+    ],
+    "areaHa": "1.80",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -12543,7 +12639,14 @@ export const lavCatalog: FishingWater[] = [
     "type": "Teich",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Barsch": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Schleie": 3,
+      "Zander": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -13050,12 +13153,28 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "5-450-05-kleiner-schachtteich-bei-wienrode-a-b-h-k-pl-s-z-0-47",
-    "name": "Kleiner Schachtteich bei Wienrode A, B, H, K, Pl, S, Z 0,47",
+    "name": "Kleiner Schachtteich bei Wienrode",
     "lavNumber": "5-450-05",
     "district": "Harz",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Schleie",
+      "Zander"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "H",
+      "K",
+      "Pl",
+      "S",
+      "Z"
+    ],
+    "areaHa": "0.47",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -13063,7 +13182,15 @@ export const lavCatalog: FishingWater[] = [
     "type": "Teich",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Schleie": 3,
+      "Zander": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -13139,12 +13266,26 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "6-100-02-tonkuhle-badetonkuhle-in-aschersleben-a-h-k-pl-ro-s-0-30",
-    "name": "Tonkuhle (Badetonkuhle) in Aschersleben A, H, K, Pl, Ro, S 0,30",
+    "name": "Tonkuhle (Badetonkuhle) in Aschersleben",
     "lavNumber": "6-100-02",
     "district": "Salzlandkreis",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "H",
+      "K",
+      "Pl",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "0.30",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -13152,7 +13293,14 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -14374,12 +14522,22 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "6-111-12-alter-schacht-pauline-neugatersleben-h-k-ro-s-4-00",
-    "name": "Alter Schacht „Pauline“ Neugatersleben H, K, Ro, S 4,00",
+    "name": "Alter Schacht „Pauline“ Neugatersleben",
     "lavNumber": "6-111-12",
     "district": "Salzlandkreis",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Hecht",
+      "Karpfen",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "H",
+      "K",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "4.00",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -14387,7 +14545,12 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -14557,12 +14720,24 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "6-113-02-groer-teich-hinter-der-fahrt-in-preulitz-a-h-k-ro-s-0-30",
-    "name": "Großer Teich hinter der Fahrt in Preußlitz A, H, K, Ro, S 0,30",
+    "name": "Großer Teich hinter der Fahrt in Preußlitz",
     "lavNumber": "6-113-02",
     "district": "Salzlandkreis",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Hecht",
+      "Karpfen",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "H",
+      "K",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "0.30",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -14570,7 +14745,13 @@ export const lavCatalog: FishingWater[] = [
     "type": "Teich",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -16809,12 +16990,30 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "6-410-05-tiefbau-jacobsgrube-bei-gro-bornecke-a-b-bl-h-k-pl-s-z-8-12",
-    "name": "Tiefbau Jacobsgrube bei Groß Börnecke A, B, Bl, H, K, Pl, S, Z 8,12",
+    "name": "Tiefbau Jacobsgrube bei Groß Börnecke",
     "lavNumber": "6-410-05",
     "district": "Salzlandkreis",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Blei",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Schleie",
+      "Zander"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "Bl",
+      "H",
+      "K",
+      "Pl",
+      "S",
+      "Z"
+    ],
+    "areaHa": "8.12",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -16822,7 +17021,16 @@ export const lavCatalog: FishingWater[] = [
     "type": "Kiesgrube",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Schleie": 3,
+      "Zander": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -22299,12 +22507,30 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "8-180-03-birnbaummuhlenteich-grafenhainichen-a-b-bl-h-k-pl-ro-s-0-53",
-    "name": "Birnbaummühlenteich Gräfenhainichen A, B, Bl, H, K, Pl, Ro, S 0,53",
+    "name": "Birnbaummühlenteich Gräfenhainichen",
     "lavNumber": "8-180-03",
     "district": "Wittenberg",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Blei",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "Bl",
+      "H",
+      "K",
+      "Pl",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "0.53",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -22312,7 +22538,16 @@ export const lavCatalog: FishingWater[] = [
     "type": "Teich",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -23036,12 +23271,26 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "8-183-02-elbe-von-km-244-5-km-248-3-linksseitig-a-bl-h-pl-z-w-q-52-00",
-    "name": "Elbe von km 244, 5 - km 248, 3 linksseitig A, Bl, H, Pl, Z, W, Q 52,00",
+    "name": "Elbe von km 244, 5 - km 248, 3 linksseitig",
     "lavNumber": "8-183-02",
     "district": "Wittenberg",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Blei",
+      "Hecht",
+      "Plötze",
+      "Zander"
+    ],
+    "fishCodes": [
+      "A",
+      "Bl",
+      "H",
+      "Pl",
+      "Z",
+      "W",
+      "Q"
+    ],
+    "areaHa": "52.00",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -23049,7 +23298,13 @@ export const lavCatalog: FishingWater[] = [
     "type": "Fließgewässer",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Plötze": 3,
+      "Zander": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -25483,12 +25738,24 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "8-460-25-streng-alte-elbe-bleesern-bei-seegrehna-a-b-bl-h-pl-0-72",
-    "name": "Streng (Alte Elbe Bleesern) bei Seegrehna A, B, Bl, H, Pl 0,72",
+    "name": "Streng (Alte Elbe Bleesern) bei Seegrehna",
     "lavNumber": "8-460-25",
     "district": "Wittenberg",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Blei",
+      "Hecht",
+      "Plötze"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "Bl",
+      "H",
+      "Pl"
+    ],
+    "areaHa": "0.72",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -25496,7 +25763,13 @@ export const lavCatalog: FishingWater[] = [
     "type": "Fließgewässer",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Plötze": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -25998,12 +26271,26 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "8-460-42-krummer-see-bodemar-bei-seegrehna-a-bl-h-k-pl-s-1-24",
-    "name": "Krummer See (Bodemar) bei Seegrehna A, Bl, H, K, Pl, S 1,24",
+    "name": "Krummer See (Bodemar) bei Seegrehna",
     "lavNumber": "8-460-42",
     "district": "Wittenberg",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Blei",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "Bl",
+      "H",
+      "K",
+      "Pl",
+      "S"
+    ],
+    "areaHa": "1.24",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -26011,7 +26298,14 @@ export const lavCatalog: FishingWater[] = [
     "type": "Fließgewässer",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -26117,12 +26411,22 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "8-460-46-alter-bruckenkopf-muschelteich-pratau-b-bl-h-pl-1-24",
-    "name": "Alter Brückenkopf (Muschelteich) Pratau B, Bl, H, Pl 1,24",
+    "name": "Alter Brückenkopf (Muschelteich) Pratau",
     "lavNumber": "8-460-46",
     "district": "Wittenberg",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Barsch",
+      "Blei",
+      "Hecht",
+      "Plötze"
+    ],
+    "fishCodes": [
+      "B",
+      "Bl",
+      "H",
+      "Pl"
+    ],
+    "areaHa": "1.24",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -26130,7 +26434,12 @@ export const lavCatalog: FishingWater[] = [
     "type": "Teich",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Barsch": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Plötze": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -26957,12 +27266,22 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "9-150-02-monchsteich-hausbergteich-bischofrode-a-k-ro-s-0-50",
-    "name": "Mönchsteich (Hausbergteich) Bischofrode A, K, Ro, S 0,50",
+    "name": "Mönchsteich (Hausbergteich) Bischofrode",
     "lavNumber": "9-150-02",
     "district": "Mansfeld-Südharz",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Karpfen",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "K",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "0.50",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -26970,7 +27289,12 @@ export const lavCatalog: FishingWater[] = [
     "type": "Teich",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Karpfen": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -31210,12 +31534,28 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "10-370-03-steinbruch-am-gutzer-berg-bei-landsberg-a-b-h-k-pl-ro-s-3-20",
-    "name": "Steinbruch am Gützer Berg bei Landsberg A, B, H, K, Pl, Ro, S 3,20",
+    "name": "Steinbruch am Gützer Berg bei Landsberg",
     "lavNumber": "10-370-03",
     "district": "Saalekreis",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Rotfeder",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "H",
+      "K",
+      "Pl",
+      "Ro",
+      "S"
+    ],
+    "areaHa": "3.20",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -31223,7 +31563,15 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Rotfeder": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -31294,12 +31642,24 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "10-370-06-steinbruche-am-spitzberg-bei-landsberg-b-bl-k-pl-ro-0-85",
-    "name": "Steinbrüche am Spitzberg bei Landsberg B, Bl, K, Pl, Ro 0,85",
+    "name": "Steinbrüche am Spitzberg bei Landsberg",
     "lavNumber": "10-370-06",
     "district": "Saalekreis",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Barsch",
+      "Blei",
+      "Karpfen",
+      "Plötze",
+      "Rotfeder"
+    ],
+    "fishCodes": [
+      "B",
+      "Bl",
+      "K",
+      "Pl",
+      "Ro"
+    ],
+    "areaHa": "0.85",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -31307,7 +31667,13 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Barsch": 3,
+      "Blei": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Rotfeder": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -34149,12 +34515,26 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "11-482-01-hainbergsee-sachsen-anhalt-bereich-a-b-h-k-s-z-6-30",
-    "name": "Hainbergsee (Sachsen-Anhalt-Bereich) A, B, H, K, S, Z 6,30",
+    "name": "Hainbergsee (Sachsen-Anhalt-Bereich)",
     "lavNumber": "11-482-01",
     "district": "Burgenlandkreis",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Hecht",
+      "Karpfen",
+      "Schleie",
+      "Zander"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "H",
+      "K",
+      "S",
+      "Z"
+    ],
+    "areaHa": "6.30",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -34162,7 +34542,14 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Schleie": 3,
+      "Zander": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -34479,12 +34866,28 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "12-140-06-wallwitzsee-im-beckerbruch-sudseite-a-bl-h-k-pl-ro-z-4-00",
-    "name": "Wallwitzsee im Beckerbruch –Südseite- A, Bl, H, K, Pl, Ro, Z 4,00",
+    "name": "Wallwitzsee im Beckerbruch –Südseite-",
     "lavNumber": "12-140-06",
     "district": "Dessau-Roßlau",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Blei",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Rotfeder",
+      "Zander"
+    ],
+    "fishCodes": [
+      "A",
+      "Bl",
+      "H",
+      "K",
+      "Pl",
+      "Ro",
+      "Z"
+    ],
+    "areaHa": "4.00",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -34492,7 +34895,15 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Rotfeder": 3,
+      "Zander": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"
@@ -35065,12 +35476,28 @@ export const lavCatalog: FishingWater[] = [
   },
   {
     "id": "13-280-07-neustadter-see-ii-schonstrecke-beachten-a-b-bl-h-k-pl-s-28-00",
-    "name": "Neustädter See II, Schonstrecke beachten A, B, Bl, H, K, Pl, S 28,00",
+    "name": "Neustädter See II, Schonstrecke beachten",
     "lavNumber": "13-280-07",
     "district": "Magdeburg",
-    "fish": [],
-    "fishCodes": [],
-    "areaHa": null,
+    "fish": [
+      "Aal",
+      "Barsch",
+      "Blei",
+      "Hecht",
+      "Karpfen",
+      "Plötze",
+      "Schleie"
+    ],
+    "fishCodes": [
+      "A",
+      "B",
+      "Bl",
+      "H",
+      "K",
+      "Pl",
+      "S"
+    ],
+    "areaHa": "28.00",
     "notes": [
       "Basis: LAV-Gewässerverzeichnis 2022–2026; aktuelle Ergänzungen und Beschilderung prüfen."
     ],
@@ -35078,7 +35505,15 @@ export const lavCatalog: FishingWater[] = [
     "type": "See",
     "latitude": null,
     "longitude": null,
-    "rating": {},
+    "rating": {
+      "Aal": 3,
+      "Barsch": 3,
+      "Blei": 3,
+      "Hecht": 3,
+      "Karpfen": 3,
+      "Plötze": 3,
+      "Schleie": 3
+    },
     "spots": [],
     "parkings": [],
     "sourceStatus": "catalog"

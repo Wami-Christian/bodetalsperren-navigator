@@ -131,6 +131,21 @@ const [atlasCategory, setAtlasCategory] =
     }),
     [fish, waterPlace]);
 
+  // Gewässeransicht: Nach einer neuen Filterung automatisch den ersten Treffer
+  // im Profil anzeigen. Die Karte bleibt dabei in der Trefferübersicht.
+  useEffect(() => {
+    if (view !== "waters") return;
+
+    const firstWater = filtered[0];
+    if (!firstWater) {
+      setFocusedWaterId(null);
+      return;
+    }
+
+    setSelected(firstWater);
+    setFocusedWaterId(null);
+  }, [view, waterPlace, fish, filtered]);
+
   async function searchWatersPlace() {
     const term = query.trim();
     if (!term) return;
