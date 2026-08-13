@@ -38,7 +38,7 @@ type AtlasPlace = {
   label: string;
 };
 
-const ATLAS_RADIUS_KM = 10;
+const ATLAS_RADIUS_KM = 20;
 
 function distanceKm(
   latitudeA: number,
@@ -67,13 +67,14 @@ export default function FishingNavigator() {
   const [view, setView] = useState<View>("dashboard");
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
-  const [query, setQuery] = useState("Halberstadt");
+  const [query, setQuery] = useState("");
   const [waterPlace, setWaterPlace] = useState<AtlasPlace | null>(null);
   const [waterSearchBusy, setWaterSearchBusy] = useState(false);
   const [waterSearchError, setWaterSearchError] = useState("");
 const [regionFilter, setRegionFilter] =
   useState<"all" | "harz">("harz");
 const [atlasQuery, setAtlasQuery] = useState("");
+const [atlasFish, setAtlasFish] = useState<Fish | "Alle">("Alle");
 const [atlasPlace, setAtlasPlace] = useState<AtlasPlace | null>(null);
 const [atlasSearchBusy, setAtlasSearchBusy] = useState(false);
 const [atlasSearchError, setAtlasSearchError] = useState("");
@@ -85,7 +86,7 @@ const [atlasCategory, setAtlasCategory] =
   const [catches, setCatches] = useState<CatchEntry[]>([]);
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
   const [forecastFish, setForecastFish] = useState<Fish>("Zander");
-  const [forecastQuery, setForecastQuery] = useState("Halberstadt");
+  const [forecastQuery, setForecastQuery] = useState("");
   const [forecastPlace, setForecastPlace] = useState<AtlasPlace | null>(null);
   const [forecastBusy, setForecastBusy] = useState(false);
   const [forecastError, setForecastError] = useState("");
@@ -149,88 +150,32 @@ const [atlasCategory, setAtlasCategory] =
     }
   }
 
+  function resetWatersFilters() {
+    setQuery("");
+    setWaterPlace(null);
+    setFish("Alle");
+    setWaterSearchError("");
+    setFocusedWaterId(null);
+  }
+
 const atlasWaters = useMemo(() => {
   return waters
     .filter((water) => {
-      if (atlasPlace) {
-        if (water.latitude === null || water.longitude === null) {
-          return false;
-        }
-
-        return (
-          distanceKm(
-            atlasPlace.latitude,
-            atlasPlace.longitude,
-            water.latitude,
-            water.longitude
-          ) <= ATLAS_RADIUS_KM
-        );
-      }
-
-      const searchText =
-        `${water.name} ${water.lavNumber ?? ""} ${water.district} ${water.type}`
-          .toLowerCase();
-
-      return searchText.includes(atlasQuery.toLowerCase());
+      if (!atlasPlace) return true;
+      if (water.latitude === null || water.longitude === null) return false;
+      return distanceKm(atlasPlace.latitude, atlasPlace.longitude, water.latitude, water.longitude) <= ATLAS_RADIUS_KM;
     })
-    .filter((water) => {
-      // Im Atlas kein versteckter Regionsfilter:
-      // "Alle Gewässer" bedeutet wirklich der vollständige Katalog.
-      switch (atlasCategory) {
-        case "reservoirs":
-          return water.module === "Bodetalsperren";
-
-        case "rivers":
-          return (
-            water.module === "Harzflüsse" ||
-            water.type.toLowerCase().includes("fließ")
-          );
-
-        case "lakes":
-          return (
-            water.type.toLowerCase().includes("see") ||
-            water.type.toLowerCase().includes("teich") ||
-            water.type.toLowerCase().includes("talsperre") ||
-            water.type.toLowerCase().includes("kiesgrube")
-          );
-
-        case "parking":
-          return water.parkings.length > 0;
-
-        case "favorites":
-          return favorites.includes(water.id);
-
-        default:
-          return true;
-      }
-    })
+    .filter((water) => atlasFish === "Alle" || waterHasTargetFish(water, atlasFish))
     .sort((a, b) => {
-      if (
-        atlasPlace &&
-        a.latitude !== null &&
-        a.longitude !== null &&
-        b.latitude !== null &&
-        b.longitude !== null
-      ) {
-        return (
-          distanceKm(
-            atlasPlace.latitude,
-            atlasPlace.longitude,
-            a.latitude,
-            a.longitude
-          ) -
-          distanceKm(
-            atlasPlace.latitude,
-            atlasPlace.longitude,
-            b.latitude,
-            b.longitude
-          )
-        );
+      if (atlasPlace && a.latitude !== null && a.longitude !== null && b.latitude !== null && b.longitude !== null) {
+        return distanceKm(atlasPlace.latitude, atlasPlace.longitude, a.latitude, a.longitude) -
+          distanceKm(atlasPlace.latitude, atlasPlace.longitude, b.latitude, b.longitude);
       }
-
-      return a.name.localeCompare(b.name, "de");
+      return atlasFish === "Alle"
+        ? a.name.localeCompare(b.name, "de")
+        : (b.rating[atlasFish] ?? 0) - (a.rating[atlasFish] ?? 0);
     });
-}, [atlasQuery, atlasPlace, atlasCategory, favorites]);
+}, [atlasPlace, atlasFish]);
 
   useEffect(() => {
     if (view !== "atlas") return;
@@ -264,40 +209,18 @@ const atlasWaters = useMemo(() => {
 
   async function searchAtlasPlace() {
     const term = atlasQuery.trim();
-
-    if (!term) {
-      setAtlasPlace(null);
-      setAtlasSearchError("");
-      return;
-    }
+    if (!term) return;
 
     setAtlasSearchBusy(true);
     setAtlasSearchError("");
 
     try {
-      const response = await fetch(
-        `/api/geocode?q=${encodeURIComponent(term)}`
-      );
+      const response = await fetch(`/api/geocode?q=${encodeURIComponent(term)}`);
+      if (!response.ok) throw new Error("Ort nicht gefunden");
 
-      if (!response.ok) {
-        throw new Error("Ortssuche fehlgeschlagen");
-      }
-
-      const result = (await response.json()) as {
-        latitude?: number;
-        longitude?: number;
-        label?: string;
-      };
-
-      if (
-        typeof result.latitude !== "number" ||
-        typeof result.longitude !== "number"
-      ) {
-        setAtlasPlace(null);
-        setAtlasSearchError(
-          "Ort nicht gefunden – normale Gewässersuche bleibt aktiv."
-        );
-        return;
+      const result = await response.json() as AtlasPlace;
+      if (typeof result.latitude !== "number" || typeof result.longitude !== "number") {
+        throw new Error("Ort nicht gefunden");
       }
 
       setAtlasPlace({
@@ -306,14 +229,21 @@ const atlasWaters = useMemo(() => {
         label: result.label || term
       });
       setFocusedWaterId(null);
-    } catch {
+    } catch (error) {
       setAtlasPlace(null);
-      setAtlasSearchError(
-        "Ortssuche derzeit nicht verfügbar – normale Gewässersuche bleibt aktiv."
-      );
+      setFocusedWaterId(null);
+      setAtlasSearchError(error instanceof Error ? error.message : "Ortssuche fehlgeschlagen");
     } finally {
       setAtlasSearchBusy(false);
     }
+  }
+
+  function resetAtlasFilters() {
+    setAtlasQuery("");
+    setAtlasPlace(null);
+    setAtlasFish("Alle");
+    setAtlasSearchError("");
+    setFocusedWaterId(null);
   }
 
   const forecastWaters = useMemo(() => {
@@ -604,127 +534,35 @@ const atlasWaters = useMemo(() => {
     <aside className="atlas-sidebar">
       <h2>Angelatlas</h2>
 
-      <input
-        type="search"
-        placeholder="Gewässer oder Ort suchen …"
-        className="atlas-search"
-        value={atlasQuery}
-        enterKeyHint="search"
-        onChange={(event) => {
-          setAtlasQuery(event.target.value);
-          setAtlasPlace(null);
-          setAtlasSearchError("");
-        }}
-        onKeyDown={(event) => {
-          if (event.key !== "Enter") return;
-
-          event.preventDefault();
-          event.currentTarget.blur();
-          void searchAtlasPlace();
-        }}
-      />
-
-      {atlasPlace && (
-        <small
-          style={{
-            display: "block",
-            margin: "-10px 0 12px",
-            color: "var(--muted)"
-          }}
-        >
-          Umkreis {ATLAS_RADIUS_KM} km um {atlasPlace.label}
-        </small>
-      )}
-
-      {atlasSearchBusy && (
-        <small
-          style={{
-            display: "block",
-            margin: "-10px 0 12px",
-            color: "var(--muted)"
-          }}
-        >
-          Ort wird gesucht …
-        </small>
-      )}
-
-      {atlasSearchError && (
-        <small
-          style={{
-            display: "block",
-            margin: "-10px 0 12px",
-            color: "var(--danger)"
-          }}
-        >
-          {atlasSearchError}
-        </small>
-      )}
-
-      <div className="atlas-categories-wrap">
-        <button
-          type="button"
-          className="atlas-scroll-button"
-          aria-label="Filter nach links"
-          onClick={() => scrollAtlasCategories("left")}
-        >
-          ‹
-        </button>
-
-        <div ref={atlasCategoryRef} className="atlas-categories">
-        <button
-          className={atlasCategory === "all" ? "active" : ""}
-          onClick={() => setAtlasCategory("all")}
-        >
-          🗺 Alle Gewässer
-        </button>
-
-        <button
-          className={atlasCategory === "reservoirs" ? "active" : ""}
-          onClick={() => setAtlasCategory("reservoirs")}
-        >
-          🎣 Bodetalsperren
-        </button>
-
-        <button
-          className={atlasCategory === "rivers" ? "active" : ""}
-          onClick={() => setAtlasCategory("rivers")}
-        >
-          🌊 Flüsse
-        </button>
-
-        <button
-          className={atlasCategory === "lakes" ? "active" : ""}
-          onClick={() => setAtlasCategory("lakes")}
-        >
-          🏞 Seen und Teiche
-        </button>
-
-        <button
-          className={atlasCategory === "parking" ? "active" : ""}
-          onClick={() => setAtlasCategory("parking")}
-        >
-          🅿 Mit Parkplatz
-        </button>
-
-        <button
-          className={atlasCategory === "favorites" ? "active" : ""}
-          onClick={() => setAtlasCategory("favorites")}
-        >
-          ⭐ Favoriten
-        </button>
+      <div
+        className="forecast-controls-modern waters-search-controls"
+        style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10, width: "100%" }}
+      >
+        <div className="forecast-control forecast-location-control" style={{ width: "100%", minWidth: 0 }}>
+          <span className="forecast-control-icon" aria-hidden="true">⌖</span>
+          <input
+            aria-label="Ort"
+            value={atlasQuery}
+            onChange={(e)=>{setAtlasQuery(e.target.value);setAtlasSearchError("");}}
+            onKeyDown={(e)=>{if(e.key==='Enter'){e.preventDefault();void searchAtlasPlace();}}}
+            placeholder="Ort"
+            style={{ minWidth: 0, width: "100%" }}
+          />
+          <button className="forecast-search-compact" type="button" onClick={()=>void searchAtlasPlace()} disabled={atlasSearchBusy}>{atlasSearchBusy?'…':'Suchen'}</button>
         </div>
-
-        <button
-          type="button"
-          className="atlas-scroll-button"
-          aria-label="Filter nach rechts"
-          onClick={() => scrollAtlasCategories("right")}
-        >
-          ›
-        </button>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 10 }}>
+          <div className="forecast-control" style={{ minWidth: 0 }}>
+            <span className="forecast-control-icon" aria-hidden="true">🐟</span>
+            <select aria-label="Zielfisch" value={atlasFish} onChange={(e)=>setAtlasFish(e.target.value as Fish|"Alle")} style={{ minWidth: 0, width: "100%" }}>{fishOptions.map(x=><option key={x}>{x}</option>)}</select>
+          </div>
+          <div className="forecast-control forecast-radius" aria-label="Umkreis 20 Kilometer">
+            <span className="forecast-control-icon" aria-hidden="true">◎</span><strong>20 km</strong>
+          </div>
+        </div>
       </div>
-
-      <div className="atlas-swipe-hint">↔ Wischen für weitere Filter</div>
+      {(atlasPlace || atlasFish !== "Alle") && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
+      {atlasPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Atlas rund um {atlasPlace.label}</strong><span>20 km · {atlasWaters.length} passende Gewässer</span></div></div>}
+      {atlasSearchError && <p className="forecast-error">⚠ {atlasSearchError}</p>}
 
       <div className="atlas-result-heading">
         <strong>{atlasWaters.length} Treffer</strong>
@@ -881,6 +719,7 @@ const atlasWaters = useMemo(() => {
 
   </section>
 )}      {view === "waters" && <section className="page">
+        <div className="waters-filter-zone" style={{ width: "min(1180px, calc(100% - 32px))", margin: "24px auto 18px" }}>
         <div className="forecast-controls-modern waters-search-controls">
           <div className="forecast-control forecast-location-control">
             <span className="forecast-control-icon" aria-hidden="true">⌖</span>
@@ -894,8 +733,10 @@ const atlasWaters = useMemo(() => {
           <div className="forecast-control forecast-radius" aria-label="Umkreis 20 Kilometer">
             <span className="forecast-control-icon" aria-hidden="true">◎</span><strong>20 km</strong>
           </div>
-          {waterPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Gewässer rund um {waterPlace.label}</strong><span>20 km · {filtered.length} passende Gewässer</span></div></div>}
-          {waterSearchError && <p className="forecast-error">⚠ {waterSearchError}</p>}
+        </div>
+        {(waterPlace || fish !== "Alle") && <button type="button" className="forecast-reset-filter" onClick={resetWatersFilters}>× Filter aufheben</button>}
+        {waterPlace && <div className="forecast-meta-modern waters-search-meta waters-search-meta-below"><div><strong>Gewässer rund um {waterPlace.label}</strong><span>20 km · {filtered.length} passende Gewässer</span></div></div>}
+        {waterSearchError && <p className="forecast-error">⚠ {waterSearchError}</p>}
         </div>
         <div className="workspace"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{filtered.map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{waterTargetFish(water).map(item=><span key={item}>{item} {'★'.repeat(targetFishRating(water,item))}</span>)}</div></article>)}</div></aside>
           <div className="map-panel"><MapView waters={mapWaters} spots={visibleSpots} parkings={visibleParkings} selectedWater={focusedWater} onSelect={selectAndFocus}/><div className="map-note">{focusedWater ? <><strong>{selected.name}</strong><span>{visibleParkings.length} Parkplatz{visibleParkings.length === 1 ? "" : "plätze"} · {visibleSpots.length} Hotspot{visibleSpots.length === 1 ? "" : "s"}</span><button type="button" onClick={()=>setFocusedWaterId(null)}>Alle Gewässer zeigen</button></> : <>{selected.latitude === null || selected.longitude === null ? <span>Für dieses Gewässer ist noch keine geprüfte Kartenposition gespeichert.</span> : <span>{mappedCount} von {filtered.length} Treffern sind bereits kartiert. Gewässer anklicken, um Parkplätze und Hotspots zu öffnen.</span>}</>}</div></div>
