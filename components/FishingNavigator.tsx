@@ -38,6 +38,38 @@ type AtlasPlace = {
   label: string;
 };
 
+
+type CatchWeatherSnapshot = {
+  temperature: number;
+  pressure: number;
+  windSpeed: number;
+  cloudCover: number;
+  precipitation?: number;
+};
+
+type EnhancedCatchEntry = CatchEntry & {
+  latitude?: number;
+  longitude?: number;
+  locationAccuracyM?: number;
+  locationSource?: "gps" | "manual";
+  weather?: CatchWeatherSnapshot;
+  moonPhase?: string;
+  moonIllumination?: number;
+  method?: string;
+  depthM?: number;
+};
+
+function moonInfoFor(date: Date) {
+  const synodicMonth = 29.530588853;
+  const knownNewMoon = Date.UTC(2000, 0, 6, 18, 14, 0);
+  const days = (date.getTime() - knownNewMoon) / 86400000;
+  const phase = ((days / synodicMonth) % 1 + 1) % 1;
+  const illumination = Math.round(((1 - Math.cos(2 * Math.PI * phase)) / 2) * 100);
+  const names = ["Neumond", "Zunehmende Sichel", "Erstes Viertel", "Zunehmender Mond", "Vollmond", "Abnehmender Mond", "Letztes Viertel", "Abnehmende Sichel"];
+  const index = Math.round(phase * 8) % 8;
+  return { phase: names[index], illumination };
+}
+
 const ATLAS_RADIUS_KM = 20;
 
 function distanceKm(
@@ -83,7 +115,13 @@ const [atlasCategory, setAtlasCategory] =
   const [selected, setSelected] = useState<FishingWater>(waters[0]);
   const [focusedWaterId, setFocusedWaterId] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [catches, setCatches] = useState<CatchEntry[]>([]);
+  const [catches, setCatches] = useState<EnhancedCatchEntry[]>([]);
+  const [catchWaterId, setCatchWaterId] = useState("");
+  const [catchPosition, setCatchPosition] = useState<{ latitude: number; longitude: number; accuracy: number } | null>(null);
+  const [catchWeather, setCatchWeather] = useState<CatchWeatherSnapshot | null>(null);
+  const [catchAutoBusy, setCatchAutoBusy] = useState(false);
+  const [catchAutoAttempted, setCatchAutoAttempted] = useState(false);
+  const [catchAutoError, setCatchAutoError] = useState("");
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
   const [forecastFish, setForecastFish] = useState<Fish>("Zander");
   const [forecastQuery, setForecastQuery] = useState("");
@@ -95,7 +133,7 @@ const [atlasCategory, setAtlasCategory] =
   const [forecastSort, setForecastSort] = useState<"score" | "distance" | "name">("score");
   const [showAllForecast, setShowAllForecast] = useState(false);
 
-  useEffect(() => { setFavorites(loadFavorites()); setCatches(loadCatches()); }, []);
+  useEffect(() => { setFavorites(loadFavorites()); setCatches(loadCatches() as EnhancedCatchEntry[]); }, []);
 
   useEffect(() => {
     const nav = mainNavRef.current;
@@ -452,15 +490,109 @@ const atlasWaters = useMemo(() => {
     setFavorites(next); saveFavorites(next);
   }
 
+  async function loadCatchEnvironment() {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setCatchAutoError("Standortbestimmung wird von diesem Gerät nicht unterstützt.");
+      setCatchAutoAttempted(true);
+      return;
+    }
+
+    setCatchAutoBusy(true);
+    setCatchAutoError("");
+    setCatchAutoAttempted(true);
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const accuracy = position.coords.accuracy;
+        setCatchPosition({ latitude, longitude, accuracy });
+
+        const nearest = waters
+          .filter((water) => water.latitude !== null && water.longitude !== null)
+          .map((water) => ({
+            water,
+            distance: distanceKm(latitude, longitude, water.latitude!, water.longitude!)
+          }))
+          .sort((a, b) => a.distance - b.distance)[0];
+
+        if (nearest) setCatchWaterId(nearest.water.id);
+
+        try {
+          const response = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}`);
+          if (!response.ok) throw new Error("Wetterdaten nicht verfügbar");
+          const data = await response.json() as { hours?: ForecastHour[] };
+          const now = Date.now();
+          const hour = (data.hours ?? [])
+            .slice()
+            .sort((a, b) => Math.abs(new Date(a.time).getTime() - now) - Math.abs(new Date(b.time).getTime() - now))[0];
+          if (hour) {
+            setCatchWeather({
+              temperature: hour.temperature,
+              pressure: hour.pressure,
+              windSpeed: hour.windSpeed,
+              cloudCover: hour.cloudCover,
+              precipitation: hour.precipitation
+            });
+          }
+        } catch (error) {
+          setCatchAutoError(error instanceof Error ? error.message : "Wetterdaten konnten nicht geladen werden.");
+        } finally {
+          setCatchAutoBusy(false);
+        }
+      },
+      (error) => {
+        const message = error.code === error.PERMISSION_DENIED
+          ? "Standortfreigabe wurde nicht erteilt – Gewässer kann manuell gewählt werden."
+          : "Standort konnte nicht bestimmt werden – Gewässer kann manuell gewählt werden.";
+        setCatchAutoError(message);
+        setCatchAutoBusy(false);
+      },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
+    );
+  }
+
+  useEffect(() => {
+    if (view !== "diary" || catchAutoAttempted || catchAutoBusy) return;
+    void loadCatchEnvironment();
+  }, [view, catchAutoAttempted, catchAutoBusy]);
+
   function addCatch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const entry: CatchEntry = {
-      id: crypto.randomUUID(), caughtAt: String(form.get("caughtAt")), waterId: String(form.get("waterId")), fish: String(form.get("fish")) as Fish,
-      lengthCm: Number(form.get("lengthCm")) || undefined, weightKg: Number(form.get("weightKg")) || undefined,
-      lure: String(form.get("lure")), note: String(form.get("note"))
+    const now = new Date();
+    const moon = moonInfoFor(now);
+    const savePosition = form.get("savePosition") === "on";
+    const waterId = catchWaterId || String(form.get("waterId") || "");
+    if (!waterId) {
+      setCatchAutoError("Bitte ein Gewässer auswählen.");
+      return;
+    }
+
+    const entry: EnhancedCatchEntry = {
+      id: crypto.randomUUID(),
+      caughtAt: now.toISOString(),
+      waterId,
+      fish: String(form.get("fish")) as Fish,
+      lengthCm: Number(form.get("lengthCm")) || undefined,
+      weightKg: Number(form.get("weightKg")) || undefined,
+      lure: String(form.get("lure") || ""),
+      note: String(form.get("note") || ""),
+      method: String(form.get("method") || "") || undefined,
+      depthM: Number(form.get("depthM")) || undefined,
+      weather: catchWeather ?? undefined,
+      moonPhase: moon.phase,
+      moonIllumination: moon.illumination,
+      latitude: savePosition ? catchPosition?.latitude : undefined,
+      longitude: savePosition ? catchPosition?.longitude : undefined,
+      locationAccuracyM: savePosition ? catchPosition?.accuracy : undefined,
+      locationSource: savePosition && catchPosition ? "gps" : "manual"
     };
-    const next = [entry, ...catches]; setCatches(next); saveCatches(next); event.currentTarget.reset();
+
+    const next = [entry, ...catches];
+    setCatches(next);
+    saveCatches(next);
+    event.currentTarget.reset();
   }
 
   async function importGpx(event: ChangeEvent<HTMLInputElement>) {
@@ -911,7 +1043,55 @@ const atlasWaters = useMemo(() => {
 
         {bestForecast && <p className="forecast-disclaimer">ⓘ Bewertungen basieren auf Wettervorhersage, Sonnen- & Mondphasen und artspezifischen Faktoren. Community-Fangaktivität wird separat angezeigt und verändert den 0–100-Score noch nicht. Keine Garantie – Petri Heil!</p>}
       </section>}
-      {view === "diary" && <section className="page diary"><form className="panel" onSubmit={addCatch}><p className="eyebrow">Lokales Fangbuch</p><h1>Fang eintragen</h1><div className="form-grid"><label>Datum und Uhrzeit<input name="caughtAt" type="datetime-local" required/></label><label>Gewässer<select name="waterId">{waters.map(w=><option value={w.id} key={w.id}>{w.name}</option>)}</select></label><label>Fisch<select name="fish">{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select></label><label>Länge cm<input name="lengthCm" type="number" min="0" step="0.1"/></label><label>Gewicht kg<input name="weightKg" type="number" min="0" step="0.01"/></label><label>Köder<input name="lure" placeholder="z. B. 10 cm Gummifisch"/></label><label className="wide">Notiz<textarea name="note" rows={3}/></label></div><button type="submit">Fang speichern</button></form><div className="catch-list">{catches.map(entry=><article key={entry.id}><div><strong>{entry.fish}</strong><p>{waters.find(w=>w.id===entry.waterId)?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString('de-DE')}</p><small>{entry.lure}{entry.note?` · ${entry.note}`:''}</small></div><span>{entry.lengthCm?`${entry.lengthCm} cm`:''}{entry.weightKg?` · ${entry.weightKg} kg`:''}</span></article>)}{!catches.length&&<p>Noch keine Fänge gespeichert.</p>}</div></section>}
+      {view === "diary" && (() => {
+        const moon = moonInfoFor(new Date());
+        const selectedCatchWater = waters.find((water) => water.id === catchWaterId);
+        const selectedCatchDistance = selectedCatchWater && catchPosition && selectedCatchWater.latitude !== null && selectedCatchWater.longitude !== null
+          ? distanceKm(catchPosition.latitude, catchPosition.longitude, selectedCatchWater.latitude, selectedCatchWater.longitude)
+          : null;
+        return <section className="page diary diary-v2">
+          <form className="panel catch-entry-card" onSubmit={addCatch}>
+            <div className="catch-entry-head">
+              <div><p className="eyebrow">Lokales Fangbuch</p><h1>Fang eintragen</h1><p>Standort, Gewässer, Wetter und Mondphase werden automatisch vorbereitet.</p></div>
+              <button type="button" className="catch-refresh" onClick={()=>void loadCatchEnvironment()} disabled={catchAutoBusy}>{catchAutoBusy ? "Ermittle …" : "⌖ Neu erkennen"}</button>
+            </div>
+
+            <div className="catch-auto-grid">
+              <article><span>📍</span><div><small>Gewässer</small><strong>{selectedCatchWater?.name ?? (catchAutoBusy ? "wird ermittelt …" : "bitte auswählen")}</strong><em>{selectedCatchDistance != null ? `${selectedCatchDistance.toFixed(1)} km vom Standort` : catchPosition ? "Standort erkannt" : "GPS noch nicht verfügbar"}</em></div></article>
+              <article><span>🌤️</span><div><small>Wetter</small><strong>{catchWeather ? `${catchWeather.temperature.toFixed(0)} °C · ${Math.round(catchWeather.pressure)} hPa` : "wird automatisch geladen"}</strong><em>{catchWeather ? `${Math.round(catchWeather.windSpeed)} km/h Wind · ${Math.round(catchWeather.cloudCover)} % Bewölkung` : "vom aktuellen Standort"}</em></div></article>
+              <article><span>◐</span><div><small>Mondphase</small><strong>{moon.phase}</strong><em>{moon.illumination} % beleuchtet</em></div></article>
+              <article><span>🕒</span><div><small>Zeitpunkt</small><strong>{new Date().toLocaleDateString("de-DE")}</strong><em>{new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" })} Uhr · automatisch</em></div></article>
+            </div>
+
+            {catchAutoError && <p className="catch-auto-error">⚠ {catchAutoError}</p>}
+
+            <div className="catch-form-grid">
+              <label className="wide">Gewässer <select name="waterId" value={catchWaterId} onChange={(event)=>setCatchWaterId(event.target.value)} required><option value="">Gewässer auswählen …</option>{waters.slice().sort((a,b)=>a.name.localeCompare(b.name,"de")).map((water)=><option value={water.id} key={water.id}>{water.name}{water.lavNumber ? ` · ${water.lavNumber}` : ""}</option>)}</select></label>
+              <label>Fischart <select name="fish" defaultValue="Zander">{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select></label>
+              <label>Länge <div className="catch-unit-field"><input name="lengthCm" type="number" min="0" step="0.1" inputMode="decimal" placeholder="0"/><span>cm</span></div></label>
+              <label>Gewicht <div className="catch-unit-field"><input name="weightKg" type="number" min="0" step="0.01" inputMode="decimal" placeholder="0"/><span>kg</span></div></label>
+              <label>Fangmethode <select name="method" defaultValue="Spinnfischen"><option>Spinnfischen</option><option>Ansitz</option><option>Pose</option><option>Grundangeln</option><option>Fliegenfischen</option><option>Vertikalangeln</option><option>Sonstiges</option></select></label>
+              <label>Köder <input name="lure" placeholder="z. B. 10 cm Gummifisch"/></label>
+              <label>Fangtiefe <div className="catch-unit-field"><input name="depthM" type="number" min="0" step="0.1" inputMode="decimal" placeholder="optional"/><span>m</span></div></label>
+              <label className="wide">Notiz <textarea name="note" rows={3} placeholder="optional – z. B. Bissphase, Struktur, Besonderheiten"/></label>
+            </div>
+
+            <label className="catch-location-check"><input name="savePosition" type="checkbox" defaultChecked/> <span>🎯 Fangstelle mit GPS-Position speichern</span></label>
+            <button className="catch-save-button" type="submit">🎣 Fang speichern</button>
+          </form>
+
+          <div className="catch-history">
+            <div className="catch-history-head"><div><p className="eyebrow">Eigene Datenbasis</p><h2>Gespeicherte Fänge</h2></div><strong>{catches.length}</strong></div>
+            <div className="catch-list catch-list-v2">{catches.map(entry=>{
+              const water = waters.find(w=>w.id===entry.waterId);
+              return <article key={entry.id}>
+                <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}</div>
+                <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span>
+              </article>;
+            })}{!catches.length&&<p className="catch-empty">Noch keine Fänge gespeichert. Der erste Eintrag baut deine eigene Prognose-Datenbasis auf.</p>}</div>
+          </div>
+        </section>;
+      })()}
 
       {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V5.2 Beta</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten und Fangbuch liegen nur im Browser dieses Geräts. Es gibt noch kein Konto und keine Cloud-Synchronisierung.</p><h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
