@@ -67,7 +67,10 @@ export default function FishingNavigator() {
   const [view, setView] = useState<View>("dashboard");
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("Halberstadt");
+  const [waterPlace, setWaterPlace] = useState<AtlasPlace | null>(null);
+  const [waterSearchBusy, setWaterSearchBusy] = useState(false);
+  const [waterSearchError, setWaterSearchError] = useState("");
 const [regionFilter, setRegionFilter] =
   useState<"all" | "harz">("harz");
 const [atlasQuery, setAtlasQuery] = useState("");
@@ -111,27 +114,41 @@ const [atlasCategory, setAtlasCategory] =
 
   const filtered = useMemo(() => waters
     .filter((water) => {
-        if (regionFilter === "all") return true;
-
-        return (
-            water.district.includes("Harz") ||
-            water.module === "Bodetalsperren" ||
-            water.module === "Harzflüsse"
-        );
+      if (!waterPlace) return true;
+      if (water.latitude === null || water.longitude === null) return false;
+      return distanceKm(waterPlace.latitude, waterPlace.longitude, water.latitude, water.longitude) <= 20;
     })
-    .filter((water) => module === "Alle" || water.module === module)
     .filter((water) => fish === "Alle" || waterHasTargetFish(water, fish))
-    .filter((water) =>
-        `${water.name} ${water.lavNumber ?? ""} ${water.district} ${water.module}`
-            .toLowerCase()
-            .includes(query.toLowerCase())
-    )
-    .sort((a, b) =>
-        fish === "Alle"
-            ? a.name.localeCompare(b.name, "de")
-            : (b.rating[fish] ?? 0) - (a.rating[fish] ?? 0)
-    ),
-    [fish, module, query, regionFilter]);
+    .sort((a, b) => {
+      if (waterPlace && a.latitude !== null && a.longitude !== null && b.latitude !== null && b.longitude !== null) {
+        return distanceKm(waterPlace.latitude, waterPlace.longitude, a.latitude, a.longitude) -
+          distanceKm(waterPlace.latitude, waterPlace.longitude, b.latitude, b.longitude);
+      }
+      return fish === "Alle"
+        ? a.name.localeCompare(b.name, "de")
+        : (b.rating[fish] ?? 0) - (a.rating[fish] ?? 0);
+    }),
+    [fish, waterPlace]);
+
+  async function searchWatersPlace() {
+    const term = query.trim();
+    if (!term) return;
+    setWaterSearchBusy(true);
+    setWaterSearchError("");
+    try {
+      const response = await fetch(`/api/geocode?q=${encodeURIComponent(term)}`);
+      if (!response.ok) throw new Error("Ort nicht gefunden");
+      const result = await response.json() as AtlasPlace;
+      if (typeof result.latitude !== "number" || typeof result.longitude !== "number") throw new Error("Ort nicht gefunden");
+      setWaterPlace(result);
+      setFocusedWaterId(null);
+    } catch (error) {
+      setWaterSearchError(error instanceof Error ? error.message : "Ortssuche fehlgeschlagen");
+    } finally {
+      setWaterSearchBusy(false);
+    }
+  }
+
 const atlasWaters = useMemo(() => {
   return waters
     .filter((water) => {
@@ -864,7 +881,22 @@ const atlasWaters = useMemo(() => {
 
   </section>
 )}      {view === "waters" && <section className="page">
-        <div className="toolbar"><input type="search" placeholder="Gewässer suchen …" value={query} onChange={(e)=>setQuery(e.target.value)} /><select value={module} onChange={(e)=>setModule(e.target.value as WaterModule|"Alle")}>{moduleOptions.map(x=><option key={x}>{x}</option>)}</select><div className="chips">{fishOptions.map((option)=><button key={option} className={fish===option?'active':''} onClick={()=>setFish(option)}>{option}</button>)}</div></div>
+        <div className="forecast-controls-modern waters-search-controls">
+          <div className="forecast-control forecast-location-control">
+            <span className="forecast-control-icon" aria-hidden="true">⌖</span>
+            <input aria-label="Ort" value={query} onChange={(e)=>setQuery(e.target.value)} onKeyDown={(e)=>{if(e.key==='Enter') void searchWatersPlace();}} placeholder="Ort"/>
+            <button className="forecast-search-compact" type="button" onClick={()=>void searchWatersPlace()} disabled={waterSearchBusy}>{waterSearchBusy?'…':'Suchen'}</button>
+          </div>
+          <div className="forecast-control">
+            <span className="forecast-control-icon" aria-hidden="true">🐟</span>
+            <select aria-label="Zielfisch" value={fish} onChange={(e)=>setFish(e.target.value as Fish|"Alle")}>{fishOptions.map(x=><option key={x}>{x}</option>)}</select>
+          </div>
+          <div className="forecast-control forecast-radius" aria-label="Umkreis 20 Kilometer">
+            <span className="forecast-control-icon" aria-hidden="true">◎</span><strong>20 km</strong>
+          </div>
+          {waterPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Gewässer rund um {waterPlace.label}</strong><span>20 km · {filtered.length} passende Gewässer</span></div></div>}
+          {waterSearchError && <p className="forecast-error">⚠ {waterSearchError}</p>}
+        </div>
         <div className="workspace"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{filtered.map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{waterTargetFish(water).map(item=><span key={item}>{item} {'★'.repeat(targetFishRating(water,item))}</span>)}</div></article>)}</div></aside>
           <div className="map-panel"><MapView waters={mapWaters} spots={visibleSpots} parkings={visibleParkings} selectedWater={focusedWater} onSelect={selectAndFocus}/><div className="map-note">{focusedWater ? <><strong>{selected.name}</strong><span>{visibleParkings.length} Parkplatz{visibleParkings.length === 1 ? "" : "plätze"} · {visibleSpots.length} Hotspot{visibleSpots.length === 1 ? "" : "s"}</span><button type="button" onClick={()=>setFocusedWaterId(null)}>Alle Gewässer zeigen</button></> : <>{selected.latitude === null || selected.longitude === null ? <span>Für dieses Gewässer ist noch keine geprüfte Kartenposition gespeichert.</span> : <span>{mappedCount} von {filtered.length} Treffern sind bereits kartiert. Gewässer anklicken, um Parkplätze und Hotspots zu öffnen.</span>}</>}</div></div>
           <aside className="details"><p className="eyebrow">Gewässerprofil</p><div className="water-stats">
@@ -896,7 +928,7 @@ const atlasWaters = useMemo(() => {
     </strong>
     <small>Top-Fisch</small>
   </div>
-</div><h2>{selected.name}</h2><p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p><span className={`status ${selected.sourceStatus}`}>{selected.sourceStatus==='verified'?'Navigationsdaten vorhanden':selected.sourceStatus==='catalog'?'LAV-Katalog – Lage noch offen':'Arbeitsdaten – prüfen'}</span>{selected.areaHa && <p><strong>Fläche:</strong> {selected.areaHa} ha</p>}<h3>Zielfische</h3><div className="score-list">{waterTargetFish(selected).length ? waterTargetFish(selected).map(item=><div key={item}><span>{item}</span><strong>{'★'.repeat(targetFishRating(selected,item))}</strong></div>) : <p>Keine Zielfischarten im Basiskatalog erkannt.</p>}</div><h3>Hinweise</h3><ul>{selected.notes.map(note=><li key={note}>{note}</li>)}</ul>
+</div><h2>{selected.name}</h2><p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p><span className={`status ${selected.sourceStatus}`}>{selected.sourceStatus==='verified'?'Navigationsdaten vorhanden':selected.sourceStatus==='catalog'?'LAV-Katalog – Lage noch offen':'Arbeitsdaten – prüfen'}</span>{selected.areaHa && <p><strong>Fläche:</strong> {selected.areaHa} ha</p>}<h3>Zielfische</h3><div className="score-list">{waterTargetFish(selected).length ? waterTargetFish(selected).map(item=><div key={item}><span>{item}</span><strong>{'★'.repeat(targetFishRating(selected,item))}</strong></div>) : <p>Keine Zielfischarten im Basiskatalog erkannt.</p>}</div><h3>Hinweise</h3><ul>{selected.notes.map((note, index)=><li key={`${selected.id}-note-${index}`}>{note}</li>)}</ul>
           {selected.parkings.length > 0 && <><h3>Parkplätze / Ausgangspunkte</h3><div className="nav-list">{selected.parkings.map(p=><article key={p.id}><strong>{p.name}</strong><small>{p.access==='public'?'öffentlich':'Zufahrt eingeschränkt'} · {p.accuracy==='verified'?'belegt':'Näherungswert'}</small><div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a><a href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a></div></article>)}</div></>}
           {selected.spots.length > 0 && <><h3>Hotspots / Erkundungspunkte</h3><div className="nav-list">{selected.spots.map(spot=>{const parking=selected.parkings.find(p=>p.id===spot.parkingId);return <article key={spot.id}><strong>{spot.name}</strong><small>{spot.risk ?? spot.note ?? 'Zugang vor Ort prüfen.'}</small><div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>{parking&&<a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Parkplatz</a>}</div></article>})}</div></>}
           <div className="button-row">{selected.latitude !== null && selected.longitude !== null && <a className="route-button" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`} target="_blank" rel="noreferrer">Zum Gewässer</a>}<button onClick={exportGpx} disabled={!visibleSpots.length}>GPX exportieren</button></div><label className="file-button">GPX importieren<input type="file" accept=".gpx,application/gpx+xml" onChange={importGpx}/></label></aside>
