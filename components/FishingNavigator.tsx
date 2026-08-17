@@ -10,7 +10,7 @@ import { calculateAutomaticFishingScore, type ForecastHour, type ScoreResult } f
 import { targetFishRating, waterHasTargetFish, waterTargetFish } from "@/lib/fish";
 import { parseGpx, spotsToGpx } from "@/lib/gpx";
 import { loadCatches, loadFavorites, saveCatches, saveFavorites } from "@/lib/storage";
-import type { CatchEntry, Fish, FishingSpot, FishingWater, WaterModule } from "@/lib/types";
+import type { CatchEntry, Fish, FishingSpot, FishingWater, ParkingSpot, WaterModule } from "@/lib/types";
 
 const MapView = dynamic(() => import("./MapView"), { ssr: false });
 const fishOptions: Array<Fish | "Alle"> = ["Alle", "Aal", "Barsch", "Blei", "Forelle", "Hecht", "Karpfen", "Plötze", "Rotfeder", "Schleie", "Zander"];
@@ -59,6 +59,77 @@ type EnhancedCatchEntry = CatchEntry & {
   method?: string;
   depthM?: number;
 };
+
+type UserParkingSpot = ParkingSpot & {
+  waterId: string;
+  photo?: string;
+  createdAt: string;
+  accuracyM?: number;
+};
+
+type UserFishingSpot = FishingSpot & {
+  waterId: string;
+  photo?: string;
+  createdAt: string;
+  accuracyM?: number;
+};
+
+const USER_PARKINGS_KEY = "harzfishing:user-parkings";
+const USER_HOTSPOTS_KEY = "harzfishing:user-hotspots";
+
+function loadLocalArray<T>(key: string): T[] {
+  if (typeof window === "undefined") return [];
+  try {
+    return JSON.parse(localStorage.getItem(key) ?? "[]") as T[];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalArray<T>(key: string, value: T[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+async function imageFileToDataUrl(file: File) {
+  const rawUrl = URL.createObjectURL(file);
+  try {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error("Foto konnte nicht gelesen werden."));
+      img.src = rawUrl;
+    });
+
+    const maxSide = 1280;
+    const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(image.width * scale));
+    canvas.height = Math.max(1, Math.round(image.height * scale));
+
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("Foto konnte nicht verarbeitet werden.");
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL("image/jpeg", 0.78);
+  } finally {
+    URL.revokeObjectURL(rawUrl);
+  }
+}
+
+function getCurrentGpsPosition() {
+  return new Promise<GeolocationPosition>((resolve, reject) => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      reject(new Error("Standortbestimmung wird von diesem Gerät nicht unterstützt."));
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 15000
+    });
+  });
+}
 
 function windDirectionLabel(degrees?: number | null) {
   if (degrees == null || !Number.isFinite(degrees)) return "–";
@@ -142,6 +213,12 @@ const [atlasCategory, setAtlasCategory] =
   const [catchAutoAttempted, setCatchAutoAttempted] = useState(false);
   const [catchAutoError, setCatchAutoError] = useState("");
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
+  const [userParkings, setUserParkings] = useState<UserParkingSpot[]>([]);
+  const [userHotspots, setUserHotspots] = useState<UserFishingSpot[]>([]);
+  const [atlasPointSaving, setAtlasPointSaving] = useState<"parking" | "hotspot" | null>(null);
+  const [atlasPointMessage, setAtlasPointMessage] = useState("");
+  const parkingPhotoRef = useRef<HTMLInputElement | null>(null);
+  const hotspotPhotoRef = useRef<HTMLInputElement | null>(null);
   const [forecastFish, setForecastFish] = useState<Fish>("Zander");
   const [forecastQuery, setForecastQuery] = useState("");
   const [forecastPlace, setForecastPlace] = useState<AtlasPlace | null>(null);
@@ -152,7 +229,12 @@ const [atlasCategory, setAtlasCategory] =
   const [forecastSort, setForecastSort] = useState<"score" | "distance" | "name">("score");
   const [showAllForecast, setShowAllForecast] = useState(false);
 
-  useEffect(() => { setFavorites(loadFavorites()); setCatches(loadCatches() as EnhancedCatchEntry[]); }, []);
+  useEffect(() => {
+    setFavorites(loadFavorites());
+    setCatches(loadCatches() as EnhancedCatchEntry[]);
+    setUserParkings(loadLocalArray<UserParkingSpot>(USER_PARKINGS_KEY));
+    setUserHotspots(loadLocalArray<UserFishingSpot>(USER_HOTSPOTS_KEY));
+  }, []);
 
   useEffect(() => {
     const nav = mainNavRef.current;
@@ -442,6 +524,63 @@ const atlasWaters = useMemo(() => {
     return { local: local.length, regional: regional.length, eligible: eligible.length };
   };
 
+  const SimilarCatchDiagnostic = ({ water, hour }: { water: FishingWater; hour: ForecastHour }) => {
+    const [open, setOpen] = useState(false);
+    const eligible = catchEvents.filter((event) =>
+      event.species === forecastFish &&
+      event.weather &&
+      event.caughtAt &&
+      (event.confidence ?? 0) >= 0.6 &&
+      event.source?.provider !== "manual-test" &&
+      !event.notes?.toLowerCase().includes("beispieldatensatz")
+    );
+    const similar = eligible.filter((event) => {
+      const w = event.weather!;
+      return Math.abs((w.temperatureC ?? hour.temperature) - hour.temperature) <= 4 &&
+        Math.abs((w.pressureHpa ?? hour.pressure) - hour.pressure) <= 8 &&
+        Math.abs((w.windKmh ?? hour.windSpeed) - hour.windSpeed) <= 8 &&
+        Math.abs((w.cloudCoverPct ?? hour.cloudCover) - hour.cloudCover) <= 30;
+    });
+    const local = similar.filter((event) =>
+      (water.lavNumber && event.lavNumber === water.lavNumber) ||
+      (!!event.waterName && event.waterName.toLowerCase() === water.name.toLowerCase())
+    );
+
+    useEffect(() => {
+      if (!open) return;
+      const oldOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => { document.body.style.overflow = oldOverflow; window.removeEventListener("keydown", handleKeyDown); };
+    }, [open]);
+
+    const modal = open && typeof document !== "undefined" ? createPortal(
+      <div className="forecast-activity-modal-backdrop" onClick={() => setOpen(false)}>
+        <div className="forecast-activity-modal" role="dialog" aria-modal="true" aria-label={`Ähnliche ${forecastFish}fänge in ${water.name}`} onClick={(event) => event.stopPropagation()}>
+          <button type="button" className="forecast-activity-close" aria-label="Fanginfo schließen" onClick={() => setOpen(false)}>×</button>
+          <h3>Ähnliche {forecastFish}fänge<br />in diesem Gewässer</h3>
+          <div className="forecast-activity-direct-check">
+            Aktuelles Gewässer: <strong>{water.name}</strong>
+            <small>Vergleich zur besten Prognosezeit {new Date(hour.time).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" })} Uhr</small>
+          </div>
+          <b className="forecast-activity-count">{local.length} passende Einzelfänge</b>
+          {local.length ? <ul className="forecast-activity-modal-list">{local.slice(0, 20).map((event, index) => <li key={`${water.id}-similar-${event.caughtAt}-${index}`}>
+            <span><strong>{event.caughtAt ? new Date(event.caughtAt).toLocaleDateString("de-DE") : "Fang"}</strong><small>{event.weather?.temperatureC != null ? `${Math.round(event.weather.temperatureC)} °C` : "–"} · {event.weather?.pressureHpa != null ? `${Math.round(event.weather.pressureHpa)} hPa` : "–"} · {event.weather?.windKmh != null ? `${Math.round(event.weather.windKmh)} km/h Wind` : "–"} · {event.weather?.cloudCoverPct != null ? `${Math.round(event.weather.cloudCoverPct)} % Wolken` : "–"}</small></span>
+            <b>{event.timePrecision === "exact" ? "exakt" : event.timePrecision === "daypart" ? "Tageszeit" : "Fang"}</b>
+          </li>)}</ul> : <p>Für dieses Gewässer gibt es aktuell keine verwertbaren {forecastFish}-Einzelfänge bei vergleichbaren Wetterbedingungen.</p>}
+          <div className="forecast-activity-note"><span>ⓘ</span><small>Ähnlich bedeutet: Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h und Bewölkung ±30 %. Berücksichtigt werden nur verwertbare Einzelfänge mit ausreichender Datenqualität. Die Treffer beeinflussen den 0–100-Score derzeit nicht.</small></div>
+        </div>
+      </div>, document.body) : null;
+
+    return <>
+      <span className="forecast-activity-diagnostic" onClick={(event) => event.stopPropagation()}>
+        <button type="button" className="forecast-activity-info-button" aria-label={`Ähnliche Fänge in ${water.name} anzeigen`} title="Ähnliche Fänge in diesem Gewässer anzeigen" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setOpen(true); }}>i</button>
+      </span>
+      {modal}
+    </>;
+  };
+
   const forecastActivityMatches = useMemo(() => ranked.filter((item) => activityFor(item.water)).length, [ranked, forecastFish]);
 
   const bestForecast = ranked[0] ?? null;
@@ -480,9 +619,103 @@ const atlasWaters = useMemo(() => {
   useEffect(() => { if (view === "forecast" && !forecastPlace && !forecastBusy) void loadForecast(); }, [view]);
   const focusedWater = focusedWaterId === selected.id && selected.latitude !== null && selected.longitude !== null ? selected : null;
   const mapWaters = focusedWater ? [focusedWater] : filtered;
-  const visibleSpots = focusedWater ? [...selected.spots, ...importedSpots] : [];
-  const visibleParkings = focusedWater ? (selected.parkings ?? []) : [];
+  const selectedUserParkings = userParkings.filter((parking) => parking.waterId === selected.id);
+  const selectedUserHotspots = userHotspots.filter((spot) => spot.waterId === selected.id);
+  const visibleSpots = focusedWater ? [...selected.spots, ...selectedUserHotspots, ...importedSpots] : [];
+  const visibleParkings = focusedWater ? [...(selected.parkings ?? []), ...selectedUserParkings] : [];
   const mappedCount = filtered.filter((water) => water.latitude !== null && water.longitude !== null).length;
+
+  async function saveAtlasPoint(kind: "parking" | "hotspot", file: File) {
+    setAtlasPointSaving(kind);
+    setAtlasPointMessage("");
+
+    try {
+      const [position, photo] = await Promise.all([
+        getCurrentGpsPosition(),
+        imageFileToDataUrl(file)
+      ]);
+
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const accuracyM = Math.round(position.coords.accuracy);
+      const createdAt = new Date().toISOString();
+
+      if (kind === "parking") {
+        const item: UserParkingSpot = {
+          id: `user-parking-${crypto.randomUUID()}`,
+          waterId: selected.id,
+          name: "Eigener Parkplatz",
+          latitude,
+          longitude,
+          access: "public",
+          accuracy: "verified",
+          note: `Eigene GPS-Position · Genauigkeit ca. ${accuracyM} m`,
+          photo,
+          createdAt,
+          accuracyM
+        };
+        const next = [...userParkings, item];
+        setUserParkings(next);
+        saveLocalArray(USER_PARKINGS_KEY, next);
+        setAtlasPointMessage("✅ Parkplatz mit Position und Foto gespeichert.");
+      } else {
+        const item: UserFishingSpot = {
+          id: `user-hotspot-${crypto.randomUUID()}`,
+          waterId: selected.id,
+          name: "Eigener Hot Spot",
+          latitude,
+          longitude,
+          tags: ["Eigener Hot Spot"],
+          note: `Eigene GPS-Position · Genauigkeit ca. ${accuracyM} m`,
+          source: "Benutzer",
+          photo,
+          createdAt,
+          accuracyM
+        };
+        const next = [...userHotspots, item];
+        setUserHotspots(next);
+        saveLocalArray(USER_HOTSPOTS_KEY, next);
+        setAtlasPointMessage("✅ Hot Spot mit Position und Foto gespeichert.");
+      }
+
+      if (selected.latitude !== null && selected.longitude !== null) {
+        setFocusedWaterId(selected.id);
+      }
+    } catch (error) {
+      const geoCode = typeof error === "object" && error !== null && "code" in error
+        ? Number((error as { code?: number }).code)
+        : 0;
+      const message = geoCode === 1
+        ? "Standortfreigabe wurde nicht erteilt."
+        : geoCode
+          ? "Standort konnte nicht bestimmt werden."
+          : error instanceof Error
+            ? error.message
+            : "Position und Foto konnten nicht gespeichert werden.";
+      setAtlasPointMessage(`⚠ ${message}`);
+    } finally {
+      setAtlasPointSaving(null);
+    }
+  }
+
+  function handleAtlasPhoto(kind: "parking" | "hotspot", event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    void saveAtlasPoint(kind, file);
+  }
+
+  function deleteUserParking(id: string) {
+    const next = userParkings.filter((item) => item.id !== id);
+    setUserParkings(next);
+    saveLocalArray(USER_PARKINGS_KEY, next);
+  }
+
+  function deleteUserHotspot(id: string) {
+    const next = userHotspots.filter((item) => item.id !== id);
+    setUserHotspots(next);
+    saveLocalArray(USER_HOTSPOTS_KEY, next);
+  }
 
   function selectAndFocus(water: FishingWater) {
   setSelected(water);
@@ -772,7 +1005,7 @@ const atlasWaters = useMemo(() => {
             </small>
 
             <span className="atlas-water-meta">
-              🅿 {water.parkings.length} · 📍 {water.spots.length}
+              🅿 {water.parkings.length + userParkings.filter((item) => item.waterId === water.id).length} · 📍 {water.spots.length + userHotspots.filter((item) => item.waterId === water.id).length}
             </span>
           </button>
         ))}
@@ -793,8 +1026,8 @@ const atlasWaters = useMemo(() => {
 
       <div className="atlas-detail-stats">
         <span>🐟 {waterTargetFish(selected).length} Zielfische</span>
-        <span>🅿️ {selected.parkings.length} Parkplätze</span>
-        <span>📍 {selected.spots.length} Erkundungspunkte</span>
+        <span>🅿️ {selected.parkings.length + selectedUserParkings.length} Parkplätze</span>
+        <span>📍 {selected.spots.length + selectedUserHotspots.length} Erkundungspunkte</span>
       </div>
 
       {selected.latitude !== null && selected.longitude !== null ? (
@@ -806,37 +1039,82 @@ const atlasWaters = useMemo(() => {
         <p className="atlas-empty-note">Für dieses Gewässer ist noch keine Kartenposition gespeichert.</p>
       )}
 
-      {selected.parkings.length > 0 && (
+      <div className="atlas-save-point-actions">
+        <button
+          type="button"
+          onClick={() => parkingPhotoRef.current?.click()}
+          disabled={atlasPointSaving !== null}
+        >
+          {atlasPointSaving === "parking" ? "📷 Speichere…" : "🅿️ Parkplatz speichern"}
+          <small>Position + Foto</small>
+        </button>
+        <button
+          type="button"
+          onClick={() => hotspotPhotoRef.current?.click()}
+          disabled={atlasPointSaving !== null}
+        >
+          {atlasPointSaving === "hotspot" ? "📷 Speichere…" : "📍 Hot Spot speichern"}
+          <small>Position + Foto</small>
+        </button>
+        <input
+          ref={parkingPhotoRef}
+          className="atlas-hidden-photo-input"
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={(event) => handleAtlasPhoto("parking", event)}
+        />
+        <input
+          ref={hotspotPhotoRef}
+          className="atlas-hidden-photo-input"
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={(event) => handleAtlasPhoto("hotspot", event)}
+        />
+      </div>
+      {atlasPointMessage && <p className="atlas-point-message">{atlasPointMessage}</p>}
+
+      {(selected.parkings.length > 0 || selectedUserParkings.length > 0) && (
         <>
           <h3>Parkplätze / Ausgangspunkte</h3>
           <div className="atlas-nav-list">
-            {selected.parkings.slice(0, 1).map((parking) => (
-              <article key={parking.id}>
-                <strong>{parking.name}</strong>
-                <small>{parking.note ?? (parking.access === "public" ? "Öffentlicher Parkplatz" : "Zufahrt eingeschränkt")}</small>
-                <div className="atlas-row-actions">
-                  <a href={`https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a>
-                  <a href={`https://maps.apple.com/?daddr=${parking.latitude},${parking.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>
-                </div>
-              </article>
-            ))}
+            {[...selected.parkings.slice(0, 1), ...selectedUserParkings].map((parking) => {
+              const own = "waterId" in parking;
+              const ownParking = own ? parking as UserParkingSpot : null;
+              return (
+                <article key={parking.id}>
+                  {ownParking?.photo && <img className="atlas-point-photo" src={ownParking.photo} alt="Foto des gespeicherten Parkplatzes" />}
+                  <strong>{parking.name}</strong>
+                  <small>{parking.note ?? (parking.access === "public" ? "Öffentlicher Parkplatz" : "Zufahrt eingeschränkt")}</small>
+                  <div className="atlas-row-actions">
+                    <a href={`https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a>
+                    <a href={`https://maps.apple.com/?daddr=${parking.latitude},${parking.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>
+                    {ownParking && <button type="button" onClick={() => deleteUserParking(parking.id)}>Löschen</button>}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </>
       )}
 
-      {selected.spots.length > 0 && (
+      {(selected.spots.length > 0 || selectedUserHotspots.length > 0) && (
         <>
           <h3>Erkundungspunkte</h3>
           <div className="atlas-nav-list">
-            {selected.spots.map((spot) => {
-              const parking = selected.parkings.find((item) => item.id === spot.parkingId);
+            {[...selected.spots, ...selectedUserHotspots].map((spot) => {
+              const parking = [...selected.parkings, ...selectedUserParkings].find((item) => item.id === spot.parkingId);
+              const ownSpot = "waterId" in spot ? spot as UserFishingSpot : null;
               return (
                 <article key={spot.id}>
+                  {ownSpot?.photo && <img className="atlas-point-photo" src={ownSpot.photo} alt="Foto des gespeicherten Hot Spots" />}
                   <strong>{spot.name}</strong>
                   <small>{spot.risk ?? spot.note ?? "Zugang vor Ort prüfen."}</small>
                   <div className="atlas-row-actions">
                     <a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>
                     {parking && <a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Ab Parkplatz</a>}
+                    {ownSpot && <button type="button" onClick={() => deleteUserHotspot(spot.id)}>Löschen</button>}
                   </div>
                 </article>
               );
@@ -1014,7 +1292,7 @@ const atlasWaters = useMemo(() => {
               <div className="forecast-catch-compact-row">
                 <span aria-hidden="true">🎣</span>
                 <b>Ähnliche Fänge Gewässer</b>
-                <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen im Gewässer" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span>
+                <SimilarCatchDiagnostic water={bestForecast.water} hour={bestForecast.best.hour} />
               </div>
               <div className="forecast-catch-compact-row">
                 <span aria-hidden="true">📊</span>
@@ -1038,7 +1316,7 @@ const atlasWaters = useMemo(() => {
                   <p>⌖ {distance.toFixed(1)} km · {water.type} · Beste Zeit: {new Date(best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</p>
                   <div className="forecast-reason-pills"><span>{best.result.dayPhase} günstig</span><span>{Math.round(best.hour.cloudCover)} % Bewölkung</span><span>{Math.round(best.hour.windSpeed)} km/h · {windDisplay(best.hour.windDirection)} Wind</span><span>◐ {best.result.moonPhase} · {best.result.moonIllumination} %</span></div>
                   <div className="forecast-catch-mini forecast-catch-desktop">
-                    <span className="forecast-catch-mini-line">🎣 <b>Ähnliche Fänge Gewässer</b> <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen im Gewässer" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span></span>
+                    <span className="forecast-catch-mini-line">🎣 <b>Ähnliche Fänge Gewässer</b> <SimilarCatchDiagnostic water={water} hour={best.hour} /></span>
                     <span className="forecast-catch-mini-line">📊 <b>Ähnliche Fänge Umkreis 20 km</b> <ActivityDiagnostic water={water} compact /></span>
                   </div>
                 </div>
@@ -1047,7 +1325,7 @@ const atlasWaters = useMemo(() => {
                   <div className="forecast-catch-compact-row">
                     <span aria-hidden="true">🎣</span>
                     <b>Ähnliche Fänge Gewässer</b>
-                    <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen im Gewässer" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span>
+                    <SimilarCatchDiagnostic water={water} hour={best.hour} />
                   </div>
                   <div className="forecast-catch-compact-row">
                     <span aria-hidden="true">📊</span>
