@@ -43,6 +43,7 @@ type CatchWeatherSnapshot = {
   temperature: number;
   pressure: number;
   windSpeed: number;
+  windDirection?: number;
   cloudCover: number;
   precipitation?: number;
 };
@@ -58,6 +59,24 @@ type EnhancedCatchEntry = CatchEntry & {
   method?: string;
   depthM?: number;
 };
+
+function windDirectionLabel(degrees?: number | null) {
+  if (degrees == null || !Number.isFinite(degrees)) return "–";
+  const directions = ["N", "NO", "O", "SO", "S", "SW", "W", "NW"];
+  return directions[Math.round((((degrees % 360) + 360) % 360) / 45) % 8];
+}
+
+function windDirectionArrow(degrees?: number | null) {
+  if (degrees == null || !Number.isFinite(degrees)) return "";
+  const arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"];
+  return arrows[Math.round((((degrees % 360) + 360) % 360) / 45) % 8];
+}
+
+function windDisplay(degrees?: number | null) {
+  const label = windDirectionLabel(degrees);
+  if (label === "–") return label;
+  return `${label} ${windDirectionArrow(degrees)}`;
+}
 
 function moonInfoFor(date: Date) {
   const synodicMonth = 29.530588853;
@@ -532,7 +551,8 @@ const atlasWaters = useMemo(() => {
               pressure: hour.pressure,
               windSpeed: hour.windSpeed,
               cloudCover: hour.cloudCover,
-              precipitation: hour.precipitation
+              precipitation: hour.precipitation,
+              windDirection: hour.windDirection
             });
           }
         } catch (error) {
@@ -978,7 +998,7 @@ const atlasWaters = useMemo(() => {
             <div className="forecast-best-weather">
               <span><i>☾</i><b>{bestForecast.best.result.dayPhase}</b><small>günstig</small></span>
               <span><i>☁</i><b>{Math.round(bestForecast.best.hour.cloudCover)} %</b><small>Bewölkung</small></span>
-              <span><i>≋</i><b>{Math.round(bestForecast.best.hour.windSpeed)} km/h</b><small>Wind</small></span>
+              <span><i>≋</i><b>{Math.round(bestForecast.best.hour.windSpeed)} km/h · {windDisplay(bestForecast.best.hour.windDirection)}</b><small>Wind</small></span>
               <span><i>♨</i><b>{bestForecast.best.hour.temperature.toFixed(0)} °C</b><small>Temperatur</small></span>
               <span><i>◴</i><b>{Math.round(bestForecast.best.hour.pressure)} hPa</b><small>Luftdruck {bestForecast.best.hour.pressureTrend >= 1.5 ? '↗' : bestForecast.best.hour.pressureTrend <= -1.5 ? '↘' : '→'}</small></span>
               <span className="forecast-weather-moon"><i>◐</i><b>{bestForecast.best.result.moonPhase}</b><small>{bestForecast.best.result.moonIllumination} %</small></span>
@@ -1016,7 +1036,7 @@ const atlasWaters = useMemo(() => {
                 <div className="forecast-other-copy">
                   <strong>{water.name}</strong>
                   <p>⌖ {distance.toFixed(1)} km · {water.type} · Beste Zeit: {new Date(best.hour.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr</p>
-                  <div className="forecast-reason-pills"><span>{best.result.dayPhase} günstig</span><span>{Math.round(best.hour.cloudCover)} % Bewölkung</span><span>{Math.round(best.hour.windSpeed)} km/h Wind</span><span>◐ {best.result.moonPhase} · {best.result.moonIllumination} %</span></div>
+                  <div className="forecast-reason-pills"><span>{best.result.dayPhase} günstig</span><span>{Math.round(best.hour.cloudCover)} % Bewölkung</span><span>{Math.round(best.hour.windSpeed)} km/h · {windDisplay(best.hour.windDirection)} Wind</span><span>◐ {best.result.moonPhase} · {best.result.moonIllumination} %</span></div>
                   <div className="forecast-catch-mini forecast-catch-desktop">
                     <span className="forecast-catch-mini-line">🎣 <b>Ähnliche Fänge Gewässer</b> <span className="forecast-catch-info" role="button" tabIndex={0} aria-label="Info zu ähnlichen Fängen im Gewässer" title="Gezählt werden nur Einzelfänge mit verwertbaren Wetterdaten bei ähnlichen Bedingungen (Temperatur ±4 °C, Luftdruck ±8 hPa, Wind ±8 km/h, Bewölkung ±30 %)." onClick={(event)=>{event.preventDefault();event.stopPropagation();}}>i</span></span>
                     <span className="forecast-catch-mini-line">📊 <b>Ähnliche Fänge Umkreis 20 km</b> <ActivityDiagnostic water={water} compact /></span>
@@ -1058,7 +1078,7 @@ const atlasWaters = useMemo(() => {
 
             <div className="catch-auto-grid">
               <article><span>📍</span><div><small>Gewässer</small><strong>{selectedCatchWater?.name ?? (catchAutoBusy ? "wird ermittelt …" : "bitte auswählen")}</strong><em>{selectedCatchDistance != null ? `${selectedCatchDistance.toFixed(1)} km vom Standort` : catchPosition ? "Standort erkannt" : "GPS noch nicht verfügbar"}</em></div></article>
-              <article><span>🌤️</span><div><small>Wetter</small><strong>{catchWeather ? `${catchWeather.temperature.toFixed(0)} °C · ${Math.round(catchWeather.pressure)} hPa` : "wird automatisch geladen"}</strong><em>{catchWeather ? `${Math.round(catchWeather.windSpeed)} km/h Wind · ${Math.round(catchWeather.cloudCover)} % Bewölkung` : "vom aktuellen Standort"}</em></div></article>
+              <article><span>🌤️</span><div><small>Wetter</small><strong>{catchWeather ? `${catchWeather.temperature.toFixed(0)} °C · ${Math.round(catchWeather.pressure)} hPa` : "wird automatisch geladen"}</strong><em>{catchWeather ? `${Math.round(catchWeather.windSpeed)} km/h · ${windDisplay(catchWeather.windDirection)} · ${Math.round(catchWeather.cloudCover)} % Bewölkung` : "vom aktuellen Standort"}</em></div></article>
               <article><span>◐</span><div><small>Mondphase</small><strong>{moon.phase}</strong><em>{moon.illumination} % beleuchtet</em></div></article>
               <article><span>🕒</span><div><small>Zeitpunkt</small><strong>{new Date().toLocaleDateString("de-DE")}</strong><em>{new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" })} Uhr · automatisch</em></div></article>
             </div>
@@ -1085,7 +1105,7 @@ const atlasWaters = useMemo(() => {
             <div className="catch-list catch-list-v2">{catches.map(entry=>{
               const water = waters.find(w=>w.id===entry.waterId);
               return <article key={entry.id}>
-                <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}</div>
+                <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}</div>
                 <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span>
               </article>;
             })}{!catches.length&&<p className="catch-empty">Noch keine Fänge gespeichert. Der erste Eintrag baut deine eigene Prognose-Datenbasis auf.</p>}</div>
