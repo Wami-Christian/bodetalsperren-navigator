@@ -58,6 +58,7 @@ type EnhancedCatchEntry = CatchEntry & {
   moonIllumination?: number;
   method?: string;
   depthM?: number;
+  photo?: string;
 };
 
 type UserParkingSpot = ParkingSpot & {
@@ -90,6 +91,133 @@ function saveLocalArray<T>(key: string, value: T[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(key, JSON.stringify(value));
 }
+
+const ATLAS_DB_NAME = "harzfishing-atlas";
+const ATLAS_DB_VERSION = 2;
+const ATLAS_PHOTO_STORE = "point-photos";
+const CATCH_PHOTO_STORE = "catch-photos";
+
+function openAtlasDb() {
+  return new Promise<IDBDatabase>((resolve, reject) => {
+    if (typeof indexedDB === "undefined") {
+      reject(new Error("IndexedDB wird von diesem Browser nicht unterstützt."));
+      return;
+    }
+    const request = indexedDB.open(ATLAS_DB_NAME, ATLAS_DB_VERSION);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(ATLAS_PHOTO_STORE)) db.createObjectStore(ATLAS_PHOTO_STORE);
+      if (!db.objectStoreNames.contains(CATCH_PHOTO_STORE)) db.createObjectStore(CATCH_PHOTO_STORE);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error ?? new Error("Lokaler Bildspeicher konnte nicht geöffnet werden."));
+  });
+}
+
+async function putDbPhoto(store: string, id: string, photo: string) {
+  const db = await openAtlasDb();
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(store, "readwrite");
+      tx.objectStore(store).put(photo, id);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error ?? new Error("Foto konnte nicht dauerhaft gespeichert werden."));
+      tx.onabort = () => reject(tx.error ?? new Error("Fotospeicherung wurde abgebrochen."));
+    });
+  } finally { db.close(); }
+}
+
+async function getDbPhoto(store: string, id: string) {
+  const db = await openAtlasDb();
+  try {
+    return await new Promise<string | undefined>((resolve, reject) => {
+      const tx = db.transaction(store, "readonly");
+      const request = tx.objectStore(store).get(id);
+      request.onsuccess = () => resolve(typeof request.result === "string" ? request.result : undefined);
+      request.onerror = () => reject(request.error);
+    });
+  } finally { db.close(); }
+}
+
+async function putAtlasPhoto(id: string, photo: string) {
+  const db = await openAtlasDb();
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(ATLAS_PHOTO_STORE, "readwrite");
+      tx.objectStore(ATLAS_PHOTO_STORE).put(photo, id);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error ?? new Error("Foto konnte nicht dauerhaft gespeichert werden."));
+      tx.onabort = () => reject(tx.error ?? new Error("Fotospeicherung wurde abgebrochen."));
+    });
+  } finally { db.close(); }
+}
+
+async function getAtlasPhoto(id: string) {
+  const db = await openAtlasDb();
+  try {
+    return await new Promise<string | undefined>((resolve, reject) => {
+      const tx = db.transaction(ATLAS_PHOTO_STORE, "readonly");
+      const request = tx.objectStore(ATLAS_PHOTO_STORE).get(id);
+      request.onsuccess = () => resolve(typeof request.result === "string" ? request.result : undefined);
+      request.onerror = () => reject(request.error);
+    });
+  } finally { db.close(); }
+}
+
+async function deleteAtlasPhoto(id: string) {
+  const db = await openAtlasDb();
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(ATLAS_PHOTO_STORE, "readwrite");
+      tx.objectStore(ATLAS_PHOTO_STORE).delete(id);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  } finally { db.close(); }
+}
+
+function withoutPhoto<T extends { photo?: string }>(items: T[]) {
+  return items.map(({ photo: _photo, ...item }) => item);
+}
+
+async function hydrateAndMigrateAtlasPoints<T extends { id: string; photo?: string }>(key: string) {
+  const stored = loadLocalArray<T>(key);
+  const hydrated: T[] = [];
+  let migrated = false;
+
+  for (const item of stored) {
+    let photo = item.photo;
+    if (photo) {
+      await putAtlasPhoto(item.id, photo);
+      migrated = true;
+    } else {
+      photo = await getAtlasPhoto(item.id);
+    }
+    hydrated.push(photo ? { ...item, photo } : item);
+  }
+
+  if (migrated) saveLocalArray(key, withoutPhoto(hydrated));
+  return hydrated;
+}
+
+async function hydrateCatchPhotos(entries: EnhancedCatchEntry[]) {
+  const hydrated: EnhancedCatchEntry[] = [];
+  for (const entry of entries) {
+    const photo = await getDbPhoto(CATCH_PHOTO_STORE, entry.id);
+    hydrated.push(photo ? { ...entry, photo } : entry);
+  }
+  return hydrated;
+}
+
+type HarzFishingBackup = {
+  format: "HarzFishing Navigator Backup";
+  version: 1;
+  exportedAt: string;
+  favorites: string[];
+  catches: EnhancedCatchEntry[];
+  parkings: UserParkingSpot[];
+  hotspots: UserFishingSpot[];
+};
 
 async function imageFileToDataUrl(file: File) {
   const rawUrl = URL.createObjectURL(file);
@@ -212,6 +340,11 @@ const [atlasCategory, setAtlasCategory] =
   const [catchAutoBusy, setCatchAutoBusy] = useState(false);
   const [catchAutoAttempted, setCatchAutoAttempted] = useState(false);
   const [catchAutoError, setCatchAutoError] = useState("");
+  const [catchPhoto, setCatchPhoto] = useState<string | null>(null);
+  const [catchSaveBusy, setCatchSaveBusy] = useState(false);
+  const [dataMessage, setDataMessage] = useState("");
+  const catchPhotoRef = useRef<HTMLInputElement | null>(null);
+  const backupImportRef = useRef<HTMLInputElement | null>(null);
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
   const [userParkings, setUserParkings] = useState<UserParkingSpot[]>([]);
   const [userHotspots, setUserHotspots] = useState<UserFishingSpot[]>([]);
@@ -231,9 +364,21 @@ const [atlasCategory, setAtlasCategory] =
 
   useEffect(() => {
     setFavorites(loadFavorites());
-    setCatches(loadCatches() as EnhancedCatchEntry[]);
-    setUserParkings(loadLocalArray<UserParkingSpot>(USER_PARKINGS_KEY));
-    setUserHotspots(loadLocalArray<UserFishingSpot>(USER_HOTSPOTS_KEY));
+    const storedCatches = loadCatches() as EnhancedCatchEntry[];
+    setCatches(storedCatches);
+    void hydrateCatchPhotos(storedCatches).then(setCatches).catch((error) => {
+      console.error("Fangfotos konnten nicht vollständig geladen werden:", error);
+    });
+
+    void Promise.all([
+      hydrateAndMigrateAtlasPoints<UserParkingSpot>(USER_PARKINGS_KEY),
+      hydrateAndMigrateAtlasPoints<UserFishingSpot>(USER_HOTSPOTS_KEY)
+    ]).then(([parkings, hotspots]) => {
+      setUserParkings(parkings);
+      setUserHotspots(hotspots);
+    }).catch((error) => {
+      console.error("Atlas-Punkte konnten nicht vollständig geladen werden:", error);
+    });
   }, []);
 
   useEffect(() => {
@@ -655,9 +800,10 @@ const atlasWaters = useMemo(() => {
           accuracyM
         };
         const next = [...userParkings, item];
+        await putAtlasPhoto(item.id, photo);
+        saveLocalArray(USER_PARKINGS_KEY, withoutPhoto(next));
         setUserParkings(next);
-        saveLocalArray(USER_PARKINGS_KEY, next);
-        setAtlasPointMessage("✅ Parkplatz mit Position und Foto gespeichert.");
+        setAtlasPointMessage("✅ Parkplatz mit Position und Foto dauerhaft gespeichert.");
       } else {
         const item: UserFishingSpot = {
           id: `user-hotspot-${crypto.randomUUID()}`,
@@ -673,9 +819,10 @@ const atlasWaters = useMemo(() => {
           accuracyM
         };
         const next = [...userHotspots, item];
+        await putAtlasPhoto(item.id, photo);
+        saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
         setUserHotspots(next);
-        saveLocalArray(USER_HOTSPOTS_KEY, next);
-        setAtlasPointMessage("✅ Hot Spot mit Position und Foto gespeichert.");
+        setAtlasPointMessage("✅ Hot Spot mit Position und Foto dauerhaft gespeichert.");
       }
 
       if (selected.latitude !== null && selected.longitude !== null) {
@@ -705,16 +852,26 @@ const atlasWaters = useMemo(() => {
     void saveAtlasPoint(kind, file);
   }
 
-  function deleteUserParking(id: string) {
+  async function deleteUserParking(id: string) {
     const next = userParkings.filter((item) => item.id !== id);
-    setUserParkings(next);
-    saveLocalArray(USER_PARKINGS_KEY, next);
+    try {
+      saveLocalArray(USER_PARKINGS_KEY, withoutPhoto(next));
+      await deleteAtlasPhoto(id);
+      setUserParkings(next);
+    } catch {
+      setAtlasPointMessage("⚠ Parkplatz konnte nicht vollständig gelöscht werden.");
+    }
   }
 
-  function deleteUserHotspot(id: string) {
+  async function deleteUserHotspot(id: string) {
     const next = userHotspots.filter((item) => item.id !== id);
-    setUserHotspots(next);
-    saveLocalArray(USER_HOTSPOTS_KEY, next);
+    try {
+      saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
+      await deleteAtlasPhoto(id);
+      setUserHotspots(next);
+    } catch {
+      setAtlasPointMessage("⚠ Hot Spot konnte nicht vollständig gelöscht werden.");
+    }
   }
 
   function selectAndFocus(water: FishingWater) {
@@ -810,7 +967,7 @@ const atlasWaters = useMemo(() => {
     void loadCatchEnvironment();
   }, [view, catchAutoAttempted, catchAutoBusy]);
 
-  function addCatch(event: React.FormEvent<HTMLFormElement>) {
+  async function addCatch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const now = new Date();
@@ -842,10 +999,101 @@ const atlasWaters = useMemo(() => {
       locationSource: savePosition && catchPosition ? "gps" : "manual"
     };
 
-    const next = [entry, ...catches];
-    setCatches(next);
-    saveCatches(next);
-    event.currentTarget.reset();
+    setCatchSaveBusy(true);
+    setCatchAutoError("");
+    try {
+      if (catchPhoto) await putDbPhoto(CATCH_PHOTO_STORE, entry.id, catchPhoto);
+      const next = [{ ...entry, photo: catchPhoto ?? undefined }, ...catches];
+      saveCatches(withoutPhoto(next) as EnhancedCatchEntry[]);
+      setCatches(next);
+      setCatchPhoto(null);
+      event.currentTarget.reset();
+    } catch (error) {
+      setCatchAutoError(error instanceof Error ? error.message : "Fang konnte nicht dauerhaft gespeichert werden.");
+    } finally {
+      setCatchSaveBusy(false);
+    }
+  }
+
+  async function handleCatchPhoto(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    try {
+      setCatchPhoto(await imageFileToDataUrl(file));
+    } catch (error) {
+      setCatchAutoError(error instanceof Error ? error.message : "Fangfoto konnte nicht verarbeitet werden.");
+    }
+  }
+
+  async function exportDataBackup() {
+    setDataMessage("");
+    try {
+      const catchesWithPhotos = await Promise.all(catches.map(async (entry) => ({
+        ...entry,
+        photo: entry.photo ?? await getDbPhoto(CATCH_PHOTO_STORE, entry.id)
+      })));
+      const parkingsWithPhotos = await Promise.all(userParkings.map(async (item) => ({
+        ...item,
+        photo: item.photo ?? await getAtlasPhoto(item.id)
+      })));
+      const hotspotsWithPhotos = await Promise.all(userHotspots.map(async (item) => ({
+        ...item,
+        photo: item.photo ?? await getAtlasPhoto(item.id)
+      })));
+      const backup: HarzFishingBackup = {
+        format: "HarzFishing Navigator Backup",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        favorites,
+        catches: catchesWithPhotos,
+        parkings: parkingsWithPhotos,
+        hotspots: hotspotsWithPhotos
+      };
+      const href = URL.createObjectURL(new Blob([JSON.stringify(backup)], { type: "application/json" }));
+      const anchor = document.createElement("a");
+      anchor.href = href;
+      anchor.download = `harzfishing-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      anchor.click();
+      URL.revokeObjectURL(href);
+      setDataMessage("✅ Datensicherung erstellt – inklusive Fangfotos, Parkplätzen und Hot Spots.");
+    } catch (error) {
+      setDataMessage(`⚠ ${error instanceof Error ? error.message : "Datensicherung konnte nicht erstellt werden."}`);
+    }
+  }
+
+  async function importDataBackup(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    setDataMessage("");
+    try {
+      const backup = JSON.parse(await file.text()) as HarzFishingBackup;
+      if (backup.format !== "HarzFishing Navigator Backup" || backup.version !== 1 ||
+          !Array.isArray(backup.catches) || !Array.isArray(backup.parkings) || !Array.isArray(backup.hotspots)) {
+        throw new Error("Die Datei ist keine gültige HarzFishing-Datensicherung.");
+      }
+
+      for (const entry of backup.catches) if (entry.photo) await putDbPhoto(CATCH_PHOTO_STORE, entry.id, entry.photo);
+      for (const item of backup.parkings) if (item.photo) await putAtlasPhoto(item.id, item.photo);
+      for (const item of backup.hotspots) if (item.photo) await putAtlasPhoto(item.id, item.photo);
+
+      const restoredCatches = backup.catches.map(({ photo, ...entry }) => entry) as EnhancedCatchEntry[];
+      const restoredParkings = withoutPhoto(backup.parkings) as UserParkingSpot[];
+      const restoredHotspots = withoutPhoto(backup.hotspots) as UserFishingSpot[];
+      saveCatches(restoredCatches);
+      saveFavorites(Array.isArray(backup.favorites) ? backup.favorites : []);
+      saveLocalArray(USER_PARKINGS_KEY, restoredParkings);
+      saveLocalArray(USER_HOTSPOTS_KEY, restoredHotspots);
+
+      setFavorites(Array.isArray(backup.favorites) ? backup.favorites : []);
+      setCatches(backup.catches);
+      setUserParkings(backup.parkings);
+      setUserHotspots(backup.hotspots);
+      setDataMessage(`✅ Datensicherung wiederhergestellt: ${backup.catches.length} Fänge, ${backup.parkings.length} Parkplätze, ${backup.hotspots.length} Hot Spots.`);
+    } catch (error) {
+      setDataMessage(`⚠ ${error instanceof Error ? error.message : "Datensicherung konnte nicht wiederhergestellt werden."}`);
+    }
   }
 
   async function importGpx(event: ChangeEvent<HTMLInputElement>) {
@@ -1374,8 +1622,15 @@ const atlasWaters = useMemo(() => {
               <label className="wide">Notiz <textarea name="note" rows={3} placeholder="optional – z. B. Bissphase, Struktur, Besonderheiten"/></label>
             </div>
 
+            <div className="catch-photo-box">
+              <button type="button" className="catch-photo-button" onClick={()=>catchPhotoRef.current?.click()}>
+                📷 {catchPhoto ? "Fangfoto ändern" : "Fangfoto aufnehmen"}
+              </button>
+              <input ref={catchPhotoRef} className="atlas-hidden-photo-input" type="file" accept="image/*" capture="environment" onChange={handleCatchPhoto}/>
+              {catchPhoto && <div className="catch-photo-preview"><img src={catchPhoto} alt="Vorschau Fangfoto"/><button type="button" onClick={()=>setCatchPhoto(null)}>× Foto entfernen</button></div>}
+            </div>
             <label className="catch-location-check"><input name="savePosition" type="checkbox" defaultChecked/> <span>🎯 Fangstelle mit GPS-Position speichern</span></label>
-            <button className="catch-save-button" type="submit">🎣 Fang speichern</button>
+            <button className="catch-save-button" type="submit" disabled={catchSaveBusy}>{catchSaveBusy ? "Speichere dauerhaft …" : "🎣 Fang speichern"}</button>
           </form>
 
           <div className="catch-history">
@@ -1383,6 +1638,7 @@ const atlasWaters = useMemo(() => {
             <div className="catch-list catch-list-v2">{catches.map(entry=>{
               const water = waters.find(w=>w.id===entry.waterId);
               return <article key={entry.id}>
+                {entry.photo && <img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/>}
                 <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}</div>
                 <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span>
               </article>;
@@ -1391,7 +1647,11 @@ const atlasWaters = useMemo(() => {
         </section>;
       })()}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V5.2 Beta</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten und Fangbuch liegen nur im Browser dieses Geräts. Es gibt noch kein Konto und keine Cloud-Synchronisierung.</p><h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V5.2 Beta</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+        <h3>Datensicherung</h3><p>Die Sicherungsdatei enthält Favoriten, alle Fänge inklusive Fotos sowie deine gespeicherten Parkplätze und Hot Spots inklusive Fotos. Damit kannst du die Daten nach einem Geräte- oder Browserwechsel wiederherstellen.</p>
+        <div className="data-backup-actions"><button type="button" onClick={()=>void exportDataBackup()}>💾 Datensicherung erstellen</button><button type="button" onClick={()=>backupImportRef.current?.click()}>📂 Datensicherung wiederherstellen</button><input ref={backupImportRef} className="atlas-hidden-photo-input" type="file" accept=".json,application/json" onChange={importDataBackup}/></div>
+        {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
+        <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
       <footer>HarzFishing Navigator V5.2 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>

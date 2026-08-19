@@ -2927,3 +2927,18 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     min-height: 50px;
   }
 }
+
+/* Fangbuch: Foto + Datensicherung */
+.catch-photo-box { margin: 12px 0; }
+.catch-photo-button { width: 100%; min-height: 48px; border: 1px solid #0b6658; border-radius: 10px; background: #eef8f4; color: #0b6658; font: inherit; font-weight: 800; cursor: pointer; }
+.catch-photo-preview { margin-top: 10px; display: grid; gap: 7px; }
+.catch-photo-preview img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px; }
+.catch-photo-preview button { justify-self: start; border: 0; background: transparent; color: #8a2f2f; font-weight: 700; cursor: pointer; }
+.catch-history-photo { width: 112px; height: 88px; object-fit: cover; border-radius: 10px; flex: 0 0 auto; }
+.data-backup-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.data-backup-actions button { min-height: 46px; border: 1px solid #0b6658; border-radius: 10px; background: #0b6658; color: #fff; font: inherit; font-weight: 800; cursor: pointer; padding: 9px 12px; }
+.data-backup-message { padding: 9px 11px; border-radius: 9px; background: #eef8f4; color: #174f46; font-size: 13px; }
+@media (max-width: 700px) {
+  .catch-history-photo { width: 100%; height: 180px; }
+  .data-backup-actions { grid-template-columns: 1fr; }
+}
