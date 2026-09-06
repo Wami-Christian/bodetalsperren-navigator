@@ -1,0 +1,11 @@
+{
+  "totalSafeStandingWaters": 836,
+  "byType": {
+    "Teich": 340,
+    "See": 421,
+    "Kiesgrube": 75
+  },
+  "source": "Angelatlas Sachsen-Anhalt / GeoServer WFS",
+  "method": "polygon-safe-vertex",
+  "flowingWatersChanged": 0
+}

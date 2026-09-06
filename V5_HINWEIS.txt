@@ -1,0 +1,14 @@
+V5 – Referenztest Lüttgenbörnecke
+
+Diesmal wird die Angelrute für „Lüttgenbörnecke bei Börnecke“ nicht mehr über
+eine generische Näherung bestimmt. Sie wird synchron auf einen Punkt gesetzt,
+der direkt aus dem lokalen Sachsen-Anhalt-PBF-Teichpolygon stammt:
+
+51.829069, 11.024324
+
+Dieser Punkt ist das östliche Ufer des in der lokalen Kachel 518_110 enthaltenen
+Wasserpolygons. Zusätzlich zentriert die Karte bei Auswahl auf dieselbe
+verifizierte Position statt auf die alte LAV-Ausgangskoordinate.
+
+Ziel: Erst diesen Referenzfall zweifelsfrei richtig bekommen. Danach wird
+dieselbe Objekt-ID-/Polygonlogik auf weitere Seen und Teiche erweitert.

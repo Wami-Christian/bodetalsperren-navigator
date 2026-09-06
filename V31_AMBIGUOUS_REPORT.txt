@@ -1,0 +1,45 @@
+V31 ambiguity resolution. V30 preserved.
+Resolved only Zoberbergsee 1/2 using official LAV area values and exact OSM polygon areas.
+Other ambiguous groups remain untouched until objective evidence is available.
+
+zoberbergsee 1 im ot mosigkau -> way 25767200; LAV 0.60 ha; OSM polygon 2.601 ha; marker 51.8139567,12.1787751
+zoberbergsee 2 inkl. „kleiner see“, -> way 25347670; LAV 1.05 ha; OSM polygon 2.176 ha; marker 51.8154215,12.1815048
+
+Remaining ambiguous candidates:
+Salzwedeler Dumme von Böddenstedter Mühle b. Mündung in die Jeetze
+  Salzwedeler Dumme way 1495007811: 314m, area 1.012 ha
+  Salzwedeler Dumme way 1494926619: 966m, area 0.153 ha
+Rehsumpf
+  Rehsumpf way 25927865: 81m, area 2.431 ha
+  Rehsumpf way 25842059: 595m, area 0.733 ha
+Zoberbergsee 1 im OT Mosigkau
+  Zoberbergsee way 25767200: 536m, area 2.601 ha
+  Zoberbergsee way 25347670: 602m, area 2.176 ha
+Zoberbergsee 2 inkl. Kleiner See
+  Zoberbergsee way 25767200: 536m, area 2.601 ha
+  Zoberbergsee way 25347670: 602m, area 2.176 ha
+Saalealtarm Hohenweiden
+  Saale way 166124608: 675m, area 0.107 ha
+  Saale way 28196760: 716m, area 0.245 ha
+  Saale way 199808802: 843m, area 59.601 ha
+Seehäuser Seewiesen
+  Seehäuser See way 254154689: 192m, area 17.817 ha
+  Seewiese way 254154027: 460m, area 0.366 ha
+Undank I bei Löderburg
+  Undank way 91760421: 433m, area 13.953 ha
+  Undank way 18808982: 782m, area 9.695 ha
+Undank II bei Löderburg
+  Undank way 91760421: 268m, area 13.953 ha
+  Undank way 18808982: 312m, area 9.695 ha
+Brückmannsteich und Pumpenteich bei Osternienburg
+  Brückmannsteich way 93629856: 532m, area 4.993 ha
+  Pumpenteich way 915044143: 546m, area 0.256 ha
+Affenteich Gräfenhainichen
+  Affenteich way 1387737676: 130m, area 0.055 ha
+  Affenteich way 159394202: 151m, area 0.201 ha
+Kleiner Riß bei Dabrun (Schleienloch)
+  Kleiner Riß bei Dabrun way 1208139135: 146m, area 0.232 ha
+  Kleiner Riß bei Dabrun way 1208139134: 245m, area 0.719 ha
+Wilde Kölke I bei Dabrun/Melzwig
+  Wilde Kölke way 417081672: 318m, area 0.241 ha
+  Wilde Kölke way 830417255: 413m, area 0.362 ha

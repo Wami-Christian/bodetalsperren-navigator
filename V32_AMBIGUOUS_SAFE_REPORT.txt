@@ -1,0 +1,8 @@
+V32 – konservative Auflösung weiterer Mehrdeutigkeiten
+Basis V31; Zoberberg bleibt erhalten.
+
+Rehsumpf -> OSM way 25927865; marker 51.8267327,12.2713275; Grund: Größe/Geometrie
+Affenteich Gräfenhainichen -> OSM way 159394202; marker 51.7305454,12.4922911; Grund: externe OSM-Way-Bestätigung
+Wilde Kölke I bei Dabrun/Melzwig -> OSM way 830417255; marker 51.8063328,12.7411044; Grund: Größe 0,30 ha
+
+Nicht automatisch aufgelöst: Salzwedeler Dumme, Saalealtarm Hohenweiden, Seehäuser Seewiesen, Undank I/II, Brückmannsteich/Pumpenteich, Kleiner Riß. Diese benötigen zusätzliche eindeutige Identitätsmerkmale.

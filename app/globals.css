@@ -2942,3 +2942,12 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   .catch-history-photo { width: 100%; height: 180px; }
   .data-backup-actions { grid-template-columns: 1fr; }
 }
+
+/* Elbe-LAV-Strecken */
+.atlas-special-filter { display:flex; gap:8px; margin:10px 0 2px; }
+.atlas-special-filter button { width:100%; border:1px solid #b9c8c0; background:#fff; border-radius:12px; padding:10px 12px; font-weight:800; cursor:pointer; }
+.atlas-special-filter button.active { background:#e7f6ee; border-color:#18864b; color:#116337; }
+.elbe-permission-card { display:grid; gap:6px; margin:14px 0; padding:12px 14px; border:1px solid #bad5c7; border-radius:14px; background:#f1faf5; }
+.elbe-permission-card strong { font-size:15px; }
+.elbe-permission-card span { font-weight:800; }
+.elbe-permission-card small { line-height:1.35; }

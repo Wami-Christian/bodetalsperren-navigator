@@ -1,0 +1,3 @@
+Exact OSM-way geometry extraction from local PBF; no nearest-water-polygon fallback.
+erichsburger teich bei friedrichsbrunn -> way 35331539 -> 51.6752824,11.0669739
+bergrat-müller teich bei gernrode -> way 41416110 -> 51.6794461,11.0648109

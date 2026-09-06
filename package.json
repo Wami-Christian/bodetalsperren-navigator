@@ -15,7 +15,8 @@
     "catch:import": "node scripts/import-catch-events.mjs",
     "catch:quality": "node scripts/classify-catch-data.mjs",
     "catch:activity": "node scripts/import-catch-activity.mjs",
-    "catch:pilot": "node scripts/import-catch-activity.mjs data/catch-activity-import.csv"
+    "catch:pilot": "node scripts/import-catch-activity.mjs data/catch-activity-import.csv",
+    "geometry:cache": "node scripts/cache-waterway-geometries.mjs"
   },
   "dependencies": {
     "leaflet": "1.9.4",

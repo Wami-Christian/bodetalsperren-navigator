@@ -13013,6 +13013,33 @@ export const lavCatalog: FishingWater[] = [
     "sourceStatus": "catalog"
   },
   {
+    "id": "s-340-03-hirschteich-ballenstedt",
+    "name": "Hirschteich Ballenstedt",
+    "lavNumber": "S-340-03",
+    "district": "Harz",
+    "fish": [
+      "Forelle"
+    ],
+    "fishCodes": [
+      "Bf"
+    ],
+    "areaHa": null,
+    "notes": [
+      "Salmonidengewässer der Harzregion; Harzer-Salmoniden-Angelkarte oder Gastkarte erforderlich."
+    ],
+    "module": "LAV Sachsen-Anhalt",
+    "type": "Teich",
+    "latitude": 51.7075602,
+    "longitude": 11.2227066,
+    "rating": {
+      "Forelle": 3
+    },
+    "spots": [],
+    "parkings": [],
+    "sourceStatus": "catalog",
+    "salmonid": true
+  },
+  {
     "id": "5-450-01-luttgenbornecke-bei-bornecke",
     "name": "Lüttgenbörnecke bei Börnecke",
     "lavNumber": "5-450-01",

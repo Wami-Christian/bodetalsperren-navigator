@@ -1,0 +1,16 @@
+V14 – SAFE BATCH 2 auf Basis V13
+
+Bestehende Marker unverändert.
+
+Goethebruch Petersberg: 51.5952260, 11.9552210 | Ref-Abstand 15 m | Eindeutigkeitsabstand 1524 m | PBF ~0.58 ha
+Schweinekolk bei Niegripp: 52.2650690, 11.7550480 | Ref-Abstand 15 m | Eindeutigkeitsabstand 346 m | PBF ~0.18 ha
+Schwarze Elster von Straßenbrücke Jessen bis Einmündung des Neugrabens: 51.7872300, 12.9468300 | Ref-Abstand 22 m | Eindeutigkeitsabstand 365 m | PBF ~1.58 ha
+Parkteich in Braunsbedra: 51.2799840, 11.8804520 | Ref-Abstand 24 m | Eindeutigkeitsabstand 2013 m | PBF ~0.86 ha
+Tongrube bei Ivenrode: 52.2799510, 11.2502180 | Ref-Abstand 25 m | Eindeutigkeitsabstand 367 m | PBF ~1.53 ha
+Dorfteich Sylda: 51.6800520, 11.4199870 | Ref-Abstand 29 m | Eindeutigkeitsabstand 114 m | PBF ~0.05 ha
+Erlengrund bei Teutschenthal: 51.4598950, 11.7800980 | Ref-Abstand 30 m | Eindeutigkeitsabstand 220 m | PBF ~1.16 ha
+Griebehner Teiche bei Calbe: 51.9201570, 11.7796310 | Ref-Abstand 31 m | Eindeutigkeitsabstand 159 m | PBF ~0.93 ha
+Großer See (Bleesern) bei Seegrehna: 51.8400440, 12.5696100 | Ref-Abstand 36 m | Eindeutigkeitsabstand 596 m | PBF ~2.79 ha
+Mühlenteich Deersheim: 51.9798570, 10.7801760 | Ref-Abstand 37 m | Eindeutigkeitsabstand 74 m | PBF ~0.10 ha
+Steinbachteich Deersheim: 51.9798570, 10.7801760 | Ref-Abstand 37 m | Eindeutigkeitsabstand 74 m | PBF ~0.10 ha
+Großes Wasserloch Parey (Kühn´s Loch): 52.3900720, 11.9799410 | Ref-Abstand 38 m | Eindeutigkeitsabstand 163 m | PBF ~1.36 ha

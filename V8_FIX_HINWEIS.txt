@@ -1,0 +1,7 @@
+V8 FIX
+
+Behoben:
+Nach "pappelteich ermsleben": [51.7292278, 11.3157937]
+fehlte ein Komma. Dadurch brach TypeScript beim nächsten Objekt-Eintrag ab.
+
+Die Positionslogik selbst wurde nicht verändert.

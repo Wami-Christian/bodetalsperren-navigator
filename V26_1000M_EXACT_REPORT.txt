@@ -1,0 +1,140 @@
+V26: strict 1000 m name-match batch.
+Rule: Angelatlas/LAV reference <=1000m + normalized name match + exactly one named natural=water OSM Way.
+Marker position comes from that exact OSM Way geometry in the local Sachsen-Anhalt PBF; no nearest-polygon fallback.
+
+Exact entries written: 134
+
+pfefferteich bei salzwedel -> Pfefferteich | way 88273618 | ref distance 203m | marker 52.8514603,11.1485079
+herrenteich bei tollwitz -> Herrenteich | way 162767536 | ref distance 315m | marker 51.2774148,12.1025467
+großkaynaer see -> Großkaynaer See | way 23094600 | ref distance 292m | marker 51.2720851,11.9530766
+schachtteich milzau -> Schachtteich Milzau | way 62447108 | ref distance 388m | marker 51.3716541,11.9057310
+pappelgrund bei teutschenthal -> Pappelgrund | way 34428381 | ref distance 450m | marker 51.4595951,11.8487037
+dorfteich nauendorf -> Dorfteich Nauendorf | way 122996556 | ref distance 296m | marker 51.6020595,11.8834343
+auensee bei granschütz -> Auensee | way 4981271 | ref distance 129m | marker 51.1885094,12.0508462
+neuer teich in meineweh -> Neuer Teich | way 161568020 | ref distance 337m | marker 51.0721663,11.9934278
+hainbergsee -> Hainbergsee | way 205396214 | ref distance 325m | marker 51.0369347,12.2959388
+naturbad rehmsdorf -> Naturbad Rehmsdorf | way 58715055 | ref distance 207m | marker 51.0588620,12.2139377
+diepold -> Diepold | way 4444853 | ref distance 711m | marker 51.8359287,12.2652376
+stillinge nord -> Stillinge Nord | way 25691251 | ref distance 288m | marker 51.8532583,12.2499923
+peisker an der straße zum ot roßlau -> Peisker | way 494305731 | ref distance 350m | marker 51.8593458,12.2375591
+fährsee an der straße zum ot roßlau -> Fährsee | way 26705425 | ref distance 574m | marker 51.8662199,12.2385931
+erdkuhle bei rothensee -> Erdkuhle | way 24288359 | ref distance 107m | marker 52.1897452,11.6610608
+barleber see i -> Barleber See I | way 5235760 | ref distance 256m | marker 52.2246844,11.6581946
+baggerloch an der sülzewiese (hermeckers kiesloch) -> Baggerloch an der Sülzewiese "Hermickes Kiesloch" | way 32701478 | ref distance 75m | marker 52.1302915,11.7011119
+alte elbe bei randau/calenberge -> Alte Elbe | way 169322289 | ref distance 497m | marker 52.0634050,11.7341226
+kirchteich in neustadt -> Kirchteich | way 28192730 | ref distance 229m | marker 51.4740692,11.9359962
+bruchsee in neustadt -> Bruchsee | way 8039102 | ref distance 381m | marker 51.4834358,11.9186451
+hufeisensee in kanena -> Hufeisensee | way 164790598 | ref distance 204m | marker 51.4615269,12.0314239
+ententeich in planena -> Ententeich | way 185230626 | ref distance 102m | marker 51.4207381,11.9605635
+kleiner klietzer see -> Kleiner Klietzer See | way 102337347 | ref distance 110m | marker 52.6662622,12.0615534
+flachspuhl bei erxleben -> Flachspuhl | way 203268402 | ref distance 450m | marker 52.7460451,11.7689231
+bleichwehl bei werben/elbe -> Bleichwehl | way 204643545 | ref distance 488m | marker 52.8628989,11.9950477
+marschners loch bei werben/elbe -> Marschners Loch | way 97744186 | ref distance 503m | marker 52.8682455,11.9960576
+stadtwehl in werben/elbe -> Stadtwehl | way 204629927 | ref distance 331m | marker 52.8614999,11.9870602
+schwanenteich in stendal -> Schwanenteich | way 27046823 | ref distance 432m | marker 52.6067776,11.8677922
+fieber in stendal -> Fieber | way 310351246 | ref distance 324m | marker 52.5472396,11.7608292
+ziegeleiteich in klein schwarzlosen -> Ziegeleiteich | way 598962419 | ref distance 549m | marker 52.4852556,11.7898470
+jaeneckes teiche bei stendal -> Jaeneckes Teiche | way 27046822 | ref distance 299m | marker 52.5962038,11.8812671
+holzmühlenteich in flechtingen -> Holzmühlenteich | way 303356656 | ref distance 469m | marker 52.3117134,11.2099312
+haidteich bei bebertal -> Haidteich | way 255556415 | ref distance 413m | marker 52.2561438,11.3213091
+neuer teich in bebertal -> Neuer Teich | way 255552948 | ref distance 153m | marker 52.2504961,11.3238898
+königsee bei bebertal -> Königsee | way 173763505 | ref distance 347m | marker 52.2472057,11.3429690
+schäferteich bei hörsingen -> Schäferteich | way 25212826 | ref distance 171m | marker 52.2814850,11.1602705
+wegenstedter teich bei calvörde -> Wegenstedter Teich | way 41418456 | ref distance 493m | marker 52.3935243,11.2845611
+törner see bei bülstringen -> Törner See | way 182332044 | ref distance 274m | marker 52.3182731,11.3426267
+papenteich bei emden -> Papenteich | way 10426017 | ref distance 143m | marker 52.2346566,11.2991870
+waldsteinbruch hundisburg -> Waldsteinbruch Hundisburg | way 132470093 | ref distance 383m | marker 52.2573567,11.4080217
+priesterteich in eggenstedt -> Priesterteich | way 58123058 | ref distance 380m | marker 52.1027856,11.2341481
+bauernteich in schermke -> Bauernteich | way 93180932 | ref distance 421m | marker 52.0570013,11.2866326
+tonkuhle bei altenweddingen -> Tonkuhle | way 135694101 | ref distance 528m | marker 51.9854166,11.5037904
+moortalsee bei zielitz/farsleben -> Moortalsee | way 129211953 | ref distance 170m | marker 52.2821284,11.6709665
+alte kiesgrube (rabe) bei groß ammensleben -> Alte Kiesgrube (Rabe) | way 159693895 | ref distance 447m | marker 52.2429342,11.5458647
+jersleber see -> Jersleber See | way 6108850 | ref distance 216m | marker 52.2318441,11.5871259
+zielitzer see -> Zielitzer See | way 171891411 | ref distance 418m | marker 52.2886767,11.6868247
+döbberitz bei glindenberg -> Döbberitz | way 198258041 | ref distance 350m | marker 52.2465345,11.6880667
+steinkolk bei glindenberg -> Steinkolk | way 150030107 | ref distance 220m | marker 52.2608705,11.6943152
+daukuhle bei samswegen -> Daukuhle | way 223391246 | ref distance 576m | marker 52.2553760,11.5824151
+steinbruch dahlenwarsleben -> Steinbruch Dahlenwarsleben | way 67152293 | ref distance 372m | marker 52.1909794,11.5651126
+pfennigsee bei farsleben -> Pfennigsee | way 129211955 | ref distance 256m | marker 52.2663992,11.6720662
+zollau bei glindenberg -> Zollau | way 96746618 | ref distance 690m | marker 52.2276608,11.6955981
+fenn in möser -> Fenn | way 30082332 | ref distance 449m | marker 52.2229583,11.7872117
+schweinekolk bei niegripp -> Schweinekolk | way 96745128 | ref distance 15m | marker 52.2649055,11.7553645
+katzenkolk bei schartau -> Katzenkolk | way 176309335 | ref distance 227m | marker 52.2792477,11.7735949
+waldmühlenlanke bei parey -> Waldmühlenlanke | way 1136247588 | ref distance 193m | marker 52.3686061,11.9614512
+lübser see -> Lübser See | way 168134307 | ref distance 705m | marker 52.0125308,11.9087394
+erichsburger teich bei friedrichsbrunn -> Erichsburger Teich | way 35331539 | ref distance 518m | marker 51.6752824,11.0669739
+bergrat-müller teich bei friedrichsbrunn -> Bergrat Müller Teich | way 41416110 | ref distance 249m | marker 51.6794461,11.0648109
+neuer teich bei gernrode -> Neuer Teich | way 59572316 | ref distance 687m | marker 51.7062307,11.1051042
+kunstteich in ballenstedt -> Kunstteich | way 27940316 | ref distance 610m | marker 51.7065880,11.2386025
+großer dachsteich bei ballenstedt -> Großer Dachsteich | way 38079829 | ref distance 549m | marker 51.7138419,11.2167647
+gondelteich in friedrichsbrunn -> Gondelteich | way 26181217 | ref distance 191m | marker 51.6801191,11.0443933
+lettenloch bei könnern -> Lettenloch | way 102707955 | ref distance 340m | marker 51.6726431,11.7540934
+großer wiendorfer teich -> Großer Wiendorfer Teich | way 33972938 | ref distance 310m | marker 51.7158175,11.8230224
+taiga in gröna -> Taiga | way 126761787 | ref distance 377m | marker 51.7663253,11.7148351
+bläßsee in der aue bei altenburg -> Bläßsee | way 438832963 | ref distance 140m | marker 51.8192571,11.7703913
+saalealtarm lesewitz bei plötzkau -> Saalealtarm Lesewitz | way 128212117 | ref distance 478m | marker 51.7489348,11.7111468
+fahrt in preußlitz -> Fahrt | way 91415007 | ref distance 63m | marker 51.7302599,11.8119223
+parkteich bei brumby -> Parkteich | way 43074261 | ref distance 72m | marker 51.9002469,11.6820926
+fährlake bei grünewalde -> Fährlake | way 168964832 | ref distance 389m | marker 52.0270671,11.7447829
+röthe bei schönebeck -> Röthe | way 168428161 | ref distance 302m | marker 52.0192264,11.7715182
+norderney in schwarz -> Norderney | way 149647876 | ref distance 309m | marker 51.8821804,11.7991872
+bruch 1 bei breitenhagen -> Bruch 1 | way 95936511 | ref distance 411m | marker 51.9228717,11.9347464
+bruch 2 bei breitenhagen -> Bruch 2 | way 95936505 | ref distance 220m | marker 51.9289795,11.9277614
+bruch 3 bei breitenhagen -> Bruch 3 | way 95936496 | ref distance 403m | marker 51.9364141,11.9309806
+badebruch bei breitenhagen -> Badebruch | way 95936509 | ref distance 461m | marker 51.9222518,11.9361438
+krügersee bei breitenhagen -> Krügersee | way 23874630 | ref distance 766m | marker 51.9048427,11.9524305
+salzteich bei löderburg -> Salzteich | way 18809083 | ref distance 314m | marker 51.8818312,11.5502537
+großer schachtsee bei wolmirsleben -> Großer Schachtsee | way 19795526 | ref distance 311m | marker 51.9543535,11.4665906
+seemann bei löderburg -> Seemann | way 18809123 | ref distance 366m | marker 51.8755009,11.5513281
+laake bei löderburg -> Laake | way 18809109 | ref distance 351m | marker 51.8795292,11.5485021
+löderburger see -> Löderburger See | way 176304631 | ref distance 916m | marker 51.8800020,11.5309928
+alte mulde roitzschjora -> Alte Mulde Roitzschjora | way 53156729 | ref distance 836m | marker 51.5977444,12.4981606
+auensee bei holzweißig -> Auensee | way 38345987 | ref distance 798m | marker 51.6030084,12.3305062
+kragenteich roitzsch -> Kragenteich Roitzsch | way 41730861 | ref distance 427m | marker 51.5762853,12.2603801
+tonkiete schortewitz -> Tonkiete Schortewitz | way 112044168 | ref distance 132m | marker 51.6491735,12.0304045
+möster altes wasser -> Möster Altes Wasser | way 25692643 | ref distance 340m | marker 51.7691284,12.2931877
+niesauer stillinge -> Niesauer Stillinge | way 25697688 | ref distance 320m | marker 51.7634172,12.2958360
+hausteich in reupzig -> Hausteich | way 172064954 | ref distance 273m | marker 51.7375146,12.0689521
+zuckerteich bei osternienburg -> Zuckerteich | way 27230898 | ref distance 345m | marker 51.8113491,12.0167197
+elsdorfer sandkiete -> Elsdorfer Sandkiete | way 26986369 | ref distance 432m | marker 51.7833192,11.9644182
+magdalenenteich in aken -> Magdalenenteich | way 88365219 | ref distance 612m | marker 51.8563989,12.0365004
+bürgersee in aken -> Bürgersee | way 265841531 | ref distance 411m | marker 51.8570568,12.0739901
+betonwerkteich 3 + 4 bei gröbzig -> Betonwerkteich 3+4 | way 39531868 | ref distance 656m | marker 51.6775806,11.8929289
+schachtteich bei piethen -> Schachtteich | way 91762572 | ref distance 544m | marker 51.6799667,11.9455074
+grubenteich bei osternienburg -> Grubenteich | way 93629861 | ref distance 568m | marker 51.7995752,12.0327144
+kleine sandfürchen bei osternienburg -> Kleine Sandfürchen | way 93629837 | ref distance 897m | marker 51.7982308,12.0433367
+baggerteich bei trebbichau/aken -> Baggerteich | way 27230896 | ref distance 292m | marker 51.8175287,12.0023617
+hasenteich bei osternienburg -> Hasenteich | way 93629823 | ref distance 169m | marker 51.7984552,12.0412428
+stadionteich in köthen -> Stadionteich | way 26723579 | ref distance 254m | marker 51.7476286,11.9614105
+schulteich bei trebbichau/aken -> Schulteich | way 24586244 | ref distance 493m | marker 51.8127960,12.0139701
+gödnitzer see -> Gödnitzer See | way 168106290 | ref distance 914m | marker 51.9881642,11.9212601
+großes loch bei steutz -> Großes Loch bei Steutz | way 639913913 | ref distance 128m | marker 51.8743184,12.0765897
+pfaffensee bei steckby -> Pfaffensee | way 60844426 | ref distance 200m | marker 51.8875635,12.0316099
+großer wehl bei steutz -> Großer Wehl | way 60846850 | ref distance 379m | marker 51.8675940,12.0593332
+gänseteich in söllichau -> Gänseteich | way 106873500 | ref distance 544m | marker 51.6242390,12.6462856
+margaretenhofteich bei oranienbaum -> Margaretenhofteich | way 388193325 | ref distance 498m | marker 51.8061631,12.4029086
+talkenloch bei kakau -> Talkenloch | way 159704954 | ref distance 297m | marker 51.7997802,12.4646620
+stammhainigte bei wörlitz -> Stammhainigte | way 69673108 | ref distance 461m | marker 51.8559121,12.4309486
+schiffinge bei vockerode -> Schiffinge | way 254235028 | ref distance 429m | marker 51.8632272,12.3325283
+roter see bei rotta -> Roter See | way 14310162 | ref distance 431m | marker 51.7793858,12.5592233
+alte elbe in iserbegka bei elster -> Alte Elbe | way 484339578 | ref distance 470m | marker 51.8354402,12.7911934
+dorfteich klieken -> Dorfteich Klieken | way 30981525 | ref distance 211m | marker 51.8878568,12.3694642
+klinkerteich bei bad schmiedeberg -> Klinkerteich | way 94141600 | ref distance 564m | marker 51.6846723,12.7476721
+streitlache bei pratau -> Streitlache | way 473839068 | ref distance 165m | marker 51.8491928,12.6296611
+sandekolk bei pratau -> Sandekolk | way 59712809 | ref distance 462m | marker 51.8464896,12.6654983
+bleddiner riß -> Bleddiner Riß | way 620417506 | ref distance 200m | marker 51.7932102,12.7941971
+moschkolk bei wartenburg -> Moschkolk | way 335779684 | ref distance 506m | marker 51.8042162,12.7768474
+blaues auge bei reinharz -> Blaues Auge | way 95794348 | ref distance 208m | marker 51.6985608,12.7088246
+pfählen bei wartenburg -> Pfählen | way 1202926698 | ref distance 225m | marker 51.8006495,12.7782719
+blumenwinkel bei seegrehna -> Blumenwinkel | way 303858344 | ref distance 450m | marker 51.8535694,12.5673424
+drehkolk bei seegrehna -> Drehkolk | way 33097446 | ref distance 210m | marker 51.8512114,12.5681920
+hauskolk bei seegrehna -> Hauskolk | way 33097450 | ref distance 99m | marker 51.8491430,12.5714424
+schäferteich in stedten -> Schäferteich | way 286077015 | ref distance 433m | marker 51.4427560,11.6845099
+rüdels teich bei helfta -> Rüdels Teich | way 148959667 | ref distance 422m | marker 51.5240807,11.5612255
+tonloch bei hettstedt -> Tonloch | way 28134715 | ref distance 554m | marker 51.6353578,11.5274274
+ölgrundteich bei hettstedt -> Ölgrundteich | way 110540106 | ref distance 358m | marker 51.6672913,11.5049040
+mansfelder teich -> Mansfelder Teich | way 30280722 | ref distance 175m | marker 51.5814909,11.4316951
+melmensee bei tilleda -> Melmensee | way 220947062 | ref distance 235m | marker 51.4083964,11.1723791
+sackteich in sangerhausen -> Sackteich | way 166423311 | ref distance 415m | marker 51.4838099,11.3133666
+alte kiesgrube katharinenrieth -> Alte Kiesgrube Katharinenrieth | way 304500267 | ref distance 256m | marker 51.3975833,11.3317126
+stausee kelbra -> Stausee Kelbra | way 4598627 | ref distance 404m | marker 51.4320551,11.0213153

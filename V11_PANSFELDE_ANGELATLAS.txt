@@ -1,0 +1,4 @@
+V11: Pansfelde direkt aus den vollständigen Angelatlas-WFS-MultiPolygon-Geometrien.
+untere schwenneckestau bei pansfelde: 51.6600000, 11.2800000
+oberer teich pansfelde: 51.6600000, 11.2600000
+unterer teich pansfelde: 51.6600000, 11.2600000

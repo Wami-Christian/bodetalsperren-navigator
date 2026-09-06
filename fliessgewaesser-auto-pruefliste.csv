@@ -1,0 +1,184 @@
+﻿lavNumber;catalogName;atlasName;latitude;longitude;featureId;geometryType;status
+1-160-04;Stadtgraben in Gardelegen;Stadtgraben in Gardelegen;52.53;11.39;v_gewaesser.fid-36945e2d_19febabadac_6d23;MultiPolygon;AUTO_CANDIDATE
+1-160-06;Wilhelmskanal von Straße;Wilhelmskanal von Straße Taterebrg-Miestehorst bis Mündung in die Ohre;52.45;11.14;v_gewaesser.fid-36945e2d_19febabadac_69a0;MultiPolygon;AUTO_CANDIDATE
+1-160-14;Milde von Gardelegen-;Milde;52.61;11.39;v_gewaesser.fid-36945e2d_19febabadac_6d66;MultiPolygon;AUTO_CANDIDATE
+1-160-16;Untere Milde von Wegebrücke;Untere Milde von Wegebrücke Kahrstedt/Karritz bis Mündung in die Milde;52.7;11.48;v_gewaesser.fid-36945e2d_19febabadac_69a1;MultiPolygon;AUTO_CANDIDATE
+1-160-18;Untere Milde von Straßenbrücke;Untere Milde von Straßenbrücke Wustrewe/Zethlingen bis Winkelstedt;52.6866667;11.3266667;v_gewaesser.fid-36945e2d_19febabadac_69a2;MultiPolygon;AUTO_CANDIDATE
+1-160-20;Königsgraben vom Abschlag;Königsgraben vom Abschlag Schenkenhorst bis Mündung in die Milde;52.64;11.41;v_gewaesser.fid-36945e2d_19febabadac_69a3;MultiPolygon;AUTO_CANDIDATE
+1-160-22;Secantsgraben von Str.-Br. Kalbe/M. –;Secantsgraben von Str.-Br. Kalbe/M. – Neuendorf a. D. bis Mündung in die Milde;52.66;11.45;v_gewaesser.fid-36945e2d_19febabadac_69a4;MultiPolygon;AUTO_CANDIDATE
+1-161-01;Teich am Anglerheim (Burggraben);Teich am Anglerheim (Burggraben) in Kalbe/Milde;52.65;11.39;v_gewaesser.fid-36945e2d_19febabadac_6d32;MultiPolygon;AUTO_CANDIDATE
+1-161-02;Milde von Kalbe (Straßenbrücke);Milde von Kalbe (Straßenbrücke) bis Eimündung des Secantsgraben;52.6633334;11.4566667;v_gewaesser.fid-36945e2d_19febabadac_6dda;MultiPolygon;AUTO_CANDIDATE
+1-161-03;Untere Milde von Winkelstedt;Untere Milde von Winkelstedt bis Brücke Kahrstedt-Karritz;52.6733333;11.3533333;v_gewaesser.fid-36945e2d_19febabadac_69a7;MultiPolygon;AUTO_CANDIDATE
+1-260-03;Wasserbecken am Schlammgraben;Wasserbecken am Schlammgraben bei Kusey;52.55;11.1;v_gewaesser.fid-36945e2d_19febabadac_6a1e;MultiPolygon;AUTO_CANDIDATE
+1-260-11;Jeetze von Dorfstraße im Amt;Jeetze von Dorfstraße im Amt Dambeck bis Landesgrenze;52.8488889;11.1633333;v_gewaesser.fid-36945e2d_19febabadac_6da3;MultiPolygon;LOCKED
+1-260-14;Ohre in Steimke;Ohre in Steimke;52.58;10.98;v_gewaesser.fid-36945e2d_19febabadac_6c89;MultiPolygon;LOCKED
+1-260-15;Ohre in Jahrstedt;Ohre in Jahrstedt;52.56;10.98;v_gewaesser.fid-36945e2d_19febabadac_6c8b;MultiPolygon;LOCKED
+1-260-20;Untere Milde Cheinitz;Untere Milde Cheinitz;52.7;11.27;v_gewaesser.fid-36945e2d_19febabadac_69a5;MultiPolygon;AUTO_CANDIDATE
+1-260-22;Moorgraben Cheinitz/Brüchau;Moorgraben Cheinitz/Brüchau;52.7;11.23;v_gewaesser.fid-36945e2d_19febabadac_6d6c;MultiPolygon;AUTO_CANDIDATE
+1-380-13;Jeetze bei Dambeck;Jeetze bei Dambeck;52.79;11.16;v_gewaesser.fid-36945e2d_19febabadac_6d53;MultiPolygon;LOCKED
+1-380-16;Kalter Graben bei Wallstawe;Kalter Graben bei Wallstawe bis Mündung in die Dumme;52.8;11.0;v_gewaesser.fid-36945e2d_19febabadac_6d55;MultiPolygon;AUTO_CANDIDATE
+1-381-01;Flöt- und Mühlgraben bei Mechau;Flöt- und Mühlgraben bei Mechau;52.86;11.36;v_gewaesser.fid-36945e2d_19febabadac_6c7a;MultiPolygon;AUTO_CANDIDATE
+2-160-02;Secantsgraben von Straßenbrücke;Secantsgraben von Straßenbrücke Lindstedt/Holzhausen bis Straßenbrücke Kalbe/Neuendorf am Damm;52.61;11.48;v_gewaesser.fid-36945e2d_19febabadac_69bd;MultiPolygon;AUTO_CANDIDATE
+2-220-10;Eichenschlenke bei Havelberg;Eichenschlenke bei Havelberg;52.82;12.04;v_gewaesser.fid-36945e2d_19febabadac_6a2f;MultiPolygon;AUTO_CANDIDATE
+2-220-11;Kampierung bei Havelberg;Kampierung bei Havelberg;52.82;12.04;v_gewaesser.fid-36945e2d_19febabadac_6c7f;MultiPolygon;AUTO_CANDIDATE
+2-220-12;Große Wiesenschlenke bei Havelberg;Große Wiesenschlenke bei Havelberg;52.82;12.04;v_gewaesser.fid-36945e2d_19febabadac_6c80;MultiPolygon;AUTO_CANDIDATE
+2-220-13;Hornings Bracke bei Havelberg;Hornings Bracke bei Havelberg;52.82;12.04;v_gewaesser.fid-36945e2d_19febabadac_6cf8;MultiPolygon;AUTO_CANDIDATE
+2-220-14;Kühnsches Loch bei Havelberg;Kühnsches Loch bei Havelberg;52.82;12.04;v_gewaesser.fid-36945e2d_19febabadac_6c7e;MultiPolygon;AUTO_CANDIDATE
+2-220-15;Karpfenlöcher bei Havelberg;Karpfenlöcher bei Havelberg;52.81;12.04;v_gewaesser.fid-36945e2d_19febabadac_6cf9;MultiPolygon;AUTO_CANDIDATE
+2-220-18;Elbe km 428-431 rechtsseitig;Elbe km 428-431 rechtsseitig;52.8755555;11.9855556;v_gewaesser.fid-36945e2d_19febabadac_69be;MultiPolygon;AUTO_CANDIDATE
+2-220-20;Garzer See in Havelberg;Garzer See in Havelberg;52.75;12.21;v_gewaesser.fid-36945e2d_19febabadac_6c57;MultiPolygon;AUTO_CANDIDATE
+2-330-11;Alte Elbe und Gänsebrink;Alte Elbe und Gänsebrink Berge/Sandauer Holz;52.81;11.99;v_gewaesser.fid-36945e2d_19febabadac_6a37;MultiPolygon;AUTO_CANDIDATE
+2-330-12;Binnengewässer links der Elbe;Binnengewässer links der Elbe bei Pappelhagen;52.95;11.81;v_gewaesser.fid-36945e2d_19febabadac_6c7c;MultiPolygon;AUTO_CANDIDATE
+2-330-14;Elbe von km 428 - 454 linksseitig;Elbe von km 428 - 454;52.908;11.882;v_gewaesser.fid-36945e2d_19febabadac_69bf;MultiPolygon;AUTO_CANDIDATE
+2-330-29;Bodenentnahmestelle Losenrade 1;Bodenentnahmestelle Losenrade 1;52.96;11.77;v_gewaesser.fid-36945e2d_19febabadac_6c73;MultiPolygon;AUTO_CANDIDATE
+2-330-30;Bodenentnahmestelle Krüden;Bodenentnahmestelle Krüden;52.95;11.69;v_gewaesser.fid-36945e2d_19febabadac_6c74;MultiPolygon;AUTO_CANDIDATE
+2-332-01;Milde/Biese von Einmündung des;Milde/Biese von Einmündung des Secantsgrabens (bei Butterhorst) bis Einmündung des Augrabens (b. Gladigau);52.73;11.52;v_gewaesser.fid-36945e2d_19febabadac_6d1f;MultiPolygon;AUTO_CANDIDATE
+2-334-01;Bleichwehl bei Werben/Elbe;Bleichwehl bei Werben/Elbe;52.86;12.0;v_gewaesser.fid-36945e2d_19febabadac_6a3d;MultiPolygon;AUTO_CANDIDATE
+2-334-02;Marschners Loch bei Werben/Elbe;Marschners Loch bei Werben/Elbe;52.87;12.0;v_gewaesser.fid-36945e2d_19febabadac_6a3e;MultiPolygon;AUTO_CANDIDATE
+2-420-08;Elbe km 392 - 402 linksseitig;Elbe km 392 - 402;52.6238889;12.0061111;v_gewaesser.fid-36945e2d_19febabadac_69c7;MultiPolygon;AUTO_CANDIDATE
+2-421-01;Dollgraben;Dollgraben;52.45;11.79;v_gewaesser.fid-36945e2d_19febabadac_69c8;MultiPolygon;AUTO_CANDIDATE
+2-421-11;Elbe km 372, 4 – km 378 linksseitig;Elbe km 372, 4 - km 378 linksseitig;52.425;11.985;v_gewaesser.fid-36945e2d_19febabadac_69ca;MultiPolygon;AUTO_CANDIDATE
+2-422-12;Elbe km 386-392 beidseitig, km 391-392;Elbe km 386-392 beidseitig;52.5533333;11.9813333;v_gewaesser.fid-36945e2d_19febabadac_69cb;MultiPolygon;AUTO_CANDIDATE
+3-200-08;Mühlenteich Bodendorf bei Süplingen;Mühlenteich Bodendorf bei Süplingen;52.29;11.29;v_gewaesser.fid-36945e2d_19febabadac_6a5b;MultiPolygon;AUTO_CANDIDATE
+3-200-13;Hofteich Bodendorf;Hofteich Bodendorf;52.29;11.29;v_gewaesser.fid-36945e2d_19febabadac_6a5c;MultiPolygon;AUTO_CANDIDATE
+3-200-33;Mittelllandkanal Bereich;Mittelllandkanal Bereich Haldensleben;52.3213333;11.3606667;v_gewaesser.fid-36945e2d_19febabadac_69d0;MultiPolygon;AUTO_CANDIDATE
+3-200-34;Ohre von Straßenbrücke Calvörde;Ohre von Straßenbrücke Calvörde bis Vahlsdorfer Brücke;52.3116667;11.4;v_gewaesser.fid-36945e2d_19febabadac_6dd2;MultiPolygon;LOCKED
+3-261-01;Mittellandkanal Bereich Oebisfelde;Mittellandkanal Bereich Oebisfelde;52.4448718;11.1184615;v_gewaesser.fid-36945e2d_19febabadac_69d9;MultiPolygon;AUTO_CANDIDATE
+3-261-05;Landgraben bei Oebisfelde;Landgraben bei Oebisfelde;52.41;11.0;v_gewaesser.fid-36945e2d_19febabadac_69db;MultiPolygon;AUTO_CANDIDATE
+3-430-08;Bode von Einmündung des Mühl-;Bode von Einmündung des Mühlgrabens an der Bodebrücke Hadmersleben bis Wehr Egeln-Nord (Oberwasser);51.99;11.38;v_gewaesser.fid-36945e2d_19febabadac_69cd;MultiPolygon;LOCKED
+3-470-06;Mittellandkanal Bereich Wolmirstedt;Mittellandkanal Bereich Wolmirstedt;52.23;11.57;v_gewaesser.fid-36945e2d_19febabadac_69dc;MultiPolygon;AUTO_CANDIDATE
+3-470-17;Ohre von Vahldorfer Brücke bis;Ohre von Vahldorfer Brücke bis Ortsgrenze Wolmirstedt;52.26;11.55;v_gewaesser.fid-36945e2d_19febabadac_69dd;MultiPolygon;LOCKED
+3-470-26;Ohre von Wolmirstedt bis Elbmündung;Ohre von Wolmirstedt bis Elbmündung;52.2933333;11.7133333;v_gewaesser.fid-36945e2d_19febabadac_69de;MultiPolygon;LOCKED
+3-470-27;Mittellandkanal km 320, 10 – 321, 10;Mittellandkanal km 320,10 – km 321,10;52.23;11.68;v_gewaesser.fid-36945e2d_19febabadac_69df;MultiPolygon;LOCKED
+3-472-05;Ohre Stadgebiet Wolmirstedt;Ohre Stadgebiet Wolmirstedt;52.25;11.62;v_gewaesser.fid-36945e2d_19febabadac_6a98;MultiPolygon;LOCKED
+4-130-01;Alte Elbe Lostau;Alte Elbe Lostau;52.2066667;11.7266667;v_gewaesser.fid-36945e2d_19febabadac_6a99;MultiPolygon;AUTO_CANDIDATE
+4-130-15;Elbe-Havel-Kanal km 326, 67- km 344;Elbe-Havel-Kanal km326, 67-km344;52.2833333;11.8446667;v_gewaesser.fid-36945e2d_19febabadac_69e0;MultiPolygon;LOCKED
+4-130-18;Elbe km 334-350 beidseitig;Elbe km 334-350 beidseitig;52.2690476;11.7380952;v_gewaesser.fid-36945e2d_19febabadac_69e1;MultiPolygon;AUTO_CANDIDATE
+4-130-24;Niegripper Verbindungskanal;Niegripper Verbindungskanal von km 0, 95 - km 1, 60;52.25;11.73;v_gewaesser.fid-36945e2d_19febabadac_69e6;MultiPolygon;AUTO_CANDIDATE
+4-130-31;Alte Elbe bei Niegripp;Alte Elbe bei Niegripp;52.29;11.77;v_gewaesser.fid-36945e2d_19febabadac_6d6a;MultiPolygon;AUTO_CANDIDATE
+4-130-32;Niegripper Altkanal (Teilfläche);Niegripper Altkanal;52.2733333;11.7933333;v_gewaesser.fid-36945e2d_19febabadac_6a14;MultiPolygon;AUTO_CANDIDATE
+4-130-36;Mittellandkanal km 322,82 - km 324,46 A, Bl, K, Pl, Z 5,31 Nordufer;Mittellandkanal km 322,82-km 324,6 nur Nordufer;52.2366667;11.7233333;v_gewaesser.fid-36945e2d_19febabadac_6e46;MultiPolygon;LOCKED
+4-170-01;Lehmkuhlengraben bei Parchen;Lehmkuhlengraben bei Parchen;52.36;12.06;v_gewaesser.fid-36945e2d_19febabadac_69e7;MultiPolygon;AUTO_CANDIDATE
+4-170-04;Mühlengraben bei Mützel;Mühlengraben bei Mützel;52.39;12.17;v_gewaesser.fid-36945e2d_19febabadac_69e8;MultiPolygon;AUTO_CANDIDATE
+4-170-08;Altenplatower-Altkanal;Altenplatower-Altkanal km 360 - km 361, 5;52.42;12.13;v_gewaesser.fid-36945e2d_19febabadac_69e9;MultiPolygon;AUTO_CANDIDATE
+4-170-09;Roßdorfer Altkanal km 0, 0 bis;Roßdorfer Altkanal km 0, 0 bis Brücke Dunkelforth (B1) am Nordufer;52.42;12.2;v_gewaesser.fid-36945e2d_19febabadac_69ea;MultiPolygon;AUTO_CANDIDATE
+4-170-12;Torschiffahrtskanal vom Wehr Mützel bis A, B, Bl, H, Pl, Qu 3,00 zur Mündung in den Fiener Haupvorfluter;Torschiffahrtskanal vom Wehr Mützel bis zur Mündung in den Fiener Haupvorfluter;52.37;12.18;v_gewaesser.fid-36945e2d_19febabadac_69ec;MultiPolygon;AUTO_CANDIDATE
+4-170-14;Hauptstremme vom Roßdorfer Altkanal A, B, Bl, H, Pl, S 8,00 bis zur Einmündung des Galmer Grabens;Hauptstremme vom Roßdorfer Altkanal bis zur Einmündung des Galmer Grabens;52.48;12.25;v_gewaesser.fid-36945e2d_19febabadac_69ed;MultiPolygon;AUTO_CANDIDATE
+4-170-15;Schlagenthiner Stremme vom Roßdorfer A, B, Bl, H, Pl, S 7,00 Altkanal bis zur Hauptstremme;Schlagenthiner Stremme vom Roßdorfer Altkanal bis zur Hauptstremme;52.45;12.25;v_gewaesser.fid-36945e2d_19febabadac_69ee;MultiPolygon;AUTO_CANDIDATE
+4-170-16;Elbe-Havel-Kanal von km 360 bis 364, 5 A, B, Bl, H, K, 71,92 (Brücke B1 Ortsausgang Genthin) und;Elbe-Havel-Kanal von km 360 bis 364, 5 (Brücke B1 Ortsausgang Genthin) und von km 365, 7 (Einmündung Neuer Graben) bis km 372, 8;52.4;12.21;v_gewaesser.fid-36945e2d_19febabadac_69ef;MultiPolygon;LOCKED
+4-171-03;Mühlenlanke-Herrenseegraben bei Parey;Mühlenlanke-Herrenseegraben bei Parey;52.37;11.96;v_gewaesser.fid-36945e2d_19febabadac_6c83;MultiPolygon;AUTO_CANDIDATE
+4-171-05;Alte Elbe mit Tunnel und;Alte Elbe mit Tunnel und Königsdamm bei Parey;52.38;11.95;v_gewaesser.fid-36945e2d_19febabadac_6d31;MultiPolygon;AUTO_CANDIDATE
+4-171-12;Baggerelbe bei Derben;Baggerelbe bei Derben;52.42;11.99;v_gewaesser.fid-36945e2d_19febabadac_6dea;MultiPolygon;AUTO_CANDIDATE
+4-171-14;Stromelbe von km 372,4;Stromelbe von km 372, 4 bis km 378 bei Derben rechtsseitg;52.435;11.995;v_gewaesser.fid-36945e2d_19febabadac_69f1;MultiPolygon;AUTO_CANDIDATE
+4-171-15;Pareyer Verbindungskanal;Pareyer Verbindungskanal von km 0, 0, bis km 3, 54;52.4033333;11.9733333;v_gewaesser.fid-36945e2d_19febabadac_69ce;MultiPolygon;AUTO_CANDIDATE
+4-171-21;Erdegraben bei Parey;Erdegraben bei Parey;52.4;11.95;v_gewaesser.fid-36945e2d_19febabadac_69f5;MultiPolygon;AUTO_CANDIDATE
+4-171-26;Elbe-Havel-Kanal von km 344 bis km 353;Elbe-Havel-Kanal von km 344 bis km 353;52.3666667;11.99;v_gewaesser.fid-36945e2d_19febabadac_69d4;MultiPolygon;LOCKED
+4-172-01;Elbe-Havel-Kanal von km 364,5;Elbe-Havel-Kanal von km 364, 5 (Brücke B1 Ortsausgang Genthin bis km 365, 7 (Einmündung Neuer Graben);52.4033333;12.1933333;v_gewaesser.fid-36945e2d_19febabadac_69f6;MultiPolygon;LOCKED
+4-172-03;Roßdorfer Altkanal von;Roßdorfer Altkanal von Brücke Dunkelforth (B1) bis zur Einmündung in den EHK;52.41;12.23;v_gewaesser.fid-36945e2d_19febabadac_69f7;MultiPolygon;AUTO_CANDIDATE
+4-173-01;Bergzower Altkanal vom Abzweig;Bergzower Altkanal vom Abzweig H-Kanal km 355, 15 Südufer;52.41;12.05;v_gewaesser.fid-36945e2d_19febabadac_69f8;MultiPolygon;AUTO_CANDIDATE
+4-173-02;Elbe-Havel-Kanal von km 353 - km 360;Elbe-Havel-Kanal von km 353 bis km 360;52.41;12.07;v_gewaesser.fid-36945e2d_19febabadac_6d01;MultiPolygon;LOCKED
+5-190-03;Bode vom Einlauf des Goldbaches;Bode vom Einlauf des Goldbaches bis Straßenbrücke Deesdorf;51.91;11.18;v_gewaesser.fid-36945e2d_19febabadac_69f9;MultiPolygon;LOCKED
+5-190-06;Großer Graben vom Zusammenfluss;Großer Graben vom Zusammenfluss Schiffgraben und Aue bis zur Straßenbrücke zwischen Aderstedt und Gunsleben;52.06;10.89;v_gewaesser.fid-36945e2d_19febabadac_69fa;MultiPolygon;AUTO_CANDIDATE
+5-340-06;Hauptseegraben von Kreisgrenze;Hauptseegraben von Kreisgrenze Salzlandkreis bis Mündung in die Selke;51.83;11.28;v_gewaesser.fid-36945e2d_19febabadac_69fe;MultiPolygon;AUTO_CANDIDATE
+5-340-09;Bode vom Einlauf des Quarmbaches;Bode vom Einlauf des Quarmbaches bis zur Selkemündung bei Rodersdorf;51.7966667;11.1633333;v_gewaesser.fid-36945e2d_19febabadac_69fd;MultiPolygon;LOCKED
+5-340-13;Selke von Kreisgrenze;Selke von Kreisgrenze Salzlandkreis bis Mündung in Bode;51.85;11.25;v_gewaesser.fid-36945e2d_19febabadac_69ff;MultiPolygon;LOCKED
+5-340-20;Mühlgraben Thale 0,25;;;;;;UNMATCHED
+6-100-07;Hauptseegraben von Einmündung;Hauptseegraben von Einmündung des Grabens aus Wilsleben bis Tagebaurestloch Königsaue;51.7966667;11.4;v_gewaesser.fid-36945e2d_19febabadac_6e47;MultiPolygon;AUTO_CANDIDATE
+6-110-12;Saalealtarm zwischen Plötzkau;Saalealtarm zwischen Plötzkau und Großwirschleben;51.74;11.7;v_gewaesser.fid-36945e2d_19febabadac_6aea;MultiPolygon;AUTO_CANDIDATE
+6-110-13;Saalealtarm Aderstedt;Saalealtarm Aderstedt;51.78;11.7;v_gewaesser.fid-36945e2d_19febabadac_6ae7;MultiPolygon;AUTO_CANDIDATE
+6-110-14;Saale von Kreisgrenze Saalekreis bis;Saale im Altkreis Bernburg;51.725;11.7283333;v_gewaesser.fid-36945e2d_19febabadac_6af0;MultiPolygon;LOCKED
+6-110-17;Saalealtarm Gnölbzig;Saalealtarm Gnölbzig;51.6733333;11.7233333;v_gewaesser.fid-36945e2d_19febabadac_6aed;MultiPolygon;AUTO_CANDIDATE
+6-110-18;Fuhne vom Viadukt bei Kleinwirschleben A, B, Bl, H, K, Pl, Ro 4,00 bis Mündung in die Saale;Fuhne vom Viadukt bei Kleinwirschleben bis Mündung in die Saale;51.7766667;11.7766667;v_gewaesser.fid-36945e2d_19febabadac_6a00;MultiPolygon;LOCKED
+6-111-04;Bode vom Beginn des Mühlgrabens;Bode;51.83;11.73;v_gewaesser.fid-36945e2d_19febabadac_6d7a;MultiPolygon;LOCKED
+6-111-05;Saalealtarm Nienburg;Saalealtarm Nienburg;51.84;11.79;v_gewaesser.fid-36945e2d_19febabadac_6afa;MultiPolygon;AUTO_CANDIDATE
+6-111-13;Saale von Einmündung der Fuhne bis;Saale von Fuhnemündung bis Ortslage Wispitz;51.865;11.765;v_gewaesser.fid-36945e2d_19febabadac_69f0;MultiPolygon;LOCKED
+6-112-03;Saalealtarm Lesewitz bei Plötzkau;Saalealtarm Lesewitz bei Plötzkau;51.75;11.7;v_gewaesser.fid-36945e2d_19febabadac_6afb;MultiPolygon;AUTO_CANDIDATE
+6-400-20;Saale im Altkreis Schönebeck;Saale im Altkreis Schönebeck;51.9088889;11.8244444;v_gewaesser.fid-36945e2d_19febabadac_6a02;MultiPolygon;LOCKED
+6-400-22;Elbe von km 305 - km 320 beidseitig;Elbe von km 305-320 beidseitig;52.0316667;11.735;v_gewaesser.fid-36945e2d_19febabadac_6a03;MultiPolygon;AUTO_CANDIDATE
+6-400-24;Saalealtarm Tippelskirchen;Saalealtarm Tippelskirchen von km 22,2 - 23,3;51.89;11.78;v_gewaesser.fid-36945e2d_19febabadac_6b0d;MultiPolygon;AUTO_CANDIDATE
+6-400-30;Küchenpfuhl Elbenau;Küchenpfuhl Elbenau;52.04;11.76;v_gewaesser.fid-36945e2d_19febabadac_6c9f;MultiPolygon;AUTO_CANDIDATE
+6-400-33;Stilles Wasser Elbenau;Stilles Wasser Elbenau;52.05;11.75;v_gewaesser.fid-36945e2d_19febabadac_6c9e;MultiPolygon;AUTO_CANDIDATE
+6-400-35;Elbealtarm Grünewalde;Elbealtarm Grünewalde;52.03;11.73;v_gewaesser.fid-36945e2d_19febabadac_6b14;MultiPolygon;AUTO_CANDIDATE
+6-400-41;Salinekanal Schönebeck;Salinekanal Schönebeck;52.02;11.75;v_gewaesser.fid-36945e2d_19febabadac_6a01;MultiPolygon;AUTO_CANDIDATE
+6-400-45;Götzenthiegraben;Götzenthiegraben;52.0;11.73;v_gewaesser.fid-36945e2d_19febabadac_6ce5;MultiPolygon;AUTO_CANDIDATE
+6-401-08;Landgraben von Einmündung des;Landgraben von Einmündung des Laufgrabens bis zur Mündung in die Taube;51.8966667;11.8933333;v_gewaesser.fid-36945e2d_19febabadac_6a04;MultiPolygon;AUTO_CANDIDATE
+6-402-02;Barbyer Landgraben von;Barbyer Landgraben von Bahnhofsstraße bis Mündung in die Elbe;51.99;11.87;v_gewaesser.fid-36945e2d_19febabadac_6a06;MultiPolygon;AUTO_CANDIDATE
+6-402-07;Saale von Werkleitz bis Elbmündung;;;;;;LOCKED
+6-410-14;Bode vom Wehr Egeln-Nord;Bode vom Wehr Egeln-Nord (Unterwasser) bis zur Stappenbrücke Wolmirsleben;51.95;11.46;v_gewaesser.fid-36945e2d_19febabadac_6a07;MultiPolygon;LOCKED
+6-410-15;Bode vom Wehr Rothenförde;Bode vom Wehr Rothenförde (Unterwasser) bis Mühlengraben Neugattersleben;51.9033333;11.5266667;v_gewaesser.fid-36945e2d_19febabadac_6e11;MultiPolygon;LOCKED
+6-410-19;Mühlgraben von Egeln-Nord;Mühlgraben von Egeln-Nord bis zur Gemarkungsgrenze Egeln/Tarthun;51.94;11.44;v_gewaesser.fid-36945e2d_19febabadac_69b5;MultiPolygon;AUTO_CANDIDATE
+7-120-01;Alte Mulde bei Rösa;Alte Mulde bei Rösa;51.61;12.53;v_gewaesser.fid-36945e2d_19febabadac_6e23;MultiPolygon;AUTO_CANDIDATE
+7-120-04;Alte Mulde Roitzschjora;Alte Mulde Roitzschjora;51.59;12.49;v_gewaesser.fid-36945e2d_19febabadac_6d2b;MultiPolygon;AUTO_CANDIDATE
+7-120-06;Unterer Ziegeleiteich Muldenstein;Unterer Ziegeleiteich Muldenstein;51.66;12.34;v_gewaesser.fid-36945e2d_19febabadac_6e2f;MultiPolygon;AUTO_CANDIDATE
+7-120-13;Muldestausee;Muldestausee;51.6419608;12.4013725;v_gewaesser.fid-36945e2d_19febabadac_6ddc;MultiPolygon;AUTO_CANDIDATE
+7-120-19;Lober-Leine-Kanal;Lober-Leine-Kanal;51.59;12.41;v_gewaesser.fid-36945e2d_19febabadac_6a08;MultiPolygon;AUTO_CANDIDATE
+7-120-21;Mulde v. Landesgr. Sachsen bis Stausee,;Mulde v. Landesgr. Sachsen bis Stausee;51.6058333;12.4608333;v_gewaesser.fid-36945e2d_19febabadac_6de9;MultiPolygon;LOCKED
+7-120-22;Mulde von ca. 750m oberhalb Wehr;Mulde von ca. 750m oberhalb Wehr Jeßnitz bis Einmündung Mühlgraben;51.68;12.32;v_gewaesser.fid-36945e2d_19febabadac_6a09;MultiPolygon;LOCKED
+7-120-23;Mulde von ca. 500m oberhalb Brücke;Mulde von ca. 500m oberhalb Brücke bis Brücke Raghun;51.71;12.3;v_gewaesser.fid-36945e2d_19febabadac_6e0e;MultiPolygon;LOCKED
+7-120-32;Luthers Linde Muldenstein;Luthers Linde Muldenstein;51.67;12.34;v_gewaesser.fid-36945e2d_19febabadac_6cb7;MultiPolygon;AUTO_CANDIDATE
+7-120-34;Alte Mulde in Friedersdorf;Alte Mulde in Friedersdorf;51.645;12.345;v_gewaesser.fid-36945e2d_19febabadac_6d7f;MultiPolygon;AUTO_CANDIDATE
+7-400-01;Alte Elbe bei Dornburg;Alte Elbe bei Dornburg/Elbumflut von Alte Fähre bis Einmündung neue Ehle;52.05;11.8;v_gewaesser.fid-36945e2d_19febabadac_6d58;MultiPolygon;AUTO_CANDIDATE
+8-183-02;Elbe von km 244, 5 - km 248, 3 linksseitig;Elbe von km 244,5-248,3 linksseitig;51.8666667;12.3366667;v_gewaesser.fid-36945e2d_19febabadac_6a0c;MultiPolygon;AUTO_CANDIDATE
+8-183-06;Alter Graben Wörlitz;Alter Graben Wörlitz;51.84;12.45;v_gewaesser.fid-36945e2d_19febabadac_6d34;MultiPolygon;AUTO_CANDIDATE
+8-183-07;Am Fließgraben-Diestelsee bei Wörlitz;Am Fließgraben-Diestelsee bei Wörlitz;51.85;12.43;v_gewaesser.fid-36945e2d_19febabadac_6d35;MultiPolygon;AUTO_CANDIDATE
+8-183-08;Fuhrtgraben bei Wörlitz;Fuhrtgraben bei Wörlitz;51.84;12.41;v_gewaesser.fid-36945e2d_19febabadac_6d36;MultiPolygon;AUTO_CANDIDATE
+8-183-13;Kapengraben von ehem. B107 bis zur;Kapengraben von ehem. B107 bis zur Straßenbrücke Waldersee-Vockerode;51.8166667;12.4066667;v_gewaesser.fid-36945e2d_19febabadac_6a0d;MultiPolygon;AUTO_CANDIDATE
+8-183-14;Fließgraben von Straßenbrücke;Fließgraben;51.8566667;12.4133333;v_gewaesser.fid-36945e2d_19febabadac_6a0e;MultiPolygon;AUTO_CANDIDATE
+8-183-16;Hauptgraben von Wörlitz bis Kakau;Hauptgraben von Wörlitz bis Kakau;51.83;12.45;v_gewaesser.fid-36945e2d_19febabadac_6d38;MultiPolygon;AUTO_CANDIDATE
+8-250-06;Schweinitzer Fließ von Landesgrenze bis A, B, Bl, H, Pl, Ro, S 9,50 Einlauf Morgengraben bei Zwuschen/Dixförda;Schweinitzer Fließ von Landesgrenze bis Einlauf Morgengraben bei Zwuschen/Dixförda;51.8133333;13.0666667;v_gewaesser.fid-36945e2d_19febabadac_6a0f;MultiPolygon;AUTO_CANDIDATE
+8-250-12;Neugraben von Landesgrenze bis;Neugraben von Landesgrenze bis Mündung in die Schwarze Elster;51.74;13.03;v_gewaesser.fid-36945e2d_19febabadac_6da8;MultiPolygon;AUTO_CANDIDATE
+8-250-13;Landlache vom Plossiger Graben bis;Landlache vom Plossiger Graben bis Mündung in die Schwarze Elster;51.74;12.93;v_gewaesser.fid-36945e2d_19febabadac_6a15;MultiPolygon;AUTO_CANDIDATE
+8-251-01;Kiestagebau Elbekies bei Prettin;Kiestagebau Elbekies bei Prettin;51.675;12.885;v_gewaesser.fid-36945e2d_19febabadac_6d3c;MultiPolygon;AUTO_CANDIDATE
+8-251-03;Elbe km 168, 2 - km 182, 0 rechtss.;Elbe km 168,2-182,0;51.6666667;12.8966667;v_gewaesser.fid-36945e2d_19febabadac_69d5;MultiPolygon;AUTO_CANDIDATE
+8-252-01;Alte Elbe in Iserbegka bei Elster;Alte Elbe in Iserbegka bei Elster;51.84;12.79;v_gewaesser.fid-36945e2d_19febabadac_6b84;MultiPolygon;AUTO_CANDIDATE
+8-460-02;Brauteich, Schloßgraben und;Brauteich, Schloßgraben und Dorfteich in Kropstädt;51.96;12.74;v_gewaesser.fid-36945e2d_19febabadac_6d60;MultiPolygon;AUTO_CANDIDATE
+8-460-22;1. Brücke, Graben zum großen Loch;1. Brücke, Graben zum großen Loch;51.85;12.64;v_gewaesser.fid-36945e2d_19febabadac_6caa;MultiPolygon;AUTO_CANDIDATE
+8-460-25;Streng (Alte Elbe Bleesern) bei Seegrehna;Streng (Alte Elbe Bleesern) bei Seegrehna;51.85;12.55;v_gewaesser.fid-36945e2d_19febabadac_6cfb;MultiPolygon;AUTO_CANDIDATE
+8-460-38;Fließgraben vom Wachsdorfer;Fließgraben vom Wachsdorfer Wehr bis Kreisgrenze;51.82;12.58;v_gewaesser.fid-36945e2d_19febabadac_6a16;MultiPolygon;AUTO_CANDIDATE
+8-460-41;Tiefe Lache mit Graben und Loch;Tiefe Lache mit Graben und Loch bei Seegrehna;51.86;12.53;v_gewaesser.fid-36945e2d_19febabadac_6ba3;MultiPolygon;AUTO_CANDIDATE
+8-460-42;Krummer See (Bodemar) bei Seegrehna;Krummer See (Bodemar) bei Seegrehna;51.85;12.55;v_gewaesser.fid-36945e2d_19febabadac_6ba4;MultiPolygon;AUTO_CANDIDATE
+8-460-53;Alte Elbe Merschwitz;Alte Elbe Merschwitz;51.73;12.79;v_gewaesser.fid-36945e2d_19febabadac_6bae;MultiPolygon;AUTO_CANDIDATE
+8-460-56;Booser Graben vom Booser Riß zur Elbe;;;;;;UNMATCHED
+9-150-15;Mittelgraben v. Stollengraben bis;Mittelgraben v. Stollengraben bis Schöpfwerk Wansleben;51.4766667;11.7333333;v_gewaesser.fid-36945e2d_19febabadac_6a17;MultiPolygon;AUTO_CANDIDATE
+9-150-17;Südlicher Ringkanal von;Südlicher Ringkanal von Einleitstelle Romonta zwischen Unterröblingen und Amsdorf bis zur Salza;51.48;11.74;v_gewaesser.fid-36945e2d_19febabadac_6ddf;MultiPolygon;AUTO_CANDIDATE
+9-390-04;Toter Arm „Eichgraben“ bei Wallhausen;Toter Arm „Eichgraben“ bei Wallhausen;51.45;11.21;v_gewaesser.fid-36945e2d_19febabadac_6cf3;MultiPolygon;AUTO_CANDIDATE
+9-390-17;Mühlgraben vom Wehr Hornissenberg;Mühlgraben vom Wehr Hornissenberg bis Einmündung in die Helme;51.46;11.07;v_gewaesser.fid-36945e2d_19febabadac_6a18;MultiPolygon;AUTO_CANDIDATE
+10-210-09;Mühlgraben von Saalealtarm Hohen-;Mühlgraben;51.43;11.92;v_gewaesser.fid-36945e2d_19febabadac_6de6;MultiPolygon;AUTO_CANDIDATE
+10-290-13;Saale-Leipzig-Kanal;Saale-Leipzig-Kanal Km 7,55-7,71/8,53-10,48/10,83-10,95/11,08-11,21;51.35;12.16;v_gewaesser.fid-36945e2d_19febabadac_69ac;MultiPolygon;AUTO_CANDIDATE
+10-290-14;Saale im Altkreis Merseburg;Saale im Altkreis Merseburg (Oberwasser Wehr Bad Dürrenberg bis Straßenbrücke B91);51.3616667;12.0125;v_gewaesser.fid-36945e2d_19febabadac_69a9;MultiPolygon;LOCKED
+10-290-16;Kanal Wüsteneutsch km 1, 32 - 1, 62;Kanal Wüsteneutsch km 1,32 - 1,62;51.33;12.07;v_gewaesser.fid-36945e2d_19febabadac_69a6;MultiPolygon;AUTO_CANDIDATE
+10-290-25;Umgehungskanal Merseburg;Umgehungskanal Merseburg;51.36;12.01;v_gewaesser.fid-36945e2d_19febabadac_6e27;MultiPolygon;AUTO_CANDIDATE
+10-290-26;Saalealtarm Leuna;Saalealtarm Leuna;51.33;12.03;v_gewaesser.fid-36945e2d_19febabadac_6e03;MultiPolygon;AUTO_CANDIDATE
+10-370-17;Saale vom Trompeterfelsen;Saale vom Trompeterfelsen zwischen Halle und Brachwitz bis zur Kreisgrenze Salzlandkreis;51.567619;11.8309524;v_gewaesser.fid-36945e2d_19febabadac_69b3;MultiPolygon;LOCKED
+10-370-20;Saalealtarm Dobis – NSG beachten-;Saalealtarm Dobis;51.62;11.75;v_gewaesser.fid-36945e2d_19febabadac_6bfb;MultiPolygon;AUTO_CANDIDATE
+10-370-27;Saalealtarm Stollen Wettin;Saalealtarm Stollen Wettin;51.6;11.77;v_gewaesser.fid-36945e2d_19febabadac_6bff;MultiPolygon;AUTO_CANDIDATE
+10-370-45;Teich am Rodelberg;Teich am Rodelberg;51.5;12.17;v_gewaesser.fid-36945e2d_19febabadac_6c0b;MultiPolygon;AUTO_CANDIDATE
+11-300-06;Saale von Landesgrenze Thüringen;Saale von Landesgrenze Thüringen bis Eisenbahnbrücke bei Eulau;51.1583333;11.8116667;v_gewaesser.fid-36945e2d_19febabadac_69b0;MultiPolygon;LOCKED
+11-300-07;Kl. Saale v. Bad Kösen b. Almrich;Kl. Saale v. Bad Kösen b. Almrich;51.14;11.75;v_gewaesser.fid-36945e2d_19febabadac_6e30;MultiPolygon;AUTO_CANDIDATE
+11-310-01;Unstrutaltarm bei Memleben/;Unstrutaltarm bei MemlebenWendelstein;51.28;11.46;v_gewaesser.fid-36945e2d_19febabadac_6c16;MultiPolygon;AUTO_CANDIDATE
+11-310-03;Restarm der Unstrut unter der Katzel;Restarm der Unstrut unter der Katzel bei Reinsdorf;51.29;11.61;v_gewaesser.fid-36945e2d_19febabadac_6ced;MultiPolygon;AUTO_CANDIDATE
+11-310-04;Unstrutflutkanal von Landesgrenze;Unstrutflutkanal von Landesgrenze bis Mündung in die Unstrut;51.27;11.46;v_gewaesser.fid-36945e2d_19febabadac_69b6;MultiPolygon;AUTO_CANDIDATE
+11-310-05;Unstrut von Landesgrenze Thüringen;Unstrut von Landesgrenze bis zur Mündung in die Saale;51.2344444;11.6577778;v_gewaesser.fid-36945e2d_19febabadac_6e31;MultiPolygon;LOCKED
+11-440-02;Saale von Eisenbahnbrücke bei Eulau;Saale von Eisenbahnbrücke bei Eulau bis Kleinkorbetha beidseitig und von Kleinkorbetha bis Einlauf Schleusengraben Bad Dürrenberg rechtsseitig;51.2322222;11.9944444;v_gewaesser.fid-36945e2d_19febabadac_69f3;MultiPolygon;LOCKED
+11-440-05;Alter Saalearm Uichteritz;Alter Saalearm Uichteritz;51.2;11.92;v_gewaesser.fid-36945e2d_19febabadac_6c19;MultiPolygon;AUTO_CANDIDATE
+11-443-01;Saale von Kleinkorbetha bis Einlauf;Alte Saale Tebnitz;51.27;12.04;v_gewaesser.fid-36945e2d_19febabadac_6c1a;MultiPolygon;LOCKED
+11-443-02;Alte Saale Tebnitz – NSG beachten!;Saale von Kleinkorbetha bis Einlauf Schleusengraben Bad Dürrenberg linksseitig;51.27;12.05;v_gewaesser.fid-36945e2d_19febabadac_6d82;MultiPolygon;AUTO_CANDIDATE
+11-480-14;Elstermühlgraben Elsteraue;Elstermühlgraben Elsteraue;51.08;12.18;v_gewaesser.fid-36945e2d_19febabadac_69bb;MultiPolygon;AUTO_CANDIDATE
+11-480-15;Elstermühlgraben Zeitz;Elstermühlgraben Zeitz;51.05;12.13;v_gewaesser.fid-36945e2d_19febabadac_6e4d;MultiPolygon;AUTO_CANDIDATE
+11-480-17;Elstermühlgraben;Elstermühlgraben Rossner Wehr/Obermühle;51.04;12.11;v_gewaesser.fid-36945e2d_19febabadac_6d83;MultiPolygon;AUTO_CANDIDATE
+11-482-02;Mühlgraben Wetterzeube;Mühlgraben Wetterzeube;51.0;12.02;v_gewaesser.fid-36945e2d_19febabadac_69b7;MultiPolygon;AUTO_CANDIDATE
+11-482-03;Mühlgraben Göbitz-Ostrau;Mühlgraben Göbitz-Ostrau;51.09;12.19;v_gewaesser.fid-36945e2d_19febabadac_69b8;MultiPolygon;AUTO_CANDIDATE
+11-482-05;Floßgraben von LG Thüringen bis;Floßgraben von LG Thüringen bis Abschlagbauwerk Uthmig;51.01;12.01;v_gewaesser.fid-36945e2d_19febabadac_6d70;MultiPolygon;AUTO_CANDIDATE
+12-140-07;Mulde von ca. 150 m unterhalb Abzweig A, B, Bl, D, H, Pl, 20,00 Jonitzer Mulde bis Tiergartenbrücke und Q, Z von unterhalb Brücke B185 bis 250m oberhalb Einmündung Jonitzer Mulde und von Einmündung Lorkgraben bis Tannenhägerbrücke sowie Jonitzer Mulde von Abzweig aus der Mulde bis oberhalb Brücke Jonitzer Mühle;Mulde;51.83;12.26;v_gewaesser.fid-36945e2d_19febabadac_6de4;MultiPolygon;LOCKED
+13-280-02;Mittellandkanal (Toter Arm);Mittellandkanal (Toter Arm) von km 318,4 bis km 320,10;52.23;11.66;v_gewaesser.fid-36945e2d_19febabadac_6e4a;MultiPolygon;LOCKED
+13-280-03;Rothenseer Verbindungskanal;Rothenseer Verbindungskanal von km 1,35 bis km 3,93;52.2133333;11.6833333;v_gewaesser.fid-36945e2d_19febabadac_6e38;MultiPolygon;AUTO_CANDIDATE
+13-280-18;Alte Elbe Kreuzhorst;Alte Elbe Kreuzhorst;52.0866667;11.6833333;v_gewaesser.fid-36945e2d_19febabadac_6d6d;MultiPolygon;AUTO_CANDIDATE
+13-280-23;Elbe und Alte Elbe;Elbe und Alte Elbe von km 320-334;52.1270175;11.6638596;v_gewaesser.fid-36945e2d_19febabadac_69b9;MultiPolygon;AUTO_CANDIDATE
+13-280-24;Zollelbe vom Elb-km 325,60 – 327,40;Zollelbe vom Elb-km 325,60 - 327,40;52.1233333;11.6466667;v_gewaesser.fid-36945e2d_19febabadac_6e39;MultiPolygon;AUTO_CANDIDATE
+13-280-28;Schleusenkanal ehem. Doppelschleuse;Schleusenkanal ehem. Doppelschleuse mit Schutzhafen von km 329,9 bis km 332,8;52.17;11.68;v_gewaesser.fid-36945e2d_19febabadac_6d4c;MultiPolygon;AUTO_CANDIDATE
+13-400-05;Gelbes Loch bei Randau;Gelbes Loch bei Randau;52.05;11.73;v_gewaesser.fid-36945e2d_19febabadac_6c9d;MultiPolygon;AUTO_CANDIDATE
+13-400-06;Alte Elbe bei Randau/Calenberge;Alte Elbe bei Randau/Calenberge;52.07;11.73;v_gewaesser.fid-36945e2d_19febabadac_6d44;MultiPolygon;AUTO_CANDIDATE
+14-210-01;Saalealtarm Hohenweiden;Saalealtarm Hohenweiden;51.415;11.945;v_gewaesser.fid-36945e2d_19febabadac_6de5;MultiPolygon;AUTO_CANDIDATE
+14-210-12;Untere Aue (Neuer Kanal);Untere Aue (Neuer Kanal);51.47;11.94;v_gewaesser.fid-36945e2d_19febabadac_6c4b;MultiPolygon;AUTO_CANDIDATE
+14-210-16;Saale von Straßenbrücke B 91;Saale von Straßenbrücke B 91 bis zum Trompeterfelsen zwischen Halle und Brachwitz;51.4764103;11.9451282;v_gewaesser.fid-36945e2d_19febabadac_6d3b;MultiPolygon;LOCKED
+14-210-17;Umgehungskanal Halle (Alter Kanal);Umgehungskanal Halle (Alter Kanal);51.4533333;11.9266667;v_gewaesser.fid-36945e2d_19febabadac_6d74;MultiPolygon;AUTO_CANDIDATE

@@ -29,7 +29,8 @@ type AtlasCategory =
   | "rivers"
   | "lakes"
   | "parking"
-  | "favorites";
+  | "favorites"
+  | "elbe";
 
 
 type AtlasPlace = {
@@ -464,6 +465,7 @@ const atlasWaters = useMemo(() => {
       if (water.latitude === null || water.longitude === null) return false;
       return distanceKm(atlasPlace.latitude, atlasPlace.longitude, water.latitude, water.longitude) <= ATLAS_RADIUS_KM;
     })
+    .filter((water) => atlasCategory !== "elbe" || Boolean(water.route?.length))
     .filter((water) => atlasFish === "Alle" || waterHasTargetFish(water, atlasFish))
     .sort((a, b) => {
       if (atlasPlace && a.latitude !== null && a.longitude !== null && b.latitude !== null && b.longitude !== null) {
@@ -474,7 +476,7 @@ const atlasWaters = useMemo(() => {
         ? a.name.localeCompare(b.name, "de")
         : (b.rating[atlasFish] ?? 0) - (a.rating[atlasFish] ?? 0);
     });
-}, [atlasPlace, atlasFish]);
+}, [atlasPlace, atlasFish, atlasCategory]);
 
   useEffect(() => {
     if (view !== "atlas") return;
@@ -541,6 +543,7 @@ const atlasWaters = useMemo(() => {
     setAtlasQuery("");
     setAtlasPlace(null);
     setAtlasFish("Alle");
+    setAtlasCategory("all");
     setAtlasSearchError("");
     setFocusedWaterId(null);
   }
@@ -1208,7 +1211,16 @@ const atlasWaters = useMemo(() => {
           </div>
         </div>
       </div>
-      {(atlasPlace || atlasFish !== "Alle") && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
+      <div className="atlas-special-filter">
+        <button
+          type="button"
+          className={atlasCategory === "elbe" ? "active" : ""}
+          onClick={() => { setAtlasCategory(atlasCategory === "elbe" ? "all" : "elbe"); setFocusedWaterId(null); }}
+        >
+          🌊 Elbe-LAV-Strecken
+        </button>
+      </div>
+      {(atlasPlace || atlasFish !== "Alle" || atlasCategory !== "all") && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
       {atlasPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Atlas rund um {atlasPlace.label}</strong><span>20 km · {atlasWaters.length} passende Gewässer</span></div></div>}
       {atlasSearchError && <p className="forecast-error">⚠ {atlasSearchError}</p>}
 
@@ -1277,6 +1289,15 @@ const atlasWaters = useMemo(() => {
         <span>🅿️ {selected.parkings.length + selectedUserParkings.length} Parkplätze</span>
         <span>📍 {selected.spots.length + selectedUserHotspots.length} Erkundungspunkte</span>
       </div>
+
+      {selected.route?.length ? (
+        <div className="elbe-permission-card">
+          <strong>🌊 Elbe-km {selected.riverKm}</strong>
+          <span>{selected.bankSide === "both" ? "✅ Beide Ufer LAV-Strecke" : selected.bankSide === "left" ? "⬅️ Nur linkes Ufer LAV-Strecke" : "➡️ Nur rechtes Ufer LAV-Strecke"}</span>
+          {selected.restrictions?.map((item) => <small key={item}>⚠ {item}</small>)}
+          <small>Maßgeblich sind Gewässerverzeichnis, aktuelle LAV-Ergänzungen und Beschilderung vor Ort.</small>
+        </div>
+      ) : null}
 
       {selected.latitude !== null && selected.longitude !== null ? (
         <div className="atlas-primary-actions">
@@ -1374,6 +1395,7 @@ const atlasWaters = useMemo(() => {
 
     <div className="atlas-map">
       <MapView
+        persistentRouteWaters={waters.filter((water) => Boolean((water.waterwayName && water.route?.length) || water.osmFeatureId))}
         waters={
           focusedWater
             ? [focusedWater]
@@ -1432,7 +1454,7 @@ const atlasWaters = useMemo(() => {
         {waterSearchError && <p className="forecast-error">⚠ {waterSearchError}</p>}
         </div>
         <div className="workspace"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{filtered.map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{waterTargetFish(water).map(item=><span key={item}>{item} {'★'.repeat(targetFishRating(water,item))}</span>)}</div></article>)}</div></aside>
-          <div className="map-panel"><MapView waters={mapWaters} spots={visibleSpots} parkings={visibleParkings} selectedWater={focusedWater} onSelect={selectAndFocus}/><div className="map-note">{focusedWater ? <><strong>{selected.name}</strong><span>{visibleParkings.length} Parkplatz{visibleParkings.length === 1 ? "" : "plätze"} · {visibleSpots.length} Hotspot{visibleSpots.length === 1 ? "" : "s"}</span><button type="button" onClick={()=>setFocusedWaterId(null)}>Alle Gewässer zeigen</button></> : <>{selected.latitude === null || selected.longitude === null ? <span>Für dieses Gewässer ist noch keine geprüfte Kartenposition gespeichert.</span> : <span>{mappedCount} von {filtered.length} Treffern sind bereits kartiert. Gewässer anklicken, um Parkplätze und Hotspots zu öffnen.</span>}</>}</div></div>
+          <div className="map-panel"><MapView waters={mapWaters} persistentRouteWaters={waters.filter((water) => Boolean((water.waterwayName && water.route?.length) || water.osmFeatureId))} spots={visibleSpots} parkings={visibleParkings} selectedWater={focusedWater} onSelect={selectAndFocus}/><div className="map-note">{focusedWater ? <><strong>{selected.name}</strong><span>{visibleParkings.length} Parkplatz{visibleParkings.length === 1 ? "" : "plätze"} · {visibleSpots.length} Hotspot{visibleSpots.length === 1 ? "" : "s"}</span><button type="button" onClick={()=>setFocusedWaterId(null)}>Alle Gewässer zeigen</button></> : <>{selected.latitude === null || selected.longitude === null ? <span>Für dieses Gewässer ist noch keine geprüfte Kartenposition gespeichert.</span> : <span>{mappedCount} von {filtered.length} Treffern sind bereits kartiert. Gewässer anklicken, um Parkplätze und Hotspots zu öffnen.</span>}</>}</div></div>
           <aside className="details"><p className="eyebrow">Gewässerprofil</p><div className="water-stats">
   <div className="stat-card">
     <span>🐟</span>

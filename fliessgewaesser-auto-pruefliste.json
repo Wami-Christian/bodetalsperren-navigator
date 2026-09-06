@@ -1,0 +1,1832 @@
+[
+  {
+    "lavNumber": "1-160-04",
+    "catalogName": "Stadtgraben in Gardelegen",
+    "atlasName": "Stadtgraben in Gardelegen",
+    "latitude": 52.53,
+    "longitude": 11.39,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d23",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-160-06",
+    "catalogName": "Wilhelmskanal von Straße",
+    "atlasName": "Wilhelmskanal von Straße Taterebrg-Miestehorst bis Mündung in die Ohre",
+    "latitude": 52.45,
+    "longitude": 11.14,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a0",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-160-14",
+    "catalogName": "Milde von Gardelegen-",
+    "atlasName": "Milde",
+    "latitude": 52.61,
+    "longitude": 11.39,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d66",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-160-16",
+    "catalogName": "Untere Milde von Wegebrücke",
+    "atlasName": "Untere Milde von Wegebrücke Kahrstedt/Karritz bis Mündung in die Milde",
+    "latitude": 52.7,
+    "longitude": 11.48,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a1",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-160-18",
+    "catalogName": "Untere Milde von Straßenbrücke",
+    "atlasName": "Untere Milde von Straßenbrücke Wustrewe/Zethlingen bis Winkelstedt",
+    "latitude": 52.6866667,
+    "longitude": 11.3266667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a2",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-160-20",
+    "catalogName": "Königsgraben vom Abschlag",
+    "atlasName": "Königsgraben vom Abschlag Schenkenhorst bis Mündung in die Milde",
+    "latitude": 52.64,
+    "longitude": 11.41,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a3",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-160-22",
+    "catalogName": "Secantsgraben von Str.-Br. Kalbe/M. –",
+    "atlasName": "Secantsgraben von Str.-Br. Kalbe/M. – Neuendorf a. D. bis Mündung in die Milde",
+    "latitude": 52.66,
+    "longitude": 11.45,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a4",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-161-01",
+    "catalogName": "Teich am Anglerheim (Burggraben)",
+    "atlasName": "Teich am Anglerheim (Burggraben) in Kalbe/Milde",
+    "latitude": 52.65,
+    "longitude": 11.39,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d32",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-161-02",
+    "catalogName": "Milde von Kalbe (Straßenbrücke)",
+    "atlasName": "Milde von Kalbe (Straßenbrücke) bis Eimündung des Secantsgraben",
+    "latitude": 52.6633334,
+    "longitude": 11.4566667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6dda",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-161-03",
+    "catalogName": "Untere Milde von Winkelstedt",
+    "atlasName": "Untere Milde von Winkelstedt bis Brücke Kahrstedt-Karritz",
+    "latitude": 52.6733333,
+    "longitude": 11.3533333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a7",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-260-03",
+    "catalogName": "Wasserbecken am Schlammgraben",
+    "atlasName": "Wasserbecken am Schlammgraben bei Kusey",
+    "latitude": 52.55,
+    "longitude": 11.1,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a1e",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-260-11",
+    "catalogName": "Jeetze von Dorfstraße im Amt",
+    "atlasName": "Jeetze von Dorfstraße im Amt Dambeck bis Landesgrenze",
+    "latitude": 52.8488889,
+    "longitude": 11.1633333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6da3",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "1-260-14",
+    "catalogName": "Ohre in Steimke",
+    "atlasName": "Ohre in Steimke",
+    "latitude": 52.58,
+    "longitude": 10.98,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c89",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "1-260-15",
+    "catalogName": "Ohre in Jahrstedt",
+    "atlasName": "Ohre in Jahrstedt",
+    "latitude": 52.56,
+    "longitude": 10.98,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c8b",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "1-260-20",
+    "catalogName": "Untere Milde Cheinitz",
+    "atlasName": "Untere Milde Cheinitz",
+    "latitude": 52.7,
+    "longitude": 11.27,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a5",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-260-22",
+    "catalogName": "Moorgraben Cheinitz/Brüchau",
+    "atlasName": "Moorgraben Cheinitz/Brüchau",
+    "latitude": 52.7,
+    "longitude": 11.23,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d6c",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-380-13",
+    "catalogName": "Jeetze bei Dambeck",
+    "atlasName": "Jeetze bei Dambeck",
+    "latitude": 52.79,
+    "longitude": 11.16,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d53",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "1-380-16",
+    "catalogName": "Kalter Graben bei Wallstawe",
+    "atlasName": "Kalter Graben bei Wallstawe bis Mündung in die Dumme",
+    "latitude": 52.8,
+    "longitude": 11.0,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d55",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "1-381-01",
+    "catalogName": "Flöt- und Mühlgraben bei Mechau",
+    "atlasName": "Flöt- und Mühlgraben bei Mechau",
+    "latitude": 52.86,
+    "longitude": 11.36,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c7a",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-160-02",
+    "catalogName": "Secantsgraben von Straßenbrücke",
+    "atlasName": "Secantsgraben von Straßenbrücke Lindstedt/Holzhausen bis Straßenbrücke Kalbe/Neuendorf am Damm",
+    "latitude": 52.61,
+    "longitude": 11.48,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69bd",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-10",
+    "catalogName": "Eichenschlenke bei Havelberg",
+    "atlasName": "Eichenschlenke bei Havelberg",
+    "latitude": 52.82,
+    "longitude": 12.04,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a2f",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-11",
+    "catalogName": "Kampierung bei Havelberg",
+    "atlasName": "Kampierung bei Havelberg",
+    "latitude": 52.82,
+    "longitude": 12.04,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c7f",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-12",
+    "catalogName": "Große Wiesenschlenke bei Havelberg",
+    "atlasName": "Große Wiesenschlenke bei Havelberg",
+    "latitude": 52.82,
+    "longitude": 12.04,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c80",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-13",
+    "catalogName": "Hornings Bracke bei Havelberg",
+    "atlasName": "Hornings Bracke bei Havelberg",
+    "latitude": 52.82,
+    "longitude": 12.04,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6cf8",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-14",
+    "catalogName": "Kühnsches Loch bei Havelberg",
+    "atlasName": "Kühnsches Loch bei Havelberg",
+    "latitude": 52.82,
+    "longitude": 12.04,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c7e",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-15",
+    "catalogName": "Karpfenlöcher bei Havelberg",
+    "atlasName": "Karpfenlöcher bei Havelberg",
+    "latitude": 52.81,
+    "longitude": 12.04,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6cf9",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-18",
+    "catalogName": "Elbe km 428-431 rechtsseitig",
+    "atlasName": "Elbe km 428-431 rechtsseitig",
+    "latitude": 52.8755555,
+    "longitude": 11.9855556,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69be",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-220-20",
+    "catalogName": "Garzer See in Havelberg",
+    "atlasName": "Garzer See in Havelberg",
+    "latitude": 52.75,
+    "longitude": 12.21,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c57",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-330-11",
+    "catalogName": "Alte Elbe und Gänsebrink",
+    "atlasName": "Alte Elbe und Gänsebrink Berge/Sandauer Holz",
+    "latitude": 52.81,
+    "longitude": 11.99,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a37",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-330-12",
+    "catalogName": "Binnengewässer links der Elbe",
+    "atlasName": "Binnengewässer links der Elbe bei Pappelhagen",
+    "latitude": 52.95,
+    "longitude": 11.81,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c7c",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-330-14",
+    "catalogName": "Elbe von km 428 - 454 linksseitig",
+    "atlasName": "Elbe von km 428 - 454",
+    "latitude": 52.908,
+    "longitude": 11.882,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69bf",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-330-29",
+    "catalogName": "Bodenentnahmestelle Losenrade 1",
+    "atlasName": "Bodenentnahmestelle Losenrade 1",
+    "latitude": 52.96,
+    "longitude": 11.77,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c73",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-330-30",
+    "catalogName": "Bodenentnahmestelle Krüden",
+    "atlasName": "Bodenentnahmestelle Krüden",
+    "latitude": 52.95,
+    "longitude": 11.69,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c74",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-332-01",
+    "catalogName": "Milde/Biese von Einmündung des",
+    "atlasName": "Milde/Biese von Einmündung des Secantsgrabens (bei Butterhorst) bis Einmündung des Augrabens (b. Gladigau)",
+    "latitude": 52.73,
+    "longitude": 11.52,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d1f",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-334-01",
+    "catalogName": "Bleichwehl bei Werben/Elbe",
+    "atlasName": "Bleichwehl bei Werben/Elbe",
+    "latitude": 52.86,
+    "longitude": 12.0,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a3d",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-334-02",
+    "catalogName": "Marschners Loch bei Werben/Elbe",
+    "atlasName": "Marschners Loch bei Werben/Elbe",
+    "latitude": 52.87,
+    "longitude": 12.0,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a3e",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-420-08",
+    "catalogName": "Elbe km 392 - 402 linksseitig",
+    "atlasName": "Elbe km 392 - 402",
+    "latitude": 52.6238889,
+    "longitude": 12.0061111,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69c7",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-421-01",
+    "catalogName": "Dollgraben",
+    "atlasName": "Dollgraben",
+    "latitude": 52.45,
+    "longitude": 11.79,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69c8",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-421-11",
+    "catalogName": "Elbe km 372, 4 – km 378 linksseitig",
+    "atlasName": "Elbe km 372, 4 - km 378 linksseitig",
+    "latitude": 52.425,
+    "longitude": 11.985,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ca",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "2-422-12",
+    "catalogName": "Elbe km 386-392 beidseitig, km 391-392",
+    "atlasName": "Elbe km 386-392 beidseitig",
+    "latitude": 52.5533333,
+    "longitude": 11.9813333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69cb",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "3-200-08",
+    "catalogName": "Mühlenteich Bodendorf bei Süplingen",
+    "atlasName": "Mühlenteich Bodendorf bei Süplingen",
+    "latitude": 52.29,
+    "longitude": 11.29,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a5b",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "3-200-13",
+    "catalogName": "Hofteich Bodendorf",
+    "atlasName": "Hofteich Bodendorf",
+    "latitude": 52.29,
+    "longitude": 11.29,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a5c",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "3-200-33",
+    "catalogName": "Mittelllandkanal Bereich",
+    "atlasName": "Mittelllandkanal Bereich Haldensleben",
+    "latitude": 52.3213333,
+    "longitude": 11.3606667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69d0",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "3-200-34",
+    "catalogName": "Ohre von Straßenbrücke Calvörde",
+    "atlasName": "Ohre von Straßenbrücke Calvörde bis Vahlsdorfer Brücke",
+    "latitude": 52.3116667,
+    "longitude": 11.4,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6dd2",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "3-261-01",
+    "catalogName": "Mittellandkanal Bereich Oebisfelde",
+    "atlasName": "Mittellandkanal Bereich Oebisfelde",
+    "latitude": 52.4448718,
+    "longitude": 11.1184615,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69d9",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "3-261-05",
+    "catalogName": "Landgraben bei Oebisfelde",
+    "atlasName": "Landgraben bei Oebisfelde",
+    "latitude": 52.41,
+    "longitude": 11.0,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69db",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "3-430-08",
+    "catalogName": "Bode von Einmündung des Mühl-",
+    "atlasName": "Bode von Einmündung des Mühlgrabens an der Bodebrücke Hadmersleben bis Wehr Egeln-Nord (Oberwasser)",
+    "latitude": 51.99,
+    "longitude": 11.38,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69cd",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "3-470-06",
+    "catalogName": "Mittellandkanal Bereich Wolmirstedt",
+    "atlasName": "Mittellandkanal Bereich Wolmirstedt",
+    "latitude": 52.23,
+    "longitude": 11.57,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69dc",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "3-470-17",
+    "catalogName": "Ohre von Vahldorfer Brücke bis",
+    "atlasName": "Ohre von Vahldorfer Brücke bis Ortsgrenze Wolmirstedt",
+    "latitude": 52.26,
+    "longitude": 11.55,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69dd",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "3-470-26",
+    "catalogName": "Ohre von Wolmirstedt bis Elbmündung",
+    "atlasName": "Ohre von Wolmirstedt bis Elbmündung",
+    "latitude": 52.2933333,
+    "longitude": 11.7133333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69de",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "3-470-27",
+    "catalogName": "Mittellandkanal km 320, 10 – 321, 10",
+    "atlasName": "Mittellandkanal km 320,10 – km 321,10",
+    "latitude": 52.23,
+    "longitude": 11.68,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69df",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "3-472-05",
+    "catalogName": "Ohre Stadgebiet Wolmirstedt",
+    "atlasName": "Ohre Stadgebiet Wolmirstedt",
+    "latitude": 52.25,
+    "longitude": 11.62,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a98",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "4-130-01",
+    "catalogName": "Alte Elbe Lostau",
+    "atlasName": "Alte Elbe Lostau",
+    "latitude": 52.2066667,
+    "longitude": 11.7266667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a99",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-130-15",
+    "catalogName": "Elbe-Havel-Kanal km 326, 67- km 344",
+    "atlasName": "Elbe-Havel-Kanal km326, 67-km344",
+    "latitude": 52.2833333,
+    "longitude": 11.8446667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69e0",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "4-130-18",
+    "catalogName": "Elbe km 334-350 beidseitig",
+    "atlasName": "Elbe km 334-350 beidseitig",
+    "latitude": 52.2690476,
+    "longitude": 11.7380952,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69e1",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-130-24",
+    "catalogName": "Niegripper Verbindungskanal",
+    "atlasName": "Niegripper Verbindungskanal von km 0, 95 - km 1, 60",
+    "latitude": 52.25,
+    "longitude": 11.73,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69e6",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-130-31",
+    "catalogName": "Alte Elbe bei Niegripp",
+    "atlasName": "Alte Elbe bei Niegripp",
+    "latitude": 52.29,
+    "longitude": 11.77,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d6a",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-130-32",
+    "catalogName": "Niegripper Altkanal (Teilfläche)",
+    "atlasName": "Niegripper Altkanal",
+    "latitude": 52.2733333,
+    "longitude": 11.7933333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a14",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-130-36",
+    "catalogName": "Mittellandkanal km 322,82 - km 324,46 A, Bl, K, Pl, Z 5,31 Nordufer",
+    "atlasName": "Mittellandkanal km 322,82-km 324,6 nur Nordufer",
+    "latitude": 52.2366667,
+    "longitude": 11.7233333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e46",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "4-170-01",
+    "catalogName": "Lehmkuhlengraben bei Parchen",
+    "atlasName": "Lehmkuhlengraben bei Parchen",
+    "latitude": 52.36,
+    "longitude": 12.06,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69e7",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-170-04",
+    "catalogName": "Mühlengraben bei Mützel",
+    "atlasName": "Mühlengraben bei Mützel",
+    "latitude": 52.39,
+    "longitude": 12.17,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69e8",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-170-08",
+    "catalogName": "Altenplatower-Altkanal",
+    "atlasName": "Altenplatower-Altkanal km 360 - km 361, 5",
+    "latitude": 52.42,
+    "longitude": 12.13,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69e9",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-170-09",
+    "catalogName": "Roßdorfer Altkanal km 0, 0 bis",
+    "atlasName": "Roßdorfer Altkanal km 0, 0 bis Brücke Dunkelforth (B1) am Nordufer",
+    "latitude": 52.42,
+    "longitude": 12.2,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ea",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-170-12",
+    "catalogName": "Torschiffahrtskanal vom Wehr Mützel bis A, B, Bl, H, Pl, Qu 3,00 zur Mündung in den Fiener Haupvorfluter",
+    "atlasName": "Torschiffahrtskanal vom Wehr Mützel bis zur Mündung in den Fiener Haupvorfluter",
+    "latitude": 52.37,
+    "longitude": 12.18,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ec",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-170-14",
+    "catalogName": "Hauptstremme vom Roßdorfer Altkanal A, B, Bl, H, Pl, S 8,00 bis zur Einmündung des Galmer Grabens",
+    "atlasName": "Hauptstremme vom Roßdorfer Altkanal bis zur Einmündung des Galmer Grabens",
+    "latitude": 52.48,
+    "longitude": 12.25,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ed",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-170-15",
+    "catalogName": "Schlagenthiner Stremme vom Roßdorfer A, B, Bl, H, Pl, S 7,00 Altkanal bis zur Hauptstremme",
+    "atlasName": "Schlagenthiner Stremme vom Roßdorfer Altkanal bis zur Hauptstremme",
+    "latitude": 52.45,
+    "longitude": 12.25,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ee",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-170-16",
+    "catalogName": "Elbe-Havel-Kanal von km 360 bis 364, 5 A, B, Bl, H, K, 71,92 (Brücke B1 Ortsausgang Genthin) und",
+    "atlasName": "Elbe-Havel-Kanal von km 360 bis 364, 5 (Brücke B1 Ortsausgang Genthin) und von km 365, 7 (Einmündung Neuer Graben) bis km 372, 8",
+    "latitude": 52.4,
+    "longitude": 12.21,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ef",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "4-171-03",
+    "catalogName": "Mühlenlanke-Herrenseegraben bei Parey",
+    "atlasName": "Mühlenlanke-Herrenseegraben bei Parey",
+    "latitude": 52.37,
+    "longitude": 11.96,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c83",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-171-05",
+    "catalogName": "Alte Elbe mit Tunnel und",
+    "atlasName": "Alte Elbe mit Tunnel und Königsdamm bei Parey",
+    "latitude": 52.38,
+    "longitude": 11.95,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d31",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-171-12",
+    "catalogName": "Baggerelbe bei Derben",
+    "atlasName": "Baggerelbe bei Derben",
+    "latitude": 52.42,
+    "longitude": 11.99,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6dea",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-171-14",
+    "catalogName": "Stromelbe von km 372,4",
+    "atlasName": "Stromelbe von km 372, 4 bis km 378 bei Derben rechtsseitg",
+    "latitude": 52.435,
+    "longitude": 11.995,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f1",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-171-15",
+    "catalogName": "Pareyer Verbindungskanal",
+    "atlasName": "Pareyer Verbindungskanal von km 0, 0, bis km 3, 54",
+    "latitude": 52.4033333,
+    "longitude": 11.9733333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ce",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-171-21",
+    "catalogName": "Erdegraben bei Parey",
+    "atlasName": "Erdegraben bei Parey",
+    "latitude": 52.4,
+    "longitude": 11.95,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f5",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-171-26",
+    "catalogName": "Elbe-Havel-Kanal von km 344 bis km 353",
+    "atlasName": "Elbe-Havel-Kanal von km 344 bis km 353",
+    "latitude": 52.3666667,
+    "longitude": 11.99,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69d4",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "4-172-01",
+    "catalogName": "Elbe-Havel-Kanal von km 364,5",
+    "atlasName": "Elbe-Havel-Kanal von km 364, 5 (Brücke B1 Ortsausgang Genthin bis km 365, 7 (Einmündung Neuer Graben)",
+    "latitude": 52.4033333,
+    "longitude": 12.1933333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f6",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "4-172-03",
+    "catalogName": "Roßdorfer Altkanal von",
+    "atlasName": "Roßdorfer Altkanal von Brücke Dunkelforth (B1) bis zur Einmündung in den EHK",
+    "latitude": 52.41,
+    "longitude": 12.23,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f7",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-173-01",
+    "catalogName": "Bergzower Altkanal vom Abzweig",
+    "atlasName": "Bergzower Altkanal vom Abzweig H-Kanal km 355, 15 Südufer",
+    "latitude": 52.41,
+    "longitude": 12.05,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f8",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "4-173-02",
+    "catalogName": "Elbe-Havel-Kanal von km 353 - km 360",
+    "atlasName": "Elbe-Havel-Kanal von km 353 bis km 360",
+    "latitude": 52.41,
+    "longitude": 12.07,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d01",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "5-190-03",
+    "catalogName": "Bode vom Einlauf des Goldbaches",
+    "atlasName": "Bode vom Einlauf des Goldbaches bis Straßenbrücke Deesdorf",
+    "latitude": 51.91,
+    "longitude": 11.18,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f9",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "5-190-06",
+    "catalogName": "Großer Graben vom Zusammenfluss",
+    "atlasName": "Großer Graben vom Zusammenfluss Schiffgraben und Aue bis zur Straßenbrücke zwischen Aderstedt und Gunsleben",
+    "latitude": 52.06,
+    "longitude": 10.89,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69fa",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "5-340-06",
+    "catalogName": "Hauptseegraben von Kreisgrenze",
+    "atlasName": "Hauptseegraben von Kreisgrenze Salzlandkreis bis Mündung in die Selke",
+    "latitude": 51.83,
+    "longitude": 11.28,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69fe",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "5-340-09",
+    "catalogName": "Bode vom Einlauf des Quarmbaches",
+    "atlasName": "Bode vom Einlauf des Quarmbaches bis zur Selkemündung bei Rodersdorf",
+    "latitude": 51.7966667,
+    "longitude": 11.1633333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69fd",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "5-340-13",
+    "catalogName": "Selke von Kreisgrenze",
+    "atlasName": "Selke von Kreisgrenze Salzlandkreis bis Mündung in Bode",
+    "latitude": 51.85,
+    "longitude": 11.25,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ff",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "5-340-20",
+    "catalogName": "Mühlgraben Thale 0,25",
+    "atlasName": "",
+    "latitude": null,
+    "longitude": null,
+    "featureId": "",
+    "geometryType": "",
+    "status": "UNMATCHED"
+  },
+  {
+    "lavNumber": "6-100-07",
+    "catalogName": "Hauptseegraben von Einmündung",
+    "atlasName": "Hauptseegraben von Einmündung des Grabens aus Wilsleben bis Tagebaurestloch Königsaue",
+    "latitude": 51.7966667,
+    "longitude": 11.4,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e47",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-110-12",
+    "catalogName": "Saalealtarm zwischen Plötzkau",
+    "atlasName": "Saalealtarm zwischen Plötzkau und Großwirschleben",
+    "latitude": 51.74,
+    "longitude": 11.7,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6aea",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-110-13",
+    "catalogName": "Saalealtarm Aderstedt",
+    "atlasName": "Saalealtarm Aderstedt",
+    "latitude": 51.78,
+    "longitude": 11.7,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6ae7",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-110-14",
+    "catalogName": "Saale von Kreisgrenze Saalekreis bis",
+    "atlasName": "Saale im Altkreis Bernburg",
+    "latitude": 51.725,
+    "longitude": 11.7283333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6af0",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-110-17",
+    "catalogName": "Saalealtarm Gnölbzig",
+    "atlasName": "Saalealtarm Gnölbzig",
+    "latitude": 51.6733333,
+    "longitude": 11.7233333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6aed",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-110-18",
+    "catalogName": "Fuhne vom Viadukt bei Kleinwirschleben A, B, Bl, H, K, Pl, Ro 4,00 bis Mündung in die Saale",
+    "atlasName": "Fuhne vom Viadukt bei Kleinwirschleben bis Mündung in die Saale",
+    "latitude": 51.7766667,
+    "longitude": 11.7766667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a00",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-111-04",
+    "catalogName": "Bode vom Beginn des Mühlgrabens",
+    "atlasName": "Bode",
+    "latitude": 51.83,
+    "longitude": 11.73,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d7a",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-111-05",
+    "catalogName": "Saalealtarm Nienburg",
+    "atlasName": "Saalealtarm Nienburg",
+    "latitude": 51.84,
+    "longitude": 11.79,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6afa",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-111-13",
+    "catalogName": "Saale von Einmündung der Fuhne bis",
+    "atlasName": "Saale von Fuhnemündung bis Ortslage Wispitz",
+    "latitude": 51.865,
+    "longitude": 11.765,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f0",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-112-03",
+    "catalogName": "Saalealtarm Lesewitz bei Plötzkau",
+    "atlasName": "Saalealtarm Lesewitz bei Plötzkau",
+    "latitude": 51.75,
+    "longitude": 11.7,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6afb",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-400-20",
+    "catalogName": "Saale im Altkreis Schönebeck",
+    "atlasName": "Saale im Altkreis Schönebeck",
+    "latitude": 51.9088889,
+    "longitude": 11.8244444,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a02",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-400-22",
+    "catalogName": "Elbe von km 305 - km 320 beidseitig",
+    "atlasName": "Elbe von km 305-320 beidseitig",
+    "latitude": 52.0316667,
+    "longitude": 11.735,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a03",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-400-24",
+    "catalogName": "Saalealtarm Tippelskirchen",
+    "atlasName": "Saalealtarm Tippelskirchen von km 22,2 - 23,3",
+    "latitude": 51.89,
+    "longitude": 11.78,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6b0d",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-400-30",
+    "catalogName": "Küchenpfuhl Elbenau",
+    "atlasName": "Küchenpfuhl Elbenau",
+    "latitude": 52.04,
+    "longitude": 11.76,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c9f",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-400-33",
+    "catalogName": "Stilles Wasser Elbenau",
+    "atlasName": "Stilles Wasser Elbenau",
+    "latitude": 52.05,
+    "longitude": 11.75,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c9e",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-400-35",
+    "catalogName": "Elbealtarm Grünewalde",
+    "atlasName": "Elbealtarm Grünewalde",
+    "latitude": 52.03,
+    "longitude": 11.73,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6b14",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-400-41",
+    "catalogName": "Salinekanal Schönebeck",
+    "atlasName": "Salinekanal Schönebeck",
+    "latitude": 52.02,
+    "longitude": 11.75,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a01",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-400-45",
+    "catalogName": "Götzenthiegraben",
+    "atlasName": "Götzenthiegraben",
+    "latitude": 52.0,
+    "longitude": 11.73,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6ce5",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-401-08",
+    "catalogName": "Landgraben von Einmündung des",
+    "atlasName": "Landgraben von Einmündung des Laufgrabens bis zur Mündung in die Taube",
+    "latitude": 51.8966667,
+    "longitude": 11.8933333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a04",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-402-02",
+    "catalogName": "Barbyer Landgraben von",
+    "atlasName": "Barbyer Landgraben von Bahnhofsstraße bis Mündung in die Elbe",
+    "latitude": 51.99,
+    "longitude": 11.87,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a06",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "6-402-07",
+    "catalogName": "Saale von Werkleitz bis Elbmündung",
+    "atlasName": "",
+    "latitude": null,
+    "longitude": null,
+    "featureId": "",
+    "geometryType": "",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-410-14",
+    "catalogName": "Bode vom Wehr Egeln-Nord",
+    "atlasName": "Bode vom Wehr Egeln-Nord (Unterwasser) bis zur Stappenbrücke Wolmirsleben",
+    "latitude": 51.95,
+    "longitude": 11.46,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a07",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-410-15",
+    "catalogName": "Bode vom Wehr Rothenförde",
+    "atlasName": "Bode vom Wehr Rothenförde (Unterwasser) bis Mühlengraben Neugattersleben",
+    "latitude": 51.9033333,
+    "longitude": 11.5266667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e11",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "6-410-19",
+    "catalogName": "Mühlgraben von Egeln-Nord",
+    "atlasName": "Mühlgraben von Egeln-Nord bis zur Gemarkungsgrenze Egeln/Tarthun",
+    "latitude": 51.94,
+    "longitude": 11.44,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69b5",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-120-01",
+    "catalogName": "Alte Mulde bei Rösa",
+    "atlasName": "Alte Mulde bei Rösa",
+    "latitude": 51.61,
+    "longitude": 12.53,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e23",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-120-04",
+    "catalogName": "Alte Mulde Roitzschjora",
+    "atlasName": "Alte Mulde Roitzschjora",
+    "latitude": 51.59,
+    "longitude": 12.49,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d2b",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-120-06",
+    "catalogName": "Unterer Ziegeleiteich Muldenstein",
+    "atlasName": "Unterer Ziegeleiteich Muldenstein",
+    "latitude": 51.66,
+    "longitude": 12.34,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e2f",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-120-13",
+    "catalogName": "Muldestausee",
+    "atlasName": "Muldestausee",
+    "latitude": 51.6419608,
+    "longitude": 12.4013725,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6ddc",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-120-19",
+    "catalogName": "Lober-Leine-Kanal",
+    "atlasName": "Lober-Leine-Kanal",
+    "latitude": 51.59,
+    "longitude": 12.41,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a08",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-120-21",
+    "catalogName": "Mulde v. Landesgr. Sachsen bis Stausee,",
+    "atlasName": "Mulde v. Landesgr. Sachsen bis Stausee",
+    "latitude": 51.6058333,
+    "longitude": 12.4608333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6de9",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "7-120-22",
+    "catalogName": "Mulde von ca. 750m oberhalb Wehr",
+    "atlasName": "Mulde von ca. 750m oberhalb Wehr Jeßnitz bis Einmündung Mühlgraben",
+    "latitude": 51.68,
+    "longitude": 12.32,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a09",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "7-120-23",
+    "catalogName": "Mulde von ca. 500m oberhalb Brücke",
+    "atlasName": "Mulde von ca. 500m oberhalb Brücke bis Brücke Raghun",
+    "latitude": 51.71,
+    "longitude": 12.3,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e0e",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "7-120-32",
+    "catalogName": "Luthers Linde Muldenstein",
+    "atlasName": "Luthers Linde Muldenstein",
+    "latitude": 51.67,
+    "longitude": 12.34,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6cb7",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-120-34",
+    "catalogName": "Alte Mulde in Friedersdorf",
+    "atlasName": "Alte Mulde in Friedersdorf",
+    "latitude": 51.645,
+    "longitude": 12.345,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d7f",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "7-400-01",
+    "catalogName": "Alte Elbe bei Dornburg",
+    "atlasName": "Alte Elbe bei Dornburg/Elbumflut von Alte Fähre bis Einmündung neue Ehle",
+    "latitude": 52.05,
+    "longitude": 11.8,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d58",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-183-02",
+    "catalogName": "Elbe von km 244, 5 - km 248, 3 linksseitig",
+    "atlasName": "Elbe von km 244,5-248,3 linksseitig",
+    "latitude": 51.8666667,
+    "longitude": 12.3366667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a0c",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-183-06",
+    "catalogName": "Alter Graben Wörlitz",
+    "atlasName": "Alter Graben Wörlitz",
+    "latitude": 51.84,
+    "longitude": 12.45,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d34",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-183-07",
+    "catalogName": "Am Fließgraben-Diestelsee bei Wörlitz",
+    "atlasName": "Am Fließgraben-Diestelsee bei Wörlitz",
+    "latitude": 51.85,
+    "longitude": 12.43,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d35",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-183-08",
+    "catalogName": "Fuhrtgraben bei Wörlitz",
+    "atlasName": "Fuhrtgraben bei Wörlitz",
+    "latitude": 51.84,
+    "longitude": 12.41,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d36",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-183-13",
+    "catalogName": "Kapengraben von ehem. B107 bis zur",
+    "atlasName": "Kapengraben von ehem. B107 bis zur Straßenbrücke Waldersee-Vockerode",
+    "latitude": 51.8166667,
+    "longitude": 12.4066667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a0d",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-183-14",
+    "catalogName": "Fließgraben von Straßenbrücke",
+    "atlasName": "Fließgraben",
+    "latitude": 51.8566667,
+    "longitude": 12.4133333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a0e",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-183-16",
+    "catalogName": "Hauptgraben von Wörlitz bis Kakau",
+    "atlasName": "Hauptgraben von Wörlitz bis Kakau",
+    "latitude": 51.83,
+    "longitude": 12.45,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d38",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-250-06",
+    "catalogName": "Schweinitzer Fließ von Landesgrenze bis A, B, Bl, H, Pl, Ro, S 9,50 Einlauf Morgengraben bei Zwuschen/Dixförda",
+    "atlasName": "Schweinitzer Fließ von Landesgrenze bis Einlauf Morgengraben bei Zwuschen/Dixförda",
+    "latitude": 51.8133333,
+    "longitude": 13.0666667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a0f",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-250-12",
+    "catalogName": "Neugraben von Landesgrenze bis",
+    "atlasName": "Neugraben von Landesgrenze bis Mündung in die Schwarze Elster",
+    "latitude": 51.74,
+    "longitude": 13.03,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6da8",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-250-13",
+    "catalogName": "Landlache vom Plossiger Graben bis",
+    "atlasName": "Landlache vom Plossiger Graben bis Mündung in die Schwarze Elster",
+    "latitude": 51.74,
+    "longitude": 12.93,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a15",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-251-01",
+    "catalogName": "Kiestagebau Elbekies bei Prettin",
+    "atlasName": "Kiestagebau Elbekies bei Prettin",
+    "latitude": 51.675,
+    "longitude": 12.885,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d3c",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-251-03",
+    "catalogName": "Elbe km 168, 2 - km 182, 0 rechtss.",
+    "atlasName": "Elbe km 168,2-182,0",
+    "latitude": 51.6666667,
+    "longitude": 12.8966667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69d5",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-252-01",
+    "catalogName": "Alte Elbe in Iserbegka bei Elster",
+    "atlasName": "Alte Elbe in Iserbegka bei Elster",
+    "latitude": 51.84,
+    "longitude": 12.79,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6b84",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-02",
+    "catalogName": "Brauteich, Schloßgraben und",
+    "atlasName": "Brauteich, Schloßgraben und Dorfteich in Kropstädt",
+    "latitude": 51.96,
+    "longitude": 12.74,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d60",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-22",
+    "catalogName": "1. Brücke, Graben zum großen Loch",
+    "atlasName": "1. Brücke, Graben zum großen Loch",
+    "latitude": 51.85,
+    "longitude": 12.64,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6caa",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-25",
+    "catalogName": "Streng (Alte Elbe Bleesern) bei Seegrehna",
+    "atlasName": "Streng (Alte Elbe Bleesern) bei Seegrehna",
+    "latitude": 51.85,
+    "longitude": 12.55,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6cfb",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-38",
+    "catalogName": "Fließgraben vom Wachsdorfer",
+    "atlasName": "Fließgraben vom Wachsdorfer Wehr bis Kreisgrenze",
+    "latitude": 51.82,
+    "longitude": 12.58,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a16",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-41",
+    "catalogName": "Tiefe Lache mit Graben und Loch",
+    "atlasName": "Tiefe Lache mit Graben und Loch bei Seegrehna",
+    "latitude": 51.86,
+    "longitude": 12.53,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6ba3",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-42",
+    "catalogName": "Krummer See (Bodemar) bei Seegrehna",
+    "atlasName": "Krummer See (Bodemar) bei Seegrehna",
+    "latitude": 51.85,
+    "longitude": 12.55,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6ba4",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-53",
+    "catalogName": "Alte Elbe Merschwitz",
+    "atlasName": "Alte Elbe Merschwitz",
+    "latitude": 51.73,
+    "longitude": 12.79,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6bae",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "8-460-56",
+    "catalogName": "Booser Graben vom Booser Riß zur Elbe",
+    "atlasName": "",
+    "latitude": null,
+    "longitude": null,
+    "featureId": "",
+    "geometryType": "",
+    "status": "UNMATCHED"
+  },
+  {
+    "lavNumber": "9-150-15",
+    "catalogName": "Mittelgraben v. Stollengraben bis",
+    "atlasName": "Mittelgraben v. Stollengraben bis Schöpfwerk Wansleben",
+    "latitude": 51.4766667,
+    "longitude": 11.7333333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a17",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "9-150-17",
+    "catalogName": "Südlicher Ringkanal von",
+    "atlasName": "Südlicher Ringkanal von Einleitstelle Romonta zwischen Unterröblingen und Amsdorf bis zur Salza",
+    "latitude": 51.48,
+    "longitude": 11.74,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6ddf",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "9-390-04",
+    "catalogName": "Toter Arm „Eichgraben“ bei Wallhausen",
+    "atlasName": "Toter Arm „Eichgraben“ bei Wallhausen",
+    "latitude": 51.45,
+    "longitude": 11.21,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6cf3",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "9-390-17",
+    "catalogName": "Mühlgraben vom Wehr Hornissenberg",
+    "atlasName": "Mühlgraben vom Wehr Hornissenberg bis Einmündung in die Helme",
+    "latitude": 51.46,
+    "longitude": 11.07,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6a18",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-210-09",
+    "catalogName": "Mühlgraben von Saalealtarm Hohen-",
+    "atlasName": "Mühlgraben",
+    "latitude": 51.43,
+    "longitude": 11.92,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6de6",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-290-13",
+    "catalogName": "Saale-Leipzig-Kanal",
+    "atlasName": "Saale-Leipzig-Kanal Km 7,55-7,71/8,53-10,48/10,83-10,95/11,08-11,21",
+    "latitude": 51.35,
+    "longitude": 12.16,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69ac",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-290-14",
+    "catalogName": "Saale im Altkreis Merseburg",
+    "atlasName": "Saale im Altkreis Merseburg (Oberwasser Wehr Bad Dürrenberg bis Straßenbrücke B91)",
+    "latitude": 51.3616667,
+    "longitude": 12.0125,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a9",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "10-290-16",
+    "catalogName": "Kanal Wüsteneutsch km 1, 32 - 1, 62",
+    "atlasName": "Kanal Wüsteneutsch km 1,32 - 1,62",
+    "latitude": 51.33,
+    "longitude": 12.07,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69a6",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-290-25",
+    "catalogName": "Umgehungskanal Merseburg",
+    "atlasName": "Umgehungskanal Merseburg",
+    "latitude": 51.36,
+    "longitude": 12.01,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e27",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-290-26",
+    "catalogName": "Saalealtarm Leuna",
+    "atlasName": "Saalealtarm Leuna",
+    "latitude": 51.33,
+    "longitude": 12.03,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e03",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-370-17",
+    "catalogName": "Saale vom Trompeterfelsen",
+    "atlasName": "Saale vom Trompeterfelsen zwischen Halle und Brachwitz bis zur Kreisgrenze Salzlandkreis",
+    "latitude": 51.567619,
+    "longitude": 11.8309524,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69b3",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "10-370-20",
+    "catalogName": "Saalealtarm Dobis – NSG beachten-",
+    "atlasName": "Saalealtarm Dobis",
+    "latitude": 51.62,
+    "longitude": 11.75,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6bfb",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-370-27",
+    "catalogName": "Saalealtarm Stollen Wettin",
+    "atlasName": "Saalealtarm Stollen Wettin",
+    "latitude": 51.6,
+    "longitude": 11.77,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6bff",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "10-370-45",
+    "catalogName": "Teich am Rodelberg",
+    "atlasName": "Teich am Rodelberg",
+    "latitude": 51.5,
+    "longitude": 12.17,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c0b",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-300-06",
+    "catalogName": "Saale von Landesgrenze Thüringen",
+    "atlasName": "Saale von Landesgrenze Thüringen bis Eisenbahnbrücke bei Eulau",
+    "latitude": 51.1583333,
+    "longitude": 11.8116667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69b0",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "11-300-07",
+    "catalogName": "Kl. Saale v. Bad Kösen b. Almrich",
+    "atlasName": "Kl. Saale v. Bad Kösen b. Almrich",
+    "latitude": 51.14,
+    "longitude": 11.75,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e30",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-310-01",
+    "catalogName": "Unstrutaltarm bei Memleben/",
+    "atlasName": "Unstrutaltarm bei MemlebenWendelstein",
+    "latitude": 51.28,
+    "longitude": 11.46,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c16",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-310-03",
+    "catalogName": "Restarm der Unstrut unter der Katzel",
+    "atlasName": "Restarm der Unstrut unter der Katzel bei Reinsdorf",
+    "latitude": 51.29,
+    "longitude": 11.61,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6ced",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-310-04",
+    "catalogName": "Unstrutflutkanal von Landesgrenze",
+    "atlasName": "Unstrutflutkanal von Landesgrenze bis Mündung in die Unstrut",
+    "latitude": 51.27,
+    "longitude": 11.46,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69b6",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-310-05",
+    "catalogName": "Unstrut von Landesgrenze Thüringen",
+    "atlasName": "Unstrut von Landesgrenze bis zur Mündung in die Saale",
+    "latitude": 51.2344444,
+    "longitude": 11.6577778,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e31",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "11-440-02",
+    "catalogName": "Saale von Eisenbahnbrücke bei Eulau",
+    "atlasName": "Saale von Eisenbahnbrücke bei Eulau bis Kleinkorbetha beidseitig und von Kleinkorbetha bis Einlauf Schleusengraben Bad Dürrenberg rechtsseitig",
+    "latitude": 51.2322222,
+    "longitude": 11.9944444,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69f3",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "11-440-05",
+    "catalogName": "Alter Saalearm Uichteritz",
+    "atlasName": "Alter Saalearm Uichteritz",
+    "latitude": 51.2,
+    "longitude": 11.92,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c19",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-443-01",
+    "catalogName": "Saale von Kleinkorbetha bis Einlauf",
+    "atlasName": "Alte Saale Tebnitz",
+    "latitude": 51.27,
+    "longitude": 12.04,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c1a",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "11-443-02",
+    "catalogName": "Alte Saale Tebnitz – NSG beachten!",
+    "atlasName": "Saale von Kleinkorbetha bis Einlauf Schleusengraben Bad Dürrenberg linksseitig",
+    "latitude": 51.27,
+    "longitude": 12.05,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d82",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-480-14",
+    "catalogName": "Elstermühlgraben Elsteraue",
+    "atlasName": "Elstermühlgraben Elsteraue",
+    "latitude": 51.08,
+    "longitude": 12.18,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69bb",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-480-15",
+    "catalogName": "Elstermühlgraben Zeitz",
+    "atlasName": "Elstermühlgraben Zeitz",
+    "latitude": 51.05,
+    "longitude": 12.13,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e4d",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-480-17",
+    "catalogName": "Elstermühlgraben",
+    "atlasName": "Elstermühlgraben Rossner Wehr/Obermühle",
+    "latitude": 51.04,
+    "longitude": 12.11,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d83",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-482-02",
+    "catalogName": "Mühlgraben Wetterzeube",
+    "atlasName": "Mühlgraben Wetterzeube",
+    "latitude": 51.0,
+    "longitude": 12.02,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69b7",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-482-03",
+    "catalogName": "Mühlgraben Göbitz-Ostrau",
+    "atlasName": "Mühlgraben Göbitz-Ostrau",
+    "latitude": 51.09,
+    "longitude": 12.19,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69b8",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "11-482-05",
+    "catalogName": "Floßgraben von LG Thüringen bis",
+    "atlasName": "Floßgraben von LG Thüringen bis Abschlagbauwerk Uthmig",
+    "latitude": 51.01,
+    "longitude": 12.01,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d70",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "12-140-07",
+    "catalogName": "Mulde von ca. 150 m unterhalb Abzweig A, B, Bl, D, H, Pl, 20,00 Jonitzer Mulde bis Tiergartenbrücke und Q, Z von unterhalb Brücke B185 bis 250m oberhalb Einmündung Jonitzer Mulde und von Einmündung Lorkgraben bis Tannenhägerbrücke sowie Jonitzer Mulde von Abzweig aus der Mulde bis oberhalb Brücke Jonitzer Mühle",
+    "atlasName": "Mulde",
+    "latitude": 51.83,
+    "longitude": 12.26,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6de4",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "13-280-02",
+    "catalogName": "Mittellandkanal (Toter Arm)",
+    "atlasName": "Mittellandkanal (Toter Arm) von km 318,4 bis km 320,10",
+    "latitude": 52.23,
+    "longitude": 11.66,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e4a",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "13-280-03",
+    "catalogName": "Rothenseer Verbindungskanal",
+    "atlasName": "Rothenseer Verbindungskanal von km 1,35 bis km 3,93",
+    "latitude": 52.2133333,
+    "longitude": 11.6833333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e38",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "13-280-18",
+    "catalogName": "Alte Elbe Kreuzhorst",
+    "atlasName": "Alte Elbe Kreuzhorst",
+    "latitude": 52.0866667,
+    "longitude": 11.6833333,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d6d",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "13-280-23",
+    "catalogName": "Elbe und Alte Elbe",
+    "atlasName": "Elbe und Alte Elbe von km 320-334",
+    "latitude": 52.1270175,
+    "longitude": 11.6638596,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_69b9",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "13-280-24",
+    "catalogName": "Zollelbe vom Elb-km 325,60 – 327,40",
+    "atlasName": "Zollelbe vom Elb-km 325,60 - 327,40",
+    "latitude": 52.1233333,
+    "longitude": 11.6466667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6e39",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "13-280-28",
+    "catalogName": "Schleusenkanal ehem. Doppelschleuse",
+    "atlasName": "Schleusenkanal ehem. Doppelschleuse mit Schutzhafen von km 329,9 bis km 332,8",
+    "latitude": 52.17,
+    "longitude": 11.68,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d4c",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "13-400-05",
+    "catalogName": "Gelbes Loch bei Randau",
+    "atlasName": "Gelbes Loch bei Randau",
+    "latitude": 52.05,
+    "longitude": 11.73,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c9d",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "13-400-06",
+    "catalogName": "Alte Elbe bei Randau/Calenberge",
+    "atlasName": "Alte Elbe bei Randau/Calenberge",
+    "latitude": 52.07,
+    "longitude": 11.73,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d44",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "14-210-01",
+    "catalogName": "Saalealtarm Hohenweiden",
+    "atlasName": "Saalealtarm Hohenweiden",
+    "latitude": 51.415,
+    "longitude": 11.945,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6de5",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "14-210-12",
+    "catalogName": "Untere Aue (Neuer Kanal)",
+    "atlasName": "Untere Aue (Neuer Kanal)",
+    "latitude": 51.47,
+    "longitude": 11.94,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6c4b",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  },
+  {
+    "lavNumber": "14-210-16",
+    "catalogName": "Saale von Straßenbrücke B 91",
+    "atlasName": "Saale von Straßenbrücke B 91 bis zum Trompeterfelsen zwischen Halle und Brachwitz",
+    "latitude": 51.4764103,
+    "longitude": 11.9451282,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d3b",
+    "geometryType": "MultiPolygon",
+    "status": "LOCKED"
+  },
+  {
+    "lavNumber": "14-210-17",
+    "catalogName": "Umgehungskanal Halle (Alter Kanal)",
+    "atlasName": "Umgehungskanal Halle (Alter Kanal)",
+    "latitude": 51.4533333,
+    "longitude": 11.9266667,
+    "featureId": "v_gewaesser.fid-36945e2d_19febabadac_6d74",
+    "geometryType": "MultiPolygon",
+    "status": "AUTO_CANDIDATE"
+  }
+]

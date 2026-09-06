@@ -1,0 +1,12 @@
+V4 – entscheidender Render-Fix
+
+Fehlerursache:
+standingWaterSnaps wurde asynchron korrekt berechnet und per setStandingWaterSnaps()
+gespeichert. Der Leaflet-Zeichen-Effect hatte standingWaterSnaps aber NICHT in seiner
+Dependency-Liste. Deshalb wurde der Marker nach dem fertigen Snap nicht neu gezeichnet.
+
+Fix:
+standingWaterSnaps wurde in die Dependency-Liste des Karten-Render-Effects aufgenommen.
+
+Die V3-Zuordnung für Lüttgenbörnecke (OSM way 109285362 / 51.82895, 11.02396)
+bleibt bestehen. Jetzt wird das berechnete Ergebnis auch tatsächlich auf der Karte dargestellt.

@@ -1,0 +1,9 @@
+Hirschteich Ballenstedt
+LAV: S-340-03
+Salmonidengewässer: ja
+OSM name: Hirschteich
+OSM way: 27940100
+center: 51.7075602,11.2227066
+shore marker: 51.7079609,11.2237359
+
+Darstellung: vorhandenes Salmoniden-Schema (violetter Unterleger/Halo) verwenden.

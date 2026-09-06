@@ -1,0 +1,295 @@
+V19 – Nachprüfung der B-Fälle aus V18
+
+B-Fälle Ausgang: 286
+Nach strengeren Sekundärkriterien zu A hochgestuft und als PBF-Ufermarker gesetzt: 166
+Weiterhin B/prüfen: 120
+
+HOCHGESTUFT:
+1. Flutbrücke bei Pratau: 51.8505550,12.6427510 | Ref 236m | Vorsprung 103m | PBF 0.32ha
+1. Teich des Doppelstaubeckens am Mammendorfer Weg: 52.1910640,11.4218550 | Ref 260m | Vorsprung 97m | PBF 0.69ha
+2 Teiche im OT Hohen: 51.5665610,12.0710930 | Ref 407m | Vorsprung 889m | PBF 0.13ha
+2. Tonstich in Beekwiesen bei Salzwedel: 52.8678340,11.0951350 | Ref 413m | Vorsprung 94m | PBF 0.04ha
+Aller von BAB 2 bis Landesgrenze Niedersachsen bei Saaldorf: 52.2777560,11.0689560 | Ref 283m | Vorsprung 109m | PBF 0.12ha
+Alte Badeanstalt Kemberg: 51.7715840,12.6233290 | Ref 363m | Vorsprung 82m | PBF 0.74ha
+Alte Badeanstalt bei Jahrstedt: 52.5540590,10.9820470 | Ref 498m | Vorsprung 122m | PBF 0.14ha
+Alte Kiesgrube (Rabe) bei Groß Ammensleben: 52.2413230,11.5442440 | Ref 447m | Vorsprung 162m | PBF 0.58ha
+Alter Tagebau Gerlebogk: 51.7014350,11.8313730 | Ref 403m | Vorsprung 144m | PBF 9.02ha
+Altes Bad Wellen: 52.1434320,11.4485100 | Ref 427m | Vorsprung 125m | PBF 0.15ha
+Augustateich in Pfaffendorf: 51.7031650,11.9011280 | Ref 452m | Vorsprung 772m | PBF 2.23ha
+Baggerkiethe Köthen: 51.7693580,11.9828590 | Ref 239m | Vorsprung 78m | PBF 0.25ha
+Baggerloch Kelterer bei Rothensee: 52.1993470,11.6592510 | Ref 102m | Vorsprung 101m | PBF 0.05ha
+Bauernwiehl bei Fischbeck: 52.5309610,12.0010940 | Ref 164m | Vorsprung 95m | PBF 0.99ha
+Beamtenteich Grube Alfred: 51.9432210,11.8031040 | Ref 497m | Vorsprung 136m | PBF 3.12ha
+Bergrat-Müller Teich bei Friedrichsbrunn: 51.6790070,11.0615950 | Ref 164m | Vorsprung 85m | PBF 0.03ha
+Biotop Am Anger Wolmirstedt: 52.2496230,11.6607390 | Ref 117m | Vorsprung 92m | PBF 1.78ha
+Blauer See Sandauerholz: 52.8085340,11.9837340 | Ref 415m | Vorsprung 175m | PBF 1.40ha
+Blechbudenteich bei Mieste/Breiteiche: 52.4472390,11.2085470 | Ref 401m | Vorsprung 507m | PBF 1.38ha
+Bruch 3 bei Breitenhagen: 51.9366390,11.9307120 | Ref 403m | Vorsprung 105m | PBF 0.24ha
+Bölsdorfer Tanger: 52.5221190,11.9522540 | Ref 464m | Vorsprung 180m | PBF 0.30ha
+Bürgersee in Aken: 51.8583210,12.0736330 | Ref 327m | Vorsprung 84m | PBF 0.06ha
+Das Heisterrevier bei Losenrade: 52.9802920,11.7502000 | Ref 68m | Vorsprung 66m | PBF 1.01ha
+Der Haken am Hausberg bei Losenrade: 52.9802920,11.7502000 | Ref 68m | Vorsprung 66m | PBF 1.01ha
+Dorfteich Dammendorf: 51.5823720,12.1375930 | Ref 427m | Vorsprung 586m | PBF 0.94ha
+Dorfteich Klieken: 51.8890230,12.3703410 | Ref 134m | Vorsprung 77m | PBF 0.12ha
+Dorfteich Passbruch: 51.5531600,11.1262010 | Ref 467m | Vorsprung 259m | PBF 0.18ha
+Dorfteich Schwerz: 51.5632740,12.1318960 | Ref 444m | Vorsprung 903m | PBF 0.47ha
+Dorfteich Thalheim: 51.6480950,12.2285930 | Ref 246m | Vorsprung 59m | PBF 0.03ha
+Dorfteich in Nordgermersleben: 52.2129660,11.3267570 | Ref 426m | Vorsprung 894m | PBF 0.49ha
+Dornburger See: 52.0302940,11.8805120 | Ref 121m | Vorsprung 89m | PBF 0.92ha
+Dr. Götz-Teich: 52.1707930,11.6471920 | Ref 237m | Vorsprung 99m | PBF 0.17ha
+Dröstekolk Pratau: 51.8505550,12.6427510 | Ref 236m | Vorsprung 103m | PBF 0.32ha
+Eisenbahnerbruch bei Losenrade: 52.9802920,11.7502000 | Ref 68m | Vorsprung 66m | PBF 1.01ha
+Elbumflut-Steinhafen: 52.0402830,11.8384570 | Ref 465m | Vorsprung 198m | PBF 15.67ha
+Ententeich in Planena: 51.4198550,11.9598550 | Ref 102m | Vorsprung 102m | PBF 5.87ha
+Erdkuhle bei Rothensee: 52.1898870,11.6596820 | Ref 107m | Vorsprung 57m | PBF 2.81ha
+Feldlache in der Aue bei Nienburg: 51.8322740,11.7732110 | Ref 416m | Vorsprung 90m | PBF 0.69ha
+Fenn in Möser: 52.2228950,11.7871690 | Ref 449m | Vorsprung 591m | PBF 0.48ha
+Fischereiberg bei Löderburg: 51.8903410,11.5084740 | Ref 205m | Vorsprung 63m | PBF 2.86ha
+Flachspuhl bei Erxleben: 52.7462560,11.7687250 | Ref 450m | Vorsprung 1307m | PBF 0.29ha
+Flutbrücke 2 (Bude 100) bei Pratau: 51.8505550,12.6427510 | Ref 236m | Vorsprung 103m | PBF 0.32ha
+Gartenteich Rätzlingen: 52.4067090,11.1186680 | Ref 410m | Vorsprung 1173m | PBF 0.17ha
+Glockenteich Langenweddingen: 52.0307860,11.5185110 | Ref 154m | Vorsprung 69m | PBF 0.09ha
+Grasteich Spora: 51.0424130,12.2794150 | Ref 302m | Vorsprung 96m | PBF 0.03ha
+Große Brack Beuster: 52.9411470,11.8215700 | Ref 192m | Vorsprung 95m | PBF 0.13ha
+Große Sandfürchen bei Osternienburg: 51.7988850,12.0395370 | Ref 169m | Vorsprung 105m | PBF 0.68ha
+Großer Kiesbagger bei Wolmirstedt: 52.2496230,11.6607390 | Ref 117m | Vorsprung 92m | PBF 1.78ha
+Großer Rußteich Osternienburg: 51.7988850,12.0395370 | Ref 169m | Vorsprung 105m | PBF 0.68ha
+Großer Schönfelder See: 52.7298080,12.0895740 | Ref 368m | Vorsprung 99m | PBF 9.36ha
+Großer Siebersteinsteich bei Ballenstedt: 51.7086690,11.1762980 | Ref 498m | Vorsprung 117m | PBF 3.01ha
+Großer Teich Bitterfeld: 51.6265500,12.3298630 | Ref 472m | Vorsprung 1191m | PBF 0.85ha
+Großer Wiendorfer Teich: 51.7148960,11.8146980 | Ref 310m | Vorsprung 92m | PBF 23.61ha
+Grubenteich bei Osternienburg: 51.7988850,12.0395370 | Ref 169m | Vorsprung 105m | PBF 0.68ha
+Gründel Teich bei Teutschenthal: 51.4600840,11.7700790 | Ref 61m | Vorsprung 61m | PBF 1.10ha
+Gutsteich Kleinsantersleben bei Schackensleben: 52.2037280,11.4221630 | Ref 490m | Vorsprung 369m | PBF 0.32ha
+Haidteich bei Bebertal: 52.2564830,11.3193450 | Ref 413m | Vorsprung 475m | PBF 0.82ha
+Hasenteich bei Osternienburg: 51.7988850,12.0395370 | Ref 169m | Vorsprung 105m | PBF 0.68ha
+Heckenrosensteinbruch (Polkenbruch) bei Altenhausen: 52.2966100,11.2522460 | Ref 433m | Vorsprung 912m | PBF 0.22ha
+Heidesee in Nietleben: 51.4834650,11.8905910 | Ref 409m | Vorsprung 573m | PBF 0.85ha
+Heiliger See bei Plötzky: 52.0509650,11.7596330 | Ref 162m | Vorsprung 74m | PBF 0.53ha
+Herren- und Bauernteich in Herrgengoßerstedt: 51.1423020,11.4547030 | Ref 492m | Vorsprung 177m | PBF 0.68ha
+Hohndorfer Rinne bei Mühlanger: 51.8605160,12.7057830 | Ref 362m | Vorsprung 96m | PBF 0.40ha
+Holzmühlenteich in Flechtingen: 52.3117450,11.2029380 | Ref 469m | Vorsprung 144m | PBF 2.69ha
+Hörsinger Spitze bei Hörsingen: 52.2730050,11.1796990 | Ref 413m | Vorsprung 783m | PBF 0.46ha
+Inselteich Glebitzsch: 51.5920430,12.1846930 | Ref 468m | Vorsprung 149m | PBF 0.19ha
+Jaeneckes Teiche bei Stendal: 52.5992280,11.8790530 | Ref 145m | Vorsprung 78m | PBF 0.35ha
+Kaltes Loch bei Randau: 52.0586380,11.7076020 | Ref 244m | Vorsprung 67m | PBF 0.15ha
+Karoline bei Piethen: 51.6722760,11.9444450 | Ref 480m | Vorsprung 412m | PBF 0.09ha
+Karpfenteich Biethe im OT Roßlau: 51.8821510,12.2210130 | Ref 345m | Vorsprung 104m | PBF 1.57ha
+Katzenkolk bei Schartau: 52.2794490,11.7727580 | Ref 227m | Vorsprung 60m | PBF 0.36ha
+Kiesbaggerloch bei Glinde: 52.0097540,11.8301080 | Ref 230m | Vorsprung 88m | PBF 49.90ha
+Kiesgrube Büden Ostufer: 52.1511650,11.8268560 | Ref 412m | Vorsprung 602m | PBF 3.41ha
+Kiesgrube Dessauer Str. Löbertiz: 51.6575430,12.1626980 | Ref 412m | Vorsprung 344m | PBF 2.18ha
+Kiesgrube Loburg Teilfeld 2: 52.1075910,12.0614480 | Ref 405m | Vorsprung 80m | PBF 5.59ha
+Kiesgrube Netzband bei Derben: 52.4084210,11.9817120 | Ref 319m | Vorsprung 90m | PBF 3.21ha
+Kiesgrube zwischen Aschersleben und Hoym: 51.7362900,11.3791400 | Ref 459m | Vorsprung 1078m | PBF 0.68ha
+Kiesgruben Wolterslage: 52.8128390,11.8487180 | Ref 401m | Vorsprung 100m | PBF 0.60ha
+Kiessandtagebau Ditfurt I: 51.8306230,11.2283500 | Ref 462m | Vorsprung 153m | PBF 18.43ha
+Kiessandtagebau Gnetsch/Riesdorf: 51.6908070,12.0837960 | Ref 450m | Vorsprung 248m | PBF 0.12ha
+Kiessandtagebaurestloch Sollnitz 1: 51.7712000,12.3152570 | Ref 485m | Vorsprung 173m | PBF 3.18ha
+Kirchbreite bei Barby: 51.9672890,11.8160860 | Ref 479m | Vorsprung 837m | PBF 0.80ha
+Kl. und Gr.Loch bei Pratau (3 Eichen): 51.8505550,12.6427510 | Ref 236m | Vorsprung 103m | PBF 0.32ha
+Kleiner Angersdorfer Teich: 51.4678640,11.9078020 | Ref 492m | Vorsprung 272m | PBF 4.93ha
+Kleiner Kiesbagger bei Wolmirstedt: 52.2496230,11.6607390 | Ref 117m | Vorsprung 92m | PBF 1.78ha
+Kleiner Riß bei Dabrun (Schleienloch): 51.8411170,12.7102740 | Ref 147m | Vorsprung 98m | PBF 0.23ha
+Kleiner Rußteich Osternienburg: 51.7988850,12.0395370 | Ref 169m | Vorsprung 105m | PBF 0.68ha
+Kleinwasserspeicher Ziegelrode: 51.5532850,11.4430880 | Ref 466m | Vorsprung 424m | PBF 0.66ha
+Klinkerteich bei Bad Schmiedeberg: 51.6902120,12.7498520 | Ref 42m | Vorsprung 61m | PBF 0.07ha
+Kolk am Schloßpark Neugattersleben: 51.8502290,11.7010070 | Ref 108m | Vorsprung 86m | PBF 0.44ha
+Koppelteiche Hundisburg: 52.2533900,11.3982450 | Ref 411m | Vorsprung 413m | PBF 0.27ha
+Kreuz-/Salzteich Löderburg: 51.8847010,11.5442070 | Ref 70m | Vorsprung 86m | PBF 8.59ha
+Kuhlienteich bei Pratau: 51.8498480,12.6468490 | Ref 288m | Vorsprung 95m | PBF 2.55ha
+Kuhweide bei Losenrade: 52.9427710,11.8217010 | Ref 160m | Vorsprung 83m | PBF 0.08ha
+Lache bei Hohenerxleben: 51.8556150,11.6455320 | Ref 176m | Vorsprung 71m | PBF 0.80ha
+Marthateich bei Wansleben: 51.4600840,11.7700790 | Ref 61m | Vorsprung 61m | PBF 1.10ha
+Mulmker Parkteiche: 51.9236030,10.8376950 | Ref 465m | Vorsprung 85m | PBF 0.19ha
+Mühlaller mit Regenauffangbecken bei Oebisfelde: 52.4312160,10.9859990 | Ref 451m | Vorsprung 259m | PBF 0.11ha
+Müller´s Loch Lieskau: 51.5010130,11.8440670 | Ref 364m | Vorsprung 109m | PBF 0.73ha
+Nachthainichte bei Aken: 51.8491060,11.9784120 | Ref 296m | Vorsprung 103m | PBF 5.43ha
+Nuthe im Landkreis Anhalt-Bitterfeld bis Walternienburg: 51.9591140,12.0263330 | Ref 408m | Vorsprung 378m | PBF 0.32ha
+Pappelloch Rösa: 51.6076250,12.4733460 | Ref 475m | Vorsprung 300m | PBF 1.02ha
+Parkteich zu Großjena: 51.1907560,11.7902090 | Ref 184m | Vorsprung 59m | PBF 0.59ha
+Pferdeteich Glebitzsch: 51.5920430,12.1846930 | Ref 468m | Vorsprung 149m | PBF 0.19ha
+Prozeßbusch in Dannefeld: 52.5265290,11.1522610 | Ref 441m | Vorsprung 106m | PBF 0.13ha
+Pulverweidenteich: 51.4709070,11.9470910 | Ref 400m | Vorsprung 290m | PBF 11.59ha
+Riß Neue Wiese Wartenburg: 51.8205120,12.7904380 | Ref 176m | Vorsprung 75m | PBF 11.11ha
+Roter See bei Rotta: 51.7806340,12.5532350 | Ref 431m | Vorsprung 1337m | PBF 10.82ha
+Röthekolk bei Wartenburg: 51.8127560,12.7743710 | Ref 454m | Vorsprung 131m | PBF 0.19ha
+Rötlache bei Elster: 51.8090140,12.8381780 | Ref 191m | Vorsprung 105m | PBF 0.11ha
+Rüdels Teich bei Helfta: 51.5228530,11.5608500 | Ref 422m | Vorsprung 849m | PBF 1.32ha
+Sackteich in Sangerhausen: 51.4826780,11.3115360 | Ref 415m | Vorsprung 136m | PBF 0.72ha
+Salzteich Osternienburg: 51.8113490,12.0167200 | Ref 345m | Vorsprung 85m | PBF 1.47ha
+Sandebreite bei Seegrehna: 51.8530880,12.5447100 | Ref 491m | Vorsprung 116m | PBF 0.21ha
+Sandekolk bei Dabrun: 51.8401840,12.7194890 | Ref 81m | Vorsprung 60m | PBF 0.88ha
+Sandkolk Bleddin: 51.7792220,12.7972550 | Ref 216m | Vorsprung 77m | PBF 0.04ha
+Schacht 9 bei Eggersdorf: 51.9700720,11.6892610 | Ref 100m | Vorsprung 97m | PBF 1.83ha
+Schachtteich Eggersdorf: 51.9694240,11.6969500 | Ref 298m | Vorsprung 93m | PBF 1.59ha
+Schloßteich und 2 Nebenteiche in Leitzkau: 52.0664240,11.9489490 | Ref 443m | Vorsprung 128m | PBF 0.51ha
+Schloßteiche Freckleben: 51.6978350,11.5437040 | Ref 391m | Vorsprung 86m | PBF 0.18ha
+Schluft Priesitz: 51.6979060,12.8367240 | Ref 356m | Vorsprung 95m | PBF 0.25ha
+Schlüdenlanke (Elbnebengewässer) bei Arneburg: 52.6608710,12.0081530 | Ref 181m | Vorsprung 78m | PBF 0.17ha
+Schmiedeteich Schwemsal: 51.6266520,12.5567030 | Ref 458m | Vorsprung 184m | PBF 0.10ha
+Schmoner Stausee: 51.3381340,11.5276800 | Ref 280m | Vorsprung 103m | PBF 0.03ha
+Schwanenteich in Stendal: 52.6088880,11.8743700 | Ref 335m | Vorsprung 97m | PBF 0.03ha
+Schwarzer Krüger bei Randau: 52.0586380,11.7076020 | Ref 244m | Vorsprung 67m | PBF 0.15ha
+Schwarzes Wasser bei Seegrehna: 51.8591900,12.5384400 | Ref 207m | Vorsprung 71m | PBF 0.36ha
+Schäferteich in Stedten: 51.4426790,11.6841280 | Ref 433m | Vorsprung 228m | PBF 0.14ha
+Siel Zipkeleben: 52.0962360,11.7183810 | Ref 448m | Vorsprung 138m | PBF 0.04ha
+Sollnitzer See: 51.7712000,12.3152570 | Ref 485m | Vorsprung 173m | PBF 3.18ha
+Spittelwasser Jeßnitz: 51.6817520,12.2944780 | Ref 383m | Vorsprung 97m | PBF 0.03ha
+Steinbrüche Nordhusen: 52.2528460,11.3852640 | Ref 496m | Vorsprung 164m | PBF 0.16ha
+Steinkolk bei Glindenberg: 52.2598480,11.6917820 | Ref 220m | Vorsprung 80m | PBF 2.52ha
+Stockscher Teich bei Wolmirsleben: 51.9497040,11.4756550 | Ref 483m | Vorsprung 151m | PBF 3.59ha
+Streitwerder bei Losenrade: 52.9724580,11.7659220 | Ref 402m | Vorsprung 218m | PBF 0.05ha
+Sträucherteich Osternienburg: 51.7988850,12.0395370 | Ref 169m | Vorsprung 105m | PBF 0.68ha
+Tagebaurestloch Golpa II (Gurke) bei Zschornewitz: 51.7020600,12.3837870 | Ref 167m | Vorsprung 57m | PBF 0.22ha
+Tagebaurestloch bei Gostau: 51.2203710,12.1063610 | Ref 440m | Vorsprung 1324m | PBF 6.50ha
+Tankstellenloch bei Fischbeck: 52.5468240,12.0121120 | Ref 431m | Vorsprung 373m | PBF 1.94ha
+Teich II Osternienburg: 51.7988850,12.0395370 | Ref 169m | Vorsprung 105m | PBF 0.68ha
+Teich Karlsrode: 51.5467210,11.0529070 | Ref 459m | Vorsprung 648m | PBF 0.37ha
+Teich am Park Schrenz: 51.5978070,12.0642260 | Ref 407m | Vorsprung 204m | PBF 0.10ha
+Teich am Passendorfer Damm: 51.4667110,11.9199140 | Ref 423m | Vorsprung 243m | PBF 0.20ha
+Teich am ehemaligen Agrarflugplatz bei Lockstedt: 52.6574550,11.2141870 | Ref 444m | Vorsprung 800m | PBF 0.58ha
+Teich an der Gellertstraße: 51.4773350,11.9052870 | Ref 468m | Vorsprung 129m | PBF 0.21ha
+Teich im Park Peseckendorf: 52.0262600,11.3200380 | Ref 480m | Vorsprung 85m | PBF 0.56ha
+Teich in Beyernaumburg/Othal: 51.4634470,11.3627320 | Ref 471m | Vorsprung 1167m | PBF 0.40ha
+Teich in Hemsdorf: 52.1369480,11.3966270 | Ref 430m | Vorsprung 1401m | PBF 0.09ha
+Teich in Rampitz: 51.3035750,12.1328740 | Ref 478m | Vorsprung 333m | PBF 0.17ha
+Teich in Thalschütz: 51.3035750,12.1328740 | Ref 478m | Vorsprung 333m | PBF 0.17ha
+Tongrube Möllensdorf: 51.9195770,12.5390050 | Ref 110m | Vorsprung 63m | PBF 0.14ha
+Tonloch Lauraberg Röblingen: 51.4577980,11.6606420 | Ref 291m | Vorsprung 101m | PBF 0.84ha
+Undank I bei Löderburg: 51.8915080,11.5187300 | Ref 341m | Vorsprung 92m | PBF 1.73ha
+Undank II bei Löderburg: 51.8903410,11.5084740 | Ref 205m | Vorsprung 63m | PBF 2.86ha
+Unterholz und Haken bei Rogätz: 52.3067010,11.7570020 | Ref 481m | Vorsprung 163m | PBF 0.35ha
+Wahrburger Tonkuhle: 52.5974540,11.8036160 | Ref 424m | Vorsprung 1277m | PBF 0.58ha
+Wal in Göbitz: 51.0873880,12.1838350 | Ref 438m | Vorsprung 191m | PBF 0.20ha
+Waldmühlenlanke bei Parey: 52.3701630,11.9586400 | Ref 116m | Vorsprung 77m | PBF 0.14ha
+Waldteich Thalheim: 51.6468940,12.2438810 | Ref 475m | Vorsprung 207m | PBF 0.42ha
+Wiemeckenbruch bei Belsdorf: 52.3357120,11.1594430 | Ref 499m | Vorsprung 737m | PBF 0.19ha
+Wiesenteich Lösau: 51.2270390,12.0275430 | Ref 404m | Vorsprung 794m | PBF 0.18ha
+Winkelwiesenteich Uchtdorf: 52.4167840,11.7713130 | Ref 427m | Vorsprung 767m | PBF 0.22ha
+Wolfsloch 1 und 2 bei Parey: 52.3904580,11.9316410 | Ref 179m | Vorsprung 98m | PBF 0.60ha
+Zernau-See bei Mützel: 52.3772970,12.1705540 | Ref 442m | Vorsprung 1850m | PBF 5.97ha
+Ziegeleiteich am Bahnhof Altenhausen: 52.2627440,11.2557350 | Ref 445m | Vorsprung 114m | PBF 0.14ha
+Zuckerteich bei Osternienburg: 51.8113490,12.0167200 | Ref 345m | Vorsprung 85m | PBF 1.47ha
+
+NICHT HOCHGESTUFT:
+1. Kiesgrube an der Zufahrt zum Kieswerk Rogätz: Ref 250m | Vorsprung 58m
+3 Teiche Rosenhagen bei Erxleben: Ref 427m | Vorsprung 64m
+4 Wallstiche an den Mittelhölzern bei Wörlitz: Ref 425m | Vorsprung 78m
+Aller westlich von Everingen: Ref 554m | Vorsprung 101m
+Altarm am Hornissenberg bei Kelbra: Ref 562m | Vorsprung 428m
+An der Tränke Ochtmersleben: Ref 566m | Vorsprung 243m
+Badebruch bei Breitenhagen: Ref 411m | Vorsprung 50m
+Baggersee Feldneuendorf: Ref 563m | Vorsprung 118m
+Bauermeisterbruch Löbejün: Ref 518m | Vorsprung 677m
+Betonwerkteich V bei Gröbzig: Ref 569m | Vorsprung 218m
+Blaues Auge Reinsdorf: Ref 633m | Vorsprung 1088m
+Bleddiner Riß: Ref 145m | Vorsprung 55m
+Brauhausteich Schkopau: Ref 314m | Vorsprung 56m
+Brockenstedter Mühle: Ref 620m | Vorsprung 74m
+Bruch 1 bei Breitenhagen: Ref 411m | Vorsprung 50m
+Bräken bei Trebitz: Ref 500m | Vorsprung 233m
+Dammloch Beesenlaublingen: Ref 301m | Vorsprung 56m
+Das Loch Annaburg: Ref 629m | Vorsprung 578m
+Deutsche Grube Zscherndorf: Ref 540m | Vorsprung 613m
+Dorfteich Nempitz: Ref 534m | Vorsprung 1076m
+Dorfteich Oebles-Schlechtewitz: Ref 250m | Vorsprung 55m
+Dorfteich Ovelgünne: Ref 560m | Vorsprung 894m
+Dorfteich Plößnitz: Ref 598m | Vorsprung 315m
+Dorfteich Steimke: Ref 546m | Vorsprung 1240m
+Dorfteich Tundersleben: Ref 535m | Vorsprung 1482m
+Dorfteiche in Ampfurth: Ref 163m | Vorsprung 50m
+Drähningensee bei Breitenhagen: Ref 519m | Vorsprung 515m
+Elbnebengewässer bei Hämerten: Ref 561m | Vorsprung 84m
+Elsdorfer Sandkiete: Ref 381m | Vorsprung 51m
+Erichsburger Teich bei Friedrichsbrunn: Ref 441m | Vorsprung 77m
+Feldschlößchen bei Piethen: Ref 333m | Vorsprung 70m
+Feuerlöschteich Gerstewitz: Ref 551m | Vorsprung 394m
+Fischteich Osterwieck: Ref 596m | Vorsprung 529m
+Flottenteich Weddersleben: Ref 608m | Vorsprung 811m
+Friedhofsteich Neustadt: Ref 548m | Vorsprung 538m
+Fährsee an der Straße zum OT Roßlau: Ref 574m | Vorsprung 178m
+Försterteich bei Jerchel: Ref 529m | Vorsprung 871m
+Gerwischer Baggersee I: Ref 531m | Vorsprung 60m
+Gewässer Feldneuendorf bei Seehausen: Ref 563m | Vorsprung 118m
+Gewässer Gemarkung Buch: Ref 340m | Vorsprung 64m
+Gewässer an der Seilbahn I: Ref 319m | Vorsprung 75m
+Große Kabel (Langes Loch) bei Aken: Ref 391m | Vorsprung 56m
+Große Röthe Neuferchau: Ref 332m | Vorsprung 71m
+Großer Dachsteich bei Ballenstedt: Ref 549m | Vorsprung 157m
+Großes Hakenloch bei Vockerode: Ref 512m | Vorsprung 259m
+Grubenteich bei Neidschütz: Ref 601m | Vorsprung 759m
+Gänseteich in Söllichau: Ref 623m | Vorsprung 695m
+Halberstädter See 1 (Badesee): Ref 564m | Vorsprung 57m
+Hasselteich Droyßig: Ref 541m | Vorsprung 334m
+Herrenteich bei Tollwitz: Ref 315m | Vorsprung 78m
+Ihlau bei Wettin: Ref 507m | Vorsprung 534m
+Jägerteich bei Söllichau: Ref 550m | Vorsprung 828m
+Kalksteinbruch in Neustadt: Ref 382m | Vorsprung 68m
+Kiesgrube Beesenlaublingen: Ref 468m | Vorsprung 61m
+Kiesgrube Kuhberge: Ref 636m | Vorsprung 520m
+Kiesgrube Schwimmbad bei Wendemark: Ref 577m | Vorsprung 118m
+Kiesgrube Wernitz: Ref 553m | Vorsprung 923m
+Kiesgrube Zabakuck: Ref 459m | Vorsprung 60m
+Kiesgrube an der Froser Straße: Ref 626m | Vorsprung 203m
+Kiesgrube an der MTS in Parey: Ref 643m | Vorsprung 102m
+Kiesgrube bei Ditfurt: Ref 576m | Vorsprung 266m
+Kiessandtagebau Landsberg: Ref 531m | Vorsprung 166m
+Kiessandtagebau Wallhausen: Ref 553m | Vorsprung 155m
+Kiessee 1 Wallendorf: Ref 645m | Vorsprung 68m
+Kiessee Gäde bei Solpke: Ref 529m | Vorsprung 871m
+Kleiner See bei Schönfeld: Ref 79m | Vorsprung 51m
+Kreutzkolk in Uetz: Ref 580m | Vorsprung 547m
+Kringel Alsleben: Ref 586m | Vorsprung 1138m
+Küchenhorn bei Wolmirstedt: Ref 308m | Vorsprung 70m
+Magdalenenteich in Aken: Ref 542m | Vorsprung 70m
+Malerteich in Günthersdorf: Ref 279m | Vorsprung 80m
+Margaretenhofteich bei Oranienbaum: Ref 260m | Vorsprung 56m
+Meuchener Teich hinter dem Jugendclub: Ref 506m | Vorsprung 663m
+Mittelteich Rohmsdorf: Ref 585m | Vorsprung 484m
+Möhlauer See: Ref 521m | Vorsprung 269m
+Mühlenteich in Schermcke: Ref 564m | Vorsprung 258m
+Mühlteich in Tornau: Ref 317m | Vorsprung 79m
+Müllerteich Diebzig: Ref 511m | Vorsprung 1301m
+Nachtwiese bei Bebertal: Ref 359m | Vorsprung 77m
+Neustädter See I: Ref 577m | Vorsprung 114m
+Nonnenspringteich Haldensleben: Ref 335m | Vorsprung 59m
+Nonnental Hornurg: Ref 595m | Vorsprung 2031m
+Ottilienteich bei Röblingen: Ref 312m | Vorsprung 58m
+Pappelteich bei Hobeck: Ref 509m | Vorsprung 1550m
+Parkteich Tollwitz: Ref 315m | Vorsprung 78m
+Pfütze bei Tollwitz: Ref 315m | Vorsprung 78m
+Plattensee-Große Wiesen bei Winterfeld: Ref 580m | Vorsprung 742m
+Rost‘s Loch in Lieskau: Ref 370m | Vorsprung 74m
+Runder Teich in Siegersleben: Ref 508m | Vorsprung 54m
+Sauergrund bei Dannefeld: Ref 275m | Vorsprung 54m
+Schachtteich bei Piethen: Ref 544m | Vorsprung 99m
+Schillingsteich in Niendorf: Ref 539m | Vorsprung 506m
+Schloßteich Rottleberode: Ref 553m | Vorsprung 758m
+Schulteich Schwemsal: Ref 471m | Vorsprung 65m
+Sohl bei Piethen: Ref 333m | Vorsprung 70m
+Speetze vom Ablauf Schloßteich Flechtingen bis Mündung in die Aller: Ref 648m | Vorsprung 155m
+Speicher am Butterberg Breggenstedt/Ivenrode: Ref 386m | Vorsprung 73m
+Staubecken Tollwitz: Ref 339m | Vorsprung 78m
+Steinbruch Ostrau: Ref 510m | Vorsprung 1190m
+Steinföhr Randau-Calenberge: Ref 533m | Vorsprung 344m
+Teich Seegarten Schierau: Ref 337m | Vorsprung 75m
+Teich am Siekweg in Rottmersleben: Ref 557m | Vorsprung 515m
+Teich in Göbel: Ref 541m | Vorsprung 118m
+Teiche in Zscherneddel: Ref 399m | Vorsprung 52m
+Teilfeld 1 Loburg: Ref 562m | Vorsprung 237m
+Tiefer Kolk in Selbitz: Ref 560m | Vorsprung 945m
+Tiefes Loch Bleddin: Ref 145m | Vorsprung 55m
+Tonkiete Schortewitz: Ref 132m | Vorsprung 51m
+Tonkuhle bei Altenweddingen: Ref 528m | Vorsprung 1069m
+Tonloch Preußlitz: Ref 522m | Vorsprung 359m
+Tonloch bei Hettstedt: Ref 554m | Vorsprung 733m
+Trollsee bei Bölsdorf: Ref 563m | Vorsprung 568m
+Unterer Dorfteich Söllichau: Ref 635m | Vorsprung 1542m
+Villa-Teich Gerlebogk: Ref 349m | Vorsprung 53m
+Wasserrückhaltebecken (Grube A-Sandwäsche) bei Nudersdorf: Ref 506m | Vorsprung 575m
+Wenddorfteich in Sandau: Ref 555m | Vorsprung 89m
+Ziegeleiteich in Klein Schwarzlosen: Ref 549m | Vorsprung 2162m
+Ziegeleiteich in Schafstädt: Ref 313m | Vorsprung 73m
+Zweier- und Dreierteich am Rosarium Sangerhausen: Ref 549m | Vorsprung 56m
+ehemaliges Schwimmbad Raguhn: Ref 547m | Vorsprung 1498m

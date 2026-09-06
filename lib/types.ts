@@ -42,6 +42,15 @@ export interface FishingWater {
   spots: FishingSpot[];
   parkings: ParkingSpot[];
   sourceStatus: SourceStatus;
+  route?: [number, number][];
+  bankSide?: "both" | "left" | "right";
+  riverKm?: string;
+  restrictions?: string[];
+  waterwayName?: string;
+  sectionLabel?: string;
+  salmonid?: boolean;
+  salmonidRoute?: [number, number][];
+  osmFeatureId?: string;
 }
 
 export interface CatchEntry {

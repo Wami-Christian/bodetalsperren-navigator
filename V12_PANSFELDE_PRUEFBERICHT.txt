@@ -1,0 +1,7 @@
+V12 – Pansfelde: Angelatlas/LAV-Identität + lokales PBF-Ufer
+
+Zuordnungskriterien:
+- LAV-Flächen: Schwenneckestau 0,50 ha; Oberer Teich 0,24 ha; Unterer Teich 0,23 ha.
+- Lokale PBF-Wasserflächen werden räumlich in Dorfteiche und Schwenneckestau getrennt.
+- Innerhalb der Gruppen erfolgt die Auswahl über die reale Polygonfläche.
+- Marker liegt anschließend auf einem Vertex des realen PBF-Ufers.

@@ -7,6 +7,9 @@ import { atkisWaterMatchIndex } from "./atkis-water-matches.generated";
 import { bodetalsperrenPremium } from "./bodetalsperren-premium";
 import { angelatlasLavSyncIndex } from "./angelatlas-lav-sync.generated";
 import { finalUnmatchedPositionIndex } from "./final-unmatched-positions.generated";
+import { elbeOverlayByLavNumber } from "./elbe-segments";
+import { waterwayOverlayByLavNumber } from "./waterway-segments";
+import { lavFlowFeatureById } from "./lav-flow-features.generated";
 
 const rappbodeParkings: FishingWater["parkings"] = [
   {
@@ -473,9 +476,33 @@ const enrichedLavCatalog: FishingWater[] = lavCatalog.map((water) => {
   };
 });
 
-export const waters: FishingWater[] = [
+const allWaters: FishingWater[] = [
   ...enrichedFeatured,
   ...enrichedLavCatalog.filter(
     (water) => !featuredLavNumbers.has(water.lavNumber)
   )
 ];
+
+export const waters: FishingWater[] = allWaters.map((water) => {
+  const elbe = water.lavNumber ? elbeOverlayByLavNumber[water.lavNumber] : undefined;
+  const waterway = water.lavNumber ? waterwayOverlayByLavNumber[water.lavNumber] : undefined;
+  const featureMatch = lavFlowFeatureById[water.id];
+  const overlay = elbe ? { ...elbe, waterwayName: "Elbe", sectionLabel: elbe.riverKm ? `Elbe-km ${elbe.riverKm}` : undefined } : waterway;
+  const salmonidFromLavText = [...(water.notes ?? []), water.name]
+    .some((text) => /salmo(?:niden|strecke|gewässer)/i.test(text));
+
+  if (!overlay && !featureMatch) return water;
+
+  return {
+    ...water,
+    ...(overlay ?? {}),
+    ...(featureMatch ? { osmFeatureId: featureMatch.osmFeatureId } : {}),
+    salmonid: overlay?.salmonid ?? salmonidFromLavText,
+    spots: [...(water.spots ?? []), ...((elbe?.spots ?? []))],
+    notes: [
+      ...water.notes,
+      ...(overlay?.sectionLabel ? [overlay.sectionLabel] : []),
+      ...(overlay?.restrictions ?? [])
+    ]
+  };
+});

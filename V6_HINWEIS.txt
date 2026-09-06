@@ -1,0 +1,15 @@
+V6 – erster sicherer Serienlauf
+
+Die bestätigte V5-Methode wurde nicht auf alle Gewässer blind ausgerollt.
+In diesem ersten Batch wurden nur 26 zusätzliche stehende Gewässer
+automatisch übernommen, bei denen
+
+1. der normalisierte LAV-Name exakt zum Namen eines lokalen OSM-natural=water-
+   Objekts passt und
+2. das Objekt höchstens 1,0 km von der offiziellen Angelatlas-Referenz entfernt ist.
+
+Mit dem bereits bestätigten Lüttgenbörnecker Teich sind damit 27
+verifizierte Ufermarker im Paket.
+
+Alle anderen Gewässer bleiben unverändert. Es gibt bei ihnen keinen
+automatischen Sprung auf irgendeine nahe Wasserfläche.

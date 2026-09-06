@@ -1,0 +1,44 @@
+V15 – größerer konservativer Batch auf Basis V14
+Bestehende Marker unverändert.
+Neue Treffer: max. 450 m zur Angelatlas-Referenz, mindestens 90 m Vorsprung vor zweitnächstem PBF-Polygon.
+
+Cobra in Bruckdorf: 51.4499160, 12.0198520 | 40 m | Vorsprung 226 m | ~0.10 ha
+Tonloch östlich der alten Schule: 51.4650440, 11.7644060 | 40 m | Vorsprung 388 m | ~3.73 ha
+Alte Kiesgrube Berga: 51.4499610, 11.0196950 | 45 m | Vorsprung 121 m | ~0.08 ha
+Anglerteiche Apenburg: 52.7100540, 11.2001440 | 47 m | Vorsprung 566 m | ~0.09 ha
+Dorfteich Hohenwarsleben: 52.1799410, 11.5005030 | 48 m | Vorsprung 104 m | ~0.04 ha
+Tonkuhle (Badetonkuhle) in Aschersleben: 51.7700770, 11.4703090 | 52 m | Vorsprung 174 m | ~0.19 ha
+Tonkuhle Nahry Aschersleben: 51.7700770, 11.4703090 | 52 m | Vorsprung 174 m | ~0.19 ha
+Rosianer Stau: 52.0954660, 12.1750830 | 52 m | Vorsprung 1517 m | ~3.91 ha
+Kiesschacht in Kroppenstedt: 51.9497480, 11.3201120 | 54 m | Vorsprung 192 m | ~0.31 ha
+Dorfteich in Breitenrode: 52.4598530, 10.9695840 | 54 m | Vorsprung 1690 m | ~0.16 ha
+Stadionteich in Köthen: 51.7500710, 11.9605710 | 57 m | Vorsprung 197 m | ~0.06 ha
+Klärteich Taucha: 51.1903710, 12.0801070 | 58 m | Vorsprung 2126 m | ~1.87 ha
+Dahlener Kiessee: 52.5752030, 11.8448240 | 58 m | Vorsprung 698 m | ~6.91 ha
+Spitzenlöcher in Elster: 51.8198850, 12.8098990 | 59 m | Vorsprung 98 m | ~0.32 ha
+Tongrube in Bruckdorf: 51.4499180, 12.0102570 | 60 m | Vorsprung 412 m | ~0.97 ha
+Großer Richard bei Sandersdorf: 51.6199730, 12.2695340 | 60 m | Vorsprung 332 m | ~4.90 ha
+Tagebaurestloch Richard I (kleiner Richard) bei Sandersdorf: 51.6199730, 12.2695340 | 60 m | Vorsprung 332 m | ~4.90 ha
+Durchstich bei Pratau: 51.8497450, 12.6104730 | 61 m | Vorsprung 205 m | ~0.08 ha
+Grube Theodor bei Roitzsch: 51.5844610, 12.2682850 | 62 m | Vorsprung 547 m | ~61.98 ha
+Fahrt in Preußlitz: 51.7297950, 11.8100460 | 63 m | Vorsprung 158 m | ~1.31 ha
+Großer Teich hinter der Fahrt in Preußlitz: 51.7297950, 11.8100460 | 63 m | Vorsprung 158 m | ~1.31 ha
+Rohrteichwiese Altenhausen: 52.2600630, 11.2698860 | 63 m | Vorsprung 186 m | ~0.40 ha
+Kiesgrube bei Roßla: 51.4597140, 11.0896780 | 63 m | Vorsprung 175 m | ~2.82 ha
+Teiche am Wasserwerk: 51.4896090, 12.1801220 | 64 m | Vorsprung 238 m | ~0.07 ha
+Dorfteich Sietzsch: 51.4896090, 12.1801220 | 64 m | Vorsprung 238 m | ~0.07 ha
+Bucher Lanke: 52.4799970, 11.9799300 | 69 m | Vorsprung 163 m | ~0.42 ha
+Kiesgrube (Gänseteich) Zwintschöna: 51.4547240, 12.0452720 | 73 m | Vorsprung 175 m | ~4.43 ha
+Zollau bei Glindenberg: 52.2200370, 11.6890840 | 73 m | Vorsprung 616 m | ~0.04 ha
+Mittelsbruch bei Losenrade: 52.9701470, 11.7501350 | 78 m | Vorsprung 264 m | ~0.84 ha
+Kiestagbau (Badesee) bei Prettin: 51.6700070, 12.9099920 | 79 m | Vorsprung 321 m | ~0.76 ha
+Kiesgruben Barbyer Straße Schönebeck: 52.0152380, 11.7750000 | 81 m | Vorsprung 228 m | ~2.51 ha
+Damaschkeplan (2 Teiche) bei Calbe: 51.8694100, 11.7601990 | 82 m | Vorsprung 95 m | ~0.41 ha
+Tagebau Miltern: 52.5646900, 11.9051330 | 87 m | Vorsprung 1106 m | ~4.78 ha
+Große Bräge bei Wörlitz: 51.8498190, 12.4690760 | 87 m | Vorsprung 527 m | ~0.61 ha
+Strandbad Gütersee in Köthen: 51.7699130, 11.9895860 | 90 m | Vorsprung 381 m | ~1.17 ha
+Tonteich Bülzig: 51.8902520, 12.7697370 | 92 m | Vorsprung 163 m | ~0.67 ha
+Obere Aue (FKK): 51.4600900, 11.9284740 | 97 m | Vorsprung 317 m | ~4.99 ha
+Kiesloch Born bei Derben: 52.4099260, 11.9910540 | 97 m | Vorsprung 150 m | ~1.65 ha
+Kiesbaggerloch Löber bei Derben: 52.4099260, 11.9910540 | 97 m | Vorsprung 150 m | ~1.65 ha
+Phönix Nord: 51.0799990, 12.2601090 | 98 m | Vorsprung 562 m | ~4.78 ha

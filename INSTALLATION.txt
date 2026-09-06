@@ -1,0 +1,16 @@
+HarzFishing – Ufer-Snap V3 (namenssicher)
+
+Änderung gegenüber V2:
+- namentlich bestätigte OSM-Gewässer werden zuerst identifiziert,
+  erst danach wird die Angelrute auf deren echte Uferlinie gesetzt.
+- Lüttgenbörnecke bei Börnecke ist mit OSM way 109285362 hinterlegt.
+- Ohne sichere Namenszuordnung wird nur noch sehr konservativ (max. 180 m)
+  gesnappt. Dadurch springt ein ungenauer Angelatlas-Punkt nicht mehr auf
+  eine beliebige fremde Wasserfläche.
+- Fließgewässer-Logik bleibt unverändert.
+
+Installation über aktuellen Projektstand kopieren:
+rmdir /s /q .next
+npm run dev
+
+Erster Test: Lüttgenbörnecke bei Börnecke.

@@ -1,0 +1,27 @@
+V8 – sicherer Namens-Batch auf Basis der funktionierenden V7
+
+Unverändert erhalten:
+- Lüttgenbörnecke bei Börnecke
+- Pappelteich Ermsleben
+
+Neu ergänzt werden ausschließlich Gewässer, für die im lokalen Sachsen-Anhalt-PBF
+ein namentlich passendes natural=water-Objekt eindeutig gefunden wurde.
+Schlüssel ist water.name (wie bei den beiden bestätigten Testfällen), NICHT lavNumber.
+
+Neu:
+- Kiesgrube in Röpzig
+- Schachtteich Milzau
+- Tonloch bei Teicha
+- Dorfteich Nauendorf
+- Naturbad Rehmsdorf
+- Diepold
+- Stillinge Nord
+- Rehsumpf
+- Kleiner Klietzer See
+- Waldsteinbruch Hundisburg
+- Zielitzer See
+- Steinbruch Dahlenwarsleben
+- Badeteich bei Güsen
+- Lübser See
+
+Alle übrigen Gewässer bleiben unverändert. Keine generische Verschiebung.

@@ -1,0 +1,3 @@
+Lineare LAV-Einträge: 122
+Abgedeckt: 122
+Offen: 0

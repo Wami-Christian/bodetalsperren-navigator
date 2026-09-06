@@ -1,0 +1,34 @@
+V19 – neu integrierte Gewässersysteme:
+Barbyer Landgraben
+Biese
+Booser Graben
+Elstermühlgraben
+Fließgraben
+Floßgraben
+Fuhne
+Großer Graben
+Hauptgraben
+Hauptseegraben
+Jeetze
+Kanal Wüsteneutsch
+Kapengraben
+Kleine Saale
+Landgraben
+Landlache
+Lober-Leine-Kanal
+Milde
+Mittelgraben
+Mühlgraben Egeln
+Mühlgraben Wetterzeube
+Neugraben
+Ohre
+Rothenseer Verbindungskanal
+Saale-Leipzig-Kanal
+Südlicher Ringkanal
+Umgehungskanal Halle
+Umgehungskanal Merseburg
+Unstrutflutkanal
+Untere Aue
+Wilhelmskanal
+
+Hinweis: Stillgewässer/Altarme, die im Rohkatalog teils als Fließgewässer klassifiziert sind, wurden nicht zu künstlichen Flusslinien verlängert.

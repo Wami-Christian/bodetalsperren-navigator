@@ -1,0 +1,6 @@
+V16 – Neuer Teich bei Gernrode
+LAV 5-340-03.
+OSM reference center: 51.70562, 11.10362.
+Matched local PBF centroid: 51.7057577, 11.1035868.
+Verified marker on local PBF shoreline: 51.7054670, 11.1034000.
+All existing verified markers from V15 retained.

@@ -1,0 +1,5 @@
+V9 Pansfelde – Kollisionsschutz
+Basis: V8 FIX.
+Die drei aktiven Pansfelder Gewässer werden nicht mehr durch den generischen Ufer-Snap
+auf dasselbe nächstgelegene Wasserpolygon gezogen. Bereits verifizierte Marker bleiben erhalten.
+Es werden bewusst keine geratenen Pansfelde-Koordinaten eingetragen.

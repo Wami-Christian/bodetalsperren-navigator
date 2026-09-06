@@ -1,0 +1,84 @@
+Unique normalized LAV↔OSM named-water matches: 119
+Added safely: 81
+
+Pfefferteich bei Salzwedel -> Pfefferteich | OSM way 88273618 | marker 52.8512670,11.1482150 | spatial confirmation 203m
+Großkaynaer See -> Großkaynaer See | OSM way 23094600 | marker 51.2784690,11.9377770 | spatial confirmation 290m
+Raßnitzer See -> Raßnitzer See | OSM way 158777376 | marker 51.3878870,12.1056790 | spatial confirmation 994m
+Pappelgrund bei Teutschenthal -> Pappelgrund | OSM way 34428381 | marker 51.4609060,11.8397000 | spatial confirmation 174m
+Baggerteich in Naumburg -> Baggerteich | OSM way 27230896 | marker 51.1588700,11.7718290 | spatial confirmation 284m
+Hainbergsee -> Hainbergsee | OSM way 205396214 | marker 51.0349610,12.2850500 | spatial confirmation 325m
+Peisker an der Straße zum OT Roßlau -> Peisker | OSM way 494305731 | marker 51.8585250,12.2280080 | spatial confirmation 234m
+Fährsee an der Straße zum OT Roßlau -> Fährsee | OSM way 26705425 | marker 51.8657840,12.2337510 | spatial confirmation 574m
+Karpfenteich Biethe im OT Roßlau -> Karpfenteich/Biethe | OSM way 640410380 | marker 51.8821510,12.2210130 | spatial confirmation 345m
+Erdkuhle bei Rothensee -> Erdkuhle | OSM way 24288359 | marker 52.1898870,11.6596820 | spatial confirmation 107m
+Barleber See I -> Barleber See I | OSM way 5235760 | marker 52.2261160,11.6502190 | spatial confirmation 255m
+Kirchteich in Neustadt -> Kirchteich | OSM way 28192730 | marker 51.4697500,11.9296870 | spatial confirmation 229m
+Hufeisensee in Kanena -> Hufeisensee | OSM way 164790598 | marker 51.4664840,12.0247360 | spatial confirmation 204m
+Kleiner See bei Schönfeld -> Kleiner See | OSM way 168361416 | marker 52.7203640,12.0491960 | spatial confirmation 79m
+Flachspuhl bei Erxleben -> Flachspuhl | OSM way 203268402 | marker 52.7462560,11.7687250 | spatial confirmation 450m
+Bleichwehl bei Werben/Elbe -> Bleichwehl | OSM way 204643545 | marker 52.8624500,11.9947190 | spatial confirmation 488m
+Stadtwehl in Werben/Elbe -> Stadtwehl | OSM way 204629927 | marker 52.8595490,11.9885520 | spatial confirmation 125m
+Stadtsee in Stendal -> Stadtsee | OSM way 186688652 | marker 52.6063930,11.8436770 | spatial confirmation 759m
+Fieber in Stendal -> Fieber | OSM way 310351246 | marker 52.5474500,11.7602240 | spatial confirmation 324m
+Jaeneckes Teiche bei Stendal -> Jaeneckes Teiche | OSM way 27046822 | marker 52.5992280,11.8790530 | spatial confirmation 145m
+Holzmühlenteich in Flechtingen -> Holzmühlenteich | OSM way 303356656 | marker 52.3117450,11.2029380 | spatial confirmation 469m
+Haidteich bei Bebertal -> Haidteich | OSM way 255556415 | marker 52.2564830,11.3193450 | spatial confirmation 413m
+Törner See bei Bülstringen -> Törner See | OSM way 182332044 | marker 52.3181420,11.3418290 | spatial confirmation 274m
+Papenteich bei Emden -> Papenteich | OSM way 10426017 | marker 52.2337270,11.2935640 | spatial confirmation 143m
+Priesterteich in Eggenstedt -> Priesterteich | OSM way 58123058 | marker 52.1021100,11.2335230 | spatial confirmation 380m
+Moortalsee bei Zielitz/Farsleben -> Moortalsee | OSM way 129211953 | marker 52.2805910,11.6676090 | spatial confirmation 170m
+Alte Kiesgrube (Rabe) bei Groß Ammensleben -> Alte Kiesgrube (Rabe) | OSM way 159693895 | marker 52.2413230,11.5442440 | spatial confirmation 447m
+Jersleber See -> Jersleber See | OSM way 6108850 | marker 52.2351480,11.5851630 | spatial confirmation 216m
+Döbberitz bei Glindenberg -> Döbberitz | OSM way 198258041 | marker 52.2498940,11.6873200 | spatial confirmation 350m
+Daukuhle bei Samswegen -> Daukuhle | OSM way 223391246 | marker 52.2496900,11.5798720 | spatial confirmation 209m
+Pfennigsee bei Farsleben -> Pfennigsee | OSM way 129211955 | marker 52.2691440,11.6673720 | spatial confirmation 256m
+Fenn in Möser -> Fenn | OSM way 30082332 | marker 52.2228950,11.7871690 | spatial confirmation 449m
+Katzenkolk bei Schartau -> Katzenkolk | OSM way 176309335 | marker 52.2794490,11.7727580 | spatial confirmation 227m
+Waldmühlenlanke bei Parey -> Waldmühlenlanke | OSM way 1136247588 | marker 52.3701630,11.9586400 | spatial confirmation 116m
+Pappelteich bei Hobeck -> Pappelteich | OSM way 33950992 | marker 52.0728890,12.0547790 | spatial confirmation 509m
+Erichsburger Teich bei Friedrichsbrunn -> Erichsburger Teich | OSM way 35331539 | marker 51.6794460,11.0648110 | spatial confirmation 441m
+Bergrat-Müller Teich bei Friedrichsbrunn -> Bergrat Müller Teich | OSM way 41416110 | marker 51.6790070,11.0615950 | spatial confirmation 164m
+Großer Dachsteich bei Ballenstedt -> Großer Dachsteich | OSM way 38079829 | marker 51.7124870,11.2149330 | spatial confirmation 549m
+Lettenloch bei Könnern -> Lettenloch | OSM way 102707955 | marker 51.6717620,11.7515910 | spatial confirmation 340m
+Großer Wiendorfer Teich -> Großer Wiendorfer Teich | OSM way 33972938 | marker 51.7148960,11.8146980 | spatial confirmation 310m
+Bläßsee in der Aue bei Altenburg -> Bläßsee | OSM way 438832963 | marker 51.8193130,11.7703380 | spatial confirmation 140m
+Fährlake bei Grünewalde -> Fährlake | OSM way 168964832 | marker 52.0291880,11.7412090 | spatial confirmation 139m
+Röthe bei Schönebeck -> Röthe | OSM way 168428161 | marker 52.0195500,11.7702040 | spatial confirmation 302m
+Bruch 1 bei Breitenhagen -> Bruch 1 | OSM way 95936511 | marker 51.9226340,11.9333190 | spatial confirmation 411m
+Bruch 2 bei Breitenhagen -> Bruch 2 | OSM way 95936505 | marker 51.9290710,11.9277010 | spatial confirmation 220m
+Bruch 3 bei Breitenhagen -> Bruch 3 | OSM way 95936496 | marker 51.9366390,11.9307120 | spatial confirmation 403m
+Badebruch bei Breitenhagen -> Badebruch | OSM way 95936509 | marker 51.9226340,11.9333190 | spatial confirmation 411m
+Krügersee bei Breitenhagen -> Krügersee | OSM way 23874630 | marker 51.9148680,11.9476140 | spatial confirmation 709m
+Salzteich bei Löderburg -> Salzteich | OSM way 18809083 | marker 51.8794620,11.5516040 | spatial confirmation 146m
+Großer Schachtsee bei Wolmirsleben -> Großer Schachtsee | OSM way 19795526 | marker 51.9552640,11.4648790 | spatial confirmation 311m
+Seemann bei Löderburg -> Seemann | OSM way 18809123 | marker 51.8794620,11.5516040 | spatial confirmation 146m
+Laake bei Löderburg -> Laake | OSM way 18809109 | marker 51.8794880,11.5429800 | spatial confirmation 223m
+Alte Mulde in Friedersdorf -> alte Mulde | OSM way 25511602 | marker 51.6450830,12.3450120 | spatial confirmation 157m
+Tonkiete Schortewitz -> Tonkiete Schortewitz | OSM way 112044168 | marker 51.6496420,12.0295960 | spatial confirmation 132m
+Möster altes Wasser -> Möster Altes Wasser | OSM way 25692643 | marker 51.7694300,12.2902700 | spatial confirmation 340m
+Niesauer Stillinge -> Niesauer Stillinge | OSM way 25697688 | marker 51.7601710,12.2904460 | spatial confirmation 320m
+Hausteich in Reupzig -> Hausteich | OSM way 172064954 | marker 51.7379600,12.0685550 | spatial confirmation 273m
+Zuckerteich bei Osternienburg -> Zuckerteich | OSM way 27230898 | marker 51.8113490,12.0167200 | spatial confirmation 345m
+Elsdorfer Sandkiete -> Elsdorfer Sandkiete | OSM way 26986369 | marker 51.7830920,11.9606410 | spatial confirmation 381m
+Magdalenenteich in Aken -> Magdalenenteich | OSM way 88365219 | marker 51.8564720,12.0348370 | spatial confirmation 542m
+Bürgersee in Aken -> Bürgersee | OSM way 265841531 | marker 51.8583210,12.0736330 | spatial confirmation 327m
+Betonwerkteich 3 + 4 bei Gröbzig -> Betonwerkteich 3+4 | OSM way 39531868 | marker 51.6676850,11.8895250 | spatial confirmation 282m
+Kleine Sandfürchen bei Osternienburg -> Kleine Sandfürchen | OSM way 93629837 | marker 51.7998230,12.0309240 | spatial confirmation 130m
+Gödnitzer See -> Gödnitzer See | OSM way 168106290 | marker 51.9980930,11.9125270 | spatial confirmation 914m
+Großes Loch bei Steutz -> Großes Loch bei Steutz | OSM way 639913913 | marker 51.8736200,12.0753990 | spatial confirmation 128m
+Pfaffensee bei Steckby -> Pfaffensee | OSM way 60844426 | marker 51.8891000,12.0286590 | spatial confirmation 200m
+Schiffinge bei Vockerode -> Schiffinge | OSM way 254235028 | marker 51.8588390,12.3326500 | spatial confirmation 258m
+Baggerteich bei Brandis -> Baggerteich | OSM way 27230896 | marker 51.7897840,13.1703780 | spatial confirmation 138m
+Dorfteich Klieken -> Dorfteich Klieken | OSM way 30981525 | marker 51.8890230,12.3703410 | spatial confirmation 134m
+Klinkerteich bei Bad Schmiedeberg -> Klinkerteich | OSM way 94141600 | marker 51.6902120,12.7498520 | spatial confirmation 42m
+Sandekolk bei Pratau -> Sandekolk | OSM way 59712809 | marker 51.8492950,12.6591170 | spatial confirmation 139m
+Bleddiner Riß -> Bleddiner Riß | OSM way 620417506 | marker 51.7897320,12.7883110 | spatial confirmation 145m
+Sandekolk bei Dabrun -> Sandekolk | OSM way 59712809 | marker 51.8401840,12.7194890 | spatial confirmation 81m
+Blumenwinkel bei Seegrehna -> Blumenwinkel | OSM way 303858344 | marker 51.8494800,12.5703990 | spatial confirmation 99m
+Drehkolk bei Seegrehna -> Drehkolk | OSM way 33097446 | marker 51.8494800,12.5703990 | spatial confirmation 99m
+Hauskolk bei Seegrehna -> Hauskolk | OSM way 33097450 | marker 51.8494800,12.5703990 | spatial confirmation 99m
+Hofteich in Stedten -> Hofteich | OSM way 26006947 | marker 51.4436570,11.6875810 | spatial confirmation 471m
+Rüdels Teich bei Helfta -> Rüdels Teich | OSM way 148959667 | marker 51.5228530,11.5608500 | spatial confirmation 422m
+Ölgrundteich bei Hettstedt -> Ölgrundteich | OSM way 110540106 | marker 51.6682540,11.5006870 | spatial confirmation 358m
+Melmensee bei Tilleda -> Melmensee | OSM way 220947062 | marker 51.4090840,11.1712820 | spatial confirmation 235m
+Sackteich in Sangerhausen -> Sackteich | OSM way 166423311 | marker 51.4826780,11.3115360 | spatial confirmation 415m

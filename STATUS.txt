@@ -1,0 +1,9 @@
+HarzFishing automatische Fließgewässer-Prüfliste
+
+AUTO_CANDIDATE: 142
+LOCKED: 39
+UNMATCHED: 2
+
+LOCKED = bereits vorhandener/bestätigter LAV-Abschnitt, wird nicht überschrieben.
+AUTO_CANDIDATE = offizielles Angelatlas-Feature + Referenzposition vorhanden; nächster Schritt ist lokales PBF-Geometrie-Matching.
+REVIEW/UNMATCHED = nicht automatisch integrieren.

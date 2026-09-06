@@ -1,0 +1,8 @@
+V13 – konservativer Folge-Batch auf Basis V12
+
+Bestehende verifizierte Marker werden NICHT überschrieben.
+Neu nur bei eindeutigem räumlichem PBF-Treffer (<=800 m und deutlicher Abstand zum zweitnächsten Polygon).
+
+Kragenteich Roitzsch: 51.5803380, 12.2572400 | Abstand Ref 199 m | PBF-Fläche ~0.00 ha
+Mansfelder Teich: 51.5810340, 11.4301210 | Abstand Ref 175 m | PBF-Fläche ~2.75 ha
+Alte Kiesgrube Katharinenrieth: 51.3983880, 11.3312900 | Abstand Ref 256 m | PBF-Fläche ~1.32 ha

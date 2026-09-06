@@ -1,0 +1,10 @@
+V10 – Pansfelde getrennt zugeordnet
+
+Lokale PBF-Wasserpolygone, nicht Angelatlas-Rundungskoordinaten:
+- Oberer Teich Pansfelde: westlicher Dorfteich
+- Unterer Teich Pansfelde: östlicher Dorfteich
+- Untere Schwenneckestau bei Pansfelde: östliches / unteres Becken des Schwenneckestaus
+
+Die Zuordnung folgt der Fließrichtung der Schwennecke (west -> ost):
+oberhalb = westlicher, unterhalb = östlicher Teich.
+Alle drei Marker verwenden unterschiedliche reale Uferpolygone.

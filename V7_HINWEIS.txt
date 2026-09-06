@@ -1,0 +1,14 @@
+V7 – stabiler Name-Key statt LAV-Nummer
+
+Basis ist wieder die vom Nutzer bestätigte V5.
+
+Geändert:
+- Lüttgenbörnecke bleibt exakt unverändert.
+- Pappelteich Ermsleben wird über den tatsächlich vorhandenen water.name-Key
+  "pappelteich ermsleben" auf einen Uferpunkt seines lokalen PBF-Wasserpolygons gesetzt.
+- Keine Serienzuordnung und kein lavNumber-Key.
+
+Pappelteich Uferpunkt:
+51.7292278, 11.3157937
+
+Das liegt auf dem lokalen Polygon direkt am Pappelteich westlich von Ermsleben.

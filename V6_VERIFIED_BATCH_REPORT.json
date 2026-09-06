@@ -1,0 +1,334 @@
+{
+  "version": "V6_BATCH1",
+  "confirmedReference": "10-370-45 Lüttgenbörnecke bei Börnecke",
+  "automaticMarkers": 26,
+  "totalVerifiedMarkers": 27,
+  "automaticRule": "exact normalized LAV/OSM name + nearest named natural=water way <= 1.0 km from Angelatlas reference",
+  "sourcePbf": "sachsen-anhalt-260904.osm.pbf",
+  "entries": [
+    {
+      "lavNumber": "10-370-45",
+      "lavName": "Lüttgenbörnecke bei Börnecke",
+      "osmName": "Lüttgenbörnecker Teich",
+      "osmWay": 109285362,
+      "shore": [
+        51.829069,
+        11.024324
+      ],
+      "distanceKm": null,
+      "status": "USER_CONFIRMED"
+    },
+    {
+      "lavNumber": "10-210-07",
+      "lavName": "Kiesgrube in Röpzig",
+      "osmName": "Kiesgrube Röpzig",
+      "osmWay": 37570023,
+      "shore": [
+        51.432797900000004,
+        11.9408255
+      ],
+      "distanceKm": 0.316,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "10-290-32",
+      "lavName": "Schachtteich Milzau",
+      "osmName": "Schachtteich Milzau",
+      "osmWay": 62447108,
+      "shore": [
+        51.3714346,
+        11.9057106
+      ],
+      "distanceKm": 0.338,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "10-370-11",
+      "lavName": "Tonloch bei Teicha",
+      "osmName": "Tonloch Teicha",
+      "osmWay": 113270552,
+      "shore": [
+        51.556875700000006,
+        11.949498400000001
+      ],
+      "distanceKm": 0.349,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "10-371-05",
+      "lavName": "Dorfteich Nauendorf",
+      "osmName": "Dorfteich Nauendorf",
+      "osmWay": 122996556,
+      "shore": [
+        51.6017902,
+        11.882379700000001
+      ],
+      "distanceKm": 0.258,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "11-482-06",
+      "lavName": "Naturbad Rehmsdorf",
+      "osmName": "Naturbad Rehmsdorf",
+      "osmWay": 58715055,
+      "shore": [
+        51.0590216,
+        12.210535
+      ],
+      "distanceKm": 0.115,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "12-140-02",
+      "lavName": "Diepold",
+      "osmName": "Diepold",
+      "osmWay": 4444853,
+      "shore": [
+        51.836338500000004,
+        12.2647586
+      ],
+      "distanceKm": 0.544,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "12-140-04",
+      "lavName": "Stillinge Nord",
+      "osmName": "Stillinge Nord",
+      "osmWay": 25691251,
+      "shore": [
+        51.8510688,
+        12.249068600000001
+      ],
+      "distanceKm": 0.135,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "12-140-05",
+      "lavName": "Rehsumpf",
+      "osmName": "Rehsumpf",
+      "osmWay": 25927865,
+      "shore": [
+        51.8294373,
+        12.2686291
+      ],
+      "distanceKm": 0.113,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "2-220-04",
+      "lavName": "Kleiner Klietzer See",
+      "osmName": "Kleiner Klietzer See",
+      "osmWay": 102337347,
+      "shore": [
+        52.670045900000005,
+        12.0596727
+      ],
+      "distanceKm": 0.023,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "3-200-56",
+      "lavName": "Waldsteinbruch Hundisburg",
+      "osmName": "Waldsteinbruch Hundisburg",
+      "osmWay": 132470093,
+      "shore": [
+        52.2576094,
+        11.4078397
+      ],
+      "distanceKm": 0.304,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "3-470-09",
+      "lavName": "Zielitzer See",
+      "osmName": "Zielitzer See",
+      "osmWay": 171891411,
+      "shore": [
+        52.287003500000004,
+        11.683466600000001
+      ],
+      "distanceKm": 0.408,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "3-470-21",
+      "lavName": "Steinbruch Dahlenwarsleben",
+      "osmName": "Steinbruch Dahlenwarsleben",
+      "osmWay": 67152293,
+      "shore": [
+        52.1909794,
+        11.5651126
+      ],
+      "distanceKm": 0.351,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "4-171-07",
+      "lavName": "Badeteich bei Güsen",
+      "osmName": "Badeteich Güsen",
+      "osmWay": 176298398,
+      "shore": [
+        52.347571200000004,
+        11.9711627
+      ],
+      "distanceKm": 0.281,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "4-491-03",
+      "lavName": "Lübser See",
+      "osmName": "Lübser See",
+      "osmWay": 168134307,
+      "shore": [
+        52.015937,
+        11.9063487
+      ],
+      "distanceKm": 0.516,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "6-411-02",
+      "lavName": "Löderburger See",
+      "osmName": "Löderburger See",
+      "osmWay": 176304631,
+      "shore": [
+        51.887627,
+        11.5264079
+      ],
+      "distanceKm": 0.361,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "7-120-04",
+      "lavName": "Alte Mulde Roitzschjora",
+      "osmName": "Alte Mulde Roitzschjora",
+      "osmWay": 53156729,
+      "shore": [
+        51.5932958,
+        12.4851483
+      ],
+      "distanceKm": 0.497,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "7-120-55",
+      "lavName": "Kragenteich Roitzsch",
+      "osmName": "Kragenteich Roitzsch",
+      "osmWay": 41730861,
+      "shore": [
+        51.576463600000004,
+        12.2598155
+      ],
+      "distanceKm": 0.393,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "7-120-56",
+      "lavName": "Tonkiete Schortewitz",
+      "osmName": "Tonkiete Schortewitz",
+      "osmWay": 112044168,
+      "shore": [
+        51.649641700000004,
+        12.0295962
+      ],
+      "distanceKm": 0.049,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "7-140-01",
+      "lavName": "Möster altes Wasser",
+      "osmName": "Möster Altes Wasser",
+      "osmWay": 25692643,
+      "shore": [
+        51.7694302,
+        12.2902702
+      ],
+      "distanceKm": 0.066,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "7-140-02",
+      "lavName": "Niesauer Stillinge",
+      "osmName": "Niesauer Stillinge",
+      "osmWay": 25697688,
+      "shore": [
+        51.7601713,
+        12.290446300000001
+      ],
+      "distanceKm": 0.036,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "7-271-03",
+      "lavName": "Elsdorfer Sandkiete",
+      "osmName": "Elsdorfer Sandkiete",
+      "osmWay": 26986369,
+      "shore": [
+        51.783244100000005,
+        11.9618281
+      ],
+      "distanceKm": 0.382,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "7-491-01",
+      "lavName": "Gödnitzer See",
+      "osmName": "Gödnitzer See",
+      "osmWay": 168106290,
+      "shore": [
+        51.99809320000001,
+        11.9125273
+      ],
+      "distanceKm": 0.274,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "8-360-02",
+      "lavName": "Dorfteich Klieken",
+      "osmName": "Dorfteich Klieken",
+      "osmWay": 30981525,
+      "shore": [
+        51.8885148,
+        12.3693
+      ],
+      "distanceKm": 0.172,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "8-460-16",
+      "lavName": "Bleddiner Riß",
+      "osmName": "Bleddiner Riß",
+      "osmWay": 620417506,
+      "shore": [
+        51.7901499,
+        12.790762800000001
+      ],
+      "distanceKm": 0.055,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "9-230-05",
+      "lavName": "Mansfelder Teich",
+      "osmName": "Mansfelder Teich",
+      "osmWay": 30280722,
+      "shore": [
+        51.5810339,
+        11.4301209
+      ],
+      "distanceKm": 0.115,
+      "status": "AUTO_EXACT_NAME"
+    },
+    {
+      "lavNumber": "9-390-29",
+      "lavName": "Alte Kiesgrube Katharinenrieth",
+      "osmName": "Alte Kiesgrube Katharinenrieth",
+      "osmWay": 304500267,
+      "shore": [
+        51.3983883,
+        11.331289900000002
+      ],
+      "distanceKm": 0.2,
+      "status": "AUTO_EXACT_NAME"
+    }
+  ]
+}
