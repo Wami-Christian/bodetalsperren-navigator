@@ -1385,15 +1385,17 @@ const atlasWaters = useMemo(() => {
           </div>
         </div>
       </div>
-      <div className="atlas-special-filter">
-        <button
-          type="button"
-          className={atlasCategory === "elbe" ? "active" : ""}
-          onClick={() => { setAtlasCategory(atlasCategory === "elbe" ? "all" : "elbe"); setFocusedWaterId(null); }}
-        >
-          🌊 Elbe-LAV-Strecken
-        </button>
-      </div>
+      {!atlasOpenedFromForecast && (
+        <div className="atlas-special-filter">
+          <button
+            type="button"
+            className={atlasCategory === "elbe" ? "active" : ""}
+            onClick={() => { setAtlasCategory(atlasCategory === "elbe" ? "all" : "elbe"); setFocusedWaterId(null); }}
+          >
+            🌊 Elbe-LAV-Strecken
+          </button>
+        </div>
+      )}
       {(atlasPlace || atlasFish !== "Alle" || atlasCategory !== "all") && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
       {atlasPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Atlas rund um {atlasPlace.label}</strong><span>20 km · {atlasWaters.length} passende Gewässer</span></div></div>}
       {atlasSearchError && <p className="forecast-error">⚠ {atlasSearchError}</p>}
