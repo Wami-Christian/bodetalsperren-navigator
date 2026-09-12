@@ -245,6 +245,63 @@ async function imageFileToDataUrl(file: File) {
   }
 }
 
+
+type PlaceSearchControlProps = {
+  value: string;
+  busy: boolean;
+  onSearch: (term: string) => void | Promise<void>;
+  onNearest: () => void | Promise<void>;
+  onEdit?: () => void;
+  ariaLabel?: string;
+};
+
+function PlaceSearchControl({
+  value,
+  busy,
+  onSearch,
+  onNearest,
+  onEdit,
+  ariaLabel = "Ort"
+}: PlaceSearchControlProps) {
+  const [draft, setDraft] = useState(value);
+
+  useEffect(() => {
+    setDraft(value);
+  }, [value]);
+
+  return (
+    <div className="forecast-control forecast-location-control">
+      <span className="forecast-control-icon" aria-hidden="true">⌖</span>
+      <input
+        aria-label={ariaLabel}
+        value={draft}
+        onChange={(event) => {
+          setDraft(event.target.value);
+          onEdit?.();
+        }}
+        onKeyDown={(event) => {
+          if (event.key !== "Enter") return;
+          event.preventDefault();
+          void onSearch(draft);
+        }}
+        placeholder="Ort eingeben · Enter"
+        autoComplete="off"
+      />
+      <button
+        className="forecast-nearest-place"
+        type="button"
+        onClick={() => void onNearest()}
+        disabled={busy}
+        title="Nächstgelegenen Ort über GPS verwenden"
+        aria-label="Nächstgelegenen Ort verwenden"
+      >
+        {busy ? "…" : "◎"}
+      </button>
+      <span className="forecast-enter-hint" aria-hidden="true">↵</span>
+    </div>
+  );
+}
+
 function getCurrentGpsPosition() {
   return new Promise<GeolocationPosition>((resolve, reject) => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
@@ -258,6 +315,29 @@ function getCurrentGpsPosition() {
       maximumAge: 15000
     });
   });
+}
+
+
+async function getNearestPlaceFromGps(): Promise<AtlasPlace> {
+  const position = await getCurrentGpsPosition();
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  const response = await fetch(
+    `/api/geocode?lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}`
+  );
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => null) as { error?: string } | null;
+    throw new Error(data?.error || "Nächstgelegener Ort konnte nicht ermittelt werden.");
+  }
+
+  const result = await response.json() as AtlasPlace;
+  return {
+    latitude,
+    longitude,
+    label: result.label || "Aktueller Standort"
+  };
 }
 
 function windDirectionLabel(degrees?: number | null) {
@@ -467,9 +547,10 @@ const [atlasCategory, setAtlasCategory] =
     setFocusedWaterId(null);
   }, [view, waterPlace, fish, filtered]);
 
-  async function searchWatersPlace() {
-    const term = query.trim();
+  async function searchWatersPlace(searchTerm?: string) {
+    const term = (searchTerm ?? query).trim();
     if (!term) return;
+    setQuery(term);
     setWaterSearchBusy(true);
     setWaterSearchError("");
     try {
@@ -492,6 +573,22 @@ const [atlasCategory, setAtlasCategory] =
     setFish("Alle");
     setWaterSearchError("");
     setFocusedWaterId(null);
+  }
+
+
+  async function useNearestWaterPlace() {
+    setWaterSearchBusy(true);
+    setWaterSearchError("");
+    try {
+      const place = await getNearestPlaceFromGps();
+      setQuery(place.label);
+      setWaterPlace(place);
+      setFocusedWaterId(null);
+    } catch (error) {
+      setWaterSearchError(error instanceof Error ? error.message : "Standort konnte nicht bestimmt werden");
+    } finally {
+      setWaterSearchBusy(false);
+    }
   }
 
 const atlasWaters = useMemo(() => {
@@ -544,9 +641,10 @@ const atlasWaters = useMemo(() => {
     );
   }, [atlasWaters, selected.id, view]);
 
-  async function searchAtlasPlace() {
-    const term = atlasQuery.trim();
+  async function searchAtlasPlace(searchTerm?: string) {
+    const term = (searchTerm ?? atlasQuery).trim();
     if (!term) return;
+    setAtlasQuery(term);
 
     setAtlasSearchBusy(true);
     setAtlasSearchError("");
@@ -582,6 +680,22 @@ const atlasWaters = useMemo(() => {
     setAtlasCategory("all");
     setAtlasSearchError("");
     setFocusedWaterId(null);
+  }
+
+
+  async function useNearestAtlasPlace() {
+    setAtlasSearchBusy(true);
+    setAtlasSearchError("");
+    try {
+      const place = await getNearestPlaceFromGps();
+      setAtlasQuery(place.label);
+      setAtlasPlace(place);
+      setFocusedWaterId(null);
+    } catch (error) {
+      setAtlasSearchError(error instanceof Error ? error.message : "Standort konnte nicht bestimmt werden");
+    } finally {
+      setAtlasSearchBusy(false);
+    }
   }
 
   const forecastWaters = useMemo(() => {
@@ -781,9 +895,10 @@ const atlasWaters = useMemo(() => {
     setView("atlas");
   }
 
-  async function loadForecast() {
-    const term = forecastQuery.trim();
+  async function loadForecast(searchTerm?: string) {
+    const term = (searchTerm ?? forecastQuery).trim();
     if (!term) return;
+    setForecastQuery(term);
     setForecastBusy(true); setForecastError("");
     try {
       const geo = await fetch(`/api/geocode?q=${encodeURIComponent(term)}`);
@@ -798,6 +913,29 @@ const atlasWaters = useMemo(() => {
       if (!forecastDate || !availableDates.includes(forecastDate)) setForecastDate(availableDates[0] || "");
     } catch (error) { setForecastError(error instanceof Error ? error.message : "Prognose konnte nicht geladen werden"); }
     finally { setForecastBusy(false); }
+  }
+
+  async function useNearestForecastPlace() {
+    setForecastBusy(true);
+    setForecastError("");
+    try {
+      const place = await getNearestPlaceFromGps();
+      setForecastQuery(place.label);
+      setForecastPlace(place);
+
+      const weather = await fetch(`/api/weather?lat=${place.latitude}&lon=${place.longitude}`);
+      if (!weather.ok) throw new Error("Wetterdaten nicht verfügbar");
+      const data = await weather.json() as { hours: ForecastHour[] };
+      setForecastHours(data.hours || []);
+      const availableDates = Array.from(new Set((data.hours || []).map((hour) => hour.time.slice(0, 10))));
+      if (!forecastDate || !availableDates.includes(forecastDate)) {
+        setForecastDate(availableDates[0] || "");
+      }
+    } catch (error) {
+      setForecastError(error instanceof Error ? error.message : "Standort konnte nicht bestimmt werden");
+    } finally {
+      setForecastBusy(false);
+    }
   }
 
   useEffect(() => { if (view === "forecast" && !forecastPlace && !forecastBusy) void loadForecast(); }, [view]);
@@ -1225,18 +1363,13 @@ const atlasWaters = useMemo(() => {
         className="forecast-controls-modern waters-search-controls"
         style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10, width: "100%" }}
       >
-        <div className="forecast-control forecast-location-control" style={{ width: "100%", minWidth: 0 }}>
-          <span className="forecast-control-icon" aria-hidden="true">⌖</span>
-          <input
-            aria-label="Ort"
-            value={atlasQuery}
-            onChange={(e)=>{setAtlasQuery(e.target.value);setAtlasSearchError("");}}
-            onKeyDown={(e)=>{if(e.key==='Enter'){e.preventDefault();void searchAtlasPlace();}}}
-            placeholder="Ort"
-            style={{ minWidth: 0, width: "100%" }}
-          />
-          <button className="forecast-search-compact" type="button" onClick={()=>void searchAtlasPlace()} disabled={atlasSearchBusy}>{atlasSearchBusy?'…':'Suchen'}</button>
-        </div>
+        <PlaceSearchControl
+          value={atlasQuery}
+          busy={atlasSearchBusy}
+          onSearch={searchAtlasPlace}
+          onNearest={useNearestAtlasPlace}
+          onEdit={() => setAtlasSearchError("")}
+        />
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 10 }}>
           <div className="forecast-control" style={{ minWidth: 0 }}>
             <span className="forecast-control-icon" aria-hidden="true">🐟</span>
@@ -1472,11 +1605,13 @@ const atlasWaters = useMemo(() => {
 )}      {view === "waters" && <section className="page">
         <div className="waters-filter-zone" style={{ width: "min(1180px, calc(100% - 32px))", margin: "24px auto 18px" }}>
         <div className="forecast-controls-modern waters-search-controls">
-          <div className="forecast-control forecast-location-control">
-            <span className="forecast-control-icon" aria-hidden="true">⌖</span>
-            <input aria-label="Ort" value={query} onChange={(e)=>setQuery(e.target.value)} onKeyDown={(e)=>{if(e.key==='Enter') void searchWatersPlace();}} placeholder="Ort"/>
-            <button className="forecast-search-compact" type="button" onClick={()=>void searchWatersPlace()} disabled={waterSearchBusy}>{waterSearchBusy?'…':'Suchen'}</button>
-          </div>
+          <PlaceSearchControl
+            value={query}
+            busy={waterSearchBusy}
+            onSearch={searchWatersPlace}
+            onNearest={useNearestWaterPlace}
+            onEdit={() => setWaterSearchError("")}
+          />
           <div className="forecast-control">
             <span className="forecast-control-icon" aria-hidden="true">🐟</span>
             <select aria-label="Zielfisch" value={fish} onChange={(e)=>setFish(e.target.value as Fish|"Alle")}>{fishOptions.map(x=><option key={x}>{x}</option>)}</select>
@@ -1536,11 +1671,13 @@ const atlasWaters = useMemo(() => {
           </div>
 
           <div className="forecast-controls-modern">
-            <div className="forecast-control forecast-location-control">
-              <span className="forecast-control-icon" aria-hidden="true">⌖</span>
-              <input aria-label="Ort" value={forecastQuery} onChange={(e)=>setForecastQuery(e.target.value)} onKeyDown={(e)=>{if(e.key==='Enter') void loadForecast();}} placeholder="Ort"/>
-              <button className="forecast-search-compact" type="button" onClick={()=>void loadForecast()} disabled={forecastBusy}>{forecastBusy?'…':'Suchen'}</button>
-            </div>
+            <PlaceSearchControl
+              value={forecastQuery}
+              busy={forecastBusy}
+              onSearch={loadForecast}
+              onNearest={useNearestForecastPlace}
+              onEdit={() => setForecastError("")}
+            />
             <div className="forecast-control">
               <span className="forecast-control-icon" aria-hidden="true">🐟</span>
               <select aria-label="Zielfisch" value={forecastFish} onChange={(e)=>{setForecastFish(e.target.value as Fish);setShowAllForecast(false);}}>{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select>

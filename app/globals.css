@@ -3044,3 +3044,42 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   .catch-photo-modal-actions { flex-direction: column; }
   .catch-photo-modal-actions a, .catch-photo-modal-actions button { text-align: center; width: 100%; }
 }
+
+
+/* WamiFishing – schnelle Ortssuche: Tippen bleibt lokal, Suche startet erst mit Enter */
+.forecast-location-control{
+  min-width:0;
+}
+.forecast-nearest-place{
+  width:34px;
+  min-width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:999px;
+  background:#07594a;
+  color:#fff;
+  font-size:1rem;
+  font-weight:900;
+  cursor:pointer;
+  flex:0 0 auto;
+}
+.forecast-nearest-place:hover{background:#0a6b59}
+.forecast-nearest-place:disabled{opacity:.55;cursor:wait}
+.forecast-enter-hint{
+  min-width:27px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  color:#71837e;
+  background:#f1f5f3;
+  font-weight:800;
+  font-size:.9rem;
+  flex:0 0 auto;
+}
+@media(max-width:520px){
+  .forecast-enter-hint{display:none}
+  .forecast-nearest-place{width:32px;min-width:32px;height:32px}
+}
