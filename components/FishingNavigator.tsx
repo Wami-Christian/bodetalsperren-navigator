@@ -448,6 +448,7 @@ const [atlasCategory, setAtlasCategory] =
   useState<AtlasCategory>("all");
   const [selected, setSelected] = useState<FishingWater>(waters[0]);
   const [focusedWaterId, setFocusedWaterId] = useState<string | null>(null);
+  const [atlasOpenedFromForecast, setAtlasOpenedFromForecast] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [catches, setCatches] = useState<EnhancedCatchEntry[]>([]);
   const [catchWaterId, setCatchWaterId] = useState("");
@@ -642,6 +643,7 @@ const atlasWaters = useMemo(() => {
   }, [atlasWaters, selected.id, view]);
 
   async function searchAtlasPlace(searchTerm?: string) {
+    setAtlasOpenedFromForecast(false);
     const term = (searchTerm ?? atlasQuery).trim();
     if (!term) return;
     setAtlasQuery(term);
@@ -674,6 +676,7 @@ const atlasWaters = useMemo(() => {
   }
 
   function resetAtlasFilters() {
+    setAtlasOpenedFromForecast(false);
     setAtlasQuery("");
     setAtlasPlace(null);
     setAtlasFish("Alle");
@@ -684,6 +687,7 @@ const atlasWaters = useMemo(() => {
 
 
   async function useNearestAtlasPlace() {
+    setAtlasOpenedFromForecast(false);
     setAtlasSearchBusy(true);
     setAtlasSearchError("");
     try {
@@ -892,6 +896,7 @@ const atlasWaters = useMemo(() => {
     setAtlasSearchError("");
     setAtlasQuery(water.name);
     setFocusedWaterId(water.latitude !== null && water.longitude !== null ? water.id : null);
+    setAtlasOpenedFromForecast(true);
     setView("atlas");
   }
 
@@ -1393,6 +1398,8 @@ const atlasWaters = useMemo(() => {
       {atlasPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Atlas rund um {atlasPlace.label}</strong><span>20 km · {atlasWaters.length} passende Gewässer</span></div></div>}
       {atlasSearchError && <p className="forecast-error">⚠ {atlasSearchError}</p>}
 
+      {!atlasOpenedFromForecast && (
+        <>
       <div className="atlas-result-heading">
         <strong>{atlasWaters.length} Treffer</strong>
         <small>
@@ -1439,6 +1446,8 @@ const atlasWaters = useMemo(() => {
           </button>
         ))}
       </div>
+        </>
+      )}
     </aside>
 
     <aside className="atlas-details" aria-live="polite">
