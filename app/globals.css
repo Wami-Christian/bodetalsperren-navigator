@@ -2951,3 +2951,96 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 .elbe-permission-card strong { font-size:15px; }
 .elbe-permission-card span { font-weight:800; }
 .elbe-permission-card small { line-height:1.35; }
+
+
+/* Fangbuch: Fotos sichtbar und wiederauffindbar */
+.catch-history-photo-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  display: grid;
+  gap: 5px;
+  cursor: pointer;
+  color: #0b6658;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+}
+.catch-history-photo-button span { font-size: 0.78rem; }
+.catch-photo-open-inline {
+  margin-top: 6px;
+  justify-self: start;
+  border: 1px solid #0b6658;
+  border-radius: 999px;
+  background: #eef8f4;
+  color: #0b6658;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.catch-photo-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,.72);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+.catch-photo-modal {
+  width: min(900px, 100%);
+  max-height: 94vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 22px 70px rgba(0,0,0,.35);
+}
+.catch-photo-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+}
+.catch-photo-modal-head button {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #eef2f1;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+.catch-photo-modal > img {
+  display: block;
+  width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  background: #111;
+}
+.catch-photo-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 14px 14px;
+}
+.catch-photo-modal-actions a,
+.catch-photo-modal-actions button {
+  border: 1px solid #0b6658;
+  border-radius: 10px;
+  padding: 9px 12px;
+  background: #eef8f4;
+  color: #0b6658;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+@media (max-width: 700px) {
+  .catch-photo-modal-backdrop { padding: 8px; }
+  .catch-photo-modal { border-radius: 12px; }
+  .catch-photo-modal-actions { flex-direction: column; }
+  .catch-photo-modal-actions a, .catch-photo-modal-actions button { text-align: center; width: 100%; }
+}

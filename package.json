@@ -1,5 +1,5 @@
 {
-  "name": "harzfishing-navigator",
+  "name": "wamifishing-navigator",
   "version": "5.2.3-prognose-v1.10.2-mobile-modal-fix",
   "private": true,
   "scripts": {
@@ -15,8 +15,7 @@
     "catch:import": "node scripts/import-catch-events.mjs",
     "catch:quality": "node scripts/classify-catch-data.mjs",
     "catch:activity": "node scripts/import-catch-activity.mjs",
-    "catch:pilot": "node scripts/import-catch-activity.mjs data/catch-activity-import.csv",
-    "geometry:cache": "node scripts/cache-waterway-geometries.mjs"
+    "catch:pilot": "node scripts/import-catch-activity.mjs data/catch-activity-import.csv"
   },
   "dependencies": {
     "leaflet": "1.9.4",

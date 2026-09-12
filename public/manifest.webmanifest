@@ -1,6 +1,6 @@
 {
-  "name": "HarzFishing Navigator",
-  "short_name": "HarzFishing",
+  "name": "WamiFishing Navigator",
+  "short_name": "WamiFishing",
   "description": "Gewässerkarte, Fangbuch, Prognose und GPX für den Harz.",
   "start_url": "/",
   "scope": "/",

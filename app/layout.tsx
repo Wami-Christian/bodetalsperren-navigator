@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "HarzFishing Navigator",
+  title: "WamiFishing Navigator",
   description: "Gewässer, Fangbuch, Angelprognose und GPX für den Harz.",
   manifest: "/manifest.webmanifest",
   icons: {

@@ -4,7 +4,7 @@ export function spotsToGpx(name: string, spots: FishingSpot[]) {
   const points = spots.map((spot) =>
     `<wpt lat="${spot.latitude}" lon="${spot.longitude}"><name>${escapeXml(spot.name)}</name><desc>${escapeXml(spot.note ?? spot.tags.join(", "))}</desc></wpt>`
   ).join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="HarzFishing Navigator" xmlns="http://www.topografix.com/GPX/1/1"><metadata><name>${escapeXml(name)}</name></metadata>${points}</gpx>`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="WamiFishing Navigator" xmlns="http://www.topografix.com/GPX/1/1"><metadata><name>${escapeXml(name)}</name></metadata>${points}</gpx>`;
 }
 
 export function parseGpx(text: string): FishingSpot[] {

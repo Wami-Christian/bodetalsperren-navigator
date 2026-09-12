@@ -210,8 +210,8 @@ async function hydrateCatchPhotos(entries: EnhancedCatchEntry[]) {
   return hydrated;
 }
 
-type HarzFishingBackup = {
-  format: "HarzFishing Navigator Backup";
+type WamiFishingBackup = {
+  format: "WamiFishing Navigator Backup";
   version: 1;
   exportedAt: string;
   favorites: string[];
@@ -312,6 +312,41 @@ function distanceKm(
   return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+function distanceKmToSegment(
+  latitude: number,
+  longitude: number,
+  start: [number, number],
+  end: [number, number]
+) {
+  const meanLat = ((latitude + start[0] + end[0]) / 3) * Math.PI / 180;
+  const kmPerLat = 111.32;
+  const kmPerLon = 111.32 * Math.cos(meanLat);
+  const px = (longitude - start[1]) * kmPerLon;
+  const py = (latitude - start[0]) * kmPerLat;
+  const vx = (end[1] - start[1]) * kmPerLon;
+  const vy = (end[0] - start[0]) * kmPerLat;
+  const lengthSq = vx * vx + vy * vy;
+  const t = lengthSq > 0 ? Math.max(0, Math.min(1, (px * vx + py * vy) / lengthSq)) : 0;
+  const dx = px - t * vx;
+  const dy = py - t * vy;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function distanceToWaterKm(water: FishingWater, latitude: number, longitude: number) {
+  if (water.route && water.route.length >= 2) {
+    let best = Number.POSITIVE_INFINITY;
+    for (let i = 1; i < water.route.length; i += 1) {
+      best = Math.min(best, distanceKmToSegment(latitude, longitude, water.route[i - 1], water.route[i]));
+    }
+    if (Number.isFinite(best)) return best;
+  }
+  if (water.latitude !== null && water.longitude !== null) {
+    return distanceKm(latitude, longitude, water.latitude, water.longitude);
+  }
+  return Number.POSITIVE_INFINITY;
+}
+
+
 export default function FishingNavigator() {
   const mainNavRef = useRef<HTMLElement | null>(null);
   const atlasCategoryRef = useRef<HTMLDivElement | null>(null);
@@ -342,6 +377,7 @@ const [atlasCategory, setAtlasCategory] =
   const [catchAutoAttempted, setCatchAutoAttempted] = useState(false);
   const [catchAutoError, setCatchAutoError] = useState("");
   const [catchPhoto, setCatchPhoto] = useState<string | null>(null);
+  const [catchPhotoViewer, setCatchPhotoViewer] = useState<{ src: string; title: string } | null>(null);
   const [catchSaveBusy, setCatchSaveBusy] = useState(false);
   const [dataMessage, setDataMessage] = useState("");
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
@@ -921,11 +957,11 @@ const atlasWaters = useMemo(() => {
         setCatchPosition({ latitude, longitude, accuracy });
 
         const nearest = waters
-          .filter((water) => water.latitude !== null && water.longitude !== null)
           .map((water) => ({
             water,
-            distance: distanceKm(latitude, longitude, water.latitude!, water.longitude!)
+            distance: distanceToWaterKm(water, latitude, longitude)
           }))
+          .filter((item) => Number.isFinite(item.distance))
           .sort((a, b) => a.distance - b.distance)[0];
 
         if (nearest) setCatchWaterId(nearest.water.id);
@@ -1044,8 +1080,8 @@ const atlasWaters = useMemo(() => {
         ...item,
         photo: item.photo ?? await getAtlasPhoto(item.id)
       })));
-      const backup: HarzFishingBackup = {
-        format: "HarzFishing Navigator Backup",
+      const backup: WamiFishingBackup = {
+        format: "WamiFishing Navigator Backup",
         version: 1,
         exportedAt: new Date().toISOString(),
         favorites,
@@ -1056,7 +1092,7 @@ const atlasWaters = useMemo(() => {
       const href = URL.createObjectURL(new Blob([JSON.stringify(backup)], { type: "application/json" }));
       const anchor = document.createElement("a");
       anchor.href = href;
-      anchor.download = `harzfishing-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      anchor.download = `wamifishing-backup-${new Date().toISOString().slice(0, 10)}.json`;
       anchor.click();
       URL.revokeObjectURL(href);
       setDataMessage("✅ Datensicherung erstellt – inklusive Fangfotos, Parkplätzen und Hot Spots.");
@@ -1071,10 +1107,10 @@ const atlasWaters = useMemo(() => {
     if (!file) return;
     setDataMessage("");
     try {
-      const backup = JSON.parse(await file.text()) as HarzFishingBackup;
-      if (backup.format !== "HarzFishing Navigator Backup" || backup.version !== 1 ||
+      const backup = JSON.parse(await file.text()) as WamiFishingBackup;
+      if (!["WamiFishing Navigator Backup", "HarzFishing Navigator Backup"].includes(backup.format) || backup.version !== 1 ||
           !Array.isArray(backup.catches) || !Array.isArray(backup.parkings) || !Array.isArray(backup.hotspots)) {
-        throw new Error("Die Datei ist keine gültige HarzFishing-Datensicherung.");
+        throw new Error("Die Datei ist keine gültige WamiFishing-Datensicherung.");
       }
 
       for (const entry of backup.catches) if (entry.photo) await putDbPhoto(CATCH_PHOTO_STORE, entry.id, entry.photo);
@@ -1127,7 +1163,7 @@ const atlasWaters = useMemo(() => {
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>HarzFishing</strong><small>Navigator V5.2 Beta</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>WamiFishing</strong><small>Navigator V5.2 Beta</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -1170,14 +1206,14 @@ const atlasWaters = useMemo(() => {
       </header>
 
       {view === "dashboard" && <section className="page dashboard">
-        <div className="hero-card"><p className="eyebrow">HarzFishing Navigator</p><h1>Dein Angelrevier auf einer Karte.</h1><p>Bodetalsperren, LAV-Gewässer, Harzflüsse, Fangbuch, GPX und eine transparente, regelbasierte Angelprognose.</p><button onClick={()=>setView("waters")}>Gewässer entdecken</button></div>
+        <div className="hero-card"><p className="eyebrow">WamiFishing Navigator</p><h1>Dein Angelrevier auf einer Karte.</h1><p>Bodetalsperren, LAV-Gewässer, Harzflüsse, Fangbuch, GPX und eine transparente, regelbasierte Angelprognose.</p><button onClick={()=>setView("waters")}>Gewässer entdecken</button></div>
         <div className="dashboard-grid">
           <article><span>🗺️</span><strong>{waters.length}</strong><p>Gewässerprofile im Katalog</p></article>
           <article><span>⭐</span><strong>{favorites.length}</strong><p>gespeicherte Favoriten</p></article>
           <article><span>🐟</span><strong>{catches.length}</strong><p>Fänge im lokalen Fangbuch</p></article>
           <article><span>📍</span><strong>{importedSpots.length}</strong><p>importierte GPX-Punkte</p></article>
         </div>
-        <div className="panel"><h2>Automatische Prognose</h2><p>Ort und Zielfisch wählen: HarzFishing bewertet passende Gewässer im 20-km-Umkreis automatisch anhand der Wetterdaten.</p></div>
+        <div className="panel"><h2>Automatische Prognose</h2><p>Ort und Zielfisch wählen: WamiFishing bewertet passende Gewässer im 20-km-Umkreis automatisch anhand der Wetterdaten.</p></div>
       </section>}
 {view === "atlas" && (
   <section className="atlas-page">
@@ -1614,8 +1650,8 @@ const atlasWaters = useMemo(() => {
       {view === "diary" && (() => {
         const moon = moonInfoFor(new Date());
         const selectedCatchWater = waters.find((water) => water.id === catchWaterId);
-        const selectedCatchDistance = selectedCatchWater && catchPosition && selectedCatchWater.latitude !== null && selectedCatchWater.longitude !== null
-          ? distanceKm(catchPosition.latitude, catchPosition.longitude, selectedCatchWater.latitude, selectedCatchWater.longitude)
+        const selectedCatchDistance = selectedCatchWater && catchPosition
+          ? distanceToWaterKm(selectedCatchWater, catchPosition.latitude, catchPosition.longitude)
           : null;
         return <section className="page diary diary-v2">
           <form className="panel catch-entry-card" onSubmit={addCatch}>
@@ -1660,8 +1696,8 @@ const atlasWaters = useMemo(() => {
             <div className="catch-list catch-list-v2">{catches.map(entry=>{
               const water = waters.find(w=>w.id===entry.waterId);
               return <article key={entry.id}>
-                {entry.photo && <img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/>}
-                <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}</div>
+                {entry.photo && <button type="button" className="catch-history-photo-button" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })} aria-label="Fangfoto groß ansehen"><img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/><span>📷 Foto ansehen</span></button>}
+                <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}{entry.photo && <button type="button" className="catch-photo-open-inline" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })}>📷 Fangfoto öffnen</button>}</div>
                 <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span>
               </article>;
             })}{!catches.length&&<p className="catch-empty">Noch keine Fänge gespeichert. Der erste Eintrag baut deine eigene Prognose-Datenbasis auf.</p>}</div>
@@ -1669,13 +1705,27 @@ const atlasWaters = useMemo(() => {
         </section>;
       })()}
 
+      {catchPhotoViewer && typeof document !== "undefined" && createPortal(
+        <div className="catch-photo-modal-backdrop" role="presentation" onClick={()=>setCatchPhotoViewer(null)}>
+          <div className="catch-photo-modal" role="dialog" aria-modal="true" aria-label="Fangfoto" onClick={(event)=>event.stopPropagation()}>
+            <div className="catch-photo-modal-head"><strong>{catchPhotoViewer.title}</strong><button type="button" onClick={()=>setCatchPhotoViewer(null)} aria-label="Foto schließen">×</button></div>
+            <img src={catchPhotoViewer.src} alt={catchPhotoViewer.title}/>
+            <div className="catch-photo-modal-actions">
+              <a href={catchPhotoViewer.src} download={`wamifishing-fangfoto-${new Date().toISOString().slice(0,10)}.jpg`}>💾 Foto speichern</a>
+              <button type="button" onClick={()=>setCatchPhotoViewer(null)}>Schließen</button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
       {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V5.2 Beta</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Datensicherung</h3><p>Die Sicherungsdatei enthält Favoriten, alle Fänge inklusive Fotos sowie deine gespeicherten Parkplätze und Hot Spots inklusive Fotos. Damit kannst du die Daten nach einem Geräte- oder Browserwechsel wiederherstellen.</p>
         <div className="data-backup-actions"><button type="button" onClick={()=>void exportDataBackup()}>💾 Datensicherung erstellen</button><button type="button" onClick={()=>backupImportRef.current?.click()}>📂 Datensicherung wiederherstellen</button><input ref={backupImportRef} className="atlas-hidden-photo-input" type="file" accept=".json,application/json" onChange={importDataBackup}/></div>
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
-      <footer>HarzFishing Navigator V5.2 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing Navigator V5.2 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
