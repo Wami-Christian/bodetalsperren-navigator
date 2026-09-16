@@ -460,6 +460,9 @@ const [atlasCategory, setAtlasCategory] =
   const [catchPhoto, setCatchPhoto] = useState<string | null>(null);
   const [catchPhotoViewer, setCatchPhotoViewer] = useState<{ src: string; title: string } | null>(null);
   const [catchSaveBusy, setCatchSaveBusy] = useState(false);
+  const [editingCatchId, setEditingCatchId] = useState<string | null>(null);
+  const catchFormRef = useRef<HTMLFormElement | null>(null);
+  const [freeHotspotBusy, setFreeHotspotBusy] = useState(false);
   const [dataMessage, setDataMessage] = useState("");
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
   const backupImportRef = useRef<HTMLInputElement | null>(null);
@@ -952,6 +955,55 @@ const atlasWaters = useMemo(() => {
   const visibleParkings = focusedWater ? [...(selected.parkings ?? []), ...selectedUserParkings] : [];
   const mappedCount = filtered.filter((water) => water.latitude !== null && water.longitude !== null).length;
 
+  async function saveFreeHotspotAtCurrentLocation() {
+    setFreeHotspotBusy(true);
+    setAtlasPointMessage("");
+    try {
+      const position = await getCurrentGpsPosition();
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const accuracyM = Math.round(position.coords.accuracy);
+
+      const nearest = waters
+        .map((water) => ({ water, distance: distanceToWaterKm(water, latitude, longitude) }))
+        .filter((item) => Number.isFinite(item.distance))
+        .sort((a, b) => a.distance - b.distance)[0];
+
+      // Avoid silently assigning a point to an unrelated water.
+      if (!nearest || nearest.distance > 0.35) {
+        setAtlasPointMessage("⚠ Kein Gewässer eindeutig in unmittelbarer Nähe erkannt. Hot Spot wurde nicht gespeichert.");
+        return;
+      }
+
+      const item: UserFishingSpot = {
+        id: `user-hotspot-${crypto.randomUUID()}`,
+        waterId: nearest.water.id,
+        name: "Eigener Hot Spot",
+        latitude,
+        longitude,
+        tags: ["Eigener Hot Spot", "GPS frei erkannt"],
+        note: `Freie GPS-Ortserkennung · ${nearest.water.name} · Abstand zum Gewässer ca. ${Math.round(nearest.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
+        source: "Benutzer",
+        createdAt: new Date().toISOString(),
+        accuracyM
+      };
+
+      const next = [...userHotspots, item];
+      saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
+      setUserHotspots(next);
+      setSelected(nearest.water);
+      setFocusedWaterId(nearest.water.latitude !== null && nearest.water.longitude !== null ? nearest.water.id : null);
+      setAtlasPointMessage(`✅ Hot Spot gespeichert · ${nearest.water.name} · ca. ${Math.round(nearest.distance * 1000)} m vom Gewässer.`);
+    } catch (error) {
+      const geoCode = typeof error === "object" && error !== null && "code" in error
+        ? Number((error as { code?: number }).code)
+        : 0;
+      setAtlasPointMessage(`⚠ ${geoCode === 1 ? "Standortfreigabe wurde nicht erteilt." : "Standort konnte nicht bestimmt werden."}`);
+    } finally {
+      setFreeHotspotBusy(false);
+    }
+  }
+
   async function saveAtlasPoint(kind: "parking" | "hotspot", file: File) {
     setAtlasPointSaving(kind);
     setAtlasPointMessage("");
@@ -1151,9 +1203,12 @@ const atlasWaters = useMemo(() => {
 
   async function addCatch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const now = new Date();
-    const moon = moonInfoFor(now);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
+    const existing = editingCatchId ? catches.find((item) => item.id === editingCatchId) : undefined;
+    const caughtAtValue = String(form.get("caughtAt") || "");
+    const caughtAt = caughtAtValue ? new Date(caughtAtValue).toISOString() : (existing?.caughtAt ?? new Date().toISOString());
+    const moon = moonInfoFor(new Date(caughtAt));
     const savePosition = form.get("savePosition") === "on";
     const waterId = catchWaterId || String(form.get("waterId") || "");
     if (!waterId) {
@@ -1162,8 +1217,9 @@ const atlasWaters = useMemo(() => {
     }
 
     const entry: EnhancedCatchEntry = {
-      id: crypto.randomUUID(),
-      caughtAt: now.toISOString(),
+      ...(existing ?? {}),
+      id: existing?.id ?? crypto.randomUUID(),
+      caughtAt,
       waterId,
       fish: String(form.get("fish")) as Fish,
       lengthCm: Number(form.get("lengthCm")) || undefined,
@@ -1172,29 +1228,71 @@ const atlasWaters = useMemo(() => {
       note: String(form.get("note") || ""),
       method: String(form.get("method") || "") || undefined,
       depthM: Number(form.get("depthM")) || undefined,
-      weather: catchWeather ?? undefined,
+      weather: existing?.weather ?? catchWeather ?? undefined,
       moonPhase: moon.phase,
       moonIllumination: moon.illumination,
-      latitude: savePosition ? catchPosition?.latitude : undefined,
-      longitude: savePosition ? catchPosition?.longitude : undefined,
-      locationAccuracyM: savePosition ? catchPosition?.accuracy : undefined,
-      locationSource: savePosition && catchPosition ? "gps" : "manual"
+      latitude: savePosition ? (existing?.latitude ?? catchPosition?.latitude) : undefined,
+      longitude: savePosition ? (existing?.longitude ?? catchPosition?.longitude) : undefined,
+      locationAccuracyM: savePosition ? (existing?.locationAccuracyM ?? catchPosition?.accuracy) : undefined,
+      locationSource: savePosition && (existing?.latitude != null || catchPosition) ? "gps" : "manual"
     };
 
     setCatchSaveBusy(true);
     setCatchAutoError("");
     try {
-      if (catchPhoto) await putDbPhoto(CATCH_PHOTO_STORE, entry.id, catchPhoto);
-      const next = [{ ...entry, photo: catchPhoto ?? undefined }, ...catches];
+      const finalPhoto = catchPhoto ?? existing?.photo;
+      if (finalPhoto) await putDbPhoto(CATCH_PHOTO_STORE, entry.id, finalPhoto);
+      const withPhotoEntry = { ...entry, photo: finalPhoto ?? undefined };
+      const next = existing
+        ? catches.map((item) => item.id === existing.id ? withPhotoEntry : item)
+        : [withPhotoEntry, ...catches];
+
       saveCatches(withoutPhoto(next) as EnhancedCatchEntry[]);
       setCatches(next);
       setCatchPhoto(null);
-      event.currentTarget.reset();
+      setEditingCatchId(null);
+      formElement.reset();
+      setCatchWaterId("");
     } catch (error) {
       setCatchAutoError(error instanceof Error ? error.message : "Fang konnte nicht dauerhaft gespeichert werden.");
     } finally {
       setCatchSaveBusy(false);
     }
+  }
+
+  function editCatch(entry: EnhancedCatchEntry) {
+    setEditingCatchId(entry.id);
+    setCatchWaterId(entry.waterId);
+    setCatchPhoto(entry.photo ?? null);
+
+    window.setTimeout(() => {
+      const form = catchFormRef.current;
+      if (!form) return;
+      const setValue = (name: string, value: string | number | undefined) => {
+        const field = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null;
+        if (field) field.value = value == null ? "" : String(value);
+      };
+      const localDate = new Date(entry.caughtAt);
+      const offsetMs = localDate.getTimezoneOffset() * 60000;
+      setValue("caughtAt", new Date(localDate.getTime() - offsetMs).toISOString().slice(0, 16));
+      setValue("fish", entry.fish);
+      setValue("lengthCm", entry.lengthCm);
+      setValue("weightKg", entry.weightKg);
+      setValue("method", entry.method);
+      setValue("lure", entry.lure);
+      setValue("depthM", entry.depthM);
+      setValue("note", entry.note);
+      const savePosition = form.elements.namedItem("savePosition") as HTMLInputElement | null;
+      if (savePosition) savePosition.checked = entry.latitude != null && entry.longitude != null;
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  }
+
+  function cancelCatchEdit() {
+    setEditingCatchId(null);
+    setCatchPhoto(null);
+    setCatchWaterId("");
+    catchFormRef.current?.reset();
   }
 
   async function handleCatchPhoto(event: ChangeEvent<HTMLInputElement>) {
@@ -1487,6 +1585,13 @@ const atlasWaters = useMemo(() => {
       ) : (
         <p className="atlas-empty-note">Für dieses Gewässer ist noch keine Kartenposition gespeichert.</p>
       )}
+
+      <div className="atlas-free-location-action">
+        <button type="button" onClick={()=>void saveFreeHotspotAtCurrentLocation()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "⌖ Hot Spot hier speichern"}
+          <small>Ohne Gewässerauswahl · GPS ordnet den nächsten Abschnitt automatisch zu</small>
+        </button>
+      </div>
 
       <div className="atlas-save-point-actions">
         <button
@@ -1802,9 +1907,9 @@ const atlasWaters = useMemo(() => {
           ? distanceToWaterKm(selectedCatchWater, catchPosition.latitude, catchPosition.longitude)
           : null;
         return <section className="page diary diary-v2">
-          <form className="panel catch-entry-card" onSubmit={addCatch}>
+          <form ref={catchFormRef} className="panel catch-entry-card" onSubmit={addCatch}>
             <div className="catch-entry-head">
-              <div><p className="eyebrow">Lokales Fangbuch</p><h1>Fang eintragen</h1><p>Standort, Gewässer, Wetter und Mondphase werden automatisch vorbereitet.</p></div>
+              <div><p className="eyebrow">Lokales Fangbuch</p><h1>{editingCatchId ? "Fang bearbeiten" : "Fang eintragen"}</h1><p>{editingCatchId ? "Bestehenden Eintrag ergänzen oder korrigieren." : "Standort, Gewässer, Wetter und Mondphase werden automatisch vorbereitet."}</p></div>
               <button type="button" className="catch-refresh" onClick={()=>void loadCatchEnvironment()} disabled={catchAutoBusy}>{catchAutoBusy ? "Ermittle …" : "⌖ Neu erkennen"}</button>
             </div>
 
@@ -1818,7 +1923,7 @@ const atlasWaters = useMemo(() => {
             {catchAutoError && <p className="catch-auto-error">⚠ {catchAutoError}</p>}
 
             <div className="catch-form-grid">
-              <label className="wide">Gewässer <select name="waterId" value={catchWaterId} onChange={(event)=>setCatchWaterId(event.target.value)} required><option value="">Gewässer auswählen …</option>{waters.slice().sort((a,b)=>a.name.localeCompare(b.name,"de")).map((water)=><option value={water.id} key={water.id}>{water.name}{water.lavNumber ? ` · ${water.lavNumber}` : ""}</option>)}</select></label>
+              <label className="wide">Gewässer <select name="waterId" value={catchWaterId} onChange={(event)=>setCatchWaterId(event.target.value)} required><option value="">Gewässer auswählen …</option>{waters.slice().sort((a,b)=>a.name.localeCompare(b.name,"de")).map((water)=><option value={water.id} key={water.id}>{water.name}{water.lavNumber ? ` · ${water.lavNumber}` : ""}</option>)}</select></label><label className="wide">Datum / Uhrzeit <input name="caughtAt" type="datetime-local" defaultValue={new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16)}/></label>
               <label>Fischart <select name="fish" defaultValue="Zander">{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select></label>
               <label>Länge <div className="catch-unit-field"><input name="lengthCm" type="number" min="0" step="0.1" inputMode="decimal" placeholder="0"/><span>cm</span></div></label>
               <label>Gewicht <div className="catch-unit-field"><input name="weightKg" type="number" min="0" step="0.01" inputMode="decimal" placeholder="0"/><span>kg</span></div></label>
@@ -1836,7 +1941,7 @@ const atlasWaters = useMemo(() => {
               {catchPhoto && <div className="catch-photo-preview"><img src={catchPhoto} alt="Vorschau Fangfoto"/><button type="button" onClick={()=>setCatchPhoto(null)}>× Foto entfernen</button></div>}
             </div>
             <label className="catch-location-check"><input name="savePosition" type="checkbox" defaultChecked/> <span>🎯 Fangstelle mit GPS-Position speichern</span></label>
-            <button className="catch-save-button" type="submit" disabled={catchSaveBusy}>{catchSaveBusy ? "Speichere dauerhaft …" : "🎣 Fang speichern"}</button>
+            <div className="catch-edit-actions"><button className="catch-save-button" type="submit" disabled={catchSaveBusy}>{catchSaveBusy ? "Speichere dauerhaft …" : editingCatchId ? "💾 Änderungen speichern" : "🎣 Fang speichern"}</button>{editingCatchId && <button className="catch-cancel-edit" type="button" onClick={cancelCatchEdit}>Abbrechen</button>}</div>
           </form>
 
           <div className="catch-history">
@@ -1846,7 +1951,7 @@ const atlasWaters = useMemo(() => {
               return <article key={entry.id}>
                 {entry.photo && <button type="button" className="catch-history-photo-button" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })} aria-label="Fangfoto groß ansehen"><img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/><span>📷 Foto ansehen</span></button>}
                 <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}{entry.photo && <button type="button" className="catch-photo-open-inline" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })}>📷 Fangfoto öffnen</button>}</div>
-                <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span>
+                <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span><button type="button" className="catch-edit-button" onClick={()=>editCatch(entry)}>✏️ Bearbeiten</button>
               </article>;
             })}{!catches.length&&<p className="catch-empty">Noch keine Fänge gespeichert. Der erste Eintrag baut deine eigene Prognose-Datenbasis auf.</p>}</div>
           </div>

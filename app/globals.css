@@ -3083,3 +3083,14 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   .forecast-enter-hint{display:none}
   .forecast-nearest-place{width:32px;min-width:32px;height:32px}
 }
+
+
+/* WamiFishing – Fangbuch bearbeiten + freie Hot-Spot-Ortserkennung */
+.catch-edit-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.catch-cancel-edit,.catch-edit-button{border:1px solid #cfd9d5;background:#fff;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}
+.catch-edit-button{margin-left:auto;align-self:center;white-space:nowrap}
+.atlas-free-location-action{margin:14px 0}
+.atlas-free-location-action button{width:100%;min-height:54px;border:1px solid #b8cbc5;background:#f4f8f6;border-radius:14px;padding:10px 14px;text-align:left;font-weight:900;cursor:pointer}
+.atlas-free-location-action button small{display:block;margin-top:3px;font-weight:600;color:#61736d}
+.atlas-free-location-action button:disabled{opacity:.6;cursor:wait}
+@media(max-width:700px){.catch-edit-button{margin-left:0;width:100%}.catch-edit-actions>*{width:100%}}
