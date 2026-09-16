@@ -220,6 +220,26 @@ type WamiFishingBackup = {
   hotspots: UserFishingSpot[];
 };
 
+const AUTO_BACKUP_KEY = "wamifishing:auto-backup-v1";
+
+function saveAutomaticBackup(backup: WamiFishingBackup) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(AUTO_BACKUP_KEY, JSON.stringify(backup));
+}
+
+function loadAutomaticBackup(): WamiFishingBackup | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(AUTO_BACKUP_KEY);
+    if (!raw) return null;
+    const backup = JSON.parse(raw) as WamiFishingBackup;
+    if (backup.format !== "WamiFishing Navigator Backup" || backup.version !== 1) return null;
+    return backup;
+  } catch {
+    return null;
+  }
+}
+
 async function imageFileToDataUrl(file: File) {
   const rawUrl = URL.createObjectURL(file);
   try {
@@ -464,6 +484,7 @@ const [atlasCategory, setAtlasCategory] =
   const catchFormRef = useRef<HTMLFormElement | null>(null);
   const [freeHotspotBusy, setFreeHotspotBusy] = useState(false);
   const [dataMessage, setDataMessage] = useState("");
+  const [localDataReady, setLocalDataReady] = useState(false);
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
   const backupImportRef = useRef<HTMLInputElement | null>(null);
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
@@ -484,23 +505,54 @@ const [atlasCategory, setAtlasCategory] =
   const [showAllForecast, setShowAllForecast] = useState(false);
 
   useEffect(() => {
-    setFavorites(loadFavorites());
+    let active = true;
+    const initialFavorites = loadFavorites();
     const storedCatches = loadCatches() as EnhancedCatchEntry[];
-    setCatches(storedCatches);
-    void hydrateCatchPhotos(storedCatches).then(setCatches).catch((error) => {
-      console.error("Fangfotos konnten nicht vollständig geladen werden:", error);
-    });
+    setFavorites(initialFavorites);
 
     void Promise.all([
+      hydrateCatchPhotos(storedCatches),
       hydrateAndMigrateAtlasPoints<UserParkingSpot>(USER_PARKINGS_KEY),
       hydrateAndMigrateAtlasPoints<UserFishingSpot>(USER_HOTSPOTS_KEY)
-    ]).then(([parkings, hotspots]) => {
+    ]).then(([hydratedCatches, parkings, hotspots]) => {
+      if (!active) return;
+      setCatches(hydratedCatches);
       setUserParkings(parkings);
       setUserHotspots(hotspots);
+      setLocalDataReady(true);
     }).catch((error) => {
-      console.error("Atlas-Punkte konnten nicht vollständig geladen werden:", error);
+      console.error("Lokale WamiFishing-Daten konnten nicht vollständig geladen werden:", error);
+      if (active) {
+        setCatches(storedCatches);
+        setLocalDataReady(true);
+      }
     });
+
+    return () => { active = false; };
   }, []);
+
+  // Laufende automatische Sicherung im Browser. Sie wird nach jeder Änderung
+  // an Favoriten, Fangbuch, Parkplätzen oder Hot Spots aktualisiert.
+  useEffect(() => {
+    if (!localDataReady) return;
+    const timer = window.setTimeout(() => {
+      const backup: WamiFishingBackup = {
+        format: "WamiFishing Navigator Backup",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        favorites,
+        catches,
+        parkings: userParkings,
+        hotspots: userHotspots
+      };
+      try {
+        saveAutomaticBackup(backup);
+      } catch (error) {
+        console.error("Automatische Datensicherung konnte nicht aktualisiert werden:", error);
+      }
+    }, 250);
+    return () => window.clearTimeout(timer);
+  }, [localDataReady, favorites, catches, userParkings, userHotspots]);
 
   useEffect(() => {
     const nav = mainNavRef.current;
@@ -1306,39 +1358,35 @@ const atlasWaters = useMemo(() => {
     }
   }
 
-  async function exportDataBackup() {
+  async function restoreAutomaticBackup() {
     setDataMessage("");
     try {
-      const catchesWithPhotos = await Promise.all(catches.map(async (entry) => ({
-        ...entry,
-        photo: entry.photo ?? await getDbPhoto(CATCH_PHOTO_STORE, entry.id)
-      })));
-      const parkingsWithPhotos = await Promise.all(userParkings.map(async (item) => ({
-        ...item,
-        photo: item.photo ?? await getAtlasPhoto(item.id)
-      })));
-      const hotspotsWithPhotos = await Promise.all(userHotspots.map(async (item) => ({
-        ...item,
-        photo: item.photo ?? await getAtlasPhoto(item.id)
-      })));
-      const backup: WamiFishingBackup = {
-        format: "WamiFishing Navigator Backup",
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        favorites,
-        catches: catchesWithPhotos,
-        parkings: parkingsWithPhotos,
-        hotspots: hotspotsWithPhotos
-      };
-      const href = URL.createObjectURL(new Blob([JSON.stringify(backup)], { type: "application/json" }));
-      const anchor = document.createElement("a");
-      anchor.href = href;
-      anchor.download = `wamifishing-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      anchor.click();
-      URL.revokeObjectURL(href);
-      setDataMessage("✅ Datensicherung erstellt – inklusive Fangfotos, Parkplätzen und Hot Spots.");
+      const backup = loadAutomaticBackup();
+      if (!backup) {
+        setDataMessage("⚠ Noch keine automatische Datensicherung vorhanden.");
+        return;
+      }
+
+      for (const entry of backup.catches) if (entry.photo) await putDbPhoto(CATCH_PHOTO_STORE, entry.id, entry.photo);
+      for (const item of backup.parkings) if (item.photo) await putAtlasPhoto(item.id, item.photo);
+      for (const item of backup.hotspots) if (item.photo) await putAtlasPhoto(item.id, item.photo);
+
+      const restoredCatches = backup.catches.map(({ photo, ...entry }) => entry) as EnhancedCatchEntry[];
+      const restoredParkings = withoutPhoto(backup.parkings) as UserParkingSpot[];
+      const restoredHotspots = withoutPhoto(backup.hotspots) as UserFishingSpot[];
+
+      saveCatches(restoredCatches);
+      saveFavorites(Array.isArray(backup.favorites) ? backup.favorites : []);
+      saveLocalArray(USER_PARKINGS_KEY, restoredParkings);
+      saveLocalArray(USER_HOTSPOTS_KEY, restoredHotspots);
+
+      setFavorites(Array.isArray(backup.favorites) ? backup.favorites : []);
+      setCatches(backup.catches);
+      setUserParkings(backup.parkings);
+      setUserHotspots(backup.hotspots);
+      setDataMessage(`✅ Automatische Sicherung wiederhergestellt: ${backup.catches.length} Fänge, ${backup.parkings.length} Parkplätze, ${backup.hotspots.length} Hot Spots.`);
     } catch (error) {
-      setDataMessage(`⚠ ${error instanceof Error ? error.message : "Datensicherung konnte nicht erstellt werden."}`);
+      setDataMessage(`⚠ ${error instanceof Error ? error.message : "Automatische Sicherung konnte nicht wiederhergestellt werden."}`);
     }
   }
 
@@ -1483,17 +1531,16 @@ const atlasWaters = useMemo(() => {
           </div>
         </div>
       </div>
-      {!atlasOpenedFromForecast && (
-        <div className="atlas-special-filter">
-          <button
-            type="button"
-            className={atlasCategory === "elbe" ? "active" : ""}
-            onClick={() => { setAtlasCategory(atlasCategory === "elbe" ? "all" : "elbe"); setFocusedWaterId(null); }}
-          >
-            🌊 Elbe-LAV-Strecken
-          </button>
-        </div>
-      )}
+      <div className="atlas-special-filter atlas-free-location-action">
+        <button
+          type="button"
+          onClick={()=>void saveFreeHotspotAtCurrentLocation()}
+          disabled={freeHotspotBusy || atlasPointSaving !== null}
+        >
+          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "⌖ Hot Spot hier speichern"}
+          <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
+        </button>
+      </div>
       {(atlasPlace || atlasFish !== "Alle" || atlasCategory !== "all") && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
       {atlasPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Atlas rund um {atlasPlace.label}</strong><span>20 km · {atlasWaters.length} passende Gewässer</span></div></div>}
       {atlasSearchError && <p className="forecast-error">⚠ {atlasSearchError}</p>}
@@ -1585,13 +1632,6 @@ const atlasWaters = useMemo(() => {
       ) : (
         <p className="atlas-empty-note">Für dieses Gewässer ist noch keine Kartenposition gespeichert.</p>
       )}
-
-      <div className="atlas-free-location-action">
-        <button type="button" onClick={()=>void saveFreeHotspotAtCurrentLocation()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
-          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "⌖ Hot Spot hier speichern"}
-          <small>Ohne Gewässerauswahl · GPS ordnet den nächsten Abschnitt automatisch zu</small>
-        </button>
-      </div>
 
       <div className="atlas-save-point-actions">
         <button
@@ -1973,8 +2013,8 @@ const atlasWaters = useMemo(() => {
       )}
 
       {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V5.2 Beta</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
-        <h3>Datensicherung</h3><p>Die Sicherungsdatei enthält Favoriten, alle Fänge inklusive Fotos sowie deine gespeicherten Parkplätze und Hot Spots inklusive Fotos. Damit kannst du die Daten nach einem Geräte- oder Browserwechsel wiederherstellen.</p>
-        <div className="data-backup-actions"><button type="button" onClick={()=>void exportDataBackup()}>💾 Datensicherung erstellen</button><button type="button" onClick={()=>backupImportRef.current?.click()}>📂 Datensicherung wiederherstellen</button><input ref={backupImportRef} className="atlas-hidden-photo-input" type="file" accept=".json,application/json" onChange={importDataBackup}/></div>
+        <h3>Datensicherung</h3><p>WamiFishing aktualisiert die Sicherung automatisch bei Änderungen an Favoriten, Fangbuch, Fangfotos, Parkplätzen und Hot Spots. Eine Sicherung muss nicht mehr manuell erstellt werden.</p>
+        <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Automatische Sicherung wiederherstellen</button><button type="button" onClick={()=>backupImportRef.current?.click()}>📂 Alte Sicherungsdatei wiederherstellen</button><input ref={backupImportRef} className="atlas-hidden-photo-input" type="file" accept=".json,application/json" onChange={importDataBackup}/></div>
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
