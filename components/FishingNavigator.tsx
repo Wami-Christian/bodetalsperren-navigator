@@ -1468,7 +1468,7 @@ const atlasWaters = useMemo(() => {
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>WamiFishing</strong><small>Navigator V5.2 Beta</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>WamiFishing</strong><small>WAMIFISHING V5.3 Beta</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -1511,12 +1511,12 @@ const atlasWaters = useMemo(() => {
       </header>
 
       {view === "dashboard" && <section className="page dashboard">
-        <div className="hero-card"><p className="eyebrow">WamiFishing Navigator</p><h1>Dein Angelrevier auf einer Karte.</h1><p>Bodetalsperren, LAV-Gewässer, Harzflüsse, Fangbuch, GPX und eine transparente, regelbasierte Angelprognose.</p><button onClick={()=>setView("waters")}>Gewässer entdecken</button></div>
+        <div className="hero-card"><p className="eyebrow">WAMIFISHING</p><h1>Dein Angelrevier auf einer Karte.</h1><p>Bodetalsperren, LAV-Gewässer, Harzflüsse, Fangbuch, GPX und eine transparente, regelbasierte Angelprognose.</p><button onClick={()=>setView("waters")}>Gewässer entdecken</button></div>
         <div className="dashboard-grid">
-          <article><span>🗺️</span><strong>{waters.length}</strong><p>Gewässerprofile im Katalog</p></article>
-          <article><span>⭐</span><strong>{favorites.length}</strong><p>gespeicherte Favoriten</p></article>
-          <article><span>🐟</span><strong>{catches.length}</strong><p>Fänge im lokalen Fangbuch</p></article>
-          <article><span>📍</span><strong>{importedSpots.length}</strong><p>importierte GPX-Punkte</p></article>
+          <article role="button" tabIndex={0} onClick={()=>setView("waters")}><span>🗺️</span><strong>{waters.length}</strong><p>Gewässerprofile im Katalog</p></article>
+          <article role="button" tabIndex={0} onClick={()=>setView("waters")}><span>⭐</span><strong>{favorites.length}</strong><p>gespeicherte Favoriten</p></article>
+          <article role="button" tabIndex={0} onClick={()=>setView("diary")}><span>🐟</span><strong>{catches.length}</strong><p>Fänge im Fangbuch</p></article>
+          <article role="button" tabIndex={0} onClick={()=>setView("atlas")}><span>📍</span><strong>{userHotspots.length + userParkings.length}</strong><p>eigene Hotspots & Parkplätze</p></article>
         </div>
         <div className="panel"><h2>Automatische Prognose</h2><p>Ort und Zielfisch wählen: WamiFishing bewertet passende Gewässer im 20-km-Umkreis automatisch anhand der Wetterdaten.</p></div>
       </section>}
@@ -2037,7 +2037,7 @@ const atlasWaters = useMemo(() => {
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("length") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing Navigator V5.2 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V5.3 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
