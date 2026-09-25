@@ -233,10 +233,12 @@ type WamiFishingBackup = {
 };
 
 const AUTO_BACKUP_KEY = "wamifishing:auto-backup-v1";
+const AUTO_CATCH_BACKUP_KEY = "wamifishing:auto-catches-v1";
 
 function saveAutomaticBackup(backup: WamiFishingBackup) {
   if (typeof window === "undefined") return;
   localStorage.setItem(AUTO_BACKUP_KEY, JSON.stringify(backup));
+  localStorage.setItem(AUTO_CATCH_BACKUP_KEY, JSON.stringify({version:1, exportedAt:backup.exportedAt, catches:backup.catches}));
 }
 
 function loadAutomaticBackup(): WamiFishingBackup | null {
@@ -499,6 +501,7 @@ const [atlasCategory, setAtlasCategory] =
   const [freeHotspotBusy, setFreeHotspotBusy] = useState(false);
   const [dataMessage, setDataMessage] = useState("");
   const [localDataReady, setLocalDataReady] = useState(false);
+  const [backupStatus, setBackupStatus] = useState("");
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
   const backupImportRef = useRef<HTMLInputElement | null>(null);
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
@@ -563,6 +566,8 @@ const [atlasCategory, setAtlasCategory] =
       };
       try {
         saveAutomaticBackup(backup);
+        const catchPhotos=catches.filter(entry=>Boolean(entry.photo)).length;
+        setBackupStatus(`✓ Automatisch gesichert: ${catches.length} Fänge · ${catchPhotos} Fangfotos · ${userHotspots.length} Hot Spots · ${userParkings.length} Parkplätze`);
       } catch (error) {
         console.error("Automatische Datensicherung konnte nicht aktualisiert werden:", error);
       }
@@ -1269,6 +1274,23 @@ const atlasWaters = useMemo(() => {
     void loadCatchEnvironment();
   }, [view, catchAutoAttempted, catchAutoBusy]);
 
+  async function saveCatchPhotoToPhotoApp(photo:string, fishName?:string) {
+    try {
+      const response=await fetch(photo); const blob=await response.blob();
+      const file=new File([blob],`WAMIFISHING-${(fishName||"Fang").replace(/[^\p{L}\p{N}_-]+/gu,"-")}-${new Date().toISOString().slice(0,10)}.jpg`,{type:blob.type||"image/jpeg"});
+      if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))) {
+        await navigator.share({files:[file],title:"WAMIFISHING Fangfoto"});
+      } else {
+        const url=URL.createObjectURL(blob); const a=document.createElement("a");
+        a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),1000);
+        setDataMessage("📷 Fangfoto gespeichert. Auf iPhone/iPad anschließend über Teilen → Bild sichern in Fotos übernehmen.");
+      }
+    } catch(error) {
+      if((error as Error)?.name!=="AbortError") setDataMessage("⚠ Fangfoto konnte nicht an die Foto-App übergeben werden.");
+    }
+  }
+
   async function addCatch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
@@ -1383,6 +1405,12 @@ const atlasWaters = useMemo(() => {
         return;
       }
 
+      if ((!backup.catches || backup.catches.length===0) && typeof window!=="undefined") {
+        try {
+          const fallback=JSON.parse(localStorage.getItem(AUTO_CATCH_BACKUP_KEY)||"null");
+          if(Array.isArray(fallback?.catches)&&fallback.catches.length>0) backup.catches=fallback.catches;
+        } catch {}
+      }
       for (const entry of backup.catches) if (entry.photo) await putDbPhoto(CATCH_PHOTO_STORE, entry.id, entry.photo);
       for (const item of backup.parkings) if (item.photo) await putAtlasPhoto(item.id, item.photo);
       for (const item of backup.hotspots) if (item.photo) await putAtlasPhoto(item.id, item.photo);
@@ -1468,7 +1496,7 @@ const atlasWaters = useMemo(() => {
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>WamiFishing</strong><small>WAMIFISHING V5.3 Beta</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>WamiFishing</strong><small>WAMIFISHING V5.4 Beta</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -1996,7 +2024,7 @@ const atlasWaters = useMemo(() => {
               <input ref={catchPhotoRef} className="atlas-hidden-photo-input" type="file" accept="image/*" capture="environment" onChange={handleCatchPhoto}/>
               {catchPhoto && <div className="catch-photo-preview"><img src={catchPhoto} alt="Vorschau Fangfoto"/><button type="button" onClick={()=>setCatchPhoto(null)}>× Foto entfernen</button></div>}
             </div>
-            {catchPhoto && <button type="button" className="catch-measure-button" onClick={()=>setMeasurePhoto(catchPhoto)}>📏 Länge aus Foto ermitteln</button>}
+            {catchPhoto && <div className="catch-photo-actions"><button type="button" className="catch-measure-button" onClick={()=>setMeasurePhoto(catchPhoto)}>📏 Länge aus Foto ermitteln</button><button type="button" className="catch-photo-save-button" onClick={()=>void saveCatchPhotoToPhotoApp(catchPhoto)}>📷 Foto in Fotos sichern</button></div>}
             <label className="catch-location-check"><input name="savePosition" type="checkbox" defaultChecked/> <span>🎯 Fangstelle mit GPS-Position speichern</span></label>
             <div className="catch-edit-actions"><button className="catch-save-button" type="submit" disabled={catchSaveBusy}>{catchSaveBusy ? "Speichere dauerhaft …" : editingCatchId ? "💾 Änderungen speichern" : "🎣 Fang speichern"}</button>{editingCatchId && <button className="catch-cancel-edit" type="button" onClick={cancelCatchEdit}>Abbrechen</button>}</div>
           </form>
@@ -2006,7 +2034,7 @@ const atlasWaters = useMemo(() => {
             <div className="catch-list catch-list-v2">{catches.map(entry=>{
               const water = waters.find(w=>w.id===entry.waterId);
               return <article key={entry.id}>
-                {entry.photo && <button type="button" className="catch-history-photo-button" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })} aria-label="Fangfoto groß ansehen"><img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/><span>📷 Foto ansehen</span></button>}
+                {entry.photo && <button type="button" className="catch-history-photo-button" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })} aria-label="Fangfoto groß ansehen"><img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/><span>📷 Foto ansehen</span></button><button type="button" className="catch-photo-save-button" onClick={()=>void saveCatchPhotoToPhotoApp(entry.photo!,entry.fish)}>📲 In Fotos sichern</button>}
                 <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}{entry.photo && <button type="button" className="catch-photo-open-inline" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })}>📷 Fangfoto öffnen</button>}</div>
                 <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span><button type="button" className="catch-edit-button" onClick={()=>editCatch(entry)}>✏️ Bearbeiten</button>
               </article>;
@@ -2031,13 +2059,13 @@ const atlasWaters = useMemo(() => {
 
       {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V5.2 Beta</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
-        <h3>Datensicherung</h3><p>WamiFishing aktualisiert die Sicherung automatisch bei Änderungen an Favoriten, Fangbuch, Fangfotos, Parkplätzen und Hot Spots. Eine Sicherung muss nicht mehr manuell erstellt werden.</p>
+        <h3>Datensicherung</h3><p>WamiFishing aktualisiert die Sicherung automatisch bei Änderungen an Favoriten, Fangbuch, Fangfotos, Parkplätzen und Hot Spots. Eine Sicherung muss nicht mehr manuell erstellt werden.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Automatische Sicherung wiederherstellen</button><button type="button" onClick={()=>backupImportRef.current?.click()}>📂 Alte Sicherungsdatei wiederherstellen</button><input ref={backupImportRef} className="atlas-hidden-photo-input" type="file" accept=".json,application/json" onChange={importDataBackup}/></div>
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("length") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V5.3 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V5.4 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
