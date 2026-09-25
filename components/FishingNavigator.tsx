@@ -1396,6 +1396,54 @@ const atlasWaters = useMemo(() => {
     }
   }
 
+  async function exportCurrentBackupJson() {
+    setDataMessage("");
+    try {
+      // Wichtig: Fotos direkt aus IndexedDB ergänzen, nicht nur aus dem React-State.
+      const catchesWithPhotos = await Promise.all(catches.map(async (entry) => ({
+        ...entry,
+        photo: entry.photo ?? await getDbPhoto(CATCH_PHOTO_STORE, entry.id)
+      })));
+      const parkingsWithPhotos = await Promise.all(userParkings.map(async (entry) => ({
+        ...entry,
+        photo: entry.photo ?? await getAtlasPhoto(entry.id)
+      })));
+      const hotspotsWithPhotos = await Promise.all(userHotspots.map(async (entry) => ({
+        ...entry,
+        photo: entry.photo ?? await getAtlasPhoto(entry.id)
+      })));
+
+      const backup: WamiFishingBackup = {
+        format: "WamiFishing Navigator Backup",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        favorites,
+        catches: catchesWithPhotos,
+        parkings: parkingsWithPhotos,
+        hotspots: hotspotsWithPhotos
+      };
+
+      const catchPhotos = catchesWithPhotos.filter((entry) => Boolean(entry.photo)).length;
+      const blob = new Blob([JSON.stringify(backup)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `wamifishing-backup-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      // Dieselbe geprüfte Struktur zugleich als automatische Sicherung ablegen.
+      saveAutomaticBackup(backup);
+      setBackupStatus(`✓ JSON gesichert: ${catchesWithPhotos.length} Fänge · ${catchPhotos} Fangfotos · ${hotspotsWithPhotos.length} Hot Spots · ${parkingsWithPhotos.length} Parkplätze`);
+      setDataMessage(`✅ JSON erstellt: ${catchesWithPhotos.length} Fänge · ${catchPhotos} Fangfotos · ${hotspotsWithPhotos.length} Hot Spots · ${parkingsWithPhotos.length} Parkplätze`);
+    } catch (error) {
+      console.error("JSON-Sicherung fehlgeschlagen:", error);
+      setDataMessage("⚠ JSON-Sicherung konnte nicht erstellt werden.");
+    }
+  }
+
   async function restoreAutomaticBackup() {
     setDataMessage("");
     try {
@@ -2060,7 +2108,7 @@ const atlasWaters = useMemo(() => {
       {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V5.2 Beta</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
         <h3>Datensicherung</h3><p>WamiFishing aktualisiert die Sicherung automatisch bei Änderungen an Favoriten, Fangbuch, Fangfotos, Parkplätzen und Hot Spots. Eine Sicherung muss nicht mehr manuell erstellt werden.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
-        <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Automatische Sicherung wiederherstellen</button><button type="button" onClick={()=>backupImportRef.current?.click()}>📂 Alte Sicherungsdatei wiederherstellen</button><input ref={backupImportRef} className="atlas-hidden-photo-input" type="file" accept=".json,application/json" onChange={importDataBackup}/></div>
+        <div className="data-backup-actions"><button type="button" onClick={()=>void exportCurrentBackupJson()}>💾 Sicherung als JSON herunterladen</button><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Automatische Sicherung wiederherstellen</button><button type="button" onClick={()=>backupImportRef.current?.click()}>📂 Alte Sicherungsdatei wiederherstellen</button><input ref={backupImportRef} className="atlas-hidden-photo-input" type="file" accept=".json,application/json" onChange={importDataBackup}/></div>
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
