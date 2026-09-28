@@ -1739,11 +1739,11 @@ const atlasWaters = useMemo(() => {
 
       {view === "dashboard" && <section className="page dashboard">
         <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 10 }}>
-          <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("parking")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+          <button type="button" onClick={()=>parkingPhotoRef.current?.click()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
             {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "🅿️ Parkplatz hier speichern"}
             <small>GPS · Gewässer automatisch zuordnen</small>
           </button>
-          <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("hotspot")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+          <button type="button" onClick={()=>hotspotPhotoRef.current?.click()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
             {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "📍 Hot Spot hier speichern"}
             <small>GPS · Gewässer automatisch zuordnen</small>
           </button>
@@ -1751,6 +1751,8 @@ const atlasWaters = useMemo(() => {
             🐟 Fang eintragen
             <small>Fangbuch · Standort automatisch erkennen</small>
           </button>
+          <input ref={parkingPhotoRef} className="atlas-hidden-photo-input" type="file" accept="image/*" capture="environment" onChange={(event)=>handleAtlasPhoto("parking", event)}/>
+          <input ref={hotspotPhotoRef} className="atlas-hidden-photo-input" type="file" accept="image/*" capture="environment" onChange={(event)=>handleAtlasPhoto("hotspot", event)}/>
         </div>
         {atlasPointMessage && <p className="atlas-point-message">{atlasPointMessage}</p>}
         <div className="hero-card"><p className="eyebrow">WAMIFISHING</p><h1>Dein Angelrevier auf einer Karte.</h1><p>Bodetalsperren, LAV-Gewässer, Harzflüsse, Fangbuch, GPX und eine transparente, regelbasierte Angelprognose.</p><button onClick={()=>setView("waters")}>Gewässer entdecken</button></div>
@@ -1790,11 +1792,11 @@ const atlasWaters = useMemo(() => {
         </div>
       </div>
       <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gap: 8 }}>
-        <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("parking")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+        <button type="button" onClick={()=>parkingPhotoRef.current?.click()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
           {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "🅿️ Parkplatz hier speichern"}
           <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
         </button>
-        <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("hotspot")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+        <button type="button" onClick={()=>hotspotPhotoRef.current?.click()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
           {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "📍 Hot Spot hier speichern"}
           <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
         </button>
@@ -2278,7 +2280,7 @@ const atlasWaters = useMemo(() => {
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p><button onClick={()=>{localStorage.clear();setFavorites([]);setCatches([]);setImportedSpots([])}}>Lokale App-Daten löschen</button></div></section>}
 
-      {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("length") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
+      {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
       <footer>WamiFishing WAMIFISHING V5.4 Beta · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
