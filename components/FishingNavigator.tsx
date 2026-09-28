@@ -352,6 +352,29 @@ function backupItemCount(backup: WamiFishingBackup) {
   return backup.catches.length + backup.parkings.length + backup.hotspots.length;
 }
 
+async function loadCloudBackup(): Promise<WamiFishingBackup | null> {
+  const response = await fetch("/api/wamifishing-backup", { cache: "no-store" });
+  if (!response.ok) throw new Error("Cloud-Sicherung konnte nicht gelesen werden.");
+  const value = await response.json() as unknown;
+  if (isValidAutomaticBackup(value)) return value;
+  const wrapped = value as { backup?: unknown } | null;
+  return wrapped && isValidAutomaticBackup(wrapped.backup) ? wrapped.backup : null;
+}
+
+async function saveCloudBackup(backup: WamiFishingBackup) {
+  const response = await fetch("/api/wamifishing-backup", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(backup),
+  });
+  if (!response.ok) throw new Error("Cloud-Sicherung konnte nicht gespeichert werden.");
+}
+
+async function deleteCloudBackup() {
+  const response = await fetch("/api/wamifishing-backup", { method: "DELETE" });
+  if (!response.ok) throw new Error("Cloud-Sicherung konnte nicht gelöscht werden.");
+}
+
 async function saveAutomaticBackup(backup: WamiFishingBackup) {
   const db = await openAtlasDb();
   try {
@@ -650,6 +673,7 @@ const [atlasCategory, setAtlasCategory] =
   const [freeHotspotBusy, setFreeHotspotBusy] = useState(false);
   const [dataMessage, setDataMessage] = useState("");
   const [localDataReady, setLocalDataReady] = useState(false);
+  const [cloudSyncReady, setCloudSyncReady] = useState(false);
   const [backupStatus, setBackupStatus] = useState("");
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
   const backupFileRef = useRef<HTMLInputElement | null>(null);
@@ -699,10 +723,37 @@ const [atlasCategory, setAtlasCategory] =
     return () => { active = false; };
   }, []);
 
-  // Laufende automatische Sicherung im Browser. Nach jeder Änderung wird immer
-  // der vollständige Datenbestand inklusive der in IndexedDB liegenden Fotos gesichert.
+  // Beim Start zuerst die gemeinsame Cloud-Sicherung prüfen. Wichtig: Bis das
+  // abgeschlossen ist, darf ein leerer Safari-Speicher niemals die Cloud überschreiben.
   useEffect(() => {
     if (!localDataReady) return;
+    let cancelled = false;
+    void (async () => {
+      try {
+        const cloud = await loadCloudBackup();
+        if (cancelled) return;
+        const local = await createCurrentBackup();
+        if (cloud && (backupItemCount(cloud) > backupItemCount(local) ||
+            (backupItemCount(cloud) === backupItemCount(local) && cloud.exportedAt > local.exportedAt))) {
+          await applyBackup(cloud);
+          if (!cancelled) setBackupStatus(`☁ Cloud geladen: ${cloud.catches.length} Fänge · ${cloud.hotspots.length} Hot Spots · ${cloud.parkings.length} Parkplätze`);
+        } else if (backupItemCount(local) > 0) {
+          await saveCloudBackup(local);
+        }
+      } catch (error) {
+        console.error("Cloud-Synchronisierung beim Start fehlgeschlagen:", error);
+        if (!cancelled) setBackupStatus("⚠ Cloud nicht erreichbar – lokale Daten bleiben erhalten");
+      } finally {
+        if (!cancelled) setCloudSyncReady(true);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [localDataReady]);
+
+  // Laufende automatische Sicherung lokal UND in der gemeinsamen Vercel-Cloud. Nach jeder Änderung wird immer
+  // der vollständige Datenbestand inklusive der in IndexedDB liegenden Fotos gesichert.
+  useEffect(() => {
+    if (!localDataReady || !cloudSyncReady) return;
     let cancelled = false;
     const timer = window.setTimeout(() => {
       void (async () => {
@@ -731,8 +782,9 @@ const [atlasCategory, setAtlasCategory] =
             hotspots: hotspotsWithPhotos
           };
           await saveAutomaticBackup(backup);
+          await saveCloudBackup(backup);
           const catchPhotos = catchesWithPhotos.filter(entry => Boolean(entry.photo)).length;
-          setBackupStatus(`✓ Automatisch gesichert: ${catchesWithPhotos.length} Fänge · ${catchPhotos} Fangfotos · ${hotspotsWithPhotos.length} Hot Spots · ${parkingsWithPhotos.length} Parkplätze`);
+          setBackupStatus(`☁ Automatisch gesichert: ${catchesWithPhotos.length} Fänge · ${catchPhotos} Fangfotos · ${hotspotsWithPhotos.length} Hot Spots · ${parkingsWithPhotos.length} Parkplätze`);
         } catch (error) {
           console.error("Automatische Datensicherung konnte nicht aktualisiert werden:", error);
           if (!cancelled) setBackupStatus("⚠ Automatische Sicherung fehlgeschlagen");
@@ -743,7 +795,7 @@ const [atlasCategory, setAtlasCategory] =
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [localDataReady, favorites, catches, userParkings, userHotspots]);
+  }, [localDataReady, cloudSyncReady, favorites, catches, userParkings, userHotspots]);
 
   useEffect(() => {
     const nav = mainNavRef.current;
@@ -1669,6 +1721,7 @@ const atlasWaters = useMemo(() => {
     setUserParkings(backup.parkings);
     setUserHotspots(backup.hotspots);
     await saveAutomaticBackup(backup);
+    if (cloudSyncReady) await saveCloudBackup(backup);
   }
 
   async function exportBackupFile() {
@@ -1715,7 +1768,11 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   async function restoreAutomaticBackup() {
     setDataMessage("");
     try {
-      const backup = await loadAutomaticBackup();
+      const cloudBackup = await loadCloudBackup().catch(() => null);
+      const localBackup = await loadAutomaticBackup();
+      const backup = cloudBackup && localBackup
+        ? (backupItemCount(cloudBackup) >= backupItemCount(localBackup) ? cloudBackup : localBackup)
+        : (cloudBackup ?? localBackup);
       if (!backup) {
         setDataMessage("⚠ Noch keine automatische Datensicherung vorhanden.");
         return;
@@ -1742,6 +1799,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       localStorage.removeItem(PREVIOUS_AUTO_BACKUP_KEY);
       localStorage.removeItem(AUTO_CATCH_BACKUP_KEY);
       await clearDbStore(BACKUP_STORE);
+      await deleteCloudBackup();
       saveCatches([]);
       saveFavorites([]);
       saveLocalArray(USER_PARKINGS_KEY, []);

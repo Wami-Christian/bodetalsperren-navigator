@@ -1,0 +1,12 @@
+WamiFishing 5.3.0 – gemeinsame Cloud-Sicherung
+
+- Private Vercel-Blob-Sicherung über /api/wamifishing-backup
+- Homebildschirm/PWA und Safari lesen denselben Datenbestand
+- Beim Start wird zuerst die Cloud geprüft, bevor automatische Schreibvorgänge erlaubt werden
+- Leerer Browser-Speicher überschreibt dadurch nicht versehentlich vorhandene Cloud-Daten
+- Lokale IndexedDB/localStorage-Sicherung bleibt zusätzlich bestehen
+- Fotos bleiben Bestandteil der vollständigen Sicherung
+- "Daten wiederherstellen" bevorzugt die umfangreichste verfügbare Cloud-/Lokalsicherung
+- "Daten löschen" löscht bewusst auch die Cloud-Sicherung
+
+Voraussetzung: privater Vercel Blob Store ist mit dem Projekt verbunden.
