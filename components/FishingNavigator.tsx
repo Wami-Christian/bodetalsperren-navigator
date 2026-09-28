@@ -1151,7 +1151,7 @@ const atlasWaters = useMemo(() => {
     return candidates[index] ?? candidates[0];
   }
 
-  async function saveFreeHotspotAtCurrentLocation() {
+  async function saveFreePointAtCurrentLocation(kind: "parking" | "hotspot") {
     setFreeHotspotBusy(true);
     setAtlasPointMessage("");
     try {
@@ -1162,29 +1162,48 @@ const atlasWaters = useMemo(() => {
       const chosen = chooseNearbyWater(latitude, longitude);
 
       if (!chosen) {
-        setAtlasPointMessage("⚠ Kein passendes Gewässer gewählt. Hot Spot wurde nicht gespeichert.");
+        setAtlasPointMessage(`⚠ Kein passendes Gewässer gewählt. ${kind === "parking" ? "Parkplatz" : "Hot Spot"} wurde nicht gespeichert.`);
         return;
       }
 
-      const item: UserFishingSpot = {
-        id: `user-hotspot-${crypto.randomUUID()}`,
-        waterId: chosen.water.id,
-        name: "Eigener Hot Spot",
-        latitude,
-        longitude,
-        tags: ["Eigener Hot Spot", "GPS frei erkannt"],
-        note: `Freie GPS-Ortserkennung · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
-        source: "Benutzer",
-        createdAt: new Date().toISOString(),
-        accuracyM
-      };
+      const createdAt = new Date().toISOString();
+      if (kind === "parking") {
+        const item: UserParkingSpot = {
+          id: `user-parking-${crypto.randomUUID()}`,
+          waterId: chosen.water.id,
+          name: "Eigener Parkplatz",
+          latitude,
+          longitude,
+          access: "public",
+          accuracy: "verified",
+          note: `Freie GPS-Ortserkennung · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
+          createdAt,
+          accuracyM
+        };
+        const next = [...userParkings, item];
+        saveLocalArray(USER_PARKINGS_KEY, withoutPhoto(next));
+        setUserParkings(next);
+      } else {
+        const item: UserFishingSpot = {
+          id: `user-hotspot-${crypto.randomUUID()}`,
+          waterId: chosen.water.id,
+          name: "Eigener Hot Spot",
+          latitude,
+          longitude,
+          tags: ["Eigener Hot Spot", "GPS frei erkannt"],
+          note: `Freie GPS-Ortserkennung · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
+          source: "Benutzer",
+          createdAt,
+          accuracyM
+        };
+        const next = [...userHotspots, item];
+        saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
+        setUserHotspots(next);
+      }
 
-      const next = [...userHotspots, item];
-      saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
-      setUserHotspots(next);
       setSelected(chosen.water);
       setFocusedWaterId(chosen.water.latitude !== null && chosen.water.longitude !== null ? chosen.water.id : null);
-      setAtlasPointMessage(`✅ Hot Spot gespeichert · ${chosen.water.name} · ca. ${Math.round(chosen.distance * 1000)} m vom Gewässer.`);
+      setAtlasPointMessage(`✅ ${kind === "parking" ? "Parkplatz" : "Hot Spot"} gespeichert · ${chosen.water.name} · ca. ${Math.round(chosen.distance * 1000)} m vom Gewässer.`);
     } catch (error) {
       const geoCode = typeof error === "object" && error !== null && "code" in error
         ? Number((error as { code?: number }).code)
@@ -1719,6 +1738,17 @@ const atlasWaters = useMemo(() => {
       </header>
 
       {view === "dashboard" && <section className="page dashboard">
+        <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 10 }}>
+          <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("parking")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+            {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "🅿️ Parkplatz hier speichern"}
+            <small>GPS · Gewässer automatisch zuordnen</small>
+          </button>
+          <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("hotspot")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+            {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "📍 Hot Spot hier speichern"}
+            <small>GPS · Gewässer automatisch zuordnen</small>
+          </button>
+        </div>
+        {atlasPointMessage && <p className="atlas-point-message">{atlasPointMessage}</p>}
         <div className="hero-card"><p className="eyebrow">WAMIFISHING</p><h1>Dein Angelrevier auf einer Karte.</h1><p>Bodetalsperren, LAV-Gewässer, Harzflüsse, Fangbuch, GPX und eine transparente, regelbasierte Angelprognose.</p><button onClick={()=>setView("waters")}>Gewässer entdecken</button></div>
         <div className="dashboard-grid">
           <article role="button" tabIndex={0} onClick={()=>setView("waters")}><span>🗺️</span><strong>{waters.length}</strong><p>Gewässerprofile im Katalog</p></article>
@@ -1755,13 +1785,13 @@ const atlasWaters = useMemo(() => {
           </div>
         </div>
       </div>
-      <div className="atlas-special-filter atlas-free-location-action">
-        <button
-          type="button"
-          onClick={()=>void saveFreeHotspotAtCurrentLocation()}
-          disabled={freeHotspotBusy || atlasPointSaving !== null}
-        >
-          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "⌖ Hot Spot hier speichern"}
+      <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gap: 8 }}>
+        <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("parking")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "🅿️ Parkplatz hier speichern"}
+          <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
+        </button>
+        <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("hotspot")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
+          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "📍 Hot Spot hier speichern"}
           <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
         </button>
       </div>
