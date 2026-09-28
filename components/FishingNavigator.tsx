@@ -1119,6 +1119,38 @@ const atlasWaters = useMemo(() => {
   const visibleParkings = focusedWater ? [...(selected.parkings ?? []), ...selectedUserParkings] : [];
   const mappedCount = filtered.filter((water) => water.latitude !== null && water.longitude !== null).length;
 
+  function nearbyWatersForPosition(latitude: number, longitude: number) {
+    const ranked = waters
+      .map((water) => ({ water, distance: distanceToWaterKm(water, latitude, longitude) }))
+      .filter((item) => Number.isFinite(item.distance))
+      .sort((a, b) => a.distance - b.distance);
+
+    if (!ranked.length) return [];
+
+    // Parkplätze können etwas vom Ufer entfernt liegen. Deshalb zeigen wir neben
+    // dem nächsten Gewässer weitere realistische Kandidaten im Umfeld an.
+    const nearestDistance = ranked[0].distance;
+    const limitKm = Math.max(0.75, nearestDistance + 1.0);
+    return ranked.filter((item) => item.distance <= limitKm).slice(0, 6);
+  }
+
+  function chooseNearbyWater(latitude: number, longitude: number): { water: FishingWater; distance: number } | null {
+    const candidates = nearbyWatersForPosition(latitude, longitude);
+    if (!candidates.length) return null;
+    if (candidates.length === 1) return candidates[0];
+
+    const lines = candidates.map((item, index) =>
+      `${index + 1}. ${item.water.name} · ${Math.round(item.distance * 1000)} m`
+    );
+    const answer = window.prompt(
+      `Mehrere Gewässer liegen in der Nähe.\n\n${lines.join("\n")}\n\nNummer auswählen (Vorschlag: 1):`,
+      "1"
+    );
+    if (answer === null) return null;
+    const index = Number.parseInt(answer.trim(), 10) - 1;
+    return candidates[index] ?? candidates[0];
+  }
+
   async function saveFreeHotspotAtCurrentLocation() {
     setFreeHotspotBusy(true);
     setAtlasPointMessage("");
@@ -1127,26 +1159,21 @@ const atlasWaters = useMemo(() => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       const accuracyM = Math.round(position.coords.accuracy);
+      const chosen = chooseNearbyWater(latitude, longitude);
 
-      const nearest = waters
-        .map((water) => ({ water, distance: distanceToWaterKm(water, latitude, longitude) }))
-        .filter((item) => Number.isFinite(item.distance))
-        .sort((a, b) => a.distance - b.distance)[0];
-
-      // Avoid silently assigning a point to an unrelated water.
-      if (!nearest || nearest.distance > 0.35) {
-        setAtlasPointMessage("⚠ Kein Gewässer eindeutig in unmittelbarer Nähe erkannt. Hot Spot wurde nicht gespeichert.");
+      if (!chosen) {
+        setAtlasPointMessage("⚠ Kein passendes Gewässer gewählt. Hot Spot wurde nicht gespeichert.");
         return;
       }
 
       const item: UserFishingSpot = {
         id: `user-hotspot-${crypto.randomUUID()}`,
-        waterId: nearest.water.id,
+        waterId: chosen.water.id,
         name: "Eigener Hot Spot",
         latitude,
         longitude,
         tags: ["Eigener Hot Spot", "GPS frei erkannt"],
-        note: `Freie GPS-Ortserkennung · ${nearest.water.name} · Abstand zum Gewässer ca. ${Math.round(nearest.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
+        note: `Freie GPS-Ortserkennung · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
         source: "Benutzer",
         createdAt: new Date().toISOString(),
         accuracyM
@@ -1155,9 +1182,9 @@ const atlasWaters = useMemo(() => {
       const next = [...userHotspots, item];
       saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
       setUserHotspots(next);
-      setSelected(nearest.water);
-      setFocusedWaterId(nearest.water.latitude !== null && nearest.water.longitude !== null ? nearest.water.id : null);
-      setAtlasPointMessage(`✅ Hot Spot gespeichert · ${nearest.water.name} · ca. ${Math.round(nearest.distance * 1000)} m vom Gewässer.`);
+      setSelected(chosen.water);
+      setFocusedWaterId(chosen.water.latitude !== null && chosen.water.longitude !== null ? chosen.water.id : null);
+      setAtlasPointMessage(`✅ Hot Spot gespeichert · ${chosen.water.name} · ca. ${Math.round(chosen.distance * 1000)} m vom Gewässer.`);
     } catch (error) {
       const geoCode = typeof error === "object" && error !== null && "code" in error
         ? Number((error as { code?: number }).code)
@@ -1182,17 +1209,23 @@ const atlasWaters = useMemo(() => {
       const longitude = position.coords.longitude;
       const accuracyM = Math.round(position.coords.accuracy);
       const createdAt = new Date().toISOString();
+      const chosen = chooseNearbyWater(latitude, longitude);
+
+      if (!chosen) {
+        setAtlasPointMessage(`⚠ Kein Gewässer gewählt. ${kind === "parking" ? "Parkplatz" : "Hot Spot"} wurde nicht gespeichert.`);
+        return;
+      }
 
       if (kind === "parking") {
         const item: UserParkingSpot = {
           id: `user-parking-${crypto.randomUUID()}`,
-          waterId: selected.id,
+          waterId: chosen.water.id,
           name: "Eigener Parkplatz",
           latitude,
           longitude,
           access: "public",
           accuracy: "verified",
-          note: `Eigene GPS-Position · Genauigkeit ca. ${accuracyM} m`,
+          note: `Eigene GPS-Position · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · Genauigkeit ca. ${accuracyM} m`,
           photo,
           createdAt,
           accuracyM
@@ -1201,16 +1234,15 @@ const atlasWaters = useMemo(() => {
         await putAtlasPhoto(item.id, photo);
         saveLocalArray(USER_PARKINGS_KEY, withoutPhoto(next));
         setUserParkings(next);
-        setAtlasPointMessage("✅ Parkplatz mit Position und Foto dauerhaft gespeichert.");
       } else {
         const item: UserFishingSpot = {
           id: `user-hotspot-${crypto.randomUUID()}`,
-          waterId: selected.id,
+          waterId: chosen.water.id,
           name: "Eigener Hot Spot",
           latitude,
           longitude,
           tags: ["Eigener Hot Spot"],
-          note: `Eigene GPS-Position · Genauigkeit ca. ${accuracyM} m`,
+          note: `Eigene GPS-Position · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · Genauigkeit ca. ${accuracyM} m`,
           source: "Benutzer",
           photo,
           createdAt,
@@ -1220,12 +1252,11 @@ const atlasWaters = useMemo(() => {
         await putAtlasPhoto(item.id, photo);
         saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
         setUserHotspots(next);
-        setAtlasPointMessage("✅ Hot Spot mit Position und Foto dauerhaft gespeichert.");
       }
 
-      if (selected.latitude !== null && selected.longitude !== null) {
-        setFocusedWaterId(selected.id);
-      }
+      setSelected(chosen.water);
+      setFocusedWaterId(chosen.water.latitude !== null && chosen.water.longitude !== null ? chosen.water.id : null);
+      setAtlasPointMessage(`✅ ${kind === "parking" ? "Parkplatz" : "Hot Spot"} gespeichert · ${chosen.water.name} · ca. ${Math.round(chosen.distance * 1000)} m vom Gewässer.`);
     } catch (error) {
       const geoCode = typeof error === "object" && error !== null && "code" in error
         ? Number((error as { code?: number }).code)
@@ -1833,7 +1864,7 @@ const atlasWaters = useMemo(() => {
           disabled={atlasPointSaving !== null}
         >
           {atlasPointSaving === "parking" ? "📷 Speichere…" : "🅿️ Parkplatz speichern"}
-          <small>Position + Foto</small>
+          <small>GPS + Foto · Gewässer automatisch</small>
         </button>
         <button
           type="button"
@@ -1841,7 +1872,7 @@ const atlasWaters = useMemo(() => {
           disabled={atlasPointSaving !== null}
         >
           {atlasPointSaving === "hotspot" ? "📷 Speichere…" : "📍 Hot Spot speichern"}
-          <small>Position + Foto</small>
+          <small>GPS + Foto · Gewässer automatisch</small>
         </button>
         <input
           ref={parkingPhotoRef}
