@@ -1,6 +1,6 @@
 {
   "name": "wamifishing-navigator",
-  "version": "5.2.3-prognose-v1.10.2-mobile-modal-fix",
+  "version": "5.2.4-backup-stable",
   "private": true,
   "scripts": {
     "dev": "next dev",
