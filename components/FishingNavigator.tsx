@@ -1315,12 +1315,22 @@ const atlasWaters = useMemo(() => {
         const accuracy = position.coords.accuracy;
         setCatchPosition({ latitude, longitude, accuracy });
 
-        const nearest = waters
+        const waterDistances = waters
           .map((water) => ({
             water,
-            distance: distanceToWaterKm(water, latitude, longitude)
+            distance: distanceToWaterKm(water, latitude, longitude),
+            followsRoute: Boolean(water.route && water.route.length >= 2)
           }))
-          .filter((item) => Number.isFinite(item.distance))
+          .filter((item) => Number.isFinite(item.distance));
+
+        // Fangbuch: Wenn der GPS-Punkt direkt an einer kartierten Fließgewässer-Route
+        // liegt, hat diese Vorrang vor punktförmig gespeicherten Seen/Altarmen.
+        // So wird z. B. an der Elbe nicht versehentlich eine nahe „Alte Elbe“ gewählt.
+        const nearbyRoute = waterDistances
+          .filter((item) => item.followsRoute && item.distance <= 0.20)
+          .sort((a, b) => a.distance - b.distance)[0];
+
+        const nearest = nearbyRoute ?? waterDistances
           .sort((a, b) => a.distance - b.distance)[0];
 
         if (nearest) setCatchWaterId(nearest.water.id);
