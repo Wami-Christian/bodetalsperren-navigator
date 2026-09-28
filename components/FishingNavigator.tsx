@@ -1738,7 +1738,7 @@ const atlasWaters = useMemo(() => {
       </header>
 
       {view === "dashboard" && <section className="page dashboard">
-        <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 10 }}>
+        <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 10 }}>
           <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("parking")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
             {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "🅿️ Parkplatz hier speichern"}
             <small>GPS · Gewässer automatisch zuordnen</small>
@@ -1746,6 +1746,10 @@ const atlasWaters = useMemo(() => {
           <button type="button" onClick={()=>void saveFreePointAtCurrentLocation("hotspot")} disabled={freeHotspotBusy || atlasPointSaving !== null}>
             {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "📍 Hot Spot hier speichern"}
             <small>GPS · Gewässer automatisch zuordnen</small>
+          </button>
+          <button type="button" onClick={()=>setView("diary")}>
+            🐟 Fang eintragen
+            <small>Fangbuch · Standort automatisch erkennen</small>
           </button>
         </div>
         {atlasPointMessage && <p className="atlas-point-message">{atlasPointMessage}</p>}
