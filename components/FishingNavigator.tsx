@@ -213,15 +213,106 @@ async function hydrateCatchPhotos(entries: EnhancedCatchEntry[]) {
 
 type MeasurePoint = { x: number; y: number };
 function FishLengthMeasure({photo,handleLengthCm,onApply,onClose}:{photo:string;handleLengthCm:number;onApply:(cm:number)=>void;onClose:()=>void}) {
-  const canvasRef=useRef<HTMLCanvasElement|null>(null);
-  const [points,setPoints]=useState<MeasurePoint[]>([]);
-  const labels=["Griff Anfang","Griff Ende","Maulspitze","Schwanzspitze"];
-  const distance=(a:MeasurePoint,b:MeasurePoint)=>Math.hypot(a.x-b.x,a.y-b.y);
-  const result=points.length===4 && distance(points[0],points[1])>0 ? distance(points[2],points[3])/distance(points[0],points[1])*handleLengthCm : null;
-  useEffect(()=>{const canvas=canvasRef.current;if(!canvas)return;const image=new Image();image.onload=()=>{const scale=Math.min(1,Math.min(900,window.innerWidth-40)/image.naturalWidth);canvas.width=Math.round(image.naturalWidth*scale);canvas.height=Math.round(image.naturalHeight*scale);const ctx=canvas.getContext("2d");if(!ctx)return;ctx.drawImage(image,0,0,canvas.width,canvas.height);points.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x,p.y,8,0,Math.PI*2);ctx.fillStyle=i<2?"#fff":"#ffd54f";ctx.fill();ctx.lineWidth=3;ctx.strokeStyle="#111";ctx.stroke();});[[0,1],[2,3]].forEach(([a,b])=>{if(!points[a]||!points[b])return;ctx.beginPath();ctx.moveTo(points[a].x,points[a].y);ctx.lineTo(points[b].x,points[b].y);ctx.lineWidth=4;ctx.strokeStyle="#fff";ctx.stroke();});};image.src=photo;},[photo,points]);
-  function addPoint(e:React.MouseEvent<HTMLCanvasElement>){if(points.length>=4)return;const r=e.currentTarget.getBoundingClientRect();setPoints(v=>[...v,{x:(e.clientX-r.left)*e.currentTarget.width/r.width,y:(e.clientY-r.top)*e.currentTarget.height/r.height}]);}
-  return <div className="fish-measure-overlay"><div className="fish-measure-panel"><div className="fish-measure-head"><div><strong>📏 Fischlänge aus Foto</strong><small>Rutengriff: {handleLengthCm.toFixed(1)} cm</small></div><button type="button" onClick={onClose}>✕</button></div><p className="fish-measure-help">{points.length<4?`Punkt ${points.length+1}: ${labels[points.length]} antippen`:"Messpunkte vollständig."}</p><div className="fish-measure-canvas-wrap"><canvas ref={canvasRef} onClick={addPoint}/></div><div className="fish-measure-actions"><button type="button" disabled={!points.length} onClick={()=>setPoints(v=>v.slice(0,-1))}>↶ Punkt zurück</button><button type="button" disabled={!points.length} onClick={()=>setPoints([])}>Neu messen</button>{result!==null&&<strong>{result.toFixed(1)} cm</strong>}<button type="button" disabled={result===null} onClick={()=>result!==null&&onApply(Math.round(result))}>✓ Länge übernehmen</button></div></div></div>;
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const [points, setPoints] = useState<MeasurePoint[]>([]);
+  const [imageReady, setImageReady] = useState(false);
+  const labels = ["Griff Anfang", "Griff Ende", "Maulspitze", "Schwanzspitze"];
+
+  const distance = (a?: MeasurePoint, b?: MeasurePoint) => {
+    if (!a || !b) return 0;
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  };
+
+  const handleDistance = distance(points[0], points[1]);
+  const fishDistance = distance(points[2], points[3]);
+  const result = points.length === 4 && handleDistance > 0
+    ? (fishDistance / handleDistance) * handleLengthCm
+    : null;
+
+  useEffect(() => {
+    let cancelled = false;
+    const image = new Image();
+    image.onload = () => {
+      if (cancelled) return;
+      imageRef.current = image;
+      setImageReady(true);
+    };
+    image.onerror = () => {
+      if (cancelled) return;
+      imageRef.current = null;
+      setImageReady(false);
+    };
+    image.src = photo;
+    return () => {
+      cancelled = true;
+      image.onload = null;
+      image.onerror = null;
+    };
+  }, [photo]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const image = imageRef.current;
+    if (!canvas || !image || !imageReady) return;
+
+    const availableWidth = Math.max(1, Math.min(900, window.innerWidth - 40));
+    const naturalWidth = Math.max(1, image.naturalWidth || image.width);
+    const naturalHeight = Math.max(1, image.naturalHeight || image.height);
+    const scale = Math.min(1, availableWidth / naturalWidth);
+    const width = Math.max(1, Math.round(naturalWidth * scale));
+    const height = Math.max(1, Math.round(naturalHeight * scale));
+
+    if (canvas.width !== width) canvas.width = width;
+    if (canvas.height !== height) canvas.height = height;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(image, 0, 0, width, height);
+
+    const drawLine = (a?: MeasurePoint, b?: MeasurePoint) => {
+      if (!a || !b) return;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "#fff";
+      ctx.stroke();
+    };
+
+    drawLine(points[0], points[1]);
+    drawLine(points[2], points[3]);
+
+    points.forEach((point, index) => {
+      if (!Number.isFinite(point.x) || !Number.isFinite(point.y)) return;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = index < 2 ? "#fff" : "#ffd54f";
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#111";
+      ctx.stroke();
+    });
+  }, [points, imageReady]);
+
+  function addPoint(e: React.MouseEvent<HTMLCanvasElement>) {
+    if (points.length >= 4) return;
+    const canvas = e.currentTarget;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0 || canvas.width <= 0 || canvas.height <= 0) return;
+
+    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+
+    setPoints(current => current.length >= 4 ? current : [...current, { x, y }]);
+  }
+
+  return <div className="fish-measure-overlay"><div className="fish-measure-panel"><div className="fish-measure-head"><div><strong>📏 Fischlänge aus Foto</strong><small>Rutengriff: {handleLengthCm.toFixed(1)} cm</small></div><button type="button" onClick={onClose}>✕</button></div><p className="fish-measure-help">{points.length<4?`Punkt ${points.length+1}: ${labels[points.length]} antippen`:"Messpunkte vollständig."}</p><div className="fish-measure-canvas-wrap"><canvas ref={canvasRef} onClick={addPoint}/></div><div className="fish-measure-actions"><button type="button" disabled={!points.length} onClick={()=>setPoints(v=>v.slice(0,-1))}>↶ Punkt zurück</button><button type="button" disabled={!points.length} onClick={()=>setPoints([])}>Neu messen</button>{result!==null&&Number.isFinite(result)&&<strong>{result.toFixed(1)} cm</strong>}<button type="button" disabled={result===null||!Number.isFinite(result)} onClick={()=>result!==null&&Number.isFinite(result)&&onApply(Math.round(result))}>✓ Länge übernehmen</button></div></div></div>;
 }
+
 type WamiFishingBackup = {
   format: "WamiFishing Navigator Backup";
   version: 1;
