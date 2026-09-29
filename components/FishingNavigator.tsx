@@ -2023,7 +2023,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.7</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.8</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2037,7 +2037,6 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           <nav ref={mainNavRef} className="main-nav" aria-label="Hauptnavigation">
             {([
               ["dashboard", "🏠 Dashboard"],
-              ["waters", "🎣 Gewässer"],
               ["atlas", "🗺 Atlas"],
               ["forecast", "📈 Prognose"],
               ["diary", "📖 Fangbuch"],
@@ -2268,7 +2267,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <>
           <h3>Parkplätze / Ausgangspunkte</h3>
           <div className="atlas-nav-list">
-            {[...selectedAppParkings.slice(0, 1), ...selectedUserParkings].map((parking) => {
+            {[...selectedAppParkings, ...selectedUserParkings].map((parking) => {
               const own = "waterId" in parking;
               const ownParking = own ? parking as UserParkingSpot : null;
               return (
