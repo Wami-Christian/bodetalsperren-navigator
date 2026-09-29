@@ -3138,3 +3138,8 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 .details .mini-actions .app-parking-edit-actions{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;flex-basis:100%}
 .details .mini-actions .app-parking-edit-actions button{width:100%;min-width:0;white-space:nowrap}
 @media(max-width:700px){.details .mini-actions .app-parking-edit-actions{gap:8px}.details .mini-actions .app-parking-edit-actions button{padding:8px 4px;font-size:12px}}
+
+/* V6.1.1: Gewässerprofil-Aktionen garantiert über die volle Kartenbreite */
+.details .nav-list article > .mini-actions{width:100%;}
+.details .nav-list article > .mini-actions > .app-parking-edit-actions{grid-column:1/-1!important;width:100%!important;max-width:none!important;justify-self:stretch!important;}
+.details .nav-list article > .mini-actions > .app-parking-edit-actions > button{width:100%!important;max-width:none!important;}
