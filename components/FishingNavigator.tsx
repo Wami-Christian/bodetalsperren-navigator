@@ -685,6 +685,7 @@ function distanceToWaterKm(water: FishingWater, latitude: number, longitude: num
 export default function FishingNavigator() {
   const mainNavRef = useRef<HTMLElement | null>(null);
   const atlasCategoryRef = useRef<HTMLDivElement | null>(null);
+  const atlasScrollRailTouchYRef = useRef<number | null>(null);
   const [view, setView] = useState<View>("dashboard");
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
@@ -2100,7 +2101,27 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       </section>}
 {view === "atlas" && (
   <section className="atlas-page">
-    <div className="atlas-page-scroll-rail" aria-hidden="true"><span /></div>
+    <div
+      className="atlas-page-scroll-rail"
+      aria-hidden="true"
+      onTouchStart={(event) => {
+        atlasScrollRailTouchYRef.current = event.touches[0]?.clientY ?? null;
+      }}
+      onTouchMove={(event) => {
+        const currentY = event.touches[0]?.clientY;
+        const previousY = atlasScrollRailTouchYRef.current;
+        if (currentY == null || previousY == null) return;
+        event.preventDefault();
+        window.scrollBy({ top: previousY - currentY, left: 0, behavior: "auto" });
+        atlasScrollRailTouchYRef.current = currentY;
+      }}
+      onTouchEnd={() => {
+        atlasScrollRailTouchYRef.current = null;
+      }}
+      onTouchCancel={() => {
+        atlasScrollRailTouchYRef.current = null;
+      }}
+    ><span /></div>
 
     <aside className="atlas-sidebar">
       <h2>Angelatlas</h2>

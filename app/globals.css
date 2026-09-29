@@ -3191,8 +3191,8 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     bottom: calc(env(safe-area-inset-bottom) + 10px);
     width: 24px;
     z-index: 1200;
-    touch-action: pan-y;
-    overscroll-behavior-y: auto;
+    touch-action: none;
+    overscroll-behavior: contain;
     background: rgba(255, 255, 255, 0.34);
     border-left: 1px solid rgba(13, 77, 67, 0.10);
   }
