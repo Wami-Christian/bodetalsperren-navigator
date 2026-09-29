@@ -3122,3 +3122,14 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 .app-parking-edit-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;flex:1 1 100%;width:100%}
 .app-parking-edit-actions button{width:100%;min-width:0;white-space:normal;text-align:center;justify-content:center}
 @media(max-width:420px){.app-parking-edit-actions{gap:5px}.app-parking-edit-actions button{padding:6px 4px;font-size:10px}}
+
+
+/* Atlas V6.1.0: mobile Bearbeitungsbuttons + Enter schliesst Tastatur */
+@media(max-width:700px){
+  .app-parking-edit-actions{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+  .app-parking-edit-actions button{min-height:38px;padding:6px 3px;font-size:10px;line-height:1.05;white-space:nowrap}
+}
+@media(min-width:701px){
+  .app-parking-edit-actions{gap:8px}
+  .app-parking-edit-actions button{padding:9px 10px;font-size:inherit}
+}
