@@ -69,6 +69,21 @@ type UserParkingSpot = ParkingSpot & {
   accuracyM?: number;
 };
 
+type ManualWater = FishingWater & {
+  manual: true;
+  createdAt: string;
+  positionSource: "gps" | "map";
+  ownership: "private" | "club" | "public" | "lease" | "unknown";
+  clubName?: string;
+  permitsAvailableAt?: string;
+  guestFishing?: "yes" | "no" | "unknown";
+  permission?: "free" | "membership" | "guest-card" | "special" | "unknown";
+  informationSource?: "own" | "club" | "rules" | "permit" | "internet" | "other";
+  informationDate?: string;
+  visibility: "private" | "friends" | "public";
+  description?: string;
+};
+
 type UserFishingSpot = FishingSpot & {
   waterId: string;
   photo?: string;
@@ -78,6 +93,7 @@ type UserFishingSpot = FishingSpot & {
 
 const USER_PARKINGS_KEY = "harzfishing:user-parkings";
 const USER_HOTSPOTS_KEY = "harzfishing:user-hotspots";
+const MANUAL_WATERS_KEY = "wamifishing:manual-waters";
 
 function loadLocalArray<T>(key: string): T[] {
   if (typeof window === "undefined") return [];
@@ -336,6 +352,7 @@ type WamiFishingBackup = {
   catches: EnhancedCatchEntry[];
   parkings: UserParkingSpot[];
   hotspots: UserFishingSpot[];
+  manualWaters?: ManualWater[];
 };
 
 const AUTO_BACKUP_KEY = "wamifishing:auto-backup-v1";
@@ -349,7 +366,7 @@ function isValidAutomaticBackup(value: unknown): value is WamiFishingBackup {
 }
 
 function backupItemCount(backup: WamiFishingBackup) {
-  return backup.catches.length + backup.parkings.length + backup.hotspots.length;
+  return backup.catches.length + backup.parkings.length + backup.hotspots.length + (backup.manualWaters?.length ?? 0);
 }
 
 async function loadCloudBackup(): Promise<WamiFishingBackup | null> {
@@ -680,6 +697,12 @@ const [atlasCategory, setAtlasCategory] =
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
   const [userParkings, setUserParkings] = useState<UserParkingSpot[]>([]);
   const [userHotspots, setUserHotspots] = useState<UserFishingSpot[]>([]);
+  const [manualWaters, setManualWaters] = useState<ManualWater[]>([]);
+  const [showAddWater, setShowAddWater] = useState(false);
+  const [manualWaterPosition, setManualWaterPosition] = useState<{latitude:number;longitude:number;source:"gps"|"map"}|null>(null);
+  const [manualWaterMessage, setManualWaterMessage] = useState("");
+  const [manualWaterPositionBusy, setManualWaterPositionBusy] = useState(false);
+  const [manualWaterOwnership, setManualWaterOwnership] = useState<ManualWater["ownership"]>("unknown");
   const [atlasPointSaving, setAtlasPointSaving] = useState<"parking" | "hotspot" | null>(null);
   const [atlasPointMessage, setAtlasPointMessage] = useState("");
   const parkingPhotoRef = useRef<HTMLInputElement | null>(null);
@@ -701,6 +724,7 @@ const [atlasCategory, setAtlasCategory] =
     if(Number.isFinite(savedHandleLength)&&savedHandleLength>0)setRodHandleLengthCm(savedHandleLength);
     const storedCatches = loadCatches() as EnhancedCatchEntry[];
     setFavorites(initialFavorites);
+    setManualWaters(loadLocalArray<ManualWater>(MANUAL_WATERS_KEY));
 
     void Promise.all([
       hydrateCatchPhotos(storedCatches),
@@ -779,7 +803,8 @@ const [atlasCategory, setAtlasCategory] =
             favorites,
             catches: catchesWithPhotos,
             parkings: parkingsWithPhotos,
-            hotspots: hotspotsWithPhotos
+            hotspots: hotspotsWithPhotos,
+            manualWaters
           };
           await saveAutomaticBackup(backup);
           await saveCloudBackup(backup);
@@ -795,7 +820,7 @@ const [atlasCategory, setAtlasCategory] =
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [localDataReady, cloudSyncReady, favorites, catches, userParkings, userHotspots]);
+  }, [localDataReady, cloudSyncReady, favorites, catches, userParkings, userHotspots, manualWaters]);
 
   useEffect(() => {
     const nav = mainNavRef.current;
@@ -813,7 +838,9 @@ const [atlasCategory, setAtlasCategory] =
     });
   }, [view]);
 
-  const filtered = useMemo(() => waters
+  const allWaters = useMemo(() => [...waters, ...manualWaters], [manualWaters]);
+
+  const filtered = useMemo(() => allWaters
     .filter((water) => {
       if (!waterPlace) return true;
       if (water.latitude === null || water.longitude === null) return false;
@@ -829,7 +856,7 @@ const [atlasCategory, setAtlasCategory] =
         ? a.name.localeCompare(b.name, "de")
         : (b.rating[fish] ?? 0) - (a.rating[fish] ?? 0);
     }),
-    [fish, waterPlace]);
+    [fish, waterPlace, allWaters]);
 
   // Gewässeransicht: Nach einer neuen Filterung automatisch den ersten Treffer
   // im Profil anzeigen. Die Karte bleibt dabei in der Trefferübersicht.
@@ -891,7 +918,7 @@ const [atlasCategory, setAtlasCategory] =
   }
 
 const atlasWaters = useMemo(() => {
-  return waters
+  return allWaters
     .filter((water) => {
       if (!atlasPlace) return true;
       if (water.latitude === null || water.longitude === null) return false;
@@ -908,7 +935,7 @@ const atlasWaters = useMemo(() => {
         ? a.name.localeCompare(b.name, "de")
         : (b.rating[atlasFish] ?? 0) - (a.rating[atlasFish] ?? 0);
     });
-}, [atlasPlace, atlasFish, atlasCategory]);
+}, [atlasPlace, atlasFish, atlasCategory, allWaters]);
 
   useEffect(() => {
     if (view !== "atlas") return;
@@ -1678,6 +1705,38 @@ const atlasWaters = useMemo(() => {
     }
   }
 
+  async function useGpsForManualWater() {
+    setManualWaterPositionBusy(true); setManualWaterMessage("");
+    try {
+      const pos = await new Promise<GeolocationPosition>((resolve,reject)=>navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,timeout:12000,maximumAge:30000}));
+      setManualWaterPosition({latitude:pos.coords.latitude,longitude:pos.coords.longitude,source:"gps"});
+      setManualWaterMessage(`✓ GPS-Position übernommen · ±${Math.round(pos.coords.accuracy)} m`);
+    } catch { setManualWaterMessage("⚠ GPS-Position konnte nicht bestimmt werden."); }
+    finally { setManualWaterPositionBusy(false); }
+  }
+
+  function saveManualWater(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    if (!manualWaterPosition) { setManualWaterMessage("⚠ Bitte zuerst GPS-Position oder einen Punkt auf der Karte wählen."); return; }
+    const name=String(form.get("name")??"").trim();
+    if(!name){setManualWaterMessage("⚠ Bitte einen Gewässernamen eingeben.");return;}
+    const fishList=fishOptions.filter((x): x is Fish=>x!=="Alle" && form.getAll("fish").includes(x));
+    const typeRaw=String(form.get("waterType")??"See");
+    const type: FishingWater["type"] = typeRaw==="Fluss"||typeRaw==="Bach"||typeRaw==="Kanal" ? "Fließgewässer" : typeRaw==="Kies-/Baggersee" ? "Kiesgrube" : typeRaw==="Talsperre" ? "Talsperre" : typeRaw==="Teich" ? "Teich" : "See";
+    const item: ManualWater={
+      id:`manual-${Date.now()}`,name,module:"LAV Sachsen-Anhalt",type,district:String(form.get("district")??"Eigener Eintrag"),
+      latitude:manualWaterPosition.latitude,longitude:manualWaterPosition.longitude,fish:fishList,rating:{},notes:[String(form.get("description")??"")].filter(Boolean),spots:[],parkings:[],sourceStatus:"catalog",
+      manual:true,createdAt:new Date().toISOString(),positionSource:manualWaterPosition.source,ownership:manualWaterOwnership,
+      clubName:String(form.get("clubName")??"").trim()||undefined,permitsAvailableAt:String(form.get("permitsAvailableAt")??"").trim()||undefined,
+      guestFishing:String(form.get("guestFishing")??"unknown") as ManualWater["guestFishing"],permission:String(form.get("permission")??"unknown") as ManualWater["permission"],
+      informationSource:String(form.get("informationSource")??"own") as ManualWater["informationSource"],informationDate:String(form.get("informationDate")??"")||undefined,
+      visibility:"private",description:String(form.get("description")??"").trim()||undefined
+    };
+    const next=[...manualWaters,item]; setManualWaters(next); saveLocalArray(MANUAL_WATERS_KEY,next); setSelected(item); setFocusedWaterId(item.id);
+    setManualWaterMessage(`✓ ${name} gespeichert · zunächst Privat`); setShowAddWater(false); setManualWaterPosition(null);
+  }
+
   async function createCurrentBackup(): Promise<WamiFishingBackup> {
     const catchesWithPhotos = await Promise.all(catches.map(async (entry) => ({
       ...entry,
@@ -1698,7 +1757,8 @@ const atlasWaters = useMemo(() => {
       favorites,
       catches: catchesWithPhotos,
       parkings: parkingsWithPhotos,
-      hotspots: hotspotsWithPhotos
+      hotspots: hotspotsWithPhotos,
+      manualWaters
     };
   }
 
@@ -1711,15 +1771,18 @@ const atlasWaters = useMemo(() => {
     const restoredParkings = withoutPhoto(backup.parkings) as UserParkingSpot[];
     const restoredHotspots = withoutPhoto(backup.hotspots) as UserFishingSpot[];
     const restoredFavorites = Array.isArray(backup.favorites) ? backup.favorites : [];
+    const restoredManualWaters = Array.isArray(backup.manualWaters) ? backup.manualWaters : [];
 
     saveCatches(restoredCatches);
     saveFavorites(restoredFavorites);
     saveLocalArray(USER_PARKINGS_KEY, restoredParkings);
     saveLocalArray(USER_HOTSPOTS_KEY, restoredHotspots);
+    saveLocalArray(MANUAL_WATERS_KEY, restoredManualWaters);
     setFavorites(restoredFavorites);
     setCatches(backup.catches);
     setUserParkings(backup.parkings);
     setUserHotspots(backup.hotspots);
+    setManualWaters(restoredManualWaters);
     await saveAutomaticBackup(backup);
     if (cloudSyncReady) await saveCloudBackup(backup);
   }
@@ -1846,7 +1909,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>WamiFishing</strong><small>WAMIFISHING V6.0.0</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣</span><div><strong>WamiFishing</strong><small>WAMIFISHING V6.0.1</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -1889,7 +1952,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       </header>
 
       {view === "dashboard" && <section className="page dashboard">
-        <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 10 }}>
+        <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 10 }}>
           <button type="button" onClick={()=>parkingPhotoRef.current?.click()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
             {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "🅿️ Parkplatz hier speichern"}
             <small>GPS · Gewässer automatisch zuordnen</small>
@@ -1902,13 +1965,17 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
             🐟 Fang eintragen
             <small>Fangbuch · Standort automatisch erkennen</small>
           </button>
+          <button type="button" onClick={()=>{setShowAddWater(true);setManualWaterMessage("");}}>
+            ➕ Gewässer hinzufügen
+            <small>Per GPS oder auf Karte auswählen</small>
+          </button>
           <input ref={parkingPhotoRef} className="atlas-hidden-photo-input" type="file" accept="image/*" capture="environment" onChange={(event)=>handleAtlasPhoto("parking", event)}/>
           <input ref={hotspotPhotoRef} className="atlas-hidden-photo-input" type="file" accept="image/*" capture="environment" onChange={(event)=>handleAtlasPhoto("hotspot", event)}/>
         </div>
         {atlasPointMessage && <p className="atlas-point-message">{atlasPointMessage}</p>}
         <div className="hero-card"><p className="eyebrow">WAMIFISHING</p><h1>Dein Angelrevier auf einer Karte.</h1><p>Bodetalsperren, LAV-Gewässer, Harzflüsse, Fangbuch, GPX und eine transparente, regelbasierte Angelprognose.</p><button onClick={()=>setView("waters")}>Gewässer entdecken</button></div>
         <div className="dashboard-grid">
-          <article role="button" tabIndex={0} onClick={()=>setView("waters")}><span>🗺️</span><strong>{waters.length}</strong><p>Gewässerprofile im Katalog</p></article>
+          <article role="button" tabIndex={0} onClick={()=>setView("waters")}><span>🗺️</span><strong>{allWaters.length}</strong><p>Gewässerprofile im Katalog</p></article>
           <article role="button" tabIndex={0} onClick={()=>setView("waters")}><span>⭐</span><strong>{favorites.length}</strong><p>gespeicherte Favoriten</p></article>
           <article role="button" tabIndex={0} onClick={()=>setView("diary")}><span>🐟</span><strong>{catches.length}</strong><p>Fänge im Fangbuch</p></article>
           <article role="button" tabIndex={0} onClick={()=>setView("atlas")}><span>📍</span><strong>{userHotspots.length + userParkings.length}</strong><p>eigene Hotspots & Parkplätze</p></article>
@@ -2353,7 +2420,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       </section>}
       {view === "diary" && (() => {
         const moon = moonInfoFor(new Date());
-        const selectedCatchWater = waters.find((water) => water.id === catchWaterId);
+        const selectedCatchWater = allWaters.find((water) => water.id === catchWaterId);
         const selectedCatchDistance = selectedCatchWater && catchPosition
           ? distanceToWaterKm(selectedCatchWater, catchPosition.latitude, catchPosition.longitude)
           : null;
@@ -2374,7 +2441,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
             {catchAutoError && <p className="catch-auto-error">⚠ {catchAutoError}</p>}
 
             <div className="catch-form-grid">
-              <label className="wide">Gewässer <select name="waterId" value={catchWaterId} onChange={(event)=>setCatchWaterId(event.target.value)} required><option value="">Gewässer auswählen …</option>{waters.slice().sort((a,b)=>a.name.localeCompare(b.name,"de")).map((water)=><option value={water.id} key={water.id}>{water.name}{water.lavNumber ? ` · ${water.lavNumber}` : ""}</option>)}</select></label><label className="wide">Datum / Uhrzeit <input name="caughtAt" type="datetime-local" defaultValue={new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16)}/></label>
+              <label className="wide">Gewässer <select name="waterId" value={catchWaterId} onChange={(event)=>setCatchWaterId(event.target.value)} required><option value="">Gewässer auswählen …</option>{allWaters.slice().sort((a,b)=>a.name.localeCompare(b.name,"de")).map((water)=><option value={water.id} key={water.id}>{water.name}{water.lavNumber ? ` · ${water.lavNumber}` : ""}</option>)}</select></label><label className="wide">Datum / Uhrzeit <input name="caughtAt" type="datetime-local" defaultValue={new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16)}/></label>
               <label>Fischart <select name="fish" defaultValue="Zander">{fishOptions.filter(x=>x!=="Alle").map(x=><option key={x}>{x}</option>)}</select></label>
               <label>Länge <div className="catch-unit-field"><input name="lengthCm" type="number" min="0" step="0.1" inputMode="decimal" placeholder="0"/><span>cm</span></div></label>
               <label>Gewicht <div className="catch-unit-field"><input name="weightKg" type="number" min="0" step="0.01" inputMode="decimal" placeholder="0"/><span>kg</span></div></label>
@@ -2399,7 +2466,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           <div className="catch-history">
             <div className="catch-history-head"><div><p className="eyebrow">Eigene Datenbasis</p><h2>Gespeicherte Fänge</h2></div><strong>{catches.length}</strong></div>
             <div className="catch-list catch-list-v2">{catches.map(entry=>{
-              const water = waters.find(w=>w.id===entry.waterId);
+              const water = allWaters.find(w=>w.id===entry.waterId);
               return <article key={entry.id}>
                 {entry.photo && <><button type="button" className="catch-history-photo-button" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })} aria-label="Fangfoto groß ansehen"><img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/><span>📷 Foto ansehen</span></button><button type="button" className="catch-photo-save-button" onClick={()=>void saveCatchPhotoToPhotoApp(entry.photo!,entry.fish)}>📲 In Fotos sichern</button></>}
                 <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}{entry.photo && <button type="button" className="catch-photo-open-inline" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })}>📷 Fangfoto öffnen</button>}</div>
@@ -2424,7 +2491,26 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         document.body
       )}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+
+      {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.0.1 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <form className="catch-form" onSubmit={saveManualWater}>
+          <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
+          {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
+          {manualWaterPosition?.source==="map" || (!manualWaterPosition && manualWaterMessage.includes("Karte")) ? <div style={{height:280,borderRadius:14,overflow:"hidden"}}><MapView waters={[]} spots={[]} parkings={[]} selectedWater={null} onSelect={()=>{}} onMapClick={(lat,lon)=>{setManualWaterPosition({latitude:lat,longitude:lon,source:"map"});setManualWaterMessage(`✓ Kartenposition gewählt · ${lat.toFixed(5)}, ${lon.toFixed(5)}`);}} selectionPoint={manualWaterPosition}/></div>:null}
+          {manualWaterPosition&&<small>Koordinaten: {manualWaterPosition.latitude.toFixed(6)}, {manualWaterPosition.longitude.toFixed(6)} · {manualWaterPosition.source==="gps"?"GPS":"Karte"}</small>}
+          <h3>2. Grunddaten</h3><label className="wide">Gewässername *<input name="name" required placeholder="z. B. Mühlenteich"/></label><label>Gewässerart<select name="waterType" defaultValue="See"><option>See</option><option>Teich</option><option>Fluss</option><option>Bach</option><option>Kanal</option><option>Talsperre</option><option>Kies-/Baggersee</option><option>Altarm</option><option>Hafen</option><option>Sonstiges</option></select></label><label>Region / Ort<input name="district" placeholder="optional"/></label>
+          <h3>3. Zugang & Berechtigung</h3><label>Gewässerstatus<select value={manualWaterOwnership} onChange={e=>setManualWaterOwnership(e.target.value as ManualWater["ownership"])}><option value="unknown">Unbekannt</option><option value="public">Öffentlich / frei zugänglich</option><option value="club">Vereinsgewässer</option><option value="private">Privatgewässer</option><option value="lease">Pachtgewässer</option></select></label><label>Angelberechtigung<select name="permission" defaultValue="unknown"><option value="unknown">Unbekannt</option><option value="free">Frei beangelbar</option><option value="membership">Vereinsmitgliedschaft erforderlich</option><option value="guest-card">Gast-/Tageskarte erhältlich</option><option value="special">Besondere Genehmigung erforderlich</option></select></label>
+          {(manualWaterOwnership==="club"||manualWaterOwnership==="lease")&&<><label>Verein / Verband<input name="clubName"/></label><label>Gastangler<select name="guestFishing" defaultValue="unknown"><option value="unknown">Unbekannt</option><option value="yes">Ja</option><option value="no">Nein</option></select></label></>}
+          <label className="wide">Angelkarten erhältlich bei<input name="permitsAvailableAt" placeholder="Verein, Geschäft, Webseite …"/></label>
+          <h3>4. Fischarten</h3><div className="manual-fish-grid">{fishOptions.filter(x=>x!=="Alle").map(x=><label key={x}><input type="checkbox" name="fish" value={x}/>{x}</label>)}</div>
+          <h3>5. Hinweise & Quelle</h3><label className="wide">Beschreibung / Sonderbestimmungen<textarea name="description" rows={3}/></label><label>Informationsquelle<select name="informationSource" defaultValue="own"><option value="own">Eigene Kenntnis</option><option value="club">Verein</option><option value="rules">Gewässerordnung</option><option value="permit">Angelkarte</option><option value="internet">Internet</option><option value="other">Sonstige</option></select></label><label>Stand der Information<input name="informationDate" type="date" defaultValue={new Date().toISOString().slice(0,10)}/></label>
+          <p><strong>🔒 Sichtbarkeit: Privat.</strong> Freunde/Öffentlich wird mit der kommenden User- und Teilenfunktion aktiviert.</p>
+          <div className="fish-measure-actions"><button type="button" onClick={()=>setShowAddWater(false)}>Abbrechen</button><button type="submit">✓ Gewässer speichern</button></div>
+        </form>
+      </div></div>}
+
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.1</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
         <h3>Cloudspeicherung & Datensicherung</h3><p><strong>Automatische Cloudspeicherung ist immer aktiv.</strong> Jede Änderung an Favoriten, Fangbuch, Fotos, Parkplätzen und Hot Spots wird automatisch lokal und in der WamiFishing-Cloud dieser festen Domain gesichert und zwischen deinen Geräten synchronisiert. Die Synchronisierung kann einen Moment dauern. Es ist kein Sicherungsknopf nötig.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
@@ -2432,7 +2518,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V6.0.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V6.0.1 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }

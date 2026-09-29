@@ -3100,3 +3100,11 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 .dashboard-grid article[role="button"]{cursor:pointer}.dashboard-grid article[role="button"]:hover{transform:translateY(-1px)}
 
 .catch-photo-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.55rem 0}.catch-photo-actions .catch-measure-button{margin:0}.catch-photo-save-button{white-space:nowrap}.backup-status{font-weight:700;padding:.65rem .8rem;border-radius:10px;background:rgba(80,140,80,.10)}
+
+/* V6.0.1 – manuelle Gewässernachtragung */
+.manual-water-panel{max-width:760px;max-height:92vh;overflow:auto}
+.manual-water-panel .catch-form h3{grid-column:1/-1;margin:14px 0 2px}
+.manual-fish-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.manual-fish-grid label{display:flex;align-items:center;gap:7px}
+.manual-fish-grid input{width:auto}
+@media(max-width:720px){.manual-fish-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard .atlas-free-location-action{grid-template-columns:1fr!important}}

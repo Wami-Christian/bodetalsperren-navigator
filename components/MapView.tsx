@@ -991,7 +991,9 @@ export default function MapView({
   spots,
   parkings,
   selectedWater,
-  onSelect
+  onSelect,
+  onMapClick,
+  selectionPoint
 }: {
   waters: FishingWater[];
   persistentRouteWaters?: FishingWater[];
@@ -999,20 +1001,22 @@ export default function MapView({
   parkings: ParkingSpot[];
   selectedWater: FishingWater | null;
   onSelect: (water: FishingWater) => void;
+  onMapClick?: (latitude: number, longitude: number) => void;
+  selectionPoint?: { latitude: number; longitude: number } | null;
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
   const selectRef = useRef(onSelect);
+  const mapClickRef = useRef(onMapClick);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [elbeOsmLines, setElbeOsmLines] = useState<LatLngTuple[][]>([]);
   const [saaleOsmLines, setSaaleOsmLines] = useState<LatLngTuple[][]>([]);
   const [waterwayOsmLines, setWaterwayOsmLines] = useState<Record<string, LatLngTuple[][]>>({});
   const [standingWaterSnaps, setStandingWaterSnaps] = useState<Record<string, LatLngTuple>>({});
 
-  useEffect(() => {
-    selectRef.current = onSelect;
-  }, [onSelect]);
+  useEffect(() => { selectRef.current = onSelect; }, [onSelect]);
+  useEffect(() => { mapClickRef.current = onMapClick; }, [onMapClick]);
 
   useEffect(() => {
     if (!selectedWater || selectedWater.latitude === null || selectedWater.longitude === null) return;
@@ -1134,6 +1138,7 @@ export default function MapView({
 
     layerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
+    map.on("click", (event: L.LeafletMouseEvent) => mapClickRef.current?.(event.latlng.lat, event.latlng.lng));
 
     const resize = window.setTimeout(() => map.invalidateSize(), 100);
 
@@ -1152,6 +1157,11 @@ export default function MapView({
 
     layer.clearLayers();
     const bounds: L.LatLngExpression[] = [];
+
+    if (selectionPoint) {
+      L.circleMarker([selectionPoint.latitude, selectionPoint.longitude], { radius: 9, weight: 3, fillOpacity: 0.7 }).bindTooltip("Gewählte Position").addTo(layer);
+      bounds.push([selectionPoint.latitude, selectionPoint.longitude]);
+    }
 
     // Elbe-LAV-Strecken sind ein permanenter Hintergrund-Layer und werden
     // unabhängig von Suche/Filter immer gezeichnet. Treffer-Gewässer bestimmen
@@ -1442,7 +1452,7 @@ export default function MapView({
     } else {
       map.setView(DEFAULT_CENTER, 9);
     }
-  }, [waters, persistentRouteWaters, spots, parkings, selectedWater?.id, elbeOsmLines, saaleOsmLines, waterwayOsmLines, standingWaterSnaps]);
+  }, [waters, persistentRouteWaters, spots, parkings, selectedWater?.id, elbeOsmLines, saaleOsmLines, waterwayOsmLines, standingWaterSnaps, selectionPoint]);
 
   useEffect(() => {
     window.setTimeout(() => {
