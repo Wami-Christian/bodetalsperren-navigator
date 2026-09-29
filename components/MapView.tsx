@@ -1010,6 +1010,17 @@ export default function MapView({
   const selectRef = useRef(onSelect);
   const mapClickRef = useRef(onMapClick);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobileAtlas, setIsMobileAtlas] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 900px)");
+    const update = () => setIsMobileAtlas(media.matches);
+    update();
+    media.addEventListener?.("change", update);
+    return () => media.removeEventListener?.("change", update);
+  }, []);
+
+  const shouldMountLiveMap = !isMobileAtlas || isFullscreen || Boolean(onMapClick);
   const [elbeOsmLines, setElbeOsmLines] = useState<LatLngTuple[][]>([]);
   const [saaleOsmLines, setSaaleOsmLines] = useState<LatLngTuple[][]>([]);
   const [waterwayOsmLines, setWaterwayOsmLines] = useState<Record<string, LatLngTuple[][]>>({});
@@ -1121,6 +1132,14 @@ export default function MapView({
   }, [waters.map((water) => water.waterwayName ?? "").join("|"), persistentRouteWaters.map((water) => water.waterwayName ?? "").join("|")]);
 
   useEffect(() => {
+    if (!shouldMountLiveMap) {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+        layerRef.current = null;
+      }
+      return;
+    }
     if (!hostRef.current || mapRef.current) return;
 
     const map = L.map(hostRef.current, {
@@ -1148,7 +1167,7 @@ export default function MapView({
       mapRef.current = null;
       layerRef.current = null;
     };
-  }, []);
+  }, [shouldMountLiveMap]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -1498,13 +1517,22 @@ export default function MapView({
           : "map-shell"
       }
     >
-      <div
-        ref={hostRef}
-        className="map"
-        role="application"
-        aria-label="Interaktive Gewässerkarte"
-      />
+      {shouldMountLiveMap ? (
+        <div
+          ref={hostRef}
+          className="map"
+          role="application"
+          aria-label="Interaktive Gewässerkarte"
+        />
+      ) : (
+        <div className="map map-static-preview" aria-label="Kartenvorschau">
+          <span aria-hidden="true">🗺️</span>
+          <strong>Kartenvorschau</strong>
+          <small>Zum Anzeigen und Zoomen Karte vergrößern</small>
+        </div>
+      )}
 
+      {shouldMountLiveMap && (
       <div className="map-zoom-controls" aria-label="Kartenzoom">
         <button
           type="button"
@@ -1521,6 +1549,7 @@ export default function MapView({
           −
         </button>
       </div>
+      )}
 
       {!isFullscreen && (
         <button

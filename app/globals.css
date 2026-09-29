@@ -3245,27 +3245,39 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 }
 
 
-/* WamiFishing 6.1.9 – iPhone Atlas
-   Eingebettete Karte ist im normalen Atlasmodus komplett eingefroren.
-   So verarbeitet Leaflet beim Seitenscroll keine Touch-/Pointer-Ereignisse.
-   Erst die vergrößerte/Vollbild-Karte ist wieder vollständig interaktiv. */
+/* WamiFishing 6.2.0 – mobile Atlas-Karte wirklich stilllegen
+   Im eingebetteten iPhone-Atlas wird Leaflet gar nicht gemountet.
+   Die Live-Karte startet erst in der vergrößerten Ansicht. */
 @media (max-width: 900px) {
-  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen),
-  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen) .leaflet-container,
-  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen) .leaflet-pane,
-  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen) .leaflet-control-container {
-    pointer-events: none !important;
-    touch-action: pan-y !important;
+  .atlas-map .map-static-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 290px;
+    background: linear-gradient(145deg, rgba(231,239,235,.96), rgba(247,249,248,.98));
+    text-align: center;
+    touch-action: pan-y;
+    pointer-events: none;
   }
 
-  .atlas-page .atlas-map .map-shell-fullscreen,
-  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-container,
-  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-pane,
-  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-control-container {
-    pointer-events: auto !important;
+  .atlas-map .map-static-preview > span {
+    font-size: 42px;
+    line-height: 1;
   }
 
-  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-container {
-    touch-action: none !important;
+  .atlas-map .map-static-preview > strong {
+    font-size: 16px;
+  }
+
+  .atlas-map .map-static-preview > small {
+    max-width: 240px;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+
+  .atlas-map .map-shell:not(.map-shell-fullscreen) .map-zoom-controls {
+    display: none;
   }
 }
