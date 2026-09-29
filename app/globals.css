@@ -3245,24 +3245,27 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 }
 
 
-/* WamiFishing 6.1.8 – iPhone: Karte während Seitenscroll kurz entkoppeln */
+/* WamiFishing 6.1.9 – iPhone Atlas
+   Eingebettete Karte ist im normalen Atlasmodus komplett eingefroren.
+   So verarbeitet Leaflet beim Seitenscroll keine Touch-/Pointer-Ereignisse.
+   Erst die vergrößerte/Vollbild-Karte ist wieder vollständig interaktiv. */
 @media (max-width: 900px) {
-  .atlas-page.atlas-page-scrolling .atlas-map .map-shell:not(.map-shell-fullscreen) {
+  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen),
+  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen) .leaflet-container,
+  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen) .leaflet-pane,
+  .atlas-page .atlas-map .map-shell:not(.map-shell-fullscreen) .leaflet-control-container {
     pointer-events: none !important;
+    touch-action: pan-y !important;
   }
 
-  .atlas-page.atlas-page-scrolling .atlas-map .leaflet-container {
-    pointer-events: none !important;
-  }
-
-  .atlas-page.atlas-page-scrolling .atlas-map {
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  /* Vollbildkarte bleibt immer direkt bedienbar. */
-  .atlas-page.atlas-page-scrolling .atlas-map .map-shell-fullscreen,
-  .atlas-page.atlas-page-scrolling .atlas-map .map-shell-fullscreen .leaflet-container {
+  .atlas-page .atlas-map .map-shell-fullscreen,
+  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-container,
+  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-pane,
+  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-control-container {
     pointer-events: auto !important;
+  }
+
+  .atlas-page .atlas-map .map-shell-fullscreen .leaflet-container {
+    touch-action: none !important;
   }
 }
