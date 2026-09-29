@@ -94,6 +94,17 @@ type UserFishingSpot = FishingSpot & {
 const USER_PARKINGS_KEY = "harzfishing:user-parkings";
 const USER_HOTSPOTS_KEY = "harzfishing:user-hotspots";
 const MANUAL_WATERS_KEY = "wamifishing:manual-waters";
+const APP_PARKING_CHANGES_KEY = "wamifishing:app-parking-changes";
+
+type AppParkingChange = {
+  waterId: string;
+  parkingId: string;
+  status: "hidden" | "deleted" | "corrected";
+  reason?: string;
+  latitude?: number;
+  longitude?: number;
+  changedAt: string;
+};
 
 function loadLocalArray<T>(key: string): T[] {
   if (typeof window === "undefined") return [];
@@ -353,6 +364,7 @@ type WamiFishingBackup = {
   parkings: UserParkingSpot[];
   hotspots: UserFishingSpot[];
   manualWaters?: ManualWater[];
+  appParkingChanges?: AppParkingChange[];
 };
 
 const AUTO_BACKUP_KEY = "wamifishing:auto-backup-v1";
@@ -366,7 +378,7 @@ function isValidAutomaticBackup(value: unknown): value is WamiFishingBackup {
 }
 
 function backupItemCount(backup: WamiFishingBackup) {
-  return backup.catches.length + backup.parkings.length + backup.hotspots.length + (backup.manualWaters?.length ?? 0);
+  return backup.catches.length + backup.parkings.length + backup.hotspots.length + (backup.manualWaters?.length ?? 0) + (backup.appParkingChanges?.length ?? 0);
 }
 
 async function loadCloudBackup(): Promise<WamiFishingBackup | null> {
@@ -721,6 +733,7 @@ const [atlasCategory, setAtlasCategory] =
   const [userParkings, setUserParkings] = useState<UserParkingSpot[]>([]);
   const [userHotspots, setUserHotspots] = useState<UserFishingSpot[]>([]);
   const [manualWaters, setManualWaters] = useState<ManualWater[]>([]);
+  const [appParkingChanges, setAppParkingChanges] = useState<AppParkingChange[]>([]);
   const [showAddWater, setShowAddWater] = useState(false);
   const [manualWaterPosition, setManualWaterPosition] = useState<{latitude:number;longitude:number;source:"gps"|"map"}|null>(null);
   const [manualWaterMessage, setManualWaterMessage] = useState("");
@@ -748,6 +761,7 @@ const [atlasCategory, setAtlasCategory] =
     const storedCatches = loadCatches() as EnhancedCatchEntry[];
     setFavorites(initialFavorites);
     setManualWaters(loadLocalArray<ManualWater>(MANUAL_WATERS_KEY));
+    setAppParkingChanges(loadLocalArray<AppParkingChange>(APP_PARKING_CHANGES_KEY));
 
     void Promise.all([
       hydrateCatchPhotos(storedCatches),
@@ -827,7 +841,8 @@ const [atlasCategory, setAtlasCategory] =
             catches: catchesWithPhotos,
             parkings: parkingsWithPhotos,
             hotspots: hotspotsWithPhotos,
-            manualWaters
+            manualWaters,
+            appParkingChanges
           };
           await saveAutomaticBackup(backup);
           await saveCloudBackup(backup);
@@ -843,7 +858,7 @@ const [atlasCategory, setAtlasCategory] =
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [localDataReady, cloudSyncReady, favorites, catches, userParkings, userHotspots, manualWaters]);
+  }, [localDataReady, cloudSyncReady, favorites, catches, userParkings, userHotspots, manualWaters, appParkingChanges]);
 
   useEffect(() => {
     const nav = mainNavRef.current;
@@ -1322,9 +1337,17 @@ const atlasWaters = useMemo(() => {
   const focusedWater = focusedWaterId === selected.id && selected.latitude !== null && selected.longitude !== null ? selected : null;
   const mapWaters = focusedWater ? [focusedWater] : filtered;
   const selectedUserParkings = userParkings.filter((parking) => parking.waterId === selected.id);
+  const selectedAppParkings = (selected.parkings ?? []).flatMap((parking) => {
+    const change = appParkingChanges.find((item) => item.waterId === selected.id && item.parkingId === parking.id);
+    if (change?.status === "hidden" || change?.status === "deleted") return [];
+    if (change?.status === "corrected" && change.latitude != null && change.longitude != null) {
+      return [{ ...parking, latitude: change.latitude, longitude: change.longitude, note: `${parking.note ?? "App-Parkplatz"} · Position von dir korrigiert` }];
+    }
+    return [parking];
+  });
   const selectedUserHotspots = userHotspots.filter((spot) => spot.waterId === selected.id);
   const visibleSpots = focusedWater ? [...selected.spots, ...selectedUserHotspots, ...importedSpots] : [];
-  const visibleParkings = focusedWater ? [...(selected.parkings ?? []), ...selectedUserParkings] : [];
+  const visibleParkings = focusedWater ? [...selectedAppParkings, ...selectedUserParkings] : [];
   const mappedCount = filtered.filter((water) => water.latitude !== null && water.longitude !== null).length;
 
   function nearbyWatersForPosition(latitude: number, longitude: number) {
@@ -1528,6 +1551,43 @@ const atlasWaters = useMemo(() => {
     } catch {
       setAtlasPointMessage("⚠ Hot Spot konnte nicht vollständig gelöscht werden.");
     }
+  }
+
+  function saveAppParkingChange(change: AppParkingChange) {
+    const next = [...appParkingChanges.filter((item) => !(item.waterId === change.waterId && item.parkingId === change.parkingId)), change];
+    setAppParkingChanges(next);
+    saveLocalArray(APP_PARKING_CHANGES_KEY, next);
+  }
+
+  function hideAppParking(parkingId: string) {
+    if (!window.confirm("Diesen App-Parkplatz für dich ausblenden?")) return;
+    saveAppParkingChange({ waterId: selected.id, parkingId, status: "hidden", changedAt: new Date().toISOString() });
+  }
+
+  function deleteAppParking(parkingId: string) {
+    if (!window.confirm("Diesen App-Parkplatz wirklich löschen? Er wird in deiner WamiFishing-Ansicht dauerhaft entfernt.")) return;
+    const reason = window.prompt("Grund (optional): Privatgrund, Zufahrt gesperrt, nicht mehr vorhanden, falscher Eintrag …", "") ?? "";
+    saveAppParkingChange({ waterId: selected.id, parkingId, status: "deleted", reason: reason.trim() || undefined, changedAt: new Date().toISOString() });
+  }
+
+  function correctAppParkingGps(parkingId: string) {
+    if (!navigator.geolocation) { setAtlasPointMessage("⚠ GPS ist auf diesem Gerät nicht verfügbar."); return; }
+    setAtlasPointMessage("⌖ Neue Parkplatzposition wird per GPS bestimmt …");
+    navigator.geolocation.getCurrentPosition((position) => {
+      saveAppParkingChange({ waterId: selected.id, parkingId, status: "corrected", latitude: position.coords.latitude, longitude: position.coords.longitude, changedAt: new Date().toISOString() });
+      setAtlasPointMessage(`✓ Parkplatzposition korrigiert · ±${Math.round(position.coords.accuracy)} m`);
+    }, () => setAtlasPointMessage("⚠ Parkplatzposition konnte nicht bestimmt werden."), { enableHighAccuracy: true, timeout: 12000, maximumAge: 15000 });
+  }
+
+  async function deleteManualWater(id: string) {
+    const linkedHotspots = userHotspots.filter((item) => item.waterId === id).length;
+    const linkedParkings = userParkings.filter((item) => item.waterId === id).length;
+    const linkedCatches = catches.filter((item) => item.waterId === id).length;
+    const suffix = linkedHotspots || linkedParkings || linkedCatches ? `\n\nZugeordnet bleiben: ${linkedHotspots} Hotspots, ${linkedParkings} Parkplätze, ${linkedCatches} Fänge.` : "";
+    if (!window.confirm(`Eigenes Gewässer „${selected.name}“ wirklich löschen?${suffix}`)) return;
+    const next = manualWaters.filter((item) => item.id !== id);
+    setManualWaters(next); saveLocalArray(MANUAL_WATERS_KEY, next);
+    const fallback = waters[0]; if (fallback) { setSelected(fallback); setFocusedWaterId(null); }
   }
 
   function selectAndFocus(water: FishingWater) {
@@ -1808,7 +1868,8 @@ const atlasWaters = useMemo(() => {
       catches: catchesWithPhotos,
       parkings: parkingsWithPhotos,
       hotspots: hotspotsWithPhotos,
-      manualWaters
+      manualWaters,
+      appParkingChanges
     };
   }
 
@@ -1822,17 +1883,20 @@ const atlasWaters = useMemo(() => {
     const restoredHotspots = withoutPhoto(backup.hotspots) as UserFishingSpot[];
     const restoredFavorites = Array.isArray(backup.favorites) ? backup.favorites : [];
     const restoredManualWaters = Array.isArray(backup.manualWaters) ? backup.manualWaters : [];
+    const restoredAppParkingChanges = Array.isArray(backup.appParkingChanges) ? backup.appParkingChanges : [];
 
     saveCatches(restoredCatches);
     saveFavorites(restoredFavorites);
     saveLocalArray(USER_PARKINGS_KEY, restoredParkings);
     saveLocalArray(USER_HOTSPOTS_KEY, restoredHotspots);
     saveLocalArray(MANUAL_WATERS_KEY, restoredManualWaters);
+    saveLocalArray(APP_PARKING_CHANGES_KEY, restoredAppParkingChanges);
     setFavorites(restoredFavorites);
     setCatches(backup.catches);
     setUserParkings(backup.parkings);
     setUserHotspots(backup.hotspots);
     setManualWaters(restoredManualWaters);
+    setAppParkingChanges(restoredAppParkingChanges);
     await saveAutomaticBackup(backup);
     if (cloudSyncReady) await saveCloudBackup(backup);
   }
@@ -1959,7 +2023,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.6</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.7</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2142,7 +2206,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
       <div className="atlas-detail-stats">
         <span>🐟 {waterTargetFish(selected).length} Zielfische</span>
-        <span>🅿️ {selected.parkings.length + selectedUserParkings.length} Parkplätze</span>
+        <span>🅿️ {selectedAppParkings.length + selectedUserParkings.length} Parkplätze</span>
         <span>📍 {selected.spots.length + selectedUserHotspots.length} Erkundungspunkte</span>
       </div>
 
@@ -2200,11 +2264,11 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       </div>
       {atlasPointMessage && <p className="atlas-point-message">{atlasPointMessage}</p>}
 
-      {(selected.parkings.length > 0 || selectedUserParkings.length > 0) && (
+      {(selectedAppParkings.length > 0 || selectedUserParkings.length > 0) && (
         <>
           <h3>Parkplätze / Ausgangspunkte</h3>
           <div className="atlas-nav-list">
-            {[...selected.parkings.slice(0, 1), ...selectedUserParkings].map((parking) => {
+            {[...selectedAppParkings.slice(0, 1), ...selectedUserParkings].map((parking) => {
               const own = "waterId" in parking;
               const ownParking = own ? parking as UserParkingSpot : null;
               return (
@@ -2215,7 +2279,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
                   <div className="atlas-row-actions">
                     <a href={`https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a>
                     <a href={`https://maps.apple.com/?daddr=${parking.latitude},${parking.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>
-                    {ownParking && <button type="button" onClick={() => deleteUserParking(parking.id)}>Löschen</button>}
+                    {ownParking ? <button type="button" onClick={() => deleteUserParking(parking.id)}>Löschen</button> : <><button type="button" onClick={() => correctAppParkingGps(parking.id)}>📍 Position korrigieren</button><button type="button" onClick={() => hideAppParking(parking.id)}>Ausblenden</button><button type="button" onClick={() => deleteAppParking(parking.id)}>🗑️ Löschen</button></>}
                   </div>
                 </article>
               );
@@ -2229,7 +2293,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           <h3>Erkundungspunkte</h3>
           <div className="atlas-nav-list">
             {[...selected.spots, ...selectedUserHotspots].map((spot) => {
-              const parking = [...selected.parkings, ...selectedUserParkings].find((item) => item.id === spot.parkingId);
+              const parking = [...selectedAppParkings, ...selectedUserParkings].find((item) => item.id === spot.parkingId);
               const ownSpot = "waterId" in spot ? spot as UserFishingSpot : null;
               return (
                 <article key={spot.id}>
@@ -2330,7 +2394,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
   <div className="stat-card">
     <span>🅿️</span>
-    <strong>{selected.parkings.length + selectedUserParkings.length}</strong>
+    <strong>{selectedAppParkings.length + selectedUserParkings.length}</strong>
     <small>Parkplätze</small>
   </div>
 
@@ -2345,8 +2409,9 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
     <small>Top-Fisch</small>
   </div>
 </div><h2>{selected.name}</h2><p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p><span className={`status ${selected.sourceStatus}`}>{selected.sourceStatus==='verified'?'Navigationsdaten vorhanden':selected.sourceStatus==='catalog'?'LAV-Katalog – Lage noch offen':'Arbeitsdaten – prüfen'}</span>{selected.areaHa && <p><strong>Fläche:</strong> {selected.areaHa} ha</p>}<h3>Zielfische</h3><div className="score-list">{waterTargetFish(selected).length ? waterTargetFish(selected).map(item=><div key={item}><span>{item}</span><strong>{'★'.repeat(targetFishRating(selected,item))}</strong></div>) : <p>Keine Zielfischarten im Basiskatalog erkannt.</p>}</div><h3>Hinweise</h3><ul>{selected.notes.map((note, index)=><li key={`${selected.id}-note-${index}`}>{note}</li>)}</ul>
-          {(selected.parkings.length > 0 || selectedUserParkings.length > 0) && <><h3>Parkplätze / Ausgangspunkte</h3><div className="nav-list">{[...selected.parkings, ...selectedUserParkings].map(p=><article key={p.id}><strong>{p.name}</strong><small>{p.note ?? `${p.access==='public'?'öffentlich':'Zufahrt eingeschränkt'} · ${p.accuracy==='verified'?'belegt':'Näherungswert'}`}</small>{'photo' in p && typeof p.photo === 'string' && p.photo && <img src={p.photo} alt={p.name} style={{width:'100%',maxHeight:180,objectFit:'cover',borderRadius:12,marginTop:8}}/>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a><a href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a></div></article>)}</div></>}
-          {(selected.spots.length > 0 || selectedUserHotspots.length > 0) && <><h3>Hotspots / Erkundungspunkte</h3><div className="nav-list">{[...selected.spots, ...selectedUserHotspots].map(spot=>{const parking=[...selected.parkings, ...selectedUserParkings].find(p=>p.id===spot.parkingId);return <article key={spot.id}><strong>{spot.name}</strong><small>{spot.risk ?? spot.note ?? 'Zugang vor Ort prüfen.'}</small>{'photo' in spot && typeof spot.photo === 'string' && spot.photo && <img src={spot.photo} alt={spot.name} style={{width:'100%',maxHeight:180,objectFit:'cover',borderRadius:12,marginTop:8}}/>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>{parking&&<a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Parkplatz</a>}</div></article>})}</div></>}
+          {(selectedAppParkings.length > 0 || selectedUserParkings.length > 0) && <><h3>Parkplätze / Ausgangspunkte</h3><div className="nav-list">{[...selectedAppParkings, ...selectedUserParkings].map(p=><article key={p.id}><strong>{p.name}</strong><small>{p.note ?? `${p.access==='public'?'öffentlich':'Zufahrt eingeschränkt'} · ${p.accuracy==='verified'?'belegt':'Näherungswert'}`}</small>{'photo' in p && typeof p.photo === 'string' && p.photo && <img src={p.photo} alt={p.name} style={{width:'100%',maxHeight:180,objectFit:'cover',borderRadius:12,marginTop:8}}/>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a><a href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>{"waterId" in p ? <button type="button" onClick={()=>deleteUserParking(p.id)}>🗑️ Löschen</button> : <><button type="button" onClick={()=>correctAppParkingGps(p.id)}>📍 Position korrigieren</button><button type="button" onClick={()=>hideAppParking(p.id)}>Ausblenden</button><button type="button" onClick={()=>deleteAppParking(p.id)}>🗑️ Löschen</button></>}</div></article>)}</div></>}
+          {(selected.spots.length > 0 || selectedUserHotspots.length > 0) && <><h3>Hotspots / Erkundungspunkte</h3><div className="nav-list">{[...selected.spots, ...selectedUserHotspots].map(spot=>{const parking=[...selectedAppParkings, ...selectedUserParkings].find(p=>p.id===spot.parkingId);return <article key={spot.id}><strong>{spot.name}</strong><small>{spot.risk ?? spot.note ?? 'Zugang vor Ort prüfen.'}</small>{'photo' in spot && typeof spot.photo === 'string' && spot.photo && <img src={spot.photo} alt={spot.name} style={{width:'100%',maxHeight:180,objectFit:'cover',borderRadius:12,marginTop:8}}/>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>{parking&&<a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Parkplatz</a>}{"waterId" in spot && <button type="button" onClick={()=>deleteUserHotspot(spot.id)}>🗑️ Löschen</button>}</div></article>})}</div></>}
+          {"manual" in selected && selected.manual === true && <div className="button-row"><button type="button" onClick={()=>void deleteManualWater(selected.id)}>🗑️ Eigenes Gewässer löschen</button></div>}
           <div className="button-row">{selected.latitude !== null && selected.longitude !== null && <a className="route-button" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`} target="_blank" rel="noreferrer">Zum Gewässer</a>}<button onClick={exportGpx} disabled={!visibleSpots.length}>GPX exportieren</button></div><label className="file-button">GPX importieren<input type="file" accept=".gpx,application/gpx+xml" onChange={importGpx}/></label></aside>
         </div>
       </section>}
@@ -2548,7 +2613,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.0.6 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.0.7 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2565,7 +2630,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.6</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.7</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
         <h3>Cloudspeicherung & Datensicherung</h3><p><strong>Automatische Cloudspeicherung ist immer aktiv.</strong> Jede Änderung an Favoriten, Fangbuch, Fotos, Parkplätzen und Hot Spots wird automatisch lokal und in der WamiFishing-Cloud dieser festen Domain gesichert und zwischen deinen Geräten synchronisiert. Die Synchronisierung kann einen Moment dauern. Es ist kein Sicherungsknopf nötig.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
@@ -2573,7 +2638,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V6.0.6 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V6.0.7 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
