@@ -2100,6 +2100,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       </section>}
 {view === "atlas" && (
   <section className="atlas-page">
+    <div className="atlas-page-scroll-rail" aria-hidden="true"><span /></div>
 
     <aside className="atlas-sidebar">
       <h2>Angelatlas</h2>

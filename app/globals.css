@@ -3175,3 +3175,41 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     line-height: 1.05 !important;
   }
 }
+
+/* WamiFishing 6.1.5 – mobiler Schieberand im Atlas
+   Der rechte Rand liegt außerhalb der inneren Atlas-Scroller. */
+.atlas-page-scroll-rail {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .atlas-page-scroll-rail {
+    display: block;
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 112px);
+    right: env(safe-area-inset-right);
+    bottom: calc(env(safe-area-inset-bottom) + 10px);
+    width: 24px;
+    z-index: 1200;
+    touch-action: pan-y;
+    overscroll-behavior-y: auto;
+    background: rgba(255, 255, 255, 0.34);
+    border-left: 1px solid rgba(13, 77, 67, 0.10);
+  }
+
+  .atlas-page-scroll-rail > span {
+    position: absolute;
+    top: 42%;
+    left: 8px;
+    width: 6px;
+    height: 54px;
+    border-radius: 999px;
+    background: rgba(13, 77, 67, 0.26);
+    pointer-events: none;
+  }
+
+  .atlas-page {
+    padding-right: 24px;
+  }
+}
+
