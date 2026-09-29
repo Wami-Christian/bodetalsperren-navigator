@@ -3133,3 +3133,8 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   .app-parking-edit-actions{gap:8px}
   .app-parking-edit-actions button{padding:9px 10px;font-size:inherit}
 }
+
+/* V6.1.0 Gewässerprofil: drei Bearbeitungsbuttons über volle Breite */
+.details .mini-actions .app-parking-edit-actions{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;flex-basis:100%}
+.details .mini-actions .app-parking-edit-actions button{width:100%;min-width:0;white-space:nowrap}
+@media(max-width:700px){.details .mini-actions .app-parking-edit-actions{gap:8px}.details .mini-actions .app-parking-edit-actions button{padding:8px 4px;font-size:12px}}
