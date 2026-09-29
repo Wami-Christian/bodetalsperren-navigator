@@ -670,6 +670,8 @@ const [atlasSearchError, setAtlasSearchError] = useState("");
 const [atlasCategory, setAtlasCategory] =
   useState<AtlasCategory>("all");
   const [watersFavoritesOnly, setWatersFavoritesOnly] = useState(false);
+  const [watersHotspotsOnly, setWatersHotspotsOnly] = useState(false);
+  const [diaryCatchesOnly, setDiaryCatchesOnly] = useState(false);
   const [atlasPersonalPointsOnly, setAtlasPersonalPointsOnly] = useState(false);
   const [selected, setSelected] = useState<FishingWater>(waters[0]);
   const [focusedWaterId, setFocusedWaterId] = useState<string | null>(null);
@@ -849,6 +851,7 @@ const [atlasCategory, setAtlasCategory] =
       return distanceKm(waterPlace.latitude, waterPlace.longitude, water.latitude, water.longitude) <= 20;
     })
     .filter((water) => !watersFavoritesOnly || favorites.includes(water.id))
+    .filter((water) => !watersHotspotsOnly || userHotspots.some((spot) => spot.waterId === water.id))
     .filter((water) => fish === "Alle" || waterHasTargetFish(water, fish))
     .sort((a, b) => {
       if (waterPlace && a.latitude !== null && a.longitude !== null && b.latitude !== null && b.longitude !== null) {
@@ -859,7 +862,7 @@ const [atlasCategory, setAtlasCategory] =
         ? a.name.localeCompare(b.name, "de")
         : (b.rating[fish] ?? 0) - (a.rating[fish] ?? 0);
     }),
-    [fish, waterPlace, allWaters, watersFavoritesOnly, favorites]);
+    [fish, waterPlace, allWaters, watersFavoritesOnly, watersHotspotsOnly, favorites, userHotspots]);
 
   // Gewässeransicht: Nach einer neuen Filterung automatisch den ersten Treffer
   // im Profil anzeigen. Die Karte bleibt dabei in der Trefferübersicht.
@@ -901,6 +904,7 @@ const [atlasCategory, setAtlasCategory] =
     setWaterPlace(null);
     setFish("Alle");
     setWatersFavoritesOnly(false);
+    setWatersHotspotsOnly(false);
     setWaterSearchError("");
     setFocusedWaterId(null);
   }
@@ -1914,7 +1918,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.3</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.4</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -1992,8 +1996,8 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <div className="dashboard-mini-stats">
           <button type="button" onClick={()=>{setWatersFavoritesOnly(false);setView("waters");}}><span>🗺️</span><strong>{allWaters.length}</strong><small>Profile</small><b>›</b></button>
           <button type="button" onClick={()=>{setQuery("");setWaterPlace(null);setFish("Alle");setWatersFavoritesOnly(true);setView("waters");}}><span>⭐</span><strong>{favorites.length}</strong><small>Favoriten</small><b>›</b></button>
-          <button type="button" onClick={()=>setView("diary")}><span>🐟</span><strong>{catches.length}</strong><small>Fänge</small><b>›</b></button>
-          <button type="button" onClick={()=>{resetAtlasFilters();setAtlasPersonalPointsOnly(true);setView("atlas");}}><span>📍</span><strong>{userHotspots.length + userParkings.length}</strong><small>Spots</small><b>›</b></button>
+          <button type="button" onClick={()=>{setDiaryCatchesOnly(true);setView("diary");}}><span>🐟</span><strong>{catches.length}</strong><small>Fänge</small><b>›</b></button>
+          <button type="button" onClick={()=>{setQuery("");setWaterPlace(null);setFish("Alle");setWatersFavoritesOnly(false);setWatersHotspotsOnly(true);setView("waters");}}><span>📍</span><strong>{userHotspots.length}</strong><small>Spots</small><b>›</b></button>
         </div>
       </section>}
 {view === "atlas" && (
@@ -2270,7 +2274,8 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           </div>
         </div>
         {watersFavoritesOnly && <div className="forecast-meta-modern waters-search-meta waters-search-meta-below"><div><strong>⭐ Gespeicherte Favoriten</strong><span>{filtered.length} Gewässer</span></div></div>}
-        {(waterPlace || fish !== "Alle" || watersFavoritesOnly) && <button type="button" className="forecast-reset-filter" onClick={resetWatersFilters}>× Filter aufheben</button>}
+        {watersHotspotsOnly && <div className="forecast-meta-modern waters-search-meta waters-search-meta-below"><div><strong>📍 Gewässer mit eigenen Hotspots</strong><span>{filtered.length} Gewässer · {userHotspots.length} Hotspots</span></div></div>}
+        {(waterPlace || fish !== "Alle" || watersFavoritesOnly || watersHotspotsOnly) && <button type="button" className="forecast-reset-filter" onClick={resetWatersFilters}>× Filter aufheben</button>}
         {waterPlace && <div className="forecast-meta-modern waters-search-meta waters-search-meta-below"><div><strong>Gewässer rund um {waterPlace.label}</strong><span>20 km · {filtered.length} passende Gewässer</span></div></div>}
         {waterSearchError && <p className="forecast-error">⚠ {waterSearchError}</p>}
         </div>
@@ -2441,7 +2446,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           ? distanceToWaterKm(selectedCatchWater, catchPosition.latitude, catchPosition.longitude)
           : null;
         return <section className="page diary diary-v2">
-          <form ref={catchFormRef} className="panel catch-entry-card" onSubmit={addCatch}>
+          {!diaryCatchesOnly && <form ref={catchFormRef} className="panel catch-entry-card" onSubmit={addCatch}>
             <div className="catch-entry-head">
               <div><p className="eyebrow">Lokales Fangbuch</p><h1>{editingCatchId ? "Fang bearbeiten" : "Fang eintragen"}</h1><p>{editingCatchId ? "Bestehenden Eintrag ergänzen oder korrigieren." : "Standort, Gewässer, Wetter und Mondphase werden automatisch vorbereitet."}</p></div>
               <button type="button" className="catch-refresh" onClick={()=>void loadCatchEnvironment()} disabled={catchAutoBusy}>{catchAutoBusy ? "Ermittle …" : "⌖ Neu erkennen"}</button>
@@ -2477,7 +2482,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
             {catchPhoto && <div className="catch-photo-actions"><button type="button" className="catch-measure-button" onClick={()=>setMeasurePhoto(catchPhoto)}>📏 Länge aus Foto ermitteln</button><button type="button" className="catch-photo-save-button" onClick={()=>void saveCatchPhotoToPhotoApp(catchPhoto)}>📷 Foto in Fotos sichern</button></div>}
             <label className="catch-location-check"><input name="savePosition" type="checkbox" defaultChecked/> <span>🎯 Fangstelle mit GPS-Position speichern</span></label>
             <div className="catch-edit-actions"><button className="catch-save-button" type="submit" disabled={catchSaveBusy}>{catchSaveBusy ? "Speichere dauerhaft …" : editingCatchId ? "💾 Änderungen speichern" : "🎣 Fang speichern"}</button>{editingCatchId && <button className="catch-cancel-edit" type="button" onClick={cancelCatchEdit}>Abbrechen</button>}</div>
-          </form>
+          </form>}
 
           <div className="catch-history">
             <div className="catch-history-head"><div><p className="eyebrow">Eigene Datenbasis</p><h2>Gespeicherte Fänge</h2></div><strong>{catches.length}</strong></div>
@@ -2486,7 +2491,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
               return <article key={entry.id}>
                 {entry.photo && <><button type="button" className="catch-history-photo-button" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })} aria-label="Fangfoto groß ansehen"><img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/><span>📷 Foto ansehen</span></button><button type="button" className="catch-photo-save-button" onClick={()=>void saveCatchPhotoToPhotoApp(entry.photo!,entry.fish)}>📲 In Fotos sichern</button></>}
                 <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}{entry.photo && <button type="button" className="catch-photo-open-inline" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })}>📷 Fangfoto öffnen</button>}</div>
-                <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span><button type="button" className="catch-edit-button" onClick={()=>editCatch(entry)}>✏️ Bearbeiten</button>
+                <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span><button type="button" className="catch-edit-button" onClick={()=>{setDiaryCatchesOnly(false);editCatch(entry);}}>✏️ Bearbeiten</button>
               </article>;
             })}{!catches.length&&<p className="catch-empty">Noch keine Fänge gespeichert. Der erste Eintrag baut deine eigene Prognose-Datenbasis auf.</p>}</div>
           </div>
@@ -2509,7 +2514,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.0.3 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.0.4 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2526,7 +2531,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.3</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.4</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
         <h3>Cloudspeicherung & Datensicherung</h3><p><strong>Automatische Cloudspeicherung ist immer aktiv.</strong> Jede Änderung an Favoriten, Fangbuch, Fotos, Parkplätzen und Hot Spots wird automatisch lokal und in der WamiFishing-Cloud dieser festen Domain gesichert und zwischen deinen Geräten synchronisiert. Die Synchronisierung kann einen Moment dauern. Es ist kein Sicherungsknopf nötig.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
@@ -2534,7 +2539,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V6.0.3 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V6.0.4 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
