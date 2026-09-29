@@ -2124,16 +2124,6 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           </div>
         </div>
       </div>
-      <div className="atlas-special-filter atlas-free-location-action" style={{ display: "grid", gap: 8 }}>
-        <button type="button" onClick={()=>parkingPhotoRef.current?.click()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
-          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "🅿️ Parkplatz hier speichern"}
-          <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
-        </button>
-        <button type="button" onClick={()=>hotspotPhotoRef.current?.click()} disabled={freeHotspotBusy || atlasPointSaving !== null}>
-          {freeHotspotBusy ? "⌖ Standort wird erkannt …" : "📍 Hot Spot hier speichern"}
-          <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
-        </button>
-      </div>
       {atlasPersonalPointsOnly && <div className="forecast-meta-modern waters-search-meta"><div><strong>📍 Eigene Hotspots &amp; Parkplätze</strong><span>{userHotspots.length} Hotspots · {userParkings.length} Parkplätze</span></div></div>}
       {(atlasPlace || atlasFish !== "Alle" || atlasCategory !== "all" || atlasPersonalPointsOnly) && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
       {atlasPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Atlas rund um {atlasPlace.label}</strong><span>20 km · {atlasWaters.length} passende Gewässer</span></div></div>}
@@ -2227,41 +2217,6 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <p className="atlas-empty-note">Für dieses Gewässer ist noch keine Kartenposition gespeichert.</p>
       )}
 
-      <div className="atlas-save-point-actions">
-        <button
-          type="button"
-          onClick={() => parkingPhotoRef.current?.click()}
-          disabled={atlasPointSaving !== null}
-        >
-          {atlasPointSaving === "parking" ? "📷 Speichere…" : "🅿️ Parkplatz speichern"}
-          <small>GPS + Foto · Gewässer automatisch</small>
-        </button>
-        <button
-          type="button"
-          onClick={() => hotspotPhotoRef.current?.click()}
-          disabled={atlasPointSaving !== null}
-        >
-          {atlasPointSaving === "hotspot" ? "📷 Speichere…" : "📍 Hot Spot speichern"}
-          <small>GPS + Foto · Gewässer automatisch</small>
-        </button>
-        <input
-          ref={parkingPhotoRef}
-          className="atlas-hidden-photo-input"
-          type="file"
-          accept="image/*"
-          capture="environment"
-          onChange={(event) => handleAtlasPhoto("parking", event)}
-        />
-        <input
-          ref={hotspotPhotoRef}
-          className="atlas-hidden-photo-input"
-          type="file"
-          accept="image/*"
-          capture="environment"
-          onChange={(event) => handleAtlasPhoto("hotspot", event)}
-        />
-      </div>
-      {atlasPointMessage && <p className="atlas-point-message">{atlasPointMessage}</p>}
 
       {(selectedAppParkings.length > 0 || selectedUserParkings.length > 0) && (
         <>
@@ -2278,7 +2233,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
                   <div className="atlas-row-actions">
                     <a href={`https://www.google.com/maps/dir/?api=1&destination=${parking.latitude},${parking.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a>
                     <a href={`https://maps.apple.com/?daddr=${parking.latitude},${parking.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>
-                    {ownParking ? <button type="button" onClick={() => deleteUserParking(parking.id)}>Löschen</button> : <><button type="button" onClick={() => correctAppParkingGps(parking.id)}>📍 Position korrigieren</button><button type="button" onClick={() => hideAppParking(parking.id)}>Ausblenden</button><button type="button" onClick={() => deleteAppParking(parking.id)}>🗑️ Löschen</button></>}
+                    {ownParking ? <button type="button" onClick={() => deleteUserParking(parking.id)}>Löschen</button> : <div className="app-parking-edit-actions"><button type="button" onClick={() => correctAppParkingGps(parking.id)}>📍 Position korrigieren</button><button type="button" onClick={() => hideAppParking(parking.id)}>🚫 Ausblenden</button><button type="button" onClick={() => deleteAppParking(parking.id)}>🗑️ Löschen</button></div>}
                   </div>
                 </article>
               );
