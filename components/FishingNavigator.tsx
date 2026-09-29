@@ -669,6 +669,8 @@ const [atlasSearchBusy, setAtlasSearchBusy] = useState(false);
 const [atlasSearchError, setAtlasSearchError] = useState("");
 const [atlasCategory, setAtlasCategory] =
   useState<AtlasCategory>("all");
+  const [watersFavoritesOnly, setWatersFavoritesOnly] = useState(false);
+  const [atlasPersonalPointsOnly, setAtlasPersonalPointsOnly] = useState(false);
   const [selected, setSelected] = useState<FishingWater>(waters[0]);
   const [focusedWaterId, setFocusedWaterId] = useState<string | null>(null);
   const [atlasOpenedFromForecast, setAtlasOpenedFromForecast] = useState(false);
@@ -846,6 +848,7 @@ const [atlasCategory, setAtlasCategory] =
       if (water.latitude === null || water.longitude === null) return false;
       return distanceKm(waterPlace.latitude, waterPlace.longitude, water.latitude, water.longitude) <= 20;
     })
+    .filter((water) => !watersFavoritesOnly || favorites.includes(water.id))
     .filter((water) => fish === "Alle" || waterHasTargetFish(water, fish))
     .sort((a, b) => {
       if (waterPlace && a.latitude !== null && a.longitude !== null && b.latitude !== null && b.longitude !== null) {
@@ -856,7 +859,7 @@ const [atlasCategory, setAtlasCategory] =
         ? a.name.localeCompare(b.name, "de")
         : (b.rating[fish] ?? 0) - (a.rating[fish] ?? 0);
     }),
-    [fish, waterPlace, allWaters]);
+    [fish, waterPlace, allWaters, watersFavoritesOnly, favorites]);
 
   // Gewässeransicht: Nach einer neuen Filterung automatisch den ersten Treffer
   // im Profil anzeigen. Die Karte bleibt dabei in der Trefferübersicht.
@@ -897,6 +900,7 @@ const [atlasCategory, setAtlasCategory] =
     setQuery("");
     setWaterPlace(null);
     setFish("Alle");
+    setWatersFavoritesOnly(false);
     setWaterSearchError("");
     setFocusedWaterId(null);
   }
@@ -1006,6 +1010,7 @@ const atlasWaters = useMemo(() => {
     setAtlasPlace(null);
     setAtlasFish("Alle");
     setAtlasCategory("all");
+    setAtlasPersonalPointsOnly(false);
     setAtlasSearchError("");
     setFocusedWaterId(null);
   }
@@ -1909,7 +1914,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.2</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.0.3</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -1985,10 +1990,10 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </div>
 
         <div className="dashboard-mini-stats">
-          <button type="button" onClick={()=>setView("waters")}><span>🗺️</span><strong>{allWaters.length}</strong><small>Profile</small><b>›</b></button>
-          <button type="button" onClick={()=>setView("waters")}><span>⭐</span><strong>{favorites.length}</strong><small>Favoriten</small><b>›</b></button>
+          <button type="button" onClick={()=>{setWatersFavoritesOnly(false);setView("waters");}}><span>🗺️</span><strong>{allWaters.length}</strong><small>Profile</small><b>›</b></button>
+          <button type="button" onClick={()=>{setQuery("");setWaterPlace(null);setFish("Alle");setWatersFavoritesOnly(true);setView("waters");}}><span>⭐</span><strong>{favorites.length}</strong><small>Favoriten</small><b>›</b></button>
           <button type="button" onClick={()=>setView("diary")}><span>🐟</span><strong>{catches.length}</strong><small>Fänge</small><b>›</b></button>
-          <button type="button" onClick={()=>setView("atlas")}><span>📍</span><strong>{userHotspots.length + userParkings.length}</strong><small>Spots</small><b>›</b></button>
+          <button type="button" onClick={()=>{resetAtlasFilters();setAtlasPersonalPointsOnly(true);setView("atlas");}}><span>📍</span><strong>{userHotspots.length + userParkings.length}</strong><small>Spots</small><b>›</b></button>
         </div>
       </section>}
 {view === "atlas" && (
@@ -2028,7 +2033,8 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           <small>Ohne Gewässerauswahl · GPS ordnet automatisch zu</small>
         </button>
       </div>
-      {(atlasPlace || atlasFish !== "Alle" || atlasCategory !== "all") && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
+      {atlasPersonalPointsOnly && <div className="forecast-meta-modern waters-search-meta"><div><strong>📍 Eigene Hotspots &amp; Parkplätze</strong><span>{userHotspots.length} Hotspots · {userParkings.length} Parkplätze</span></div></div>}
+      {(atlasPlace || atlasFish !== "Alle" || atlasCategory !== "all" || atlasPersonalPointsOnly) && <button type="button" className="forecast-reset-filter" onClick={resetAtlasFilters}>× Filter aufheben</button>}
       {atlasPlace && <div className="forecast-meta-modern waters-search-meta"><div><strong>Atlas rund um {atlasPlace.label}</strong><span>20 km · {atlasWaters.length} passende Gewässer</span></div></div>}
       {atlasSearchError && <p className="forecast-error">⚠ {atlasSearchError}</p>}
 
@@ -2213,8 +2219,8 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
             ? [focusedWater]
             : atlasWaters
         }
-        spots={visibleSpots}
-        parkings={visibleParkings}
+        spots={atlasPersonalPointsOnly ? userHotspots : visibleSpots}
+        parkings={atlasPersonalPointsOnly ? userParkings : visibleParkings}
         selectedWater={focusedWater}
         onSelect={selectAndFocus}
       />
@@ -2263,7 +2269,8 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
             <span className="forecast-control-icon" aria-hidden="true">◎</span><strong>20 km</strong>
           </div>
         </div>
-        {(waterPlace || fish !== "Alle") && <button type="button" className="forecast-reset-filter" onClick={resetWatersFilters}>× Filter aufheben</button>}
+        {watersFavoritesOnly && <div className="forecast-meta-modern waters-search-meta waters-search-meta-below"><div><strong>⭐ Gespeicherte Favoriten</strong><span>{filtered.length} Gewässer</span></div></div>}
+        {(waterPlace || fish !== "Alle" || watersFavoritesOnly) && <button type="button" className="forecast-reset-filter" onClick={resetWatersFilters}>× Filter aufheben</button>}
         {waterPlace && <div className="forecast-meta-modern waters-search-meta waters-search-meta-below"><div><strong>Gewässer rund um {waterPlace.label}</strong><span>20 km · {filtered.length} passende Gewässer</span></div></div>}
         {waterSearchError && <p className="forecast-error">⚠ {waterSearchError}</p>}
         </div>
@@ -2502,7 +2509,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.0.2 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.0.3 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2519,7 +2526,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.2</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.0.3</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
         <h3>Cloudspeicherung & Datensicherung</h3><p><strong>Automatische Cloudspeicherung ist immer aktiv.</strong> Jede Änderung an Favoriten, Fangbuch, Fotos, Parkplätzen und Hot Spots wird automatisch lokal und in der WamiFishing-Cloud dieser festen Domain gesichert und zwischen deinen Geräten synchronisiert. Die Synchronisierung kann einen Moment dauern. Es ist kein Sicherungsknopf nötig.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
@@ -2527,7 +2534,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V6.0.2 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V6.0.3 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
