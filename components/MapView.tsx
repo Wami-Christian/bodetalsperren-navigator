@@ -1425,12 +1425,30 @@ export default function MapView({
         standingWaterSnaps[selectedWater.id] ??
         selectedRaw;
 
-      if (bounds.length > 1) {
-        map.fitBounds(L.latLngBounds(bounds), {
-          padding: [55, 55],
-          maxZoom: 15,
-          animate: true
-        });
+      // Bei einer Gewässerauswahl darf der Kartenausschnitt nicht von allen
+      // übrigen sichtbaren Gewässern, Parkplätzen oder Hotspots bestimmt werden.
+      // Fließgewässer werden auf ihren ausgewählten Abschnitt eingepasst; Seen
+      // und punktförmige Gewässer werden sauber in die Kartenmitte geholt.
+      if (selectedWater.route?.length) {
+        const selectedSourceLines = selectedWater.waterwayName === "Elbe"
+          ? elbeOsmLines
+          : selectedWater.waterwayName === "Saale"
+            ? saaleOsmLines
+            : (selectedWater.waterwayName ? (waterwayOsmLines[selectedWater.waterwayName] ?? []) : []);
+        const selectedParts: LatLngTuple[][] = selectedWater.waterwayName
+          ? osmElbeSectionParts(selectedWater.route as LatLngTuple[], selectedSourceLines)
+          : [selectedWater.route as LatLngTuple[]];
+        const selectedRoutePoints = selectedParts.flat();
+
+        if (selectedRoutePoints.length > 1) {
+          map.fitBounds(L.latLngBounds(selectedRoutePoints), {
+            padding: [55, 55],
+            maxZoom: 15,
+            animate: true
+          });
+        } else {
+          map.flyTo(center, 14, { animate: true, duration: 0.8 });
+        }
       } else {
         map.flyTo(center, 14, {
           animate: true,
