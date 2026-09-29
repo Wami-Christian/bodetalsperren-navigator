@@ -3243,3 +3243,26 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     touch-action: none;
   }
 }
+
+
+/* WamiFishing 6.1.8 – iPhone: Karte während Seitenscroll kurz entkoppeln */
+@media (max-width: 900px) {
+  .atlas-page.atlas-page-scrolling .atlas-map .map-shell:not(.map-shell-fullscreen) {
+    pointer-events: none !important;
+  }
+
+  .atlas-page.atlas-page-scrolling .atlas-map .leaflet-container {
+    pointer-events: none !important;
+  }
+
+  .atlas-page.atlas-page-scrolling .atlas-map {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Vollbildkarte bleibt immer direkt bedienbar. */
+  .atlas-page.atlas-page-scrolling .atlas-map .map-shell-fullscreen,
+  .atlas-page.atlas-page-scrolling .atlas-map .map-shell-fullscreen .leaflet-container {
+    pointer-events: auto !important;
+  }
+}
