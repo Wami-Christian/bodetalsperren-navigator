@@ -3191,8 +3191,8 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     bottom: calc(env(safe-area-inset-bottom) + 10px);
     width: 24px;
     z-index: 1200;
-    touch-action: none;
-    overscroll-behavior: contain;
+    touch-action: pan-y;
+    overscroll-behavior-y: auto;
     background: rgba(255, 255, 255, 0.34);
     border-left: 1px solid rgba(13, 77, 67, 0.10);
   }
@@ -3213,3 +3213,33 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   }
 }
 
+
+
+/* WamiFishing 6.1.7 – iPhone Atlas: flüssiger Seitenscroll
+   Kein JS-scrollBy pro Touchmove; der rechte Rand nutzt natives iOS-Pan-Y.
+   Während der normalen Atlasansicht werden teure Browser-Effekte reduziert. */
+@media (max-width: 900px) {
+  .atlas-page-scroll-rail {
+    -webkit-overflow-scrolling: touch;
+    will-change: auto;
+  }
+
+  .atlas-page .atlas-map,
+  .atlas-page .atlas-sidebar,
+  .atlas-page .atlas-details {
+    box-shadow: none;
+  }
+
+  .atlas-page .atlas-map {
+    contain: layout paint;
+  }
+
+  .atlas-page .leaflet-container {
+    touch-action: manipulation;
+  }
+
+  /* Vollbildkarte bleibt vollständig interaktiv. */
+  .atlas-page .map-shell-fullscreen .leaflet-container {
+    touch-action: none;
+  }
+}
