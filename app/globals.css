@@ -3437,3 +3437,71 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* WamiFishing 6.2.0 – mobiles Atlas-Feintuning.
+   Filter enger, Gewässerliste sichtbar scrollbar, alter Seiten-Scrollrand vollständig weg. */
+@media (max-width: 900px) {
+  /* Filterblöcke dichter zusammen. */
+  body.wami-atlas-view .atlas-page {
+    gap: 2px !important;
+  }
+
+  body.wami-atlas-view .atlas-search {
+    gap: 2px !important;
+    margin-bottom: 0 !important;
+  }
+
+  body.wami-atlas-view .atlas-search > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  body.wami-atlas-view .atlas-search input,
+  body.wami-atlas-view .atlas-search select,
+  body.wami-atlas-view .atlas-search button {
+    min-height: 38px !important;
+  }
+
+  /* Karte bleibt direkt unter den Filtern. */
+  body.wami-atlas-view .atlas-map {
+    margin-top: 2px !important;
+  }
+
+  /* Gewässerliste etwas höher: zweiter Treffer soll bereits sichtbar werden
+     und damit die Scrollmöglichkeit sofort erkennbar sein. */
+  body.wami-atlas-view .atlas-water-list {
+    flex: 0 0 150px !important;
+    height: 150px !important;
+    min-height: 150px !important;
+    max-height: 150px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-gutter: auto !important;
+    padding-right: 2px !important;
+  }
+
+  /* Gewässerprofil folgt danach; kein eigener künstlicher Maximalbereich. */
+  body.wami-atlas-view .atlas-details {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Alter rechter Ganzseiten-Scrollstreifen samt optischem Rand restlos weg. */
+  body.wami-atlas-view .atlas-page-scroll-rail,
+  body.wami-atlas-view .atlas-page-scroll-rail::before,
+  body.wami-atlas-view .atlas-page-scroll-rail::after,
+  body.wami-atlas-view .atlas-page-scroll-rail > span {
+    display: none !important;
+    width: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  body.wami-atlas-view .atlas-page {
+    padding-right: 12px !important;
+  }
+}
