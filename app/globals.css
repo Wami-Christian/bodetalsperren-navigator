@@ -3215,85 +3215,35 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 
 
 
-/* WamiFishing 6.2.2 – iPhone Atlas: reine Kartenseite ohne Seitenscroll. */
+/* WamiFishing 6.1.7 – 6.1.6 bleibt unverändert.
+   Die bereits vorhandene, funktionierende Karten-Gesamtansicht
+   wird im mobilen Atlas nur deutlicher beschriftet. */
+.map-fullscreen-label {
+  display: none;
+}
+
 @media (max-width: 900px) {
-  body:has(.atlas-page) {
-    overflow: hidden !important;
-    overscroll-behavior: none;
+  .atlas-map .map-fullscreen-button:not(.map-shell-fullscreen *) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: auto !important;
+    min-width: 112px !important;
+    height: 40px !important;
+    padding: 0 10px !important;
+    font-size: 18px !important;
   }
 
-  .atlas-page {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 4000;
-    display: block !important;
-    width: 100vw !important;
-    height: 100dvh !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    background: #fff;
-  }
-
-  .atlas-page > .atlas-sidebar,
-  .atlas-page > .atlas-details,
-  .atlas-page > .atlas-page-scroll-rail {
-    display: none !important;
-  }
-
-  .atlas-page > .atlas-map {
-    position: absolute !important;
-    inset: 0 !important;
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    overflow: hidden !important;
-  }
-
-  .atlas-page > .atlas-map > .map-shell,
-  .atlas-page > .atlas-map > .map-shell > .map,
-  .atlas-page > .atlas-map .leaflet-container {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    border-radius: 0 !important;
-  }
-
-  .atlas-page .atlas-viewport-window {
-    position: absolute !important;
-    left: calc(env(safe-area-inset-left) + 12px) !important;
-    right: calc(env(safe-area-inset-right) + 12px) !important;
-    bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
-    z-index: 1300 !important;
-    display: grid !important;
-    gap: 3px;
-    margin: 0 !important;
-    padding: 10px 12px !important;
-    overflow: hidden !important;
-    border-radius: 14px !important;
-    background: rgba(255,255,255,.92) !important;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 18px rgba(0,0,0,.16);
-    pointer-events: none;
-  }
-
-  .atlas-page .atlas-viewport-window small {
-    display: block;
+  .atlas-map .map-fullscreen-button .map-fullscreen-label {
+    display: inline !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  .atlas-page .leaflet-container {
-    touch-action: none !important;
+  .map-shell-fullscreen .map-fullscreen-label {
+    display: none !important;
   }
 }

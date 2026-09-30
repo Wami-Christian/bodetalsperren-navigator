@@ -993,8 +993,7 @@ export default function MapView({
   selectedWater,
   onSelect,
   onMapClick,
-  selectionPoint,
-  onViewportWaterIds
+  selectionPoint
 }: {
   waters: FishingWater[];
   persistentRouteWaters?: FishingWater[];
@@ -1004,15 +1003,12 @@ export default function MapView({
   onSelect: (water: FishingWater) => void;
   onMapClick?: (latitude: number, longitude: number) => void;
   selectionPoint?: { latitude: number; longitude: number } | null;
-  onViewportWaterIds?: (ids: string[]) => void;
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
   const selectRef = useRef(onSelect);
   const mapClickRef = useRef(onMapClick);
-  const viewportCallbackRef = useRef(onViewportWaterIds);
-  const watersRef = useRef(waters);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [elbeOsmLines, setElbeOsmLines] = useState<LatLngTuple[][]>([]);
   const [saaleOsmLines, setSaaleOsmLines] = useState<LatLngTuple[][]>([]);
@@ -1021,8 +1017,6 @@ export default function MapView({
 
   useEffect(() => { selectRef.current = onSelect; }, [onSelect]);
   useEffect(() => { mapClickRef.current = onMapClick; }, [onMapClick]);
-  useEffect(() => { viewportCallbackRef.current = onViewportWaterIds; }, [onViewportWaterIds]);
-  useEffect(() => { watersRef.current = waters; }, [waters]);
 
   useEffect(() => {
     if (!selectedWater || selectedWater.latitude === null || selectedWater.longitude === null) return;
@@ -1126,21 +1120,6 @@ export default function MapView({
     return () => { cancelled = true; };
   }, [waters.map((water) => water.waterwayName ?? "").join("|"), persistentRouteWaters.map((water) => water.waterwayName ?? "").join("|")]);
 
-  function reportViewportWaters(map: L.Map) {
-    const callback = viewportCallbackRef.current;
-    if (!callback) return;
-    const bounds = map.getBounds();
-    callback(
-      watersRef.current
-        .filter((water) => {
-          if (water.latitude !== null && water.longitude !== null &&
-              bounds.contains([water.latitude, water.longitude])) return true;
-          return Boolean(water.route?.some((point) => bounds.contains(point as L.LatLngExpression)));
-        })
-        .map((water) => water.id)
-    );
-  }
-
   useEffect(() => {
     if (!hostRef.current || mapRef.current) return;
 
@@ -1160,9 +1139,6 @@ export default function MapView({
     layerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
     map.on("click", (event: L.LeafletMouseEvent) => mapClickRef.current?.(event.latlng.lat, event.latlng.lng));
-    const reportViewport = () => reportViewportWaters(map);
-    map.on("moveend zoomend", reportViewport);
-    window.setTimeout(reportViewport, 140);
 
     const resize = window.setTimeout(() => map.invalidateSize(), 100);
 
@@ -1499,9 +1475,8 @@ export default function MapView({
   useEffect(() => {
     window.setTimeout(() => {
       mapRef.current?.invalidateSize();
-      if (mapRef.current) reportViewportWaters(mapRef.current);
     }, 80);
-  }, [isFullscreen, waters]);
+  }, [isFullscreen]);
 
   function zoomIn() {
     mapRef.current?.zoomIn();
@@ -1556,6 +1531,7 @@ export default function MapView({
           title="Gesamtansicht"
         >
           <span aria-hidden="true">⛶</span>
+          <strong className="map-fullscreen-label">Karte groß</strong>
         </button>
       )}
 
