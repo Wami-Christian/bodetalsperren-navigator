@@ -3247,3 +3247,88 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     display: none !important;
   }
 }
+
+
+/* WamiFishing 6.1.8 – mobiler Atlas:
+   Branding ausblenden, Filter verdichten, Karte fest; nur der Bereich darunter scrollt. */
+@media (max-width: 900px) {
+  body.wami-atlas-view {
+    overflow: hidden !important;
+  }
+
+  /* Nur auf der Atlasseite den großen WamiFishing-Kopf ausblenden.
+     Die Hauptnavigation bleibt sichtbar. */
+  body.wami-atlas-view .app-header .brand,
+  body.wami-atlas-view .app-header .brand-block,
+  body.wami-atlas-view .app-header .app-brand {
+    display: none !important;
+  }
+
+  body.wami-atlas-view .app-header {
+    padding-top: max(6px, env(safe-area-inset-top)) !important;
+    padding-bottom: 6px !important;
+    min-height: 0 !important;
+  }
+
+  /* Atlas selbst wird zum festen Bildschirmbereich unter der Navigation. */
+  body.wami-atlas-view .atlas-page {
+    height: calc(100dvh - 92px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding-top: 4px !important;
+    gap: 5px !important;
+  }
+
+  /* Filter oben enger zusammen. */
+  body.wami-atlas-view .atlas-search {
+    margin: 0 !important;
+    gap: 5px !important;
+  }
+
+  body.wami-atlas-view .atlas-sidebar > h2 {
+    margin: 2px 0 0 !important;
+    font-size: 25px !important;
+    line-height: 1.05 !important;
+  }
+
+  body.wami-atlas-view .atlas-search input,
+  body.wami-atlas-view .atlas-search select,
+  body.wami-atlas-view .atlas-search button {
+    min-height: 42px !important;
+  }
+
+  /* Die Karte bleibt stehen. */
+  body.wami-atlas-view .atlas-map {
+    flex: 0 0 270px !important;
+    height: 270px !important;
+    min-height: 270px !important;
+    max-height: 270px !important;
+    overflow: hidden !important;
+  }
+
+  /* Nur Trefferliste + Gewässerprofil darunter scrollen. */
+  body.wami-atlas-view .atlas-result-heading {
+    flex: 0 0 auto !important;
+    margin-top: 2px !important;
+  }
+
+  body.wami-atlas-view .atlas-water-list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 14px) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  body.wami-atlas-view .atlas-map {
+    flex-basis: 245px !important;
+    height: 245px !important;
+    min-height: 245px !important;
+    max-height: 245px !important;
+  }
+}
