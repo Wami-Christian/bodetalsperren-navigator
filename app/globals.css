@@ -3573,3 +3573,29 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     display: block;
   }
 }
+
+
+/* WamiFishing 6.2.2 – Gewässerprofil auf Mobil wieder vollständig scrollbar.
+   Filter, Karte und Gewässerliste aus 6.2.1 bleiben unverändert. */
+@media (max-width: 900px) {
+  body.wami-atlas-view .atlas-details {
+    flex: 1 1 0 !important;
+    min-height: 110px !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y !important;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 18px) !important;
+  }
+
+  body.wami-atlas-view .atlas-details::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  body.wami-atlas-view .atlas-details::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(13,77,67,.42);
+  }
+}
