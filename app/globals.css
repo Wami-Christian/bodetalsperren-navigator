@@ -3599,3 +3599,54 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     background: rgba(13,77,67,.42);
   }
 }
+
+
+/* WamiFishing 6.2.3 – mobiles Atlas-Feintuning:
+   Filter höher/enger, Gewässerkarten breiter, klare Trennung zum Profil. */
+@media (max-width: 900px) {
+  /* Filterblock weiter nach oben ziehen und vertikal verdichten. */
+  body.wami-atlas-view .atlas-page {
+    padding-top: 0 !important;
+    gap: 0 !important;
+  }
+
+  body.wami-atlas-view .atlas-search {
+    margin-top: -10px !important;
+    margin-bottom: 0 !important;
+    gap: 0 !important;
+  }
+
+  body.wami-atlas-view .atlas-search > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  body.wami-atlas-view .atlas-search > * + * {
+    margin-top: -2px !important;
+  }
+
+  /* Gewässerbereich nutzt die Breite besser aus.
+     Nur die schmale eigene Scrollanzeige bleibt rechts frei. */
+  body.wami-atlas-view .atlas-water-list {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 0 !important;
+    padding-right: 7px !important;
+  }
+
+  body.wami-atlas-view .atlas-water {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Klare optische Trennung zwischen Gewässerauswahl und Profil. */
+  body.wami-atlas-view .atlas-details {
+    position: relative !important;
+    margin-top: 9px !important;
+    border-top: 2px solid rgba(13,77,67,.28) !important;
+    padding-top: 12px !important;
+  }
+}
