@@ -3332,3 +3332,108 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     max-height: 245px !important;
   }
 }
+
+
+/* WamiFishing 6.1.9 – Korrektur der mobilen Atlas-Aufteilung.
+   Oben kein Scrollen. Die sichtbare Scrollbar beginnt erst unter der Karte. */
+@media (max-width: 900px) {
+  body.wami-atlas-view {
+    overflow: hidden !important;
+  }
+
+  /* Tatsächlicher Kopf in der App: topbar > brand */
+  body.wami-atlas-view .topbar > .brand {
+    display: none !important;
+  }
+
+  body.wami-atlas-view .topbar {
+    padding-top: max(4px, env(safe-area-inset-top)) !important;
+    padding-bottom: 4px !important;
+    min-height: 0 !important;
+    gap: 0 !important;
+  }
+
+  body.wami-atlas-view .topbar .main-nav-shell {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Atlas füllt nur den Rest des Bildschirms und scrollt selbst NICHT. */
+  body.wami-atlas-view .atlas-page {
+    height: calc(100dvh - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    padding-top: 4px !important;
+    padding-bottom: 6px !important;
+    gap: 4px !important;
+  }
+
+  body.wami-atlas-view .atlas-sidebar {
+    display: contents !important;
+  }
+
+  /* Überschrift auf Mobil komplett sparen. */
+  body.wami-atlas-view .atlas-sidebar > h2 {
+    display: none !important;
+  }
+
+  body.wami-atlas-view .atlas-search {
+    order: 1 !important;
+    margin: 0 !important;
+    gap: 4px !important;
+  }
+
+  body.wami-atlas-view .atlas-search input,
+  body.wami-atlas-view .atlas-search select,
+  body.wami-atlas-view .atlas-search button {
+    min-height: 40px !important;
+  }
+
+  /* Karte ist der letzte feste Block. */
+  body.wami-atlas-view .atlas-map {
+    order: 2 !important;
+    flex: 0 0 245px !important;
+    height: 245px !important;
+    min-height: 245px !important;
+    max-height: 245px !important;
+    overflow: hidden !important;
+  }
+
+  /* Ab hier beginnt der Scrollbereich optisch.
+     Scrollbar ausschließlich an Trefferliste und Profil. */
+  body.wami-atlas-view .atlas-result-heading {
+    order: 3 !important;
+    flex: 0 0 auto !important;
+    margin: 2px 0 0 !important;
+    padding-right: 6px !important;
+  }
+
+  body.wami-atlas-view .atlas-water-list {
+    order: 4 !important;
+    flex: 1 1 0 !important;
+    min-height: 70px !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: stable;
+    padding-right: 4px !important;
+  }
+
+  /* Profil folgt im selben unteren Bereich; Seite selbst bleibt fest. */
+  body.wami-atlas-view .atlas-details {
+    order: 5 !important;
+    flex: 0 0 auto !important;
+    max-height: 38vh !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Den alten seitlichen Ganzseiten-Scrollstreifen auf Atlas abschalten. */
+  body.wami-atlas-view .atlas-page-scroll-rail {
+    display: none !important;
+  }
+}
