@@ -3900,3 +3900,61 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     border-radius: 12px !important;
   }
 }
+
+
+/* WamiFishing 6.4.1 – NUR mobil:
+   Nach Gewässerauswahl bleibt genau eine Kachel, darunter folgt das Profil.
+   Desktop 6.3.8 bleibt unangetastet. */
+@media (max-width: 900px) {
+  .waters-list-mobile-hidden {
+    display: none !important;
+  }
+
+  .waters-mobile-selection {
+    display: block !important;
+  }
+
+  .waters-mobile-back {
+    display: block;
+    width: 100%;
+    min-height: 38px;
+    margin: 0 0 6px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-align: left;
+  }
+
+  .waters-mobile-selected-card {
+    margin-bottom: 8px !important;
+  }
+
+  .waters-without-map > .details.waters-mobile-profile-hidden {
+    display: none !important;
+  }
+
+  .waters-without-map > .details.waters-mobile-profile-visible {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin-top: 6px !important;
+  }
+
+  /* Im Auswahlmodus Kopfzeile der Gesamtliste ausblenden:
+     sichtbar bleiben Zurück, eine Gewässerkachel und Profil. */
+  .waters-without-map:has(.waters-mobile-selection) .sidebar-heading {
+    display: none !important;
+  }
+}
+
+@media (min-width: 901px) {
+  .waters-mobile-selection {
+    display: none !important;
+  }
+  .waters-list-mobile-hidden {
+    display: block !important;
+  }
+}

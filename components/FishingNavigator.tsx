@@ -688,6 +688,7 @@ export default function FishingNavigator() {
   const atlasScrollRailTouchYRef = useRef<number | null>(null);
   const [view, setView] = useState<View>("dashboard");
   const [watersVisibleCount, setWatersVisibleCount] = useState(60);
+  const [mobileSelectedWaterId, setMobileSelectedWaterId] = useState<string | null>(null);
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
   const [module, setModule] = useState<WaterModule | "Alle">("Alle");
   const [query, setQuery] = useState("");
@@ -1602,15 +1603,14 @@ const atlasWaters = useMemo(() => {
       : null
   );
 
-  if (window.innerWidth <= 900) {
+  if (window.innerWidth <= 900 && view === "waters") {
+    setMobileSelectedWaterId(water.id);
     window.setTimeout(() => {
-      if (view === "waters") {
-        document.querySelector(".waters-without-map .details")?.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      }
-    }, 120);
+      document.querySelector(".waters-mobile-selected-card")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 80);
   }
 }
 
@@ -2028,6 +2028,10 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
     setWatersVisibleCount(60);
   }, [query, fish, waterPlace, watersFavoritesOnly, watersHotspotsOnly]);
 
+  useEffect(() => {
+    if (view !== "waters") setMobileSelectedWaterId(null);
+  }, [view]);
+
   function openProfilePhoto(src: string, title: string) {
     setCatchPhotoViewer({ src, title });
   }
@@ -2035,7 +2039,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.4.0</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.4.1</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2172,14 +2176,26 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
         {waterSearchError && <p className="forecast-error">⚠ {waterSearchError}</p>}
         </div>
-        <div className="workspace waters-without-map"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{filtered.slice(0, watersVisibleCount).map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{waterTargetFish(water).map(item=><span key={item}>{item} {'★'.repeat(targetFishRating(water,item))}</span>)}</div></article>)}
-            {watersVisibleCount < filtered.length && (
-              <button type="button" className="waters-load-more" onClick={() => setWatersVisibleCount((count) => count + 60)}>
-                Weitere 60 Gewässer anzeigen · {filtered.length - watersVisibleCount} übrig
-              </button>
+        <div className="workspace waters-without-map"><aside className="sidebar"><div className="sidebar-heading"><strong>{filtered.length} Gewässer</strong><span>Demo-/Prüfdaten</span></div><div className="water-list">{mobileSelectedWaterId && selected.id === mobileSelectedWaterId && (
+              <div className="waters-mobile-selection">
+                <button type="button" className="waters-mobile-back" onClick={() => setMobileSelectedWaterId(null)}>← Zurück zur Gewässerliste</button>
+                <article className="water-card selected waters-mobile-selected-card">
+                  <div><h2>{selected.name}</h2><p>{selected.module} · {selected.type}</p></div>
+                  <button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(selected.id)}}>{favorites.includes(selected.id)?'★':'☆'}</button>
+                  <div className="fish-row">{waterTargetFish(selected).map(item=><span key={item}>{item} {'★'.repeat(targetFishRating(selected,item))}</span>)}</div>
+                </article>
+              </div>
             )}
+            <div className={mobileSelectedWaterId ? "waters-list-mobile-hidden" : ""}>
+              {filtered.slice(0, watersVisibleCount).map((water)=><article key={water.id} className={`water-card ${selected.id===water.id?'selected':''}`} onClick={()=>selectAndFocus(water)}><div><h2>{water.name}</h2><p>{water.module} · {water.type}</p></div><button className="favorite" onClick={(e)=>{e.stopPropagation();toggleFavorite(water.id)}}>{favorites.includes(water.id)?'★':'☆'}</button><div className="fish-row">{waterTargetFish(water).map(item=><span key={item}>{item} {'★'.repeat(targetFishRating(water,item))}</span>)}</div></article>)}
+              {watersVisibleCount < filtered.length && (
+                <button type="button" className="waters-load-more" onClick={() => setWatersVisibleCount((count) => count + 60)}>
+                  Weitere 60 Gewässer anzeigen · {filtered.length - watersVisibleCount} übrig
+                </button>
+              )}
+            </div>
           </div></aside>
-          <aside className="details"><p className="eyebrow">Gewässerprofil</p><div className="water-stats">
+          <aside className={`details ${mobileSelectedWaterId ? "waters-mobile-profile-visible" : "waters-mobile-profile-hidden"}`}><p className="eyebrow">Gewässerprofil</p><div className="water-stats">
   <div className="stat-card">
     <span>🐟</span>
     <strong>{waterTargetFish(selected).length}</strong>
@@ -2413,7 +2429,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.4.0 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.4.1 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2430,7 +2446,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.4.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.4.1</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
         <h3>Cloudspeicherung & Datensicherung</h3><p><strong>Automatische Cloudspeicherung ist immer aktiv.</strong> Jede Änderung an Favoriten, Fangbuch, Fotos, Parkplätzen und Hot Spots wird automatisch lokal und in der WamiFishing-Cloud dieser festen Domain gesichert und zwischen deinen Geräten synchronisiert. Die Synchronisierung kann einen Moment dauern. Es ist kein Sicherungsknopf nötig.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
@@ -2438,7 +2454,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V6.4.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V6.4.1 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
