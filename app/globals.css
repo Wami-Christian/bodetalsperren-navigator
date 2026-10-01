@@ -3687,3 +3687,15 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     max-height: calc(100dvh - 256px) !important;
   }
 }
+
+
+/* WamiFishing 6.3.2 – nur Hauptbereich auf PC ca. 3 mm nach unten.
+   Filterleiste bleibt exakt auf Position 6.3.1. 96dpi: 3 mm ≈ 11 px. */
+@media (min-width: 901px) {
+  .waters-without-map {
+    transform: translateY(-8px) !important;
+    margin-bottom: -8px !important;
+    height: calc(100dvh - 267px) !important;
+    max-height: calc(100dvh - 267px) !important;
+  }
+}
