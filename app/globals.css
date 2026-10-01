@@ -3249,404 +3249,127 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 }
 
 
-/* WamiFishing 6.1.8 – mobiler Atlas:
-   Branding ausblenden, Filter verdichten, Karte fest; nur der Bereich darunter scrollt. */
-@media (max-width: 900px) {
-  body.wami-atlas-view {
-    overflow: hidden !important;
-  }
-
-  /* Nur auf der Atlasseite den großen WamiFishing-Kopf ausblenden.
-     Die Hauptnavigation bleibt sichtbar. */
-  body.wami-atlas-view .app-header .brand,
-  body.wami-atlas-view .app-header .brand-block,
-  body.wami-atlas-view .app-header .app-brand {
-    display: none !important;
-  }
-
-  body.wami-atlas-view .app-header {
-    padding-top: max(6px, env(safe-area-inset-top)) !important;
-    padding-bottom: 6px !important;
-    min-height: 0 !important;
-  }
-
-  /* Atlas selbst wird zum festen Bildschirmbereich unter der Navigation. */
-  body.wami-atlas-view .atlas-page {
-    height: calc(100dvh - 92px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
-    padding-top: 4px !important;
-    gap: 5px !important;
-  }
-
-  /* Filter oben enger zusammen. */
-  body.wami-atlas-view .atlas-search {
-    margin: 0 !important;
-    gap: 5px !important;
-  }
-
-  body.wami-atlas-view .atlas-sidebar > h2 {
-    margin: 2px 0 0 !important;
-    font-size: 25px !important;
-    line-height: 1.05 !important;
-  }
-
-  body.wami-atlas-view .atlas-search input,
-  body.wami-atlas-view .atlas-search select,
-  body.wami-atlas-view .atlas-search button {
-    min-height: 42px !important;
-  }
-
-  /* Die Karte bleibt stehen. */
-  body.wami-atlas-view .atlas-map {
-    flex: 0 0 270px !important;
-    height: 270px !important;
-    min-height: 270px !important;
-    max-height: 270px !important;
-    overflow: hidden !important;
-  }
-
-  /* Nur Trefferliste + Gewässerprofil darunter scrollen. */
-  body.wami-atlas-view .atlas-result-heading {
-    flex: 0 0 auto !important;
-    margin-top: 2px !important;
-  }
-
-  body.wami-atlas-view .atlas-water-list {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(env(safe-area-inset-bottom) + 14px) !important;
-  }
+/* WamiFishing 6.2.4 – Atlas und Gewässer konsequent getrennt.
+   Atlas: statische Seite ohne Seitenscroll. Gewässer: Filter/Liste/Profil ohne Leaflet-Karte. */
+.atlas-static-page {
+  width: min(1500px, calc(100% - 28px));
+  margin: 12px auto 20px;
 }
 
-@media (max-width: 430px) {
-  body.wami-atlas-view .atlas-map {
-    flex-basis: 245px !important;
-    height: 245px !important;
-    min-height: 245px !important;
-    max-height: 245px !important;
-  }
+.atlas-static-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: var(--surface, #fff);
 }
 
-
-/* WamiFishing 6.1.9 – Korrektur der mobilen Atlas-Aufteilung.
-   Oben kein Scrollen. Die sichtbare Scrollbar beginnt erst unter der Karte. */
-@media (max-width: 900px) {
-  body.wami-atlas-view {
-    overflow: hidden !important;
-  }
-
-  /* Tatsächlicher Kopf in der App: topbar > brand */
-  body.wami-atlas-view .topbar > .brand {
-    display: none !important;
-  }
-
-  body.wami-atlas-view .topbar {
-    padding-top: max(4px, env(safe-area-inset-top)) !important;
-    padding-bottom: 4px !important;
-    min-height: 0 !important;
-    gap: 0 !important;
-  }
-
-  body.wami-atlas-view .topbar .main-nav-shell {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  /* Atlas füllt nur den Rest des Bildschirms und scrollt selbst NICHT. */
-  body.wami-atlas-view .atlas-page {
-    height: calc(100dvh - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: hidden !important;
-    padding-top: 4px !important;
-    padding-bottom: 6px !important;
-    gap: 4px !important;
-  }
-
-  body.wami-atlas-view .atlas-sidebar {
-    display: contents !important;
-  }
-
-  /* Überschrift auf Mobil komplett sparen. */
-  body.wami-atlas-view .atlas-sidebar > h2 {
-    display: none !important;
-  }
-
-  body.wami-atlas-view .atlas-search {
-    order: 1 !important;
-    margin: 0 !important;
-    gap: 4px !important;
-  }
-
-  body.wami-atlas-view .atlas-search input,
-  body.wami-atlas-view .atlas-search select,
-  body.wami-atlas-view .atlas-search button {
-    min-height: 40px !important;
-  }
-
-  /* Karte ist der letzte feste Block. */
-  body.wami-atlas-view .atlas-map {
-    order: 2 !important;
-    flex: 0 0 245px !important;
-    height: 245px !important;
-    min-height: 245px !important;
-    max-height: 245px !important;
-    overflow: hidden !important;
-  }
-
-  /* Ab hier beginnt der Scrollbereich optisch.
-     Scrollbar ausschließlich an Trefferliste und Profil. */
-  body.wami-atlas-view .atlas-result-heading {
-    order: 3 !important;
-    flex: 0 0 auto !important;
-    margin: 2px 0 0 !important;
-    padding-right: 6px !important;
-  }
-
-  body.wami-atlas-view .atlas-water-list {
-    order: 4 !important;
-    flex: 1 1 0 !important;
-    min-height: 70px !important;
-    max-height: none !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-gutter: stable;
-    padding-right: 4px !important;
-  }
-
-  /* Profil folgt im selben unteren Bereich; Seite selbst bleibt fest. */
-  body.wami-atlas-view .atlas-details {
-    order: 5 !important;
-    flex: 0 0 auto !important;
-    max-height: 38vh !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Den alten seitlichen Ganzseiten-Scrollstreifen auf Atlas abschalten. */
-  body.wami-atlas-view .atlas-page-scroll-rail {
-    display: none !important;
-  }
+.atlas-static-filter span {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
+.atlas-static-map {
+  position: relative;
+  height: calc(100dvh - 190px);
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: 18px;
+}
 
-/* WamiFishing 6.2.0 – mobiles Atlas-Feintuning.
-   Filter enger, Gewässerliste sichtbar scrollbar, alter Seiten-Scrollrand vollständig weg. */
+.atlas-static-map .map-shell,
+.atlas-static-map .map,
+.atlas-static-map .leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.waters-without-map {
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr) !important;
+}
+
+.waters-without-map > .map-panel {
+  display: none !important;
+}
+
+.waters-load-more {
+  width: 100%;
+  min-height: 46px;
+  margin: 8px 0 14px;
+  border-radius: 12px;
+  font-weight: 800;
+}
+
 @media (max-width: 900px) {
-  /* Filterblöcke dichter zusammen. */
-  body.wami-atlas-view .atlas-page {
-    gap: 2px !important;
+  body:has(.atlas-static-page) {
+    overflow: hidden !important;
   }
 
-  body.wami-atlas-view .atlas-search {
-    gap: 2px !important;
-    margin-bottom: 0 !important;
+  .atlas-static-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100dvh - 86px);
+    margin: 0;
+    padding: 6px 10px 10px;
+    overflow: hidden;
   }
 
-  body.wami-atlas-view .atlas-search > * {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+  .atlas-static-filter {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 8px;
+    margin: 0 0 5px;
+    padding: 6px 9px;
   }
 
-  body.wami-atlas-view .atlas-search input,
-  body.wami-atlas-view .atlas-search select,
-  body.wami-atlas-view .atlas-search button {
-    min-height: 38px !important;
+  .atlas-static-filter strong {
+    grid-column: 1;
   }
 
-  /* Karte bleibt direkt unter den Filtern. */
-  body.wami-atlas-view .atlas-map {
-    margin-top: 2px !important;
+  .atlas-static-filter span {
+    grid-column: 1;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  /* Gewässerliste etwas höher: zweiter Treffer soll bereits sichtbar werden
-     und damit die Scrollmöglichkeit sofort erkennbar sein. */
-  body.wami-atlas-view .atlas-water-list {
-    flex: 0 0 150px !important;
-    height: 150px !important;
-    min-height: 150px !important;
-    max-height: 150px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    scrollbar-gutter: auto !important;
-    padding-right: 2px !important;
+  .atlas-static-filter button {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: stretch;
+    min-height: 38px;
   }
 
-  /* Gewässerprofil folgt danach; kein eigener künstlicher Maximalbereich. */
-  body.wami-atlas-view .atlas-details {
+  .atlas-static-map {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    border-radius: 14px;
+  }
+
+  /* Gewässerseite darf normal scrollen, enthält aber keine Karte. */
+  .waters-without-map {
+    display: block !important;
+  }
+
+  .waters-without-map > .sidebar,
+  .waters-without-map > .details {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .waters-without-map > .sidebar {
     max-height: none !important;
     overflow: visible !important;
   }
 
-  /* Alter rechter Ganzseiten-Scrollstreifen samt optischem Rand restlos weg. */
-  body.wami-atlas-view .atlas-page-scroll-rail,
-  body.wami-atlas-view .atlas-page-scroll-rail::before,
-  body.wami-atlas-view .atlas-page-scroll-rail::after,
-  body.wami-atlas-view .atlas-page-scroll-rail > span {
-    display: none !important;
-    width: 0 !important;
-    border: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-
-  body.wami-atlas-view .atlas-page {
-    padding-right: 12px !important;
-  }
-}
-
-
-/* WamiFishing 6.2.1 – Filter weiter nach oben/enger + eigene sichtbare
-   Scrollanzeige ausschließlich an der Gewässerliste. */
-.atlas-water-scrollbar {
-  display: none;
-}
-
-@media (max-width: 900px) {
-  /* Restabstand zwischen Navigation und Atlas weiter reduzieren. */
-  body.wami-atlas-view .topbar {
-    padding-bottom: 0 !important;
-  }
-
-  body.wami-atlas-view .atlas-page {
-    padding-top: 0 !important;
-    gap: 0 !important;
-  }
-
-  body.wami-atlas-view .atlas-search {
-    gap: 0 !important;
-    margin-top: -4px !important;
-    margin-bottom: 0 !important;
-  }
-
-  body.wami-atlas-view .atlas-search > * + * {
-    margin-top: 2px !important;
-  }
-
-  body.wami-atlas-view .atlas-map {
-    margin-top: 2px !important;
-  }
-
-  /* Gewässerliste ist der einzige Bereich mit sichtbarer Scrollanzeige. */
-  body.wami-atlas-view .atlas-water-list {
-    position: relative !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-    padding-right: 10px !important;
-  }
-
-  body.wami-atlas-view .atlas-water-list::-webkit-scrollbar {
-    width: 0 !important;
-    height: 0 !important;
-    display: none !important;
-  }
-
-  body.wami-atlas-view .atlas-water-scrollbar {
-    display: none;
-    position: sticky;
-    float: right;
-    top: 4px;
-    right: 0;
-    z-index: 20;
-    width: 5px;
-    height: var(--atlas-scroll-height);
-    margin-left: -5px;
-    margin-bottom: calc(-1 * var(--atlas-scroll-height));
-    transform: translateY(var(--atlas-scroll-top));
-    border-radius: 999px;
-    background: rgba(13,77,67,.48);
-    pointer-events: none;
-  }
-
-  body.wami-atlas-view .atlas-water-scrollbar.visible {
-    display: block;
-  }
-}
-
-
-/* WamiFishing 6.2.2 – Gewässerprofil auf Mobil wieder vollständig scrollbar.
-   Filter, Karte und Gewässerliste aus 6.2.1 bleiben unverändert. */
-@media (max-width: 900px) {
-  body.wami-atlas-view .atlas-details {
-    flex: 1 1 0 !important;
-    min-height: 110px !important;
+  .waters-without-map .water-list {
     max-height: none !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y !important;
-    padding-bottom: calc(env(safe-area-inset-bottom) + 18px) !important;
-  }
-
-  body.wami-atlas-view .atlas-details::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  body.wami-atlas-view .atlas-details::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(13,77,67,.42);
-  }
-}
-
-
-/* WamiFishing 6.2.3 – mobiles Atlas-Feintuning:
-   Filter höher/enger, Gewässerkarten breiter, klare Trennung zum Profil. */
-@media (max-width: 900px) {
-  /* Filterblock weiter nach oben ziehen und vertikal verdichten. */
-  body.wami-atlas-view .atlas-page {
-    padding-top: 0 !important;
-    gap: 0 !important;
-  }
-
-  body.wami-atlas-view .atlas-search {
-    margin-top: -10px !important;
-    margin-bottom: 0 !important;
-    gap: 0 !important;
-  }
-
-  body.wami-atlas-view .atlas-search > * {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  body.wami-atlas-view .atlas-search > * + * {
-    margin-top: -2px !important;
-  }
-
-  /* Gewässerbereich nutzt die Breite besser aus.
-     Nur die schmale eigene Scrollanzeige bleibt rechts frei. */
-  body.wami-atlas-view .atlas-water-list {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding-left: 0 !important;
-    padding-right: 7px !important;
-  }
-
-  body.wami-atlas-view .atlas-water {
-    width: 100% !important;
-    max-width: none !important;
-    box-sizing: border-box !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  /* Klare optische Trennung zwischen Gewässerauswahl und Profil. */
-  body.wami-atlas-view .atlas-details {
-    position: relative !important;
-    margin-top: 9px !important;
-    border-top: 2px solid rgba(13,77,67,.28) !important;
-    padding-top: 12px !important;
+    overflow: visible !important;
   }
 }
