@@ -3380,3 +3380,67 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 .waters-without-map {
   grid-template-columns: minmax(300px, 420px) minmax(0, 1fr) !important;
 }
+
+
+/* WamiFishing 6.2.6 – Gewässerseite kompakter. */
+
+/* PC: Filter und Ergebnisinhalt auf eine kompakte horizontale Ebene. */
+@media (min-width: 901px) {
+  .waters-without-map > .sidebar {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .waters-without-map .sidebar-filters,
+  .waters-without-map .waters-filters,
+  .waters-without-map .filter-row {
+    gap: 6px !important;
+  }
+
+  .waters-without-map .sidebar input,
+  .waters-without-map .sidebar select,
+  .waters-without-map .sidebar button {
+    min-height: 34px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+
+  .waters-without-map {
+    grid-template-columns: minmax(360px, 520px) minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 10px !important;
+  }
+
+  .waters-without-map .sidebar {
+    padding-top: 8px !important;
+  }
+
+  .waters-without-map .details {
+    margin-top: 0 !important;
+    padding-top: 8px !important;
+  }
+}
+
+/* Mobil: Filter direkt nach oben; Überschrift entfernen, Trefferzahl bleibt. */
+@media (max-width: 900px) {
+  .waters-without-map {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .waters-without-map > .sidebar {
+    margin-top: 0 !important;
+    padding-top: 2px !important;
+  }
+
+  .waters-without-map .waters-area-title {
+    display: none !important;
+  }
+
+  .waters-without-map .sidebar-filters,
+  .waters-without-map .waters-filters,
+  .waters-without-map .filter-row {
+    margin-top: 0 !important;
+    gap: 3px !important;
+  }
+}
