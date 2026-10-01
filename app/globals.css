@@ -3763,3 +3763,86 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     height: 128px;
   }
 }
+
+
+/* WamiFishing 6.3.9 – ausschließlich mobile Gewässeransicht.
+   PC-Regeln aus 6.3.8 bleiben unverändert. */
+@media (max-width: 900px) {
+  /* Auf Gewässer mobil den großen Markenblock ausblenden; Navigation bleibt. */
+  body:has(.waters-without-map) .topbar > .brand {
+    display: none !important;
+  }
+
+  body:has(.waters-without-map) .topbar {
+    min-height: 0 !important;
+    padding-top: max(4px, env(safe-area-inset-top)) !important;
+    padding-bottom: 4px !important;
+    gap: 0 !important;
+  }
+
+  body:has(.waters-without-map) .topbar .main-nav-shell {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Filter direkt unter die Navigation ziehen. */
+  .waters-filter-zone {
+    margin-top: 4px !important;
+    margin-bottom: 5px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .waters-filter-zone .forecast-controls-modern.waters-search-controls {
+    gap: 6px !important;
+  }
+
+  .waters-filter-zone .forecast-control,
+  .waters-filter-zone .waters-filter-count {
+    min-height: 46px !important;
+  }
+
+  /* Reset kleiner und näher an die vier Filterfelder. */
+  .waters-filter-zone .forecast-reset-filter {
+    min-height: 32px !important;
+    width: auto !important;
+    margin: 4px 0 2px !important;
+    padding: 3px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.1 !important;
+  }
+
+  /* Hauptbereich näher an Filter heran. */
+  .waters-without-map {
+    margin-top: 5px !important;
+    padding-top: 0 !important;
+  }
+
+  /* Listen-Kopf kompakter. */
+  .waters-without-map .sidebar-heading {
+    min-height: 48px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Gewässereinträge vertikal verdichten, Lesbarkeit der Fischchips erhalten. */
+  .waters-without-map .water-card,
+  .waters-without-map .water-list article {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    margin-top: 0 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .waters-without-map .water-card h3,
+  .waters-without-map .water-list article h3 {
+    margin-top: 0 !important;
+    margin-bottom: 3px !important;
+  }
+
+  /* Mobil normaler Seitenfluss; Profil bleibt nach Auswahl erreichbar. */
+  .waters-without-map > .sidebar,
+  .waters-without-map > .details {
+    max-height: none !important;
+  }
+}
