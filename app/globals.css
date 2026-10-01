@@ -3723,3 +3723,43 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     max-height: calc(100dvh - 286px) !important;
   }
 }
+
+
+/* WamiFishing 6.3.5 – Fotos im Gewässerprofil:
+   kleine Hochkant-Vorschau; Klick öffnet vorhandenen Vollbild-Fotoviewer. */
+.water-profile-photo-button {
+  display: block;
+  width: 112px;
+  height: 150px;
+  margin: 8px 0 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.water-profile-photo-button img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  margin: 0 !important;
+  border-radius: 12px;
+  object-fit: cover !important;
+}
+
+.catch-photo-modal-head .photo-back-button {
+  width: auto !important;
+  min-width: 96px;
+  padding: 8px 12px !important;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .water-profile-photo-button {
+    width: 96px;
+    height: 128px;
+  }
+}
