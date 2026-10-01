@@ -3699,3 +3699,15 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     max-height: calc(100dvh - 267px) !important;
   }
 }
+
+
+/* WamiFishing 6.3.3 – Hauptbereich nochmals ca. 3 mm nach unten.
+   Filterleiste bleibt unverändert. */
+@media (min-width: 901px) {
+  .waters-without-map {
+    transform: translateY(3px) !important;
+    margin-bottom: 3px !important;
+    height: calc(100dvh - 278px) !important;
+    max-height: calc(100dvh - 278px) !important;
+  }
+}
