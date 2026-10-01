@@ -3501,3 +3501,68 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     border-radius: 12px;
   }
 }
+
+
+/* WamiFishing 6.2.8 – PC Gewässeransicht: vier gleich große Filter,
+   kompakte Profilkennzahlen und Profilinhalte wieder sichtbar. */
+@media (min-width: 901px) {
+  /* Filterbereich: 4 gleich große Felder in exakt einer Reihe. */
+  .waters-search {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .waters-search > * {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .waters-search > .waters-filter-count {
+    min-width: 0 !important;
+    min-height: 42px !important;
+    align-self: stretch !important;
+    border-radius: 999px !important;
+    margin: 0 !important;
+  }
+
+  .waters-filter-count span {
+    font-size: 18px;
+  }
+
+  .waters-filter-count strong {
+    font-size: 17px;
+  }
+
+  /* Reset bleibt unter der Filterzeile und beeinflusst deren Breiten nicht. */
+  .waters-search > .forecast-reset-filter {
+    grid-column: 1 / -1 !important;
+    width: max-content !important;
+    min-width: 0 !important;
+  }
+
+  /* Vier Profil-Kennzahlen nebeneinander statt 2 x 2. */
+  .waters-without-map .details .detail-stats,
+  .waters-without-map .details .stats-grid,
+  .waters-without-map .details .profile-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .waters-without-map .details .stat-card,
+  .waters-without-map .details .detail-stat,
+  .waters-without-map .details .profile-stat {
+    min-width: 0 !important;
+  }
+
+  /* Profil darf nicht durch frühere Atlas-Regeln verschwinden. */
+  .waters-without-map > .details {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+}
