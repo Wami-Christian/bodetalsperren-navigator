@@ -3618,3 +3618,54 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     max-width: none !important;
   }
 }
+
+
+/* WamiFishing 6.3.0 – PC Gewässerseite:
+   Trefferliste und Gewässerprofil bekommen zwei unabhängige Scrollbereiche. */
+@media (min-width: 901px) {
+  .waters-without-map {
+    height: calc(100dvh - 275px) !important;
+    min-height: 420px !important;
+    max-height: calc(100dvh - 275px) !important;
+    overflow: hidden !important;
+    align-items: stretch !important;
+  }
+
+  .waters-without-map > .sidebar {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .waters-without-map > .sidebar > .sidebar-heading {
+    flex: 0 0 auto !important;
+  }
+
+  .waters-without-map > .sidebar > .water-list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .waters-without-map > .details {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .waters-without-map > .sidebar > .water-list,
+  .waters-without-map > .details {
+    scrollbar-width: thin;
+  }
+}
