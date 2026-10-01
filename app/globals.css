@@ -3566,3 +3566,55 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     overflow: visible !important;
   }
 }
+
+
+/* WamiFishing 6.2.9 – gezielte Strukturregeln anhand der echten Klassen. */
+@media (min-width: 901px) {
+  /* Die vier echten Filterelemente sitzen jetzt gemeinsam in diesem Container. */
+  .waters-filter-zone .forecast-controls-modern.waters-search-controls {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .waters-filter-zone .waters-search-controls > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .waters-filter-zone .waters-filter-count {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 42px !important;
+    border-radius: 999px !important;
+  }
+
+  /* Tatsächlicher Container der vier dunklen Kennzahlen. */
+  .waters-without-map .details > .water-stats {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .waters-without-map .details > .water-stats > .stat-card {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 118px !important;
+    padding: 14px 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Profil bleibt vollständig sichtbar. */
+  .waters-without-map > .details {
+    display: block !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+}
