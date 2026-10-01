@@ -3669,3 +3669,21 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     scrollbar-width: thin;
   }
 }
+
+
+/* WamiFishing 6.3.1 – PC vertikal kompakter:
+   Filterleiste ca. 10 mm höher, Inhaltsbereich ca. 5 mm höher.
+   96dpi-Näherung: 10 mm ≈ 38 px, 5 mm ≈ 19 px. */
+@media (min-width: 901px) {
+  .waters-filter-zone {
+    transform: translateY(-38px) !important;
+    margin-bottom: -38px !important;
+  }
+
+  .waters-without-map {
+    transform: translateY(-19px) !important;
+    margin-bottom: -19px !important;
+    height: calc(100dvh - 256px) !important;
+    max-height: calc(100dvh - 256px) !important;
+  }
+}
