@@ -1604,11 +1604,12 @@ const atlasWaters = useMemo(() => {
 
   if (window.innerWidth <= 900) {
     window.setTimeout(() => {
-      const target = view === "atlas" ? ".atlas-map" : ".details";
-      document.querySelector(target)?.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+      if (view === "waters") {
+        document.querySelector(".waters-without-map .details")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
     }, 120);
   }
 }
@@ -2030,7 +2031,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.2.4</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.2.5</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2171,7 +2172,6 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
               </button>
             )}
           </div></aside>
-          <div className="map-panel"><MapView waters={mapWaters} persistentRouteWaters={waters.filter((water) => Boolean((water.waterwayName && water.route?.length) || water.osmFeatureId))} spots={visibleSpots} parkings={visibleParkings} selectedWater={focusedWater} onSelect={selectAndFocus}/><div className="map-note">{focusedWater ? <><strong>{selected.name}</strong><span>{visibleParkings.length} Parkplatz{visibleParkings.length === 1 ? "" : "plätze"} · {visibleSpots.length} Hotspot{visibleSpots.length === 1 ? "" : "s"}</span><button type="button" onClick={()=>setFocusedWaterId(null)}>Alle Gewässer zeigen</button></> : <>{selected.latitude === null || selected.longitude === null ? <span>Für dieses Gewässer ist noch keine geprüfte Kartenposition gespeichert.</span> : <span>{mappedCount} von {filtered.length} Treffern sind bereits kartiert. Gewässer anklicken, um Parkplätze und Hotspots zu öffnen.</span>}</>}</div></div>
           <aside className="details"><p className="eyebrow">Gewässerprofil</p><div className="water-stats">
   <div className="stat-card">
     <span>🐟</span>
@@ -2406,7 +2406,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.2.4 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.2.5 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2423,7 +2423,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.2.4</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.2.5</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
         <h3>Cloudspeicherung & Datensicherung</h3><p><strong>Automatische Cloudspeicherung ist immer aktiv.</strong> Jede Änderung an Favoriten, Fangbuch, Fotos, Parkplätzen und Hot Spots wird automatisch lokal und in der WamiFishing-Cloud dieser festen Domain gesichert und zwischen deinen Geräten synchronisiert. Die Synchronisierung kann einen Moment dauern. Es ist kein Sicherungsknopf nötig.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
@@ -2431,7 +2431,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V6.2.4 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V6.2.5 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }

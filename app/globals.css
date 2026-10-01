@@ -3373,3 +3373,10 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     overflow: visible !important;
   }
 }
+
+
+/* WamiFishing 6.2.5 – Gewässerseite wirklich ohne Leaflet.
+   Die Karte wird dort nicht nur versteckt, sondern gar nicht mehr gerendert. */
+.waters-without-map {
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr) !important;
+}
