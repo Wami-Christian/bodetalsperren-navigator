@@ -3444,3 +3444,60 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     gap: 3px !important;
   }
 }
+
+
+/* WamiFishing 6.2.7 – Trefferzahl als viertes Filterfeld. */
+.waters-filter-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 6px 14px;
+  border: 1px solid rgba(13,77,67,.14);
+  border-radius: 999px;
+  background: #fff;
+  white-space: nowrap;
+}
+
+.waters-filter-count strong {
+  font-size: 16px;
+}
+
+@media (min-width: 901px) {
+  /* Die bestehende Such-/Filterbox wird zur gemeinsamen Filterzeile. */
+  .waters-search {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .waters-search > .waters-filter-count {
+    flex: 0 0 auto !important;
+    min-width: 190px;
+    align-self: flex-start;
+  }
+
+  .waters-search > .forecast-reset-filter {
+    order: 10;
+    flex: 0 0 auto;
+  }
+
+  .waters-search-meta-below {
+    display: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .waters-search-meta-below {
+    display: none !important;
+  }
+
+  .waters-filter-count {
+    min-height: 38px;
+    margin-top: 3px;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+}
