@@ -20,7 +20,18 @@ function cookieValue(request: Request, name: string) {
 }
 async function authFetch(path: string, body: unknown) {
   const { url, key } = cfg();
-  return fetch(`${url}/auth/v1/${path}`, { method:"POST", headers:{apikey:key,"Content-Type":"application/json"}, body:JSON.stringify(body), cache:"no-store" });
+  try {
+    return await fetch(`${url}/auth/v1/${path}`, {
+      method: "POST",
+      headers: { apikey: key, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      cache: "no-store",
+      signal: AbortSignal.timeout(15_000),
+    });
+  } catch (error) {
+    const cause = error instanceof Error && error.cause ? ` | Ursache: ${String(error.cause)}` : "";
+    throw new Error(`Supabase nicht erreichbar (${new URL(url).hostname}): ${error instanceof Error ? error.message : String(error)}${cause}`);
+  }
 }
 export async function GET(request: Request) {
   try {
@@ -49,7 +60,15 @@ export async function POST(request: Request) {
       const email = String(body.email??"").trim().toLowerCase();
       if (!/^\S+@\S+\.\S+$/.test(email)) return Response.json({error:"Bitte eine gültige E-Mail-Adresse eingeben."},{status:400});
       const response = await authFetch("otp", {email,create_user:true});
-      if (!response.ok) return Response.json({error:"Anmeldecode konnte nicht gesendet werden."},{status:400});
+      const raw = await response.text();
+      if (!response.ok) {
+        let detail = raw;
+        try {
+          const parsed = JSON.parse(raw) as { msg?: string; message?: string; error_description?: string; error?: string };
+          detail = parsed.msg || parsed.message || parsed.error_description || parsed.error || raw;
+        } catch { /* Textantwort unverändert verwenden */ }
+        return Response.json({error:`Supabase ${response.status}: ${detail || response.statusText}`},{status:400});
+      }
       return Response.json({ok:true});
     }
     if (action === "verify") {
