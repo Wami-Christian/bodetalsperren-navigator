@@ -1,3 +1,4 @@
+import { requireWamiUser } from "../_wamifishing-auth";
 import { del, get, put } from "@vercel/blob";
 
 export const runtime = "nodejs";
@@ -7,10 +8,7 @@ type Friend = { userId: string; name: string; friendCode: string };
 type Incoming = { fromUserId: string; fromName: string; fromCode: string; createdAt: string };
 type Profile = { userId: string; name: string; friendCode: string; friends: Friend[]; incoming: Incoming[]; updatedAt: string };
 
-function userKey(request: Request) {
-  const raw = request.headers.get("x-wamifishing-user")?.trim() || "";
-  return /^[A-Za-z0-9_-]{8,100}$/.test(raw) ? raw : null;
-}
+
 function profilePath(userId: string) { return `wamifishing/social/profiles/${userId}.json`; }
 function codePath(code: string) { return `wamifishing/social/codes/${code.toUpperCase()}.json`; }
 async function readJson<T>(pathname: string): Promise<T | null> {
@@ -32,8 +30,9 @@ function validCode(code: string) { return /^WAMI-[A-Z0-9]{6,16}$/.test(code); }
 
 export async function GET(request: Request) {
   try {
-    const userId = userKey(request);
-    if (!userId) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
+    const identity = await requireWamiUser(request);
+    if (!identity) return Response.json({ error: "Bitte per E-Mail anmelden." }, { status: 401 });
+    const userId = identity.dataUserId;
     const profile = await readJson<Profile>(profilePath(userId));
     return Response.json({ profile }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
@@ -44,8 +43,9 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const userId = userKey(request);
-    if (!userId) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
+    const identity = await requireWamiUser(request);
+    if (!identity) return Response.json({ error: "Bitte per E-Mail anmelden." }, { status: 401 });
+    const userId = identity.dataUserId;
     const body = await request.json() as Record<string, unknown>;
     const action = String(body.action ?? "");
 

@@ -49,6 +49,8 @@ type CatchWeatherSnapshot = {
   precipitation?: number;
 };
 
+type ShareVisibility = "private" | "friends" | "public";
+
 type EnhancedCatchEntry = CatchEntry & {
   latitude?: number;
   longitude?: number;
@@ -60,6 +62,7 @@ type EnhancedCatchEntry = CatchEntry & {
   method?: string;
   depthM?: number;
   photo?: string;
+  visibility?: ShareVisibility;
 };
 
 type UserParkingSpot = ParkingSpot & {
@@ -67,6 +70,7 @@ type UserParkingSpot = ParkingSpot & {
   photo?: string;
   createdAt: string;
   accuracyM?: number;
+  visibility?: ShareVisibility;
 };
 
 type ManualWater = FishingWater & {
@@ -89,6 +93,7 @@ type UserFishingSpot = FishingSpot & {
   photo?: string;
   createdAt: string;
   accuracyM?: number;
+  visibility?: ShareVisibility;
 };
 
 const USER_PARKINGS_KEY = "harzfishing:user-parkings";
@@ -749,6 +754,12 @@ const [atlasCategory, setAtlasCategory] =
   const [backupStatus, setBackupStatus] = useState("");
   const [cloudUserId, setCloudUserId] = useState("");
   const [cloudUserDraft, setCloudUserDraft] = useState("");
+  const [authChecked, setAuthChecked] = useState(false);
+  const [authEmail, setAuthEmail] = useState("");
+  const [authEmailDraft, setAuthEmailDraft] = useState("");
+  const [authOtp, setAuthOtp] = useState("");
+  const [authOtpSent, setAuthOtpSent] = useState(false);
+  const [authMessage, setAuthMessage] = useState("");
   const [socialName, setSocialName] = useState("");
   const [friendCode, setFriendCode] = useState("");
   const [friendCodeDraft, setFriendCodeDraft] = useState("");
@@ -756,6 +767,9 @@ const [atlasCategory, setAtlasCategory] =
   const [friends, setFriends] = useState<Array<{userId:string;name:string;friendCode:string}>>([]);
   const [friendRequests, setFriendRequests] = useState<Array<{fromUserId:string;fromName:string;fromCode:string;createdAt:string}>>([]);
   const [socialMessage, setSocialMessage] = useState("");
+  const [sharedCatches, setSharedCatches] = useState<Array<EnhancedCatchEntry & {ownerId:string;ownerName:string}>>([]);
+  const [sharedParkings, setSharedParkings] = useState<Array<UserParkingSpot & {ownerId:string;ownerName:string}>>([]);
+  const [sharedHotspots, setSharedHotspots] = useState<Array<UserFishingSpot & {ownerId:string;ownerName:string}>>([]);
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
   const backupFileRef = useRef<HTMLInputElement | null>(null);
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
@@ -814,12 +828,48 @@ const [atlasCategory, setAtlasCategory] =
   }, []);
 
   useEffect(() => {
+    let active = true;
+    void fetch("/api/wamifishing-auth", { cache: "no-store" }).then(async response => {
+      const data = await response.json() as { user?: { email?: string } | null };
+      if (!active) return;
+      const email = data.user?.email ?? "";
+      setAuthEmail(email);
+      if (email) setAuthEmailDraft(email);
+      setAuthChecked(true);
+    }).catch(() => { if (active) setAuthChecked(true); });
+    return () => { active = false; };
+  }, []);
+
+  async function sendLoginCode() {
+    try {
+      setAuthMessage("Code wird gesendet …");
+      const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "send", email: authEmailDraft }) });
+      const data = await response.json() as { error?: string };
+      if (!response.ok) throw new Error(data.error || "Anmeldecode konnte nicht gesendet werden.");
+      setAuthOtpSent(true); setAuthMessage("✓ 6-stelliger Code wurde per E-Mail gesendet.");
+    } catch (error) { setAuthMessage(`⚠ ${error instanceof Error ? error.message : String(error)}`); }
+  }
+  async function verifyLoginCode() {
+    try {
+      const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "verify", email: authEmailDraft, token: authOtp }) });
+      const data = await response.json() as { error?: string };
+      if (!response.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
+      setAuthMessage("✓ Angemeldet. WamiFishing wird neu geladen …");
+      window.location.reload();
+    } catch (error) { setAuthMessage(`⚠ ${error instanceof Error ? error.message : String(error)}`); }
+  }
+  async function logoutEmail() {
+    await fetch("/api/wamifishing-auth", { method: "DELETE" }).catch(() => undefined);
+    window.location.reload();
+  }
+
+  useEffect(() => {
     const id = getCloudUserId();
     setCloudUserId(id);
     setCloudUserDraft(id);
   }, []);
 
-  useEffect(() => { if (cloudUserId) void loadSocialProfile(); }, [cloudUserId]);
+  useEffect(() => { if (cloudUserId && authEmail) void loadSocialProfile(); }, [cloudUserId, authEmail]);
 
   async function loadSocialProfile() {
     try {
@@ -837,6 +887,19 @@ const [atlasCategory, setAtlasCategory] =
   async function saveSocialProfile() { try { await socialPost({action:"save-profile",name:socialName,friendCode:friendCodeDraft}); setSocialMessage("✓ Profil gespeichert."); await loadSocialProfile(); } catch(e){setSocialMessage(`⚠ ${e instanceof Error?e.message:String(e)}`);} }
   async function sendFriendRequest() { try { await socialPost({action:"request",friendCode:friendAddCode}); setFriendAddCode(""); setSocialMessage("✓ Freundschaftsanfrage gesendet."); } catch(e){setSocialMessage(`⚠ ${e instanceof Error?e.message:String(e)}`);} }
   async function acceptFriend(fromUserId:string) { try { await socialPost({action:"accept",fromUserId}); setSocialMessage("✓ Freund hinzugefügt."); await loadSocialProfile(); } catch(e){setSocialMessage(`⚠ ${e instanceof Error?e.message:String(e)}`);} }
+  async function loadSharedData() {
+    try {
+      const response = await fetch("/api/wamifishing-shared", { cache:"no-store", headers: cloudUserHeaders() });
+      if (!response.ok) return;
+      const data = await response.json() as {catches?: typeof sharedCatches; parkings?: typeof sharedParkings; hotspots?: typeof sharedHotspots};
+      setSharedCatches(data.catches ?? []); setSharedParkings(data.parkings ?? []); setSharedHotspots(data.hotspots ?? []);
+    } catch (error) { console.error("Freigegebene Daten konnten nicht geladen werden:", error); }
+  }
+  function visibilityLabel(value?: ShareVisibility) { return value === "public" ? "🌍 Öffentlich" : value === "friends" ? "👥 Freunde" : "🔒 Privat"; }
+  function setCatchVisibility(id:string, visibility:ShareVisibility) { setCatches(items=>items.map(item=>item.id===id?{...item,visibility}:item)); }
+  function setParkingVisibility(id:string, visibility:ShareVisibility) { setUserParkings(items=>items.map(item=>item.id===id?{...item,visibility}:item)); }
+  function setHotspotVisibility(id:string, visibility:ShareVisibility) { setUserHotspots(items=>items.map(item=>item.id===id?{...item,visibility}:item)); }
+  useEffect(() => { if (authEmail) { void loadSocialProfile(); void loadSharedData(); } }, [cloudUserId, authEmail]);
 
   function connectCloudProfile() {
     const next = cloudUserDraft.trim();
@@ -856,7 +919,7 @@ const [atlasCategory, setAtlasCategory] =
   // Beim Start zuerst die gemeinsame Cloud-Sicherung prüfen. Wichtig: Bis das
   // abgeschlossen ist, darf ein leerer Safari-Speicher niemals die Cloud überschreiben.
   useEffect(() => {
-    if (!localDataReady) return;
+    if (!localDataReady || !authChecked || !authEmail) return;
     let cancelled = false;
     void (async () => {
       try {
@@ -888,7 +951,7 @@ const [atlasCategory, setAtlasCategory] =
       }
     })();
     return () => { cancelled = true; };
-  }, [localDataReady]);
+  }, [localDataReady, authChecked, authEmail]);
 
   // Geräteübergreifender Abgleich: Solange WamiFishing geöffnet ist, regelmäßig
   // einen neueren Cloud-Datenstand übernehmen. Dadurch kommen auch Löschungen vom
@@ -996,6 +1059,18 @@ const [atlasCategory, setAtlasCategory] =
   }, [view]);
 
   const allWaters = useMemo(() => [...waters, ...manualWaters], [manualWaters]);
+
+  useEffect(() => {
+    if (!localDataReady || !cloudSyncReady || !socialName.trim()) return;
+    const timer = window.setTimeout(() => {
+      void fetch("/api/wamifishing-shared", { method:"PUT", headers: cloudUserHeaders({"Content-Type":"application/json"}), body: JSON.stringify({
+        catches: catches.filter(x=>(x.visibility ?? "private")!=="private"),
+        parkings: userParkings.filter(x=>(x.visibility ?? "private")!=="private"),
+        hotspots: userHotspots.filter(x=>(x.visibility ?? "private")!=="private")
+      }) }).then(()=>loadSharedData()).catch(error=>console.error("Freigaben konnten nicht veröffentlicht werden:",error));
+    }, 500);
+    return () => window.clearTimeout(timer);
+  }, [localDataReady, cloudSyncReady, socialName, catches, userParkings, userHotspots]);
 
   const filtered = useMemo(() => allWaters
     .filter((water) => {
@@ -1481,6 +1556,8 @@ const atlasWaters = useMemo(() => {
     return [parking];
   });
   const selectedUserHotspots = userHotspots.filter((spot) => spot.waterId === selected.id);
+  const selectedSharedParkings = sharedParkings.filter((parking) => parking.waterId === selected.id);
+  const selectedSharedHotspots = sharedHotspots.filter((spot) => spot.waterId === selected.id);
   const visibleSpots = focusedWater ? [...selected.spots, ...selectedUserHotspots, ...importedSpots] : [];
   const visibleParkings = focusedWater ? [...selectedAppParkings, ...selectedUserParkings] : [];
   const mappedCount = filtered.filter((water) => water.latitude !== null && water.longitude !== null).length;
@@ -1545,7 +1622,8 @@ const atlasWaters = useMemo(() => {
           accuracy: "verified",
           note: `Freie GPS-Ortserkennung · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
           createdAt,
-          accuracyM
+          accuracyM,
+          visibility: "private"
         };
         const next = [...userParkings, item];
         saveLocalArray(USER_PARKINGS_KEY, withoutPhoto(next));
@@ -1561,7 +1639,8 @@ const atlasWaters = useMemo(() => {
           note: `Freie GPS-Ortserkennung · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · GPS-Genauigkeit ca. ${accuracyM} m`,
           source: "Benutzer",
           createdAt,
-          accuracyM
+          accuracyM,
+          visibility: "private"
         };
         const next = [...userHotspots, item];
         saveLocalArray(USER_HOTSPOTS_KEY, withoutPhoto(next));
@@ -1614,7 +1693,8 @@ const atlasWaters = useMemo(() => {
           note: `Eigene GPS-Position · ${chosen.water.name} · Abstand zum Gewässer ca. ${Math.round(chosen.distance * 1000)} m · Genauigkeit ca. ${accuracyM} m`,
           photo,
           createdAt,
-          accuracyM
+          accuracyM,
+          visibility: "private"
         };
         const next = [...userParkings, item];
         await putAtlasPhoto(item.id, photo);
@@ -1632,7 +1712,8 @@ const atlasWaters = useMemo(() => {
           source: "Benutzer",
           photo,
           createdAt,
-          accuracyM
+          accuracyM,
+          visibility: "private"
         };
         const next = [...userHotspots, item];
         await putAtlasPhoto(item.id, photo);
@@ -1912,7 +1993,8 @@ const atlasWaters = useMemo(() => {
       latitude: savePosition ? (existing?.latitude ?? catchPosition?.latitude) : undefined,
       longitude: savePosition ? (existing?.longitude ?? catchPosition?.longitude) : undefined,
       locationAccuracyM: savePosition ? (existing?.locationAccuracyM ?? catchPosition?.accuracy) : undefined,
-      locationSource: savePosition && (existing?.latitude != null || catchPosition) ? "gps" : "manual"
+      locationSource: savePosition && (existing?.latitude != null || catchPosition) ? "gps" : "manual",
+      visibility: existing?.visibility ?? "private"
     };
 
     setCatchSaveBusy(true);
@@ -2206,7 +2288,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V7.1.0</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V7.3.0</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2392,8 +2474,8 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
     <small>Top-Fisch</small>
   </div>
 </div><h2>{selected.name}</h2><p>{selected.module} · {selected.type}{selected.lavNumber ? ` · ${selected.lavNumber}` : ""}</p><span className={`status ${selected.sourceStatus}`}>{selected.sourceStatus==='verified'?'Navigationsdaten vorhanden':selected.sourceStatus==='catalog'?'LAV-Katalog – Lage noch offen':'Arbeitsdaten – prüfen'}</span>{selected.areaHa && <p><strong>Fläche:</strong> {selected.areaHa} ha</p>}<h3>Zielfische</h3><div className="score-list">{waterTargetFish(selected).length ? waterTargetFish(selected).map(item=><div key={item}><span>{item}</span><strong>{'★'.repeat(targetFishRating(selected,item))}</strong></div>) : <p>Keine Zielfischarten im Basiskatalog erkannt.</p>}</div><h3>Hinweise</h3><ul>{selected.notes.map((note, index)=><li key={`${selected.id}-note-${index}`}>{note}</li>)}</ul>
-          {(selectedAppParkings.length > 0 || selectedUserParkings.length > 0) && <><h3>Parkplätze / Ausgangspunkte</h3><div className="nav-list">{[...selectedAppParkings, ...selectedUserParkings].map(p=><article key={p.id}><strong>{p.name}</strong><small>{p.note ?? `${p.access==='public'?'öffentlich':'Zufahrt eingeschränkt'} · ${p.accuracy==='verified'?'belegt':'Näherungswert'}`}</small>{'photo' in p && typeof p.photo === 'string' && p.photo && <button type="button" className="water-profile-photo-button" onClick={() => openProfilePhoto(typeof p.photo === "string" ? p.photo : "", typeof p.name === "string" && p.name ? p.name : "Parkplatz")} aria-label="Parkplatzfoto groß anzeigen"><img src={p.photo} alt="Parkplatz"/></button>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a><a href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>{"waterId" in p ? <button type="button" onClick={()=>deleteUserParking(p.id)}>🗑️ Löschen</button> : <div className="app-parking-edit-actions" style={{display:"grid",gridTemplateColumns:"repeat(3,minmax(0,1fr))",gap:8,width:"100%",gridColumn:"1 / -1"}}><button type="button" onClick={()=>correctAppParkingGps(p.id)}>📍 Position</button><button type="button" onClick={()=>hideAppParking(p.id)}>🚫 Ausblenden</button><button type="button" onClick={()=>deleteAppParking(p.id)}>🗑️ Löschen</button></div>}</div></article>)}</div></>}
-          {(selected.spots.length > 0 || selectedUserHotspots.length > 0) && <><h3>Hotspots / Erkundungspunkte</h3><div className="nav-list">{[...selected.spots, ...selectedUserHotspots].map(spot=>{const parking=[...selectedAppParkings, ...selectedUserParkings].find(p=>p.id===spot.parkingId);return <article key={spot.id}><strong>{spot.name}</strong><small>{spot.risk ?? spot.note ?? 'Zugang vor Ort prüfen.'}</small>{'photo' in spot && typeof spot.photo === 'string' && spot.photo && <button type="button" className="water-profile-photo-button" onClick={() => openProfilePhoto(typeof spot.photo === "string" ? spot.photo : "", typeof spot.name === "string" && spot.name ? spot.name : "Hotspot")} aria-label="Hotspotfoto groß anzeigen"><img src={spot.photo} alt="Hotspot"/></button>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>{parking&&<a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Parkplatz</a>}{"waterId" in spot && <button type="button" onClick={()=>deleteUserHotspot(spot.id)}>🗑️ Löschen</button>}</div></article>})}</div></>}
+          {(selectedAppParkings.length > 0 || selectedUserParkings.length > 0) && <><h3>Parkplätze / Ausgangspunkte</h3><div className="nav-list">{[...selectedAppParkings, ...selectedUserParkings].map(p=><article key={p.id}><strong>{p.name}</strong><small>{p.note ?? `${p.access==='public'?'öffentlich':'Zufahrt eingeschränkt'} · ${p.accuracy==='verified'?'belegt':'Näherungswert'}`}</small>{'photo' in p && typeof p.photo === 'string' && p.photo && <button type="button" className="water-profile-photo-button" onClick={() => openProfilePhoto(typeof p.photo === "string" ? p.photo : "", typeof p.name === "string" && p.name ? p.name : "Parkplatz")} aria-label="Parkplatzfoto groß anzeigen"><img src={p.photo} alt="Parkplatz"/></button>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${p.latitude},${p.longitude}&travelmode=driving`} target="_blank" rel="noreferrer">Google Auto</a><a href={`https://maps.apple.com/?daddr=${p.latitude},${p.longitude}&dirflg=d`} target="_blank" rel="noreferrer">Apple Auto</a>{"waterId" in p ? <><select value={(p as UserParkingSpot).visibility ?? "private"} onChange={e=>setParkingVisibility(p.id,e.target.value as ShareVisibility)} aria-label="Sichtbarkeit Parkplatz"><option value="private">🔒 Privat</option><option value="friends">👥 Freunde</option><option value="public">🌍 Öffentlich</option></select><button type="button" onClick={()=>deleteUserParking(p.id)}>🗑️ Löschen</button></> : <div className="app-parking-edit-actions" style={{display:"grid",gridTemplateColumns:"repeat(3,minmax(0,1fr))",gap:8,width:"100%",gridColumn:"1 / -1"}}><button type="button" onClick={()=>correctAppParkingGps(p.id)}>📍 Position</button><button type="button" onClick={()=>hideAppParking(p.id)}>🚫 Ausblenden</button><button type="button" onClick={()=>deleteAppParking(p.id)}>🗑️ Löschen</button></div>}</div></article>)}</div></>}
+          {(selected.spots.length > 0 || selectedUserHotspots.length > 0) && <><h3>Hotspots / Erkundungspunkte</h3><div className="nav-list">{[...selected.spots, ...selectedUserHotspots].map(spot=>{const parking=[...selectedAppParkings, ...selectedUserParkings].find(p=>p.id===spot.parkingId);return <article key={spot.id}><strong>{spot.name}</strong><small>{spot.risk ?? spot.note ?? 'Zugang vor Ort prüfen.'}</small>{'photo' in spot && typeof spot.photo === 'string' && spot.photo && <button type="button" className="water-profile-photo-button" onClick={() => openProfilePhoto(typeof spot.photo === "string" ? spot.photo : "", typeof spot.name === "string" && spot.name ? spot.name : "Hotspot")} aria-label="Hotspotfoto groß anzeigen"><img src={spot.photo} alt="Hotspot"/></button>}<div className="mini-actions"><a href={`https://www.google.com/maps/dir/?api=1&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Standort</a>{parking&&<a href={`https://www.google.com/maps/dir/?api=1&origin=${parking.latitude},${parking.longitude}&destination=${spot.latitude},${spot.longitude}&travelmode=walking`} target="_blank" rel="noreferrer">Zu Fuß ab Parkplatz</a>}{"waterId" in spot && <><select value={(spot as UserFishingSpot).visibility ?? "private"} onChange={e=>setHotspotVisibility(spot.id,e.target.value as ShareVisibility)} aria-label="Sichtbarkeit Hotspot"><option value="private">🔒 Privat</option><option value="friends">👥 Freunde</option><option value="public">🌍 Öffentlich</option></select><button type="button" onClick={()=>deleteUserHotspot(spot.id)}>🗑️ Löschen</button></>}</div></article>})}</div></>}
           {"manual" in selected && selected.manual === true && <div className="button-row"><button type="button" onClick={()=>void deleteManualWater(selected.id)}>🗑️ Eigenes Gewässer löschen</button></div>}
           <div className="button-row">{selected.latitude !== null && selected.longitude !== null && <a className="route-button" href={`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`} target="_blank" rel="noreferrer">Zum Gewässer</a>}<button onClick={exportGpx} disabled={!visibleSpots.length}>GPX exportieren</button></div><label className="file-button">GPX importieren<input type="file" accept=".gpx,application/gpx+xml" onChange={importGpx}/></label></aside>
         </div>
@@ -2573,9 +2655,10 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
               return <article key={entry.id}>
                 {entry.photo && <><button type="button" className="catch-history-photo-button" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })} aria-label="Fangfoto groß ansehen"><img className="catch-history-photo" src={entry.photo} alt={`Fangfoto ${entry.fish}`}/><span>📷 Foto ansehen</span></button><button type="button" className="catch-photo-save-button" onClick={()=>void saveCatchPhotoToPhotoApp(entry.photo!,entry.fish)}>📲 In Fotos sichern</button></>}
                 <div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</p><small>{[entry.method, entry.lure, entry.depthM ? `${entry.depthM} m` : ""].filter(Boolean).join(" · ") || "Keine Zusatzangaben"}</small>{entry.weather && <small>🌤 {entry.weather.temperature.toFixed(0)} °C · {Math.round(entry.weather.pressure)} hPa · {Math.round(entry.weather.windSpeed)} km/h · {windDisplay(entry.weather.windDirection)}{entry.weather.windDirection != null ? ` (${Math.round(entry.weather.windDirection)}°)` : ""}</small>}{entry.moonPhase && <small>◐ {entry.moonPhase} · {entry.moonIllumination ?? 0} %</small>}{entry.photo && <button type="button" className="catch-photo-open-inline" onClick={()=>setCatchPhotoViewer({ src: entry.photo!, title: `${entry.fish} · ${water?.name ?? entry.waterId}` })}>📷 Fangfoto öffnen</button>}</div>
-                <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span><button type="button" className="catch-edit-button" onClick={()=>{setDiaryCatchesOnly(false);editCatch(entry);}}>✏️ Bearbeiten</button>
+                <span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}{entry.weightKg?`${entry.lengthCm?" · ":""}${entry.weightKg} kg`:""}</span><select value={entry.visibility ?? "private"} onChange={e=>setCatchVisibility(entry.id,e.target.value as ShareVisibility)} aria-label="Sichtbarkeit Fang"><option value="private">🔒 Privat</option><option value="friends">👥 Freunde</option><option value="public">🌍 Öffentlich</option></select><button type="button" className="catch-edit-button" onClick={()=>{setDiaryCatchesOnly(false);editCatch(entry);}}>✏️ Bearbeiten</button>
               </article>;
             })}{!catches.length&&<p className="catch-empty">Noch keine Fänge gespeichert. Der erste Eintrag baut deine eigene Prognose-Datenbasis auf.</p>}</div>
+            {sharedCatches.length>0 && <><div className="catch-history-head"><div><p className="eyebrow">Freunde & Öffentlich</p><h2>Freigegebene Fänge</h2></div><strong>{sharedCatches.length}</strong></div><div className="catch-list catch-list-v2">{sharedCatches.map(entry=>{const water=allWaters.find(w=>w.id===entry.waterId);return <article key={`${entry.ownerId}-${entry.id}`}><div className="catch-list-main"><strong>{entry.fish}</strong><p>{water?.name ?? entry.waterId} · von {entry.ownerName}</p><small>{visibilityLabel(entry.visibility)} · {new Date(entry.caughtAt).toLocaleString("de-DE")}</small></div><span className="catch-measure">{entry.lengthCm?`${entry.lengthCm} cm`:""}</span></article>})}</div></>}
           </div>
         </section>;
       })()}
@@ -2596,7 +2679,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V7.1.0 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V7.3.0 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2613,20 +2696,21 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V7.1.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && (sharedCatches.length+sharedParkings.length+sharedHotspots.length)>0 && <section className="page narrow"><div className="panel"><p className="eyebrow">Freunde</p><h2>👥 Freigegebene Inhalte</h2><p>{sharedCatches.length} Fänge · {sharedHotspots.length} Hotspots · {sharedParkings.length} Parkplätze sind für dich freigegeben.</p><div className="nav-list">{sharedHotspots.map(x=><article key={`${x.ownerId}-${x.id}`}><strong>📍 {x.name}</strong><small>{x.ownerName} · {visibilityLabel(x.visibility)}</small></article>)}{sharedParkings.map(x=><article key={`${x.ownerId}-${x.id}`}><strong>🅿️ {x.name}</strong><small>{x.ownerName} · {visibilityLabel(x.visibility)}</small></article>)}</div></div></section>}
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V7.3.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
-        <h3>Benutzerprofil & Cloudspeicherung</h3><p><strong>V7.1 trennt Sync-Code und Freundescode.</strong> Der Sync-Code verbindet ausschließlich deine eigenen Geräte. Deinen Freundescode darfst du dagegen weitergeben.</p><label className="wide">Persönlicher Sync-Code<input value={cloudUserDraft} onChange={(e)=>setCloudUserDraft(e.target.value)} autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={connectCloudProfile}>🔗 Eigenes Gerät verbinden</button></div><p><small>Den Sync-Code niemals an Freunde weitergeben.</small></p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
+        <h3>📧 Anmeldung & Cloudspeicherung</h3><p><strong>V7.3 verwendet die E-Mail-Adresse als Konto.</strong> Auf PC, iPhone und iPad meldest du dich mit derselben Adresse an; der bisherige Sync-Code wird im Hintergrund nur noch zur einmaligen Übernahme deiner vorhandenen Daten verwendet.</p>{authEmail ? <><p className="backup-status">✓ Angemeldet als <strong>{authEmail}</strong></p><div className="data-backup-actions"><button type="button" onClick={()=>void logoutEmail()}>Abmelden</button></div></> : <><label className="wide">E-Mail-Adresse<input type="email" value={authEmailDraft} onChange={e=>setAuthEmailDraft(e.target.value)} autoComplete="email" placeholder="name@beispiel.de"/></label><div className="data-backup-actions"><button type="button" onClick={()=>void sendLoginCode()}>✉️ Anmeldecode senden</button></div>{authOtpSent && <><label className="wide">6-stelliger Code<input inputMode="numeric" value={authOtp} onChange={e=>setAuthOtp(e.target.value.replace(/\D/g,"").slice(0,6))} autoComplete="one-time-code"/></label><div className="data-backup-actions"><button type="button" onClick={()=>void verifyLoginCode()}>✓ Anmelden</button></div></>}{authMessage&&<p className="data-backup-message">{authMessage}</p>}</>}{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <h3>👥 Freunde</h3><label className="wide">Anzeigename<input value={socialName} onChange={e=>setSocialName(e.target.value)} placeholder="z. B. Wami" maxLength={40}/></label><label className="wide">Mein Freundescode<input value={friendCodeDraft} onChange={e=>setFriendCodeDraft(e.target.value.toUpperCase())} autoCapitalize="characters" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={()=>void saveSocialProfile()}>✓ Profil / Freundescode speichern</button></div>
         <label className="wide">Freund hinzufügen<input value={friendAddCode} onChange={e=>setFriendAddCode(e.target.value.toUpperCase())} placeholder="WAMI-XXXXXXXX" autoCapitalize="characters" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={()=>void sendFriendRequest()} disabled={!friendAddCode.trim()}>➕ Freundschaftsanfrage senden</button><button type="button" onClick={()=>void loadSocialProfile()}>↻ Aktualisieren</button></div>
         {friendRequests.length>0&&<div className="nav-list"><h4>Offene Anfragen</h4>{friendRequests.map(r=><article key={r.fromUserId}><strong>{r.fromName}</strong><small>{r.fromCode}</small><div className="mini-actions"><button type="button" onClick={()=>void acceptFriend(r.fromUserId)}>✓ Annehmen</button></div></article>)}</div>}
         {friends.length>0?<div className="nav-list"><h4>Meine Freunde</h4>{friends.map(f=><article key={f.userId}><strong>👤 {f.name}</strong><small>{f.friendCode}</small></article>)}</div>:<p><small>Noch keine bestätigten Freunde.</small></p>}
-        <p><small><strong>Datenschutz:</strong> Freundschaften geben noch nicht automatisch deine privaten Hotspots oder Fänge frei. Die Sichtbarkeit Privat / Freunde / Öffentlich wird im nächsten Schritt pro Eintrag zugeschaltet.</small></p>{socialMessage&&<p className="data-backup-message">{socialMessage}</p>}
+        <p><small><strong>Datenschutz:</strong> Jeder Eintrag bleibt standardmäßig privat. Du kannst Fänge, eigene Hotspots und Parkplätze einzeln auf Privat, Freunde oder Öffentlich stellen.</small></p>{socialMessage&&<p className="data-backup-message">{socialMessage}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V7.1.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V7.3.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
