@@ -1,13 +1,10 @@
+import { requireWamiUser } from "../_wamifishing-auth";
 import { del, get, put } from "@vercel/blob";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function userKey(request: Request) {
-  const raw = request.headers.get("x-wamifishing-user")?.trim() || "";
-  if (!/^[A-Za-z0-9_-]{8,100}$/.test(raw)) return null;
-  return raw;
-}
+
 
 function paths(user: string) {
   const root = `wamifishing/users/${user}`;
@@ -28,9 +25,9 @@ async function readBlobText(pathname: string) {
 
 export async function GET(request: Request) {
   try {
-    const user = userKey(request);
-    if (!user) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
-    const p = paths(user);
+    const identity = await requireWamiUser(request);
+    if (!identity) return Response.json({ error: "Bitte per E-Mail anmelden." }, { status: 401 });
+    const p = paths(identity.dataUserId);
     const manifestText = await readBlobText(p.manifest);
     if (manifestText) {
       const manifest = JSON.parse(manifestText) as ChunkManifest;
@@ -65,9 +62,9 @@ export async function GET(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const user = userKey(request);
-    if (!user) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
-    const p = paths(user);
+    const identity = await requireWamiUser(request);
+    if (!identity) return Response.json({ error: "Bitte per E-Mail anmelden." }, { status: 401 });
+    const p = paths(identity.dataUserId);
     const uploadId = request.headers.get("x-wamifishing-upload");
     const part = Number(request.headers.get("x-wamifishing-part"));
     const total = Number(request.headers.get("x-wamifishing-total"));
@@ -108,9 +105,9 @@ export async function PUT(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const user = userKey(request);
-    if (!user) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
-    const p = paths(user);
+    const identity = await requireWamiUser(request);
+    if (!identity) return Response.json({ error: "Bitte per E-Mail anmelden." }, { status: 401 });
+    const p = paths(identity.dataUserId);
     const manifestText = await readBlobText(p.manifest).catch(() => null);
     if (manifestText) {
       const manifest = JSON.parse(manifestText) as ChunkManifest;
