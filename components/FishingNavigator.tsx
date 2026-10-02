@@ -749,6 +749,13 @@ const [atlasCategory, setAtlasCategory] =
   const [backupStatus, setBackupStatus] = useState("");
   const [cloudUserId, setCloudUserId] = useState("");
   const [cloudUserDraft, setCloudUserDraft] = useState("");
+  const [socialName, setSocialName] = useState("");
+  const [friendCode, setFriendCode] = useState("");
+  const [friendCodeDraft, setFriendCodeDraft] = useState("");
+  const [friendAddCode, setFriendAddCode] = useState("");
+  const [friends, setFriends] = useState<Array<{userId:string;name:string;friendCode:string}>>([]);
+  const [friendRequests, setFriendRequests] = useState<Array<{fromUserId:string;fromName:string;fromCode:string;createdAt:string}>>([]);
+  const [socialMessage, setSocialMessage] = useState("");
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
   const backupFileRef = useRef<HTMLInputElement | null>(null);
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
@@ -811,6 +818,25 @@ const [atlasCategory, setAtlasCategory] =
     setCloudUserId(id);
     setCloudUserDraft(id);
   }, []);
+
+  useEffect(() => { if (cloudUserId) void loadSocialProfile(); }, [cloudUserId]);
+
+  async function loadSocialProfile() {
+    try {
+      const response = await fetch("/api/wamifishing-social", { cache:"no-store", headers: cloudUserHeaders() });
+      const data = await response.json() as {profile?: {name:string;friendCode:string;friends?: Array<{userId:string;name:string;friendCode:string}>;incoming?: Array<{fromUserId:string;fromName:string;fromCode:string;createdAt:string}>} | null};
+      if (data.profile) { setSocialName(data.profile.name || ""); setFriendCode(data.profile.friendCode || ""); setFriendCodeDraft(data.profile.friendCode || ""); setFriends(data.profile.friends || []); setFriendRequests(data.profile.incoming || []); }
+      else if (!friendCodeDraft) setFriendCodeDraft(`WAMI-${crypto.randomUUID().replace(/-/g,"").slice(0,8).toUpperCase()}`);
+    } catch (error) { console.error("Freundeprofil konnte nicht geladen werden:", error); }
+  }
+
+  async function socialPost(body: Record<string,string>) {
+    const response = await fetch("/api/wamifishing-social", { method:"POST", headers: cloudUserHeaders({"Content-Type":"application/json"}), body:JSON.stringify(body) });
+    const data = await response.json() as {error?:string}; if (!response.ok) throw new Error(data.error || "Freundefunktion fehlgeschlagen."); return data;
+  }
+  async function saveSocialProfile() { try { await socialPost({action:"save-profile",name:socialName,friendCode:friendCodeDraft}); setSocialMessage("✓ Profil gespeichert."); await loadSocialProfile(); } catch(e){setSocialMessage(`⚠ ${e instanceof Error?e.message:String(e)}`);} }
+  async function sendFriendRequest() { try { await socialPost({action:"request",friendCode:friendAddCode}); setFriendAddCode(""); setSocialMessage("✓ Freundschaftsanfrage gesendet."); } catch(e){setSocialMessage(`⚠ ${e instanceof Error?e.message:String(e)}`);} }
+  async function acceptFriend(fromUserId:string) { try { await socialPost({action:"accept",fromUserId}); setSocialMessage("✓ Freund hinzugefügt."); await loadSocialProfile(); } catch(e){setSocialMessage(`⚠ ${e instanceof Error?e.message:String(e)}`);} }
 
   function connectCloudProfile() {
     const next = cloudUserDraft.trim();
@@ -2180,7 +2206,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V7.0.0</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V7.1.0</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2570,7 +2596,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V7.0.0 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V7.1.0 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2587,15 +2613,20 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V7.0.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V7.1.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
-        <h3>Benutzerprofil & Cloudspeicherung</h3><p><strong>V7.0 trennt die persönlichen Daten je Benutzerprofil.</strong> Neue Geräte und Tester erhalten automatisch einen eigenen Cloudbereich. Nur Geräte mit demselben Sync-Code teilen Fänge, Hot Spots, Parkplätze und Favoriten.</p><label className="wide">Persönlicher Sync-Code<input value={cloudUserDraft} onChange={(e)=>setCloudUserDraft(e.target.value)} autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={connectCloudProfile}>🔗 Gerät mit Sync-Code verbinden</button></div><p><small>Behandle den Sync-Code wie ein Kennwort und gib ihn nicht an Tester weiter. Für die öffentliche Version folgt noch eine echte Anmeldung mit Benutzerkonto.</small></p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
+        <h3>Benutzerprofil & Cloudspeicherung</h3><p><strong>V7.1 trennt Sync-Code und Freundescode.</strong> Der Sync-Code verbindet ausschließlich deine eigenen Geräte. Deinen Freundescode darfst du dagegen weitergeben.</p><label className="wide">Persönlicher Sync-Code<input value={cloudUserDraft} onChange={(e)=>setCloudUserDraft(e.target.value)} autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={connectCloudProfile}>🔗 Eigenes Gerät verbinden</button></div><p><small>Den Sync-Code niemals an Freunde weitergeben.</small></p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
+        <h3>👥 Freunde</h3><label className="wide">Anzeigename<input value={socialName} onChange={e=>setSocialName(e.target.value)} placeholder="z. B. Wami" maxLength={40}/></label><label className="wide">Mein Freundescode<input value={friendCodeDraft} onChange={e=>setFriendCodeDraft(e.target.value.toUpperCase())} autoCapitalize="characters" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={()=>void saveSocialProfile()}>✓ Profil / Freundescode speichern</button></div>
+        <label className="wide">Freund hinzufügen<input value={friendAddCode} onChange={e=>setFriendAddCode(e.target.value.toUpperCase())} placeholder="WAMI-XXXXXXXX" autoCapitalize="characters" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={()=>void sendFriendRequest()} disabled={!friendAddCode.trim()}>➕ Freundschaftsanfrage senden</button><button type="button" onClick={()=>void loadSocialProfile()}>↻ Aktualisieren</button></div>
+        {friendRequests.length>0&&<div className="nav-list"><h4>Offene Anfragen</h4>{friendRequests.map(r=><article key={r.fromUserId}><strong>{r.fromName}</strong><small>{r.fromCode}</small><div className="mini-actions"><button type="button" onClick={()=>void acceptFriend(r.fromUserId)}>✓ Annehmen</button></div></article>)}</div>}
+        {friends.length>0?<div className="nav-list"><h4>Meine Freunde</h4>{friends.map(f=><article key={f.userId}><strong>👤 {f.name}</strong><small>{f.friendCode}</small></article>)}</div>:<p><small>Noch keine bestätigten Freunde.</small></p>}
+        <p><small><strong>Datenschutz:</strong> Freundschaften geben noch nicht automatisch deine privaten Hotspots oder Fänge frei. Die Sichtbarkeit Privat / Freunde / Öffentlich wird im nächsten Schritt pro Eintrag zugeschaltet.</small></p>{socialMessage&&<p className="data-backup-message">{socialMessage}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V7.0.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V7.1.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
