@@ -381,8 +381,24 @@ function backupItemCount(backup: WamiFishingBackup) {
   return backup.catches.length + backup.parkings.length + backup.hotspots.length + (backup.manualWaters?.length ?? 0) + (backup.appParkingChanges?.length ?? 0);
 }
 
+const CLOUD_USER_KEY = "wamifishing:cloud-user-id-v1";
+
+function getCloudUserId() {
+  if (typeof window === "undefined") return "";
+  let id = localStorage.getItem(CLOUD_USER_KEY)?.trim() || "";
+  if (!id) {
+    id = `user-${crypto.randomUUID()}`;
+    localStorage.setItem(CLOUD_USER_KEY, id);
+  }
+  return id;
+}
+
+function cloudUserHeaders(extra?: Record<string, string>) {
+  return { ...(extra ?? {}), "X-WamiFishing-User": getCloudUserId() };
+}
+
 async function loadCloudBackup(): Promise<WamiFishingBackup | null> {
-  const response = await fetch("/api/wamifishing-backup", { cache: "no-store" });
+  const response = await fetch("/api/wamifishing-backup", { cache: "no-store", headers: cloudUserHeaders() });
   if (!response.ok) throw new Error("Cloud-Sicherung konnte nicht gelesen werden.");
   const value = await response.json() as unknown;
   if (isValidAutomaticBackup(value)) return value;
@@ -403,12 +419,12 @@ async function saveCloudBackup(backup: WamiFishingBackup) {
     const chunk = payload.slice(index * chunkSize, (index + 1) * chunkSize);
     const response = await fetch("/api/wamifishing-backup", {
       method: "PUT",
-      headers: {
+      headers: cloudUserHeaders({
         "Content-Type": "text/plain; charset=utf-8",
         "X-WamiFishing-Upload": uploadId,
         "X-WamiFishing-Part": String(index),
         "X-WamiFishing-Total": String(total),
-      },
+      }),
       body: chunk,
     });
     if (!response.ok) {
@@ -419,7 +435,7 @@ async function saveCloudBackup(backup: WamiFishingBackup) {
 }
 
 async function deleteCloudBackup() {
-  const response = await fetch("/api/wamifishing-backup", { method: "DELETE" });
+  const response = await fetch("/api/wamifishing-backup", { method: "DELETE", headers: cloudUserHeaders() });
   if (!response.ok) throw new Error("Cloud-Sicherung konnte nicht gelöscht werden.");
 }
 
@@ -731,6 +747,8 @@ const [atlasCategory, setAtlasCategory] =
   const [localDataReady, setLocalDataReady] = useState(false);
   const [cloudSyncReady, setCloudSyncReady] = useState(false);
   const [backupStatus, setBackupStatus] = useState("");
+  const [cloudUserId, setCloudUserId] = useState("");
+  const [cloudUserDraft, setCloudUserDraft] = useState("");
   const catchPhotoRef = useRef<HTMLInputElement | null>(null);
   const backupFileRef = useRef<HTMLInputElement | null>(null);
   const [importedSpots, setImportedSpots] = useState<FishingSpot[]>([]);
@@ -787,6 +805,27 @@ const [atlasCategory, setAtlasCategory] =
 
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    const id = getCloudUserId();
+    setCloudUserId(id);
+    setCloudUserDraft(id);
+  }, []);
+
+  function connectCloudProfile() {
+    const next = cloudUserDraft.trim();
+    if (!/^[A-Za-z0-9_-]{8,100}$/.test(next)) {
+      setDataMessage("⚠ Der Sync-Code ist ungültig.");
+      return;
+    }
+    if (next === cloudUserId) {
+      setDataMessage("✓ Dieses Gerät verwendet bereits diesen Sync-Code.");
+      return;
+    }
+    if (!window.confirm("Dieses Gerät mit dem eingegebenen Benutzerprofil verbinden? Danach wird die App neu geladen und der Cloudstand dieses Profils verwendet.")) return;
+    localStorage.setItem(CLOUD_USER_KEY, next);
+    window.location.reload();
+  }
 
   // Beim Start zuerst die gemeinsame Cloud-Sicherung prüfen. Wichtig: Bis das
   // abgeschlossen ist, darf ein leerer Safari-Speicher niemals die Cloud überschreiben.
@@ -2141,7 +2180,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V6.5.1</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V7.0.0</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2531,7 +2570,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V6.5.1 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V7.0.0 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2548,15 +2587,15 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V6.5.1</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V7.0.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
-        <h3>Cloudspeicherung & Datensicherung</h3><p><strong>Automatische Cloudspeicherung ist immer aktiv.</strong> Jede Änderung an Favoriten, Fangbuch, Fotos, Parkplätzen und Hot Spots wird automatisch lokal und in der WamiFishing-Cloud dieser festen Domain gesichert und zwischen deinen Geräten synchronisiert. Die Synchronisierung kann einen Moment dauern. Es ist kein Sicherungsknopf nötig.</p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
+        <h3>Benutzerprofil & Cloudspeicherung</h3><p><strong>V7.0 trennt die persönlichen Daten je Benutzerprofil.</strong> Neue Geräte und Tester erhalten automatisch einen eigenen Cloudbereich. Nur Geräte mit demselben Sync-Code teilen Fänge, Hot Spots, Parkplätze und Favoriten.</p><label className="wide">Persönlicher Sync-Code<input value={cloudUserDraft} onChange={(e)=>setCloudUserDraft(e.target.value)} autoCapitalize="none" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={connectCloudProfile}>🔗 Gerät mit Sync-Code verbinden</button></div><p><small>Behandle den Sync-Code wie ein Kennwort und gib ihn nicht an Tester weiter. Für die öffentliche Version folgt noch eine echte Anmeldung mit Benutzerkonto.</small></p>{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <div className="data-backup-actions"><button type="button" onClick={()=>void restoreAutomaticBackup()}>↩ Daten wiederherstellen</button><button type="button" onClick={()=>void deleteAllPersonalData()}>🗑 Daten löschen</button></div>
         {dataMessage && <p className="data-backup-message">{dataMessage}</p>}
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V6.5.1 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V7.0.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }

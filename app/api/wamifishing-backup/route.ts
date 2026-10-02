@@ -3,12 +3,20 @@ import { del, get, put } from "@vercel/blob";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const PATHNAME = "wamifishing/current-backup.json";
-const MANIFEST = "wamifishing/current-backup-manifest.json";
-// Letzter bekannter vollständiger Stand vor dem Mehrgeräte-Test.
-// Wird nur als Notfall-Fallback verwendet, solange der aktuelle Manifest-Stand leer ist.
-const RECOVERY_UPLOAD_ID = "1790872255509-km68asaefo";
-const RECOVERY_TOTAL = 18;
+function userKey(request: Request) {
+  const raw = request.headers.get("x-wamifishing-user")?.trim() || "";
+  if (!/^[A-Za-z0-9_-]{8,100}$/.test(raw)) return null;
+  return raw;
+}
+
+function paths(user: string) {
+  const root = `wamifishing/users/${user}`;
+  return {
+    pathname: `${root}/current-backup.json`,
+    manifest: `${root}/current-backup-manifest.json`,
+    chunk: (uploadId: string, index: number) => `${root}/chunks/${uploadId}/${index}.txt`,
+  };
+}
 
 type ChunkManifest = { uploadId: string; total: number };
 
@@ -18,56 +26,36 @@ async function readBlobText(pathname: string) {
   return new Response(result.stream).text();
 }
 
-async function readChunkedBackup(uploadId: string, total: number) {
-  const parts: string[] = [];
-  for (let index = 0; index < total; index += 1) {
-    const part = await readBlobText(`wamifishing/chunks/${uploadId}/${index}.txt`);
-    if (part === null) throw new Error(`Cloud-Sicherung ist unvollständig (Teil ${index + 1}/${total}).`);
-    parts.push(part);
-  }
-  return parts.join("");
-}
-
-function backupItemCountFromText(text: string | null) {
-  if (!text) return 0;
+export async function GET(request: Request) {
   try {
-    const backup = JSON.parse(text) as { catches?: unknown[]; parkings?: unknown[]; hotspots?: unknown[]; manualWaters?: unknown[]; appParkingChanges?: unknown[] };
-    return (backup.catches?.length ?? 0) + (backup.parkings?.length ?? 0) + (backup.hotspots?.length ?? 0) +
-      (backup.manualWaters?.length ?? 0) + (backup.appParkingChanges?.length ?? 0);
-  } catch {
-    return 0;
-  }
-}
-
-async function readEffectiveBackupText() {
-  const manifestText = await readBlobText(MANIFEST);
-  if (manifestText) {
-    const manifest = JSON.parse(manifestText) as ChunkManifest;
-    if (manifest?.uploadId && Number.isInteger(manifest.total) && manifest.total > 0) {
-      const current = await readChunkedBackup(manifest.uploadId, manifest.total);
-      if (backupItemCountFromText(current) > 0) return current;
+    const user = userKey(request);
+    if (!user) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
+    const p = paths(user);
+    const manifestText = await readBlobText(p.manifest);
+    if (manifestText) {
+      const manifest = JSON.parse(manifestText) as ChunkManifest;
+      if (manifest?.uploadId && Number.isInteger(manifest.total) && manifest.total > 0) {
+        const parts: string[] = [];
+        for (let index = 0; index < manifest.total; index += 1) {
+          const part = await readBlobText(p.chunk(manifest.uploadId, index));
+          if (part === null) throw new Error(`Cloud-Sicherung ist unvollständig (Teil ${index + 1}/${manifest.total}).`);
+          parts.push(part);
+        }
+        return new Response(parts.join(""), {
+          status: 200,
+          headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+        });
+      }
     }
-  }
-  // Ein leerer/neuer Browser darf den gemeinsamen Bestand nicht zum leeren Stand machen.
-  return readChunkedBackup(RECOVERY_UPLOAD_ID, RECOVERY_TOTAL);
-}
 
-export async function GET() {
-  try {
-    const text = await readEffectiveBackupText();
+    // Abwärtskompatibel mit der bis V6.0.5 verwendeten Ein-Datei-Sicherung.
+    const text = await readBlobText(p.pathname);
+    if (text === null) return Response.json({ backup: null }, { headers: { "Cache-Control": "no-store" } });
     return new Response(text, {
       status: 200,
       headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
     });
   } catch (error) {
-    // Abwärtskompatibel mit der bis V6.0.5 verwendeten Ein-Datei-Sicherung.
-    try {
-      const text = await readBlobText(PATHNAME);
-      if (text !== null) return new Response(text, {
-        status: 200,
-        headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
-      });
-    } catch { /* unten sauber melden */ }
     const message = error instanceof Error ? error.message : String(error);
     if (/404|not found/i.test(message)) return Response.json({ backup: null }, { headers: { "Cache-Control": "no-store" } });
     console.error("Cloud-Backup konnte nicht gelesen werden:", error);
@@ -77,30 +65,22 @@ export async function GET() {
 
 export async function PUT(request: Request) {
   try {
+    const user = userKey(request);
+    if (!user) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
+    const p = paths(user);
     const uploadId = request.headers.get("x-wamifishing-upload");
     const part = Number(request.headers.get("x-wamifishing-part"));
     const total = Number(request.headers.get("x-wamifishing-total"));
 
     if (uploadId && Number.isInteger(part) && Number.isInteger(total) && part >= 0 && total > 0 && part < total) {
       const chunk = await request.text();
-      await put(`wamifishing/chunks/${uploadId}/${part}.txt`, chunk, {
+      await put(p.chunk(uploadId, part), chunk, {
         access: "private",
         allowOverwrite: true,
         contentType: "text/plain; charset=utf-8",
       });
       if (part === total - 1) {
-        const incoming = await readChunkedBackup(uploadId, total);
-        const incomingCount = backupItemCountFromText(incoming);
-        const current = await readEffectiveBackupText().catch(() => null);
-        const currentCount = backupItemCountFromText(current);
-
-        // Sicherheitsnetz bis zur Benutzertrennung in V7: Ein leerer Test-Browser
-        // darf einen vorhandenen persönlichen Datenbestand niemals überschreiben.
-        if (incomingCount === 0 && currentCount > 0) {
-          return Response.json({ error: "Leere Cloud-Sicherung wurde zum Schutz vorhandener Daten abgewiesen." }, { status: 409 });
-        }
-
-        await put(MANIFEST, JSON.stringify({ uploadId, total } satisfies ChunkManifest), {
+        await put(p.manifest, JSON.stringify({ uploadId, total } satisfies ChunkManifest), {
           access: "private",
           allowOverwrite: true,
           contentType: "application/json; charset=utf-8",
@@ -114,7 +94,7 @@ export async function PUT(request: Request) {
     if (!backup || backup.format !== "WamiFishing Navigator Backup" || backup.version !== 1) {
       return Response.json({ error: "Ungültige WamiFishing-Sicherung." }, { status: 400 });
     }
-    await put(PATHNAME, JSON.stringify(backup), {
+    await put(p.pathname, JSON.stringify(backup), {
       access: "private",
       allowOverwrite: true,
       contentType: "application/json; charset=utf-8",
@@ -126,19 +106,22 @@ export async function PUT(request: Request) {
   }
 }
 
-export async function DELETE() {
+export async function DELETE(request: Request) {
   try {
-    const manifestText = await readBlobText(MANIFEST).catch(() => null);
+    const user = userKey(request);
+    if (!user) return Response.json({ error: "Benutzerprofil fehlt." }, { status: 400 });
+    const p = paths(user);
+    const manifestText = await readBlobText(p.manifest).catch(() => null);
     if (manifestText) {
       const manifest = JSON.parse(manifestText) as ChunkManifest;
       if (manifest?.uploadId && manifest.total > 0) {
         for (let index = 0; index < manifest.total; index += 1) {
-          await del(`wamifishing/chunks/${manifest.uploadId}/${index}.txt`).catch(() => undefined);
+          await del(p.chunk(manifest.uploadId, index)).catch(() => undefined);
         }
       }
-      await del(MANIFEST).catch(() => undefined);
+      await del(p.manifest).catch(() => undefined);
     }
-    await del(PATHNAME).catch(() => undefined);
+    await del(p.pathname).catch(() => undefined);
     return Response.json({ ok: true });
   } catch (error) {
     console.error("Cloud-Backup konnte nicht gelöscht werden:", error);
