@@ -1,91 +1,43 @@
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+import { randomBytes, randomInt, timingSafeEqual } from "crypto";
+import { authUserId, readJson, readLicense, sessionPath, sha, writeJson, writeLicense } from "../_wamifishing-auth";
 
-const ACCESS_COOKIE = "wami_access";
-const REFRESH_COOKIE = "wami_refresh";
-function cfg() {
-  const url = process.env.SUPABASE_URL?.replace(/\/$/, "");
-  const key = process.env.SUPABASE_ANON_KEY;
-  if (!url || !key) throw new Error("Supabase ist noch nicht konfiguriert.");
-  return { url, key };
-}
-function cookie(name: string, value: string, maxAge: number) {
-  return `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
-}
-function clearCookie(name: string) { return `${name}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`; }
-function cookieValue(request: Request, name: string) {
-  const raw = request.headers.get("cookie") ?? "";
-  for (const part of raw.split(";")) { const [k, ...v] = part.trim().split("="); if (k === name) return decodeURIComponent(v.join("=")); }
-  return "";
-}
-async function authFetch(path: string, body: unknown) {
-  const { url, key } = cfg();
-  try {
-    return await fetch(`${url}/auth/v1/${path}`, {
-      method: "POST",
-      headers: { apikey: key, "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      cache: "no-store",
-      signal: AbortSignal.timeout(15_000),
-    });
-  } catch (error) {
-    const cause = error instanceof Error && error.cause ? ` | Ursache: ${String(error.cause)}` : "";
-    throw new Error(`Supabase nicht erreichbar (${new URL(url).hostname}): ${error instanceof Error ? error.message : String(error)}${cause}`);
+export const runtime="nodejs"; export const dynamic="force-dynamic";
+const COOKIE="wami_session";
+type Pending={email:string;name:string;deviceId:string;dataUserId:string;adminTokenHash:string;createdAt:string;expiresAt:string};
+type Otp={email:string;deviceId:string;dataUserId:string;hash:string;expiresAt:string};
+function norm(v:unknown){return String(v??"").trim().toLowerCase()}
+function validEmail(v:string){return /^\S+@\S+\.\S+$/.test(v)}
+function cleanDevice(v:unknown){const s=String(v??"").trim();return /^[A-Za-z0-9_-]{8,120}$/.test(s)?s:""}
+function cookie(value:string,maxAge:number){return `wami_session=${encodeURIComponent(value)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`}
+function clearCookie(){return `wami_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`}
+function baseUrl(r:Request){return (process.env.WAMI_APP_URL||new URL(r.url).origin).replace(/\/$/,"")}
+async function resend(to:string,subject:string,html:string){const key=process.env.RESEND_API_KEY;if(!key)throw new Error("RESEND_API_KEY fehlt in Vercel.");const from=process.env.WAMI_FROM_EMAIL||"WamiFishing <onboarding@resend.dev>";const res=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:`Bearer ${key}`,"Content-Type":"application/json"},body:JSON.stringify({from,to:[to],subject,html}),cache:"no-store"});if(!res.ok)throw new Error(`E-Mail-Versand fehlgeschlagen (${res.status}).`)}
+function equalHash(a:string,b:string){const x=Buffer.from(a);const y=Buffer.from(b);return x.length===y.length&&timingSafeEqual(x,y)}
+async function bindUser(email:string,dataUserId:string){const id=authUserId(email);const p=`wamifishing/auth/users/${id}.json`;const existing=await readJson<{dataUserId:string}>(p);if(!existing)await writeJson(p,{dataUserId,email,boundAt:new Date().toISOString()});return existing?.dataUserId||dataUserId}
+async function sendOtp(email:string,deviceId:string,dataUserId:string){const code=String(randomInt(100000,1000000));await writeJson(`wamifishing/auth/otp/${sha(email)}.json`,{email,deviceId,dataUserId,hash:sha(code),expiresAt:new Date(Date.now()+10*60_000).toISOString()} satisfies Otp);await resend(email,"Dein WamiFishing Anmeldecode",`<h2>Dein WamiFishing Anmeldecode</h2><p>Dein Code lautet:</p><p style="font-size:32px;font-weight:bold;letter-spacing:6px">${code}</p><p>Der Code ist 10 Minuten gültig.</p>`)}
+
+export async function GET(request:Request){
+  const u=new URL(request.url); const action=u.searchParams.get("action"); const token=u.searchParams.get("token")||"";
+  if(action==="approve"||action==="reject"){
+    const p=await readJson<Pending>(`wamifishing/auth/requests/${sha(token)}.json`); if(!p||!equalHash(p.adminTokenHash,sha(token))||Date.parse(p.expiresAt)<Date.now())return new Response("Anfrage ist ungültig oder abgelaufen.",{status:400});
+    await writeJson(`wamifishing/auth/requests/${sha(token)}.json`,{...p,expiresAt:new Date(0).toISOString()});
+    const id=authUserId(p.email); const old=await readLicense(p.email); const now=new Date(); const valid=new Date(now); valid.setFullYear(valid.getFullYear()+1);
+    if(action==="approve"){await writeLicense({email:p.email,authUserId:id,status:"active",validUntil:valid.toISOString(),devices:Array.from(new Set([...(old?.devices??[]),p.deviceId])),createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()});await bindUser(p.email,p.dataUserId);try{await resend(p.email,"WamiFishing freigeschaltet",`<h2>Willkommen bei WamiFishing 🎣</h2><p>Dein Zugang wurde bis <strong>${valid.toLocaleDateString("de-DE")}</strong> freigeschaltet.</p><p>Öffne WamiFishing auf dem beantragten Gerät und fordere deinen Anmeldecode an.</p>`)}catch{}return new Response("WamiFishing: Benutzer genehmigt und für 1 Jahr freigeschaltet.",{headers:{"Content-Type":"text/plain; charset=utf-8"}})}
+    await writeLicense({email:p.email,authUserId:id,status:"rejected",devices:old?.devices??[],createdAt:old?.createdAt??now.toISOString()});try{await resend(p.email,"WamiFishing Zugangsanfrage",`<p>Deine Zugangsanfrage wurde leider nicht freigegeben.</p>`)}catch{}return new Response("WamiFishing: Anfrage abgelehnt.",{headers:{"Content-Type":"text/plain; charset=utf-8"}});
   }
+  const raw=(request.headers.get("cookie")??"").split(";").map(x=>x.trim()).find(x=>x.startsWith("wami_session=")); if(!raw)return Response.json({user:null});const st=decodeURIComponent(raw.slice(raw.indexOf("=")+1));const s=await readJson<{email:string;expiresAt:string}>(sessionPath(st));return Response.json({user:s&&Date.parse(s.expiresAt)>Date.now()?{email:s.email}:null});
 }
-export async function GET(request: Request) {
-  try {
-    const { url, key } = cfg();
-    let access = cookieValue(request, ACCESS_COOKIE);
-    let response = access ? await fetch(`${url}/auth/v1/user`, {headers:{apikey:key,Authorization:`Bearer ${access}`},cache:"no-store"}) : null;
-    const headers = new Headers({"Cache-Control":"no-store"});
-    if (!response?.ok) {
-      const refresh = cookieValue(request, REFRESH_COOKIE);
-      if (!refresh) return Response.json({user:null},{headers});
-      const refreshed = await authFetch("token?grant_type=refresh_token", {refresh_token:refresh});
-      if (!refreshed.ok) return Response.json({user:null},{headers});
-      const session = await refreshed.json() as {access_token:string;refresh_token:string;expires_in:number;user?:{id:string;email?:string}};
-      headers.append("Set-Cookie",cookie(ACCESS_COOKIE,session.access_token,session.expires_in));
-      headers.append("Set-Cookie",cookie(REFRESH_COOKIE,session.refresh_token,60*60*24*30));
-      return Response.json({user:session.user??null},{headers});
-    }
-    return Response.json({user:await response.json()},{headers});
-  } catch (error) { return Response.json({user:null,error:error instanceof Error?error.message:String(error)},{status:500}); }
-}
-export async function POST(request: Request) {
-  try {
-    const body = await request.json() as {action?:string;email?:string;token?:string};
-    const action = String(body.action??"");
-    if (action === "send") {
-      const email = String(body.email??"").trim().toLowerCase();
-      if (!/^\S+@\S+\.\S+$/.test(email)) return Response.json({error:"Bitte eine gültige E-Mail-Adresse eingeben."},{status:400});
-      const response = await authFetch("otp", {email,create_user:true});
-      const raw = await response.text();
-      if (!response.ok) {
-        let detail = raw;
-        try {
-          const parsed = JSON.parse(raw) as { msg?: string; message?: string; error_description?: string; error?: string };
-          detail = parsed.msg || parsed.message || parsed.error_description || parsed.error || raw;
-        } catch { /* Textantwort unverändert verwenden */ }
-        return Response.json({error:`Supabase ${response.status}: ${detail || response.statusText}`},{status:400});
-      }
-      return Response.json({ok:true});
-    }
-    if (action === "verify") {
-      const email = String(body.email??"").trim().toLowerCase(); const token=String(body.token??"").trim();
-      const response = await authFetch("verify", {email,token,type:"email"});
-      const data = await response.json() as {access_token?:string;refresh_token?:string;expires_in?:number;user?:{id:string;email?:string};msg?:string};
-      if (!response.ok || !data.access_token || !data.refresh_token) return Response.json({error:"Der Code ist ungültig oder abgelaufen."},{status:400});
-      const headers = new Headers({"Cache-Control":"no-store"});
-      headers.append("Set-Cookie",cookie(ACCESS_COOKIE,data.access_token,data.expires_in??3600));
-      headers.append("Set-Cookie",cookie(REFRESH_COOKIE,data.refresh_token,60*60*24*30));
-      return Response.json({ok:true,user:data.user??null},{headers});
-    }
-    return Response.json({error:"Unbekannte Aktion."},{status:400});
-  } catch (error) { return Response.json({error:error instanceof Error?error.message:String(error)},{status:500}); }
-}
-export async function DELETE() {
-  const headers = new Headers({"Cache-Control":"no-store"});
-  headers.append("Set-Cookie",clearCookie(ACCESS_COOKIE)); headers.append("Set-Cookie",clearCookie(REFRESH_COOKIE));
-  return Response.json({ok:true},{headers});
-}
+
+export async function POST(request:Request){try{const b=await request.json() as Record<string,unknown>;const action=String(b.action??"");const email=norm(b.email);const deviceId=cleanDevice(b.deviceId);const dataUserId=cleanDevice(b.dataUserId);if(!validEmail(email))return Response.json({error:"Bitte eine gültige E-Mail-Adresse eingeben."},{status:400});if(!deviceId||!dataUserId)return Response.json({error:"Geräte-ID konnte nicht ermittelt werden."},{status:400});
+  if(action==="request"){
+    const name=String(b.name??"").trim().slice(0,80);if(!name)return Response.json({error:"Bitte deinen Namen eingeben."},{status:400});const admin=norm(process.env.WAMI_ADMIN_EMAIL);if(!admin)return Response.json({error:"WAMI_ADMIN_EMAIL fehlt in Vercel."},{status:500});const token=randomBytes(32).toString("hex");const pending:Pending={email,name,deviceId,dataUserId,adminTokenHash:sha(token),createdAt:new Date().toISOString(),expiresAt:new Date(Date.now()+7*86400_000).toISOString()};await writeJson(`wamifishing/auth/requests/${sha(token)}.json`,pending);const root=baseUrl(request);await resend(admin,`WamiFishing Zugangsanfrage: ${name}`,`<h2>Neue WamiFishing-Zugangsanfrage</h2><p><strong>Name:</strong> ${name.replace(/[<>&]/g,"")}<br><strong>E-Mail:</strong> ${email}<br><strong>Geräte-ID:</strong> ${deviceId}</p><p>Bitte zuerst den Zahlungseingang bei PayPal prüfen.</p><p><a href="${root}/api/wamifishing-auth?action=approve&token=${token}" style="padding:12px 18px;background:#087b68;color:white;text-decoration:none;border-radius:8px">✓ Genehmigen · 1 Jahr</a></p><p><a href="${root}/api/wamifishing-auth?action=reject&token=${token}">✕ Ablehnen</a></p>`);return Response.json({ok:true,message:"Zugangsanfrage wurde an den Betreiber gesendet."});
+  }
+  if(action==="send"){
+    const admin=norm(process.env.WAMI_ADMIN_EMAIL);let lic=await readLicense(email);if(email===admin&&(!lic||lic.status!=="active")){const until=new Date();until.setFullYear(until.getFullYear()+10);lic={email,authUserId:authUserId(email),status:"active",validUntil:until.toISOString(),devices:[deviceId],createdAt:new Date().toISOString(),approvedAt:new Date().toISOString()};await writeLicense(lic);await bindUser(email,dataUserId)}
+    if(!lic||lic.status!=="active")return Response.json({error:"Diese E-Mail ist noch nicht freigeschaltet. Bitte zuerst Zugang beantragen."},{status:403});if(!lic.validUntil||Date.parse(lic.validUntil)<=Date.now())return Response.json({error:"Deine Jahreslizenz ist abgelaufen."},{status:403});if(!lic.devices.includes(deviceId))return Response.json({error:"Dieses Gerät ist noch nicht freigeschaltet. Bitte Zugang für dieses Gerät beantragen."},{status:403});await sendOtp(email,deviceId,dataUserId);return Response.json({ok:true});
+  }
+  if(action==="verify"){
+    const code=String(b.token??"").trim();const otp=await readJson<Otp>(`wamifishing/auth/otp/${sha(email)}.json`);if(!otp||otp.deviceId!==deviceId||Date.parse(otp.expiresAt)<=Date.now()||!equalHash(otp.hash,sha(code)))return Response.json({error:"Der Code ist ungültig oder abgelaufen."},{status:400});const data=await bindUser(email,dataUserId);const session=randomBytes(32).toString("hex");const expires=30*86400;await writeJson(sessionPath(session),{email,authUserId:authUserId(email),dataUserId:data,deviceId,expiresAt:new Date(Date.now()+expires*1000).toISOString()});const h=new Headers({"Cache-Control":"no-store"});h.append("Set-Cookie",cookie(session,expires));return Response.json({ok:true,user:{email}},{headers:h});
+  }
+  return Response.json({error:"Unbekannte Aktion."},{status:400});}catch(e){console.error("WamiFishing Auth:",e);return Response.json({error:e instanceof Error?e.message:String(e)},{status:500})}}
+export async function DELETE(){const h=new Headers({"Cache-Control":"no-store"});h.append("Set-Cookie",clearCookie());return Response.json({ok:true},{headers:h})}

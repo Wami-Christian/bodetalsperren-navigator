@@ -387,6 +387,13 @@ function backupItemCount(backup: WamiFishingBackup) {
 }
 
 const CLOUD_USER_KEY = "wamifishing:cloud-user-id-v1";
+const DEVICE_ID_KEY = "wamifishing:device-id-v1";
+function getDeviceId() {
+  if (typeof window === "undefined") return "";
+  let id = localStorage.getItem(DEVICE_ID_KEY)?.trim() || "";
+  if (!id) { id = `device-${crypto.randomUUID()}`; localStorage.setItem(DEVICE_ID_KEY, id); }
+  return id;
+}
 
 function getCloudUserId() {
   if (typeof window === "undefined") return "";
@@ -757,6 +764,7 @@ const [atlasCategory, setAtlasCategory] =
   const [authChecked, setAuthChecked] = useState(false);
   const [authEmail, setAuthEmail] = useState("");
   const [authEmailDraft, setAuthEmailDraft] = useState("");
+  const [authNameDraft, setAuthNameDraft] = useState("");
   const [authOtp, setAuthOtp] = useState("");
   const [authOtpSent, setAuthOtpSent] = useState(false);
   const [authMessage, setAuthMessage] = useState("");
@@ -840,10 +848,20 @@ const [atlasCategory, setAtlasCategory] =
     return () => { active = false; };
   }, []);
 
+  async function requestAccess() {
+    try {
+      setAuthMessage("Zugangsanfrage wird gesendet …");
+      const response = await fetch("/api/wamifishing-auth", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ action:"request", name:authNameDraft, email:authEmailDraft, deviceId:getDeviceId(), dataUserId:getCloudUserId() }) });
+      const data = await response.json() as {error?:string;message?:string};
+      if (!response.ok) throw new Error(data.error || "Zugangsanfrage fehlgeschlagen.");
+      setAuthMessage(`✓ ${data.message || "Zugangsanfrage gesendet."}`);
+    } catch (error) { setAuthMessage(`⚠ ${error instanceof Error ? error.message : String(error)}`); }
+  }
+
   async function sendLoginCode() {
     try {
       setAuthMessage("Code wird gesendet …");
-      const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "send", email: authEmailDraft }) });
+      const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "send", email: authEmailDraft, deviceId: getDeviceId(), dataUserId: getCloudUserId() }) });
       const data = await response.json() as { error?: string };
       if (!response.ok) throw new Error(data.error || "Anmeldecode konnte nicht gesendet werden.");
       setAuthOtpSent(true); setAuthMessage("✓ 6-stelliger Code wurde per E-Mail gesendet.");
@@ -851,7 +869,7 @@ const [atlasCategory, setAtlasCategory] =
   }
   async function verifyLoginCode() {
     try {
-      const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "verify", email: authEmailDraft, token: authOtp }) });
+      const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "verify", email: authEmailDraft, token: authOtp, deviceId: getDeviceId(), dataUserId: getCloudUserId() }) });
       const data = await response.json() as { error?: string };
       if (!response.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
       setAuthMessage("✓ Angemeldet. WamiFishing wird neu geladen …");
@@ -2288,7 +2306,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
   return (
     <main>
       <header className="topbar">
-        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V7.3.1</small></div></button>
+        <button className="brand" onClick={() => setView("dashboard")}><span>🎣🐟</span><div><strong>WamiFishing</strong><span className="brand-tagline">Dein Angelrevier</span><small>V7.4.0</small></div></button>
         <div className="main-nav-shell">
           <button
             type="button"
@@ -2679,7 +2697,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
 
 
       {showAddWater && <div className="fish-measure-overlay"><div className="fish-measure-panel manual-water-panel">
-        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V7.3.1 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
+        <div className="fish-measure-head"><div><strong>➕ Gewässer manuell hinzufügen</strong><small>V7.4.0 · eigener Eintrag</small></div><button type="button" onClick={()=>setShowAddWater(false)}>✕</button></div>
         <form className="catch-form" onSubmit={saveManualWater}>
           <h3>1. Position</h3><div className="data-backup-actions"><button type="button" onClick={()=>void useGpsForManualWater()} disabled={manualWaterPositionBusy}>📍 {manualWaterPositionBusy?"GPS wird ermittelt …":"Per GPS-Koordinaten"}</button><button type="button" onClick={()=>{setManualWaterPosition(null);setManualWaterMessage("Tippe jetzt auf der Karte auf die Gewässerposition.");}}>🗺️ Aus Karte</button></div>
           {manualWaterMessage&&<p className="atlas-point-message">{manualWaterMessage}</p>}
@@ -2697,9 +2715,9 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       </div></div>}
 
       {view === "settings" && (sharedCatches.length+sharedParkings.length+sharedHotspots.length)>0 && <section className="page narrow"><div className="panel"><p className="eyebrow">Freunde</p><h2>👥 Freigegebene Inhalte</h2><p>{sharedCatches.length} Fänge · {sharedHotspots.length} Hotspots · {sharedParkings.length} Parkplätze sind für dich freigegeben.</p><div className="nav-list">{sharedHotspots.map(x=><article key={`${x.ownerId}-${x.id}`}><strong>📍 {x.name}</strong><small>{x.ownerName} · {visibilityLabel(x.visibility)}</small></article>)}{sharedParkings.map(x=><article key={`${x.ownerId}-${x.id}`}><strong>🅿️ {x.name}</strong><small>{x.ownerName} · {visibilityLabel(x.visibility)}</small></article>)}</div></div></section>}
-      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V7.3.1</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
+      {view === "settings" && <section className="page narrow"><div className="panel"><p className="eyebrow">V7.4.0</p><h1>Offline & Daten</h1><h3>Installierbare Web-App</h3><p>Manifest und Service Worker sind vorbereitet. Nach einem Produktions-Deployment kann die App über den Browser zum Startbildschirm hinzugefügt werden.</p><h3>Lokale Speicherung</h3><p>Favoriten, Fangbuch, Fangfotos, eigene Parkplätze und Hot Spots liegen lokal in diesem Browser. Fotos werden platzsparend im lokalen Bildspeicher abgelegt.</p>
         <h3>Fangfoto-Messung</h3><p>Der komplette Rutengriff dient als Maßstab für die 4-Punkt-Messung.</p><label className="rod-handle-setting">Rutengrifflänge <span><input type="number" min="10" max="150" step="0.1" value={rodHandleLengthCm} onChange={(e)=>{const v=Number(e.target.value);setRodHandleLengthCm(v);if(Number.isFinite(v)&&v>0)localStorage.setItem("wamifishing:rod-handle-length-cm",String(v));}}/> cm</span></label>
-        <h3>📧 Anmeldung & Cloudspeicherung</h3><p><strong>V7.3.1 verwendet die E-Mail-Adresse als Konto.</strong> Auf PC, iPhone und iPad meldest du dich mit derselben Adresse an; der bisherige Sync-Code wird im Hintergrund nur noch zur einmaligen Übernahme deiner vorhandenen Daten verwendet.</p>{authEmail ? <><p className="backup-status">✓ Angemeldet als <strong>{authEmail}</strong></p><div className="data-backup-actions"><button type="button" onClick={()=>void logoutEmail()}>Abmelden</button></div></> : <><label className="wide">E-Mail-Adresse<input type="email" value={authEmailDraft} onChange={e=>setAuthEmailDraft(e.target.value)} autoComplete="email" placeholder="name@beispiel.de"/></label><div className="data-backup-actions"><button type="button" onClick={()=>void sendLoginCode()}>✉️ Anmeldecode senden</button></div>{authOtpSent && <><label className="wide">6-stelliger Code<input inputMode="numeric" value={authOtp} onChange={e=>setAuthOtp(e.target.value.replace(/\D/g,"").slice(0,6))} autoComplete="one-time-code"/></label><div className="data-backup-actions"><button type="button" onClick={()=>void verifyLoginCode()}>✓ Anmelden</button></div></>}{authMessage&&<p className="data-backup-message">{authMessage}</p>}</>}{backupStatus && <p className="backup-status">{backupStatus}</p>}
+        <h3>📧 Anmeldung & Cloudspeicherung</h3><p><strong>V7.4 verwendet eine Jahresfreigabe per E-Mail und registriert dieses Gerät. Neue Benutzer beantragen zuerst den Zugang; nach deiner Zahlungskontrolle wird er vom Betreiber für 1 Jahr freigeschaltet.</strong> Auf PC, iPhone und iPad meldest du dich mit derselben Adresse an; der bisherige Sync-Code wird im Hintergrund nur noch zur einmaligen Übernahme deiner vorhandenen Daten verwendet.</p>{authEmail ? <><p className="backup-status">✓ Angemeldet als <strong>{authEmail}</strong></p><div className="data-backup-actions"><button type="button" onClick={()=>void logoutEmail()}>Abmelden</button></div></> : <><label className="wide">Name<input value={authNameDraft} onChange={e=>setAuthNameDraft(e.target.value)} autoComplete="name" placeholder="Vor- und Nachname"/></label><label className="wide">E-Mail-Adresse<input type="email" value={authEmailDraft} onChange={e=>setAuthEmailDraft(e.target.value)} autoComplete="email" placeholder="name@beispiel.de"/></label><p className="backup-status">Geräte-ID: <strong>{getDeviceId()}</strong></p><div className="data-backup-actions"><button type="button" onClick={()=>void requestAccess()}>📝 Zugang beantragen</button><button type="button" onClick={()=>void sendLoginCode()}>✉️ Anmeldecode senden</button></div>{authOtpSent && <><label className="wide">6-stelliger Code<input inputMode="numeric" value={authOtp} onChange={e=>setAuthOtp(e.target.value.replace(/\D/g,"").slice(0,6))} autoComplete="one-time-code"/></label><div className="data-backup-actions"><button type="button" onClick={()=>void verifyLoginCode()}>✓ Anmelden</button></div></>}{authMessage&&<p className="data-backup-message">{authMessage}</p>}</>}{backupStatus && <p className="backup-status">{backupStatus}</p>}
         <h3>👥 Freunde</h3><label className="wide">Anzeigename<input value={socialName} onChange={e=>setSocialName(e.target.value)} placeholder="z. B. Wami" maxLength={40}/></label><label className="wide">Mein Freundescode<input value={friendCodeDraft} onChange={e=>setFriendCodeDraft(e.target.value.toUpperCase())} autoCapitalize="characters" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={()=>void saveSocialProfile()}>✓ Profil / Freundescode speichern</button></div>
         <label className="wide">Freund hinzufügen<input value={friendAddCode} onChange={e=>setFriendAddCode(e.target.value.toUpperCase())} placeholder="WAMI-XXXXXXXX" autoCapitalize="characters" autoCorrect="off" spellCheck={false}/></label><div className="data-backup-actions"><button type="button" onClick={()=>void sendFriendRequest()} disabled={!friendAddCode.trim()}>➕ Freundschaftsanfrage senden</button><button type="button" onClick={()=>void loadSocialProfile()}>↻ Aktualisieren</button></div>
         {friendRequests.length>0&&<div className="nav-list"><h4>Offene Anfragen</h4>{friendRequests.map(r=><article key={r.fromUserId}><strong>{r.fromName}</strong><small>{r.fromCode}</small><div className="mini-actions"><button type="button" onClick={()=>void acceptFriend(r.fromUserId)}>✓ Annehmen</button></div></article>)}</div>}
@@ -2710,7 +2728,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <h3>Amtliche Verlässlichkeit</h3><p>Die enthaltenen Gewässer sind technische Demonstrationsdaten. Vor dem Angeln gelten ausschließlich aktuelle Dokumente, Beschilderung und lokale Regeln.</p></div></section>}
 
       {measurePhoto && <FishLengthMeasure photo={measurePhoto} handleLengthCm={rodHandleLengthCm} onClose={()=>setMeasurePhoto(null)} onApply={(cm)=>{const input=catchFormRef.current?.elements.namedItem("lengthCm") as HTMLInputElement|null;if(input)input.value=String(cm);setMeasurePhoto(null);}}/>}
-      <footer>WamiFishing WAMIFISHING V7.3.1 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
+      <footer>WamiFishing WAMIFISHING V7.4.0 · Keine amtliche Gewässerkarte und keine Fanggarantie.</footer>
     </main>
   );
 }
