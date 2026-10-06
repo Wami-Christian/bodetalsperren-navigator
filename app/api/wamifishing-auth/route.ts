@@ -72,8 +72,15 @@ export async function POST(request:Request){try{
     if(email===admin&&(!lic||lic.status!=="active")){const until=new Date();until.setFullYear(until.getFullYear()+10);lic={email,authUserId:authUserId(email),status:"active",validUntil:until.toISOString(),devices:[deviceId],createdAt:new Date().toISOString(),approvedAt:new Date().toISOString()};await writeLicense(lic);await bindUser(email,dataUserId)}
     if(!lic||lic.status!=="active")return Response.json({error:"Diese E-Mail ist noch nicht freigeschaltet. Bitte zuerst Zugang beantragen."},{status:403});
     if(!lic.validUntil||Date.parse(lic.validUntil)<=Date.now())return Response.json({error:"Deine Jahreslizenz ist abgelaufen."},{status:403});
-    if(!lic.devices.includes(deviceId))return Response.json({error:"Dieses Gerät ist noch nicht freigeschaltet. Bitte Zugang für dieses Gerät beantragen."},{status:403});
-    await sendOtp(email,deviceId,dataUserId);return Response.json({ok:true});
+    const devices=Array.from(new Set(lic.devices??[]));
+    if(!devices.includes(deviceId)){
+      if(devices.length>=MAX_DEVICES)return Response.json({error:`Für dieses Konto sind bereits ${MAX_DEVICES} Geräte registriert. Entferne zuerst ein vorhandenes Gerät.`},{status:409});
+      devices.push(deviceId);
+      lic={...lic,devices};
+      await writeLicense(lic);
+      await bindUser(email,dataUserId);
+    }
+    await sendOtp(email,deviceId,dataUserId);return Response.json({ok:true,deviceRegistered:true,devices:devices.length,maxDevices:MAX_DEVICES});
   }
   if(action==="verify"){
     const code=String(b.token??"").trim();const otp=await readJson<Otp>(`wamifishing/auth/otp/${sha(email)}.json`);
