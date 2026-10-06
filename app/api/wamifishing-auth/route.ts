@@ -1,5 +1,5 @@
 import { randomBytes, randomInt, timingSafeEqual } from "crypto";
-import { authUserId, readJson, readLicense, sessionPath, sha, writeJson, writeLicense } from "../_wamifishing-auth";
+import { authUserId, readJson, readLicense, sessionPath, sha, writeJson, writeLicense, type License } from "../_wamifishing-auth";
 
 export const runtime="nodejs"; export const dynamic="force-dynamic";
 const COOKIE="wami_session";
@@ -12,6 +12,21 @@ function validEmail(v:string){return /^\S+@\S+\.\S+$/.test(v)}
 function cleanDevice(v:unknown){const s=String(v??"").trim();return /^[A-Za-z0-9_-]{8,120}$/.test(s)?s:""}
 function cookie(value:string,maxAge:number){return `wami_session=${encodeURIComponent(value)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`}
 function clearCookie(){return `wami_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`}
+
+function deviceLabel(request:Request){
+  const ua=request.headers.get("user-agent")||"";
+  if(/iPhone/i.test(ua))return "iPhone";
+  if(/iPad/i.test(ua))return "iPad";
+  if(/Android/i.test(ua))return /Mobile/i.test(ua)?"Android-Smartphone":"Android-Tablet";
+  if(/Windows/i.test(ua))return "Windows-PC";
+  if(/Macintosh|Mac OS X/i.test(ua))return "Mac";
+  if(/Linux/i.test(ua))return "Linux-PC";
+  return "Gerät";
+}
+function touchDevice(lic:License,deviceId:string,request:Request,register=false){
+  const now=new Date().toISOString(); const old=lic.deviceInfo?.[deviceId]??{};
+  return {...lic,deviceInfo:{...(lic.deviceInfo??{}),[deviceId]:{label:old.label||deviceLabel(request),registeredAt:old.registeredAt||(register?now:undefined),lastSeenAt:now}}};
+}
 function baseUrl(r:Request){return (process.env.WAMI_APP_URL||new URL(r.url).origin).replace(/\/$/,"")}
 function esc(v:string){return v.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]||c))}
 function page(title:string,message:string,ok=true){return new Response(`<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>body{font-family:system-ui,-apple-system,sans-serif;margin:0;background:#f5f7f6;color:#17211e}.box{max-width:560px;margin:10vh auto;padding:28px;background:white;border:1px solid #d9e0dd;border-radius:16px}.mark{font-size:44px}h1{margin:.3em 0}p{line-height:1.5}.btn{display:inline-block;margin-top:12px;padding:12px 18px;background:#087b68;color:white;text-decoration:none;border-radius:9px;font-weight:700}</style></head><body><main class="box"><div class="mark">${ok?"🎣✅":"🎣⚠️"}</div><h1>${esc(title)}</h1><p>${esc(message)}</p><a class="btn" href="/">Zurück zu WamiFishing</a></main></body></html>`,{status:ok?200:400,headers:{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"}})}
@@ -35,7 +50,7 @@ export async function GET(request:Request){
       const oldStillValid=old?.status==="active"&&typeof oldValidUntil==="string"&&Date.parse(oldValidUntil)>Date.now();
       const valid=oldStillValid?new Date(oldValidUntil):new Date(now);
       if(!oldStillValid)valid.setFullYear(valid.getFullYear()+1);
-      await writeLicense({email:p.email,name:p.name||old?.name,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()});
+      await writeLicense(touchDevice({email:p.email,name:p.name||old?.name,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,deviceInfo:old?.deviceInfo,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()},p.deviceId,request,true));
       await bindUser(p.email,p.dataUserId);
       try{await resend(p.email,"WamiFishing freigeschaltet",`<h2>Willkommen bei WamiFishing 🎣</h2><p>Dein Zugang ist bis <strong>${valid.toLocaleDateString("de-DE")}</strong> freigeschaltet.</p><p>Registrierte Geräte: <strong>${devices.length}/${MAX_DEVICES}</strong>.</p><p>Öffne WamiFishing auf dem beantragten Gerät und fordere deinen Anmeldecode an.</p>`)}catch{}
       return page("Freigabe erfolgreich",`Das Gerät wurde freigeschaltet. Die Jahreslizenz ist bis ${valid.toLocaleDateString("de-DE")} gültig. Registrierte Geräte: ${devices.length}/${MAX_DEVICES}.`);
@@ -50,6 +65,7 @@ export async function GET(request:Request){
   if(!s||Date.parse(s.expiresAt)<=Date.now())return Response.json({user:null},{headers:{"Cache-Control":"no-store"}});
   const lic=await readLicense(s.email);
   const allowed=lic?.status==="active"&&Boolean(lic.validUntil)&&Date.parse(lic.validUntil!)>Date.now()&&Array.isArray(lic.devices)&&lic.devices.includes(s.deviceId);
+  if(allowed&&lic) await writeLicense(touchDevice(lic,s.deviceId,request,false));
   return Response.json({user:allowed?{email:s.email,isAdmin:norm(s.email)===norm(process.env.WAMI_ADMIN_EMAIL)}:null},{headers:{"Cache-Control":"no-store"}});
 }
 
@@ -69,23 +85,25 @@ export async function POST(request:Request){try{
   }
   if(action==="send"){
     const admin=norm(process.env.WAMI_ADMIN_EMAIL);let lic=await readLicense(email);
-    if(email===admin&&(!lic||lic.status!=="active")){const until=new Date();until.setFullYear(until.getFullYear()+10);lic={email,authUserId:authUserId(email),status:"active",validUntil:until.toISOString(),devices:[deviceId],createdAt:new Date().toISOString(),approvedAt:new Date().toISOString()};await writeLicense(lic);await bindUser(email,dataUserId)}
+    if(email===admin&&(!lic||lic.status!=="active")){const until=new Date();until.setFullYear(until.getFullYear()+10);lic=touchDevice({email,authUserId:authUserId(email),status:"active",validUntil:until.toISOString(),devices:[deviceId],createdAt:new Date().toISOString(),approvedAt:new Date().toISOString()},deviceId,request,true);await writeLicense(lic);await bindUser(email,dataUserId)}
     if(!lic||lic.status!=="active")return Response.json({error:"Diese E-Mail ist noch nicht freigeschaltet. Bitte zuerst Zugang beantragen."},{status:403});
     if(!lic.validUntil||Date.parse(lic.validUntil)<=Date.now())return Response.json({error:"Deine Jahreslizenz ist abgelaufen."},{status:403});
     const devices=Array.from(new Set(lic.devices??[]));
     if(!devices.includes(deviceId)){
       if(devices.length>=MAX_DEVICES)return Response.json({error:`Für dieses Konto sind bereits ${MAX_DEVICES} Geräte registriert. Entferne zuerst ein vorhandenes Gerät.`},{status:409});
       devices.push(deviceId);
-      lic={...lic,devices};
+      lic=touchDevice({...lic,devices},deviceId,request,true);
       await writeLicense(lic);
       await bindUser(email,dataUserId);
     }
+    if(devices.includes(deviceId)){lic=touchDevice(lic,deviceId,request,!lic.deviceInfo?.[deviceId]?.registeredAt);await writeLicense(lic);}
     await sendOtp(email,deviceId,dataUserId);return Response.json({ok:true,deviceRegistered:true,devices:devices.length,maxDevices:MAX_DEVICES});
   }
   if(action==="verify"){
     const code=String(b.token??"").trim();const otp=await readJson<Otp>(`wamifishing/auth/otp/${sha(email)}.json`);
     if(!otp||otp.deviceId!==deviceId||Date.parse(otp.expiresAt)<=Date.now()||!equalHash(otp.hash,sha(code)))return Response.json({error:"Der Code ist ungültig oder abgelaufen."},{status:400});
-    const lic=await readLicense(email);if(!lic||lic.status!=="active"||!lic.validUntil||Date.parse(lic.validUntil)<=Date.now()||!lic.devices.includes(deviceId))return Response.json({error:"Die Freigabe für dieses Gerät ist nicht mehr gültig."},{status:403});
+    let lic=await readLicense(email);if(!lic||lic.status!=="active"||!lic.validUntil||Date.parse(lic.validUntil)<=Date.now()||!lic.devices.includes(deviceId))return Response.json({error:"Die Freigabe für dieses Gerät ist nicht mehr gültig."},{status:403});
+    lic=touchDevice(lic,deviceId,request,!lic.deviceInfo?.[deviceId]?.registeredAt);await writeLicense(lic);
     const data=await bindUser(email,dataUserId);const session=randomBytes(32).toString("hex");const expires=30*86400;
     await writeJson(sessionPath(session),{email,authUserId:authUserId(email),dataUserId:data,deviceId,expiresAt:new Date(Date.now()+expires*1000).toISOString()});
     const h=new Headers({"Cache-Control":"no-store"});h.append("Set-Cookie",cookie(session,expires));return Response.json({ok:true,user:{email}},{headers:h});
