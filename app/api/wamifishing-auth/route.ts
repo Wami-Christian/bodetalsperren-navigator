@@ -64,9 +64,11 @@ export async function GET(request:Request){
   const st=decodeURIComponent(raw.slice(raw.indexOf("=")+1)); const s=await readJson<Session>(sessionPath(st));
   if(!s||Date.parse(s.expiresAt)<=Date.now())return Response.json({user:null},{headers:{"Cache-Control":"no-store"}});
   const lic=await readLicense(s.email);
-  const allowed=lic?.status==="active"&&Boolean(lic.validUntil)&&Date.parse(lic.validUntil!)>Date.now()&&Array.isArray(lic.devices)&&lic.devices.includes(s.deviceId);
+  const expired=Boolean(lic?.validUntil)&&Date.parse(lic!.validUntil!)<=Date.now();
+  const effectiveStatus=expired&&lic?.status==="active"?"expired":lic?.status;
+  const allowed=effectiveStatus==="active"&&Boolean(lic?.validUntil)&&Array.isArray(lic?.devices)&&lic!.devices.includes(s.deviceId);
   if(allowed&&lic) await writeLicense(touchDevice(lic,s.deviceId,request,false,true));
-  return Response.json({user:allowed?{email:s.email,isAdmin:norm(s.email)===norm(process.env.WAMI_ADMIN_EMAIL)}:null},{headers:{"Cache-Control":"no-store"}});
+  return Response.json({user:allowed?{email:s.email,isAdmin:norm(s.email)===norm(process.env.WAMI_ADMIN_EMAIL),validUntil:lic?.validUntil}:null,access:lic?{email:s.email,status:effectiveStatus,validUntil:lic.validUntil}:null},{headers:{"Cache-Control":"no-store"}});
 }
 
 export async function POST(request:Request){try{
