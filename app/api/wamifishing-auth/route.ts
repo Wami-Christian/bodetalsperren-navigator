@@ -35,12 +35,12 @@ export async function GET(request:Request){
       const oldStillValid=old?.status==="active"&&typeof oldValidUntil==="string"&&Date.parse(oldValidUntil)>Date.now();
       const valid=oldStillValid?new Date(oldValidUntil):new Date(now);
       if(!oldStillValid)valid.setFullYear(valid.getFullYear()+1);
-      await writeLicense({email:p.email,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()});
+      await writeLicense({email:p.email,name:p.name||old?.name,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()});
       await bindUser(p.email,p.dataUserId);
       try{await resend(p.email,"WamiFishing freigeschaltet",`<h2>Willkommen bei WamiFishing 🎣</h2><p>Dein Zugang ist bis <strong>${valid.toLocaleDateString("de-DE")}</strong> freigeschaltet.</p><p>Registrierte Geräte: <strong>${devices.length}/${MAX_DEVICES}</strong>.</p><p>Öffne WamiFishing auf dem beantragten Gerät und fordere deinen Anmeldecode an.</p>`)}catch{}
       return page("Freigabe erfolgreich",`Das Gerät wurde freigeschaltet. Die Jahreslizenz ist bis ${valid.toLocaleDateString("de-DE")} gültig. Registrierte Geräte: ${devices.length}/${MAX_DEVICES}.`);
     }
-    await writeLicense({email:p.email,authUserId:id,status:"rejected",devices:old?.devices??[],createdAt:old?.createdAt??now.toISOString()});
+    await writeLicense({email:p.email,name:p.name||old?.name,authUserId:id,status:"rejected",devices:old?.devices??[],createdAt:old?.createdAt??now.toISOString()});
     try{await resend(p.email,"WamiFishing Zugangsanfrage",`<p>Deine Zugangsanfrage wurde leider nicht freigegeben.</p>`)}catch{}
     return page("Anfrage abgelehnt","Die WamiFishing-Zugangsanfrage wurde abgelehnt.");
   }
@@ -50,7 +50,7 @@ export async function GET(request:Request){
   if(!s||Date.parse(s.expiresAt)<=Date.now())return Response.json({user:null},{headers:{"Cache-Control":"no-store"}});
   const lic=await readLicense(s.email);
   const allowed=lic?.status==="active"&&Boolean(lic.validUntil)&&Date.parse(lic.validUntil!)>Date.now()&&Array.isArray(lic.devices)&&lic.devices.includes(s.deviceId);
-  return Response.json({user:allowed?{email:s.email}:null},{headers:{"Cache-Control":"no-store"}});
+  return Response.json({user:allowed?{email:s.email,isAdmin:norm(s.email)===norm(process.env.WAMI_ADMIN_EMAIL)}:null},{headers:{"Cache-Control":"no-store"}});
 }
 
 export async function POST(request:Request){try{

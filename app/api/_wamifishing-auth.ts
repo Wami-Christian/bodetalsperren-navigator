@@ -4,7 +4,7 @@ import { get, put } from "@vercel/blob";
 const COOKIE_SESSION = "wami_session";
 
 type Session = { email: string; authUserId: string; dataUserId: string; deviceId: string; expiresAt: string };
-type License = { email:string; authUserId:string; status:"pending"|"active"|"rejected"|"expired"; validUntil?:string; devices:string[]; createdAt:string; approvedAt?:string };
+type License = { email:string; name?:string; authUserId:string; status:"pending"|"active"|"rejected"|"expired"; validUntil?:string; devices:string[]; createdAt:string; approvedAt?:string };
 
 function cookieValue(request: Request, name: string) {
   const raw = request.headers.get("cookie") ?? "";
