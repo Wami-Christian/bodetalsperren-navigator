@@ -3967,3 +3967,36 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
   .social-mobile-stack > label.wide > input { width: 100%; min-width: 0; box-sizing: border-box; }
   .social-mobile-stack .data-backup-actions { width: 100%; }
 }
+
+
+/* V7.5.3 – Freunde: Anmeldung-Layout auf Desktop und Mobil */
+.social-profile-stack {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}
+.social-profile-stack > label {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  font-weight: 700;
+}
+.social-profile-stack > label > input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  box-sizing: border-box;
+}
+.social-profile-stack > .data-backup-actions {
+  width: 100%;
+  margin: 0 0 4px;
+}
+.social-profile-stack > .data-backup-actions button {
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .social-profile-stack > .data-backup-actions { grid-template-columns: 1fr; }
+}
