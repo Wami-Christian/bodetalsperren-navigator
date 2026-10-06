@@ -100,6 +100,16 @@ export async function POST(request: Request) {
       return Response.json({ ok: true });
     }
 
+    if (action === "remove-friend") {
+      const friendUserId = String(body.friendUserId ?? "").trim();
+      const me = await readJson<Profile>(profilePath(userId));
+      const other = await readJson<Profile>(profilePath(friendUserId));
+      if (!me) return Response.json({ error: "Freundeprofil nicht gefunden." }, { status: 404 });
+      await writeJson(profilePath(me.userId), { ...me, friends: me.friends.filter(f => f.userId !== friendUserId), updatedAt: new Date().toISOString() });
+      if (other) await writeJson(profilePath(other.userId), { ...other, friends: other.friends.filter(f => f.userId !== me.userId), updatedAt: new Date().toISOString() });
+      return Response.json({ ok: true });
+    }
+
     return Response.json({ error: "Unbekannte Aktion." }, { status: 400 });
   } catch (error) {
     console.error("Freundefunktion fehlgeschlagen:", error);
