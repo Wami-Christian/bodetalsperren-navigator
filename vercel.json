@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/wamifishing-license-reminders",
+      "schedule": "0 7 * * *"
+    }
+  ]
+}
