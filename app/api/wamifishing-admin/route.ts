@@ -2,7 +2,7 @@ import { del, list } from "@vercel/blob";
 import { authUserId, licensePath, readJson, readLicense, sessionPath, writeLicense } from "../_wamifishing-auth";
 export const runtime="nodejs"; export const dynamic="force-dynamic"; const MAX_DEVICES=3;
 type Session={email:string;authUserId:string;dataUserId:string;deviceId:string;expiresAt:string};
-type DeviceInfo={label?:string;registeredAt?:string;lastSeenAt?:string};
+type DeviceInfo={label?:string;registeredAt?:string;lastSeenAt?:string;usageCount?:number};
 type License={email:string;name?:string;authUserId:string;status:"pending"|"active"|"rejected"|"expired";validUntil?:string;devices:string[];deviceInfo?:Record<string,DeviceInfo>;createdAt:string;approvedAt?:string};
 function norm(v:unknown){return String(v??"").trim().toLowerCase()}
 function cookieValue(request:Request,name:string){const raw=request.headers.get("cookie")??"";for(const part of raw.split(";")){const [key,...rest]=part.trim().split("=");if(key===name)return decodeURIComponent(rest.join("="));}return ""}

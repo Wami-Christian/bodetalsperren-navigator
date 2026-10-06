@@ -4,7 +4,7 @@ import { get, put } from "@vercel/blob";
 const COOKIE_SESSION = "wami_session";
 
 type Session = { email: string; authUserId: string; dataUserId: string; deviceId: string; expiresAt: string };
-export type DeviceInfo = { label?:string; registeredAt?:string; lastSeenAt?:string };
+export type DeviceInfo = { label?:string; registeredAt?:string; lastSeenAt?:string; usageCount?:number };
 export type License = { email:string; name?:string; authUserId:string; status:"pending"|"active"|"rejected"|"expired"; validUntil?:string; devices:string[]; deviceInfo?:Record<string,DeviceInfo>; createdAt:string; approvedAt?:string };
 
 function cookieValue(request: Request, name: string) {

@@ -23,9 +23,9 @@ function deviceLabel(request:Request){
   if(/Linux/i.test(ua))return "Linux-PC";
   return "Gerät";
 }
-function touchDevice(lic:License,deviceId:string,request:Request,register=false){
+function touchDevice(lic:License,deviceId:string,request:Request,register=false,countUsage=false){
   const now=new Date().toISOString(); const old=lic.deviceInfo?.[deviceId]??{};
-  return {...lic,deviceInfo:{...(lic.deviceInfo??{}),[deviceId]:{label:old.label||deviceLabel(request),registeredAt:old.registeredAt||(register?now:undefined),lastSeenAt:now}}};
+  return {...lic,deviceInfo:{...(lic.deviceInfo??{}),[deviceId]:{label:old.label||deviceLabel(request),registeredAt:old.registeredAt||(register?now:undefined),lastSeenAt:now,usageCount:(old.usageCount??0)+(countUsage?1:0)}}};
 }
 function baseUrl(r:Request){return (process.env.WAMI_APP_URL||new URL(r.url).origin).replace(/\/$/,"")}
 function esc(v:string){return v.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]||c))}
@@ -65,7 +65,7 @@ export async function GET(request:Request){
   if(!s||Date.parse(s.expiresAt)<=Date.now())return Response.json({user:null},{headers:{"Cache-Control":"no-store"}});
   const lic=await readLicense(s.email);
   const allowed=lic?.status==="active"&&Boolean(lic.validUntil)&&Date.parse(lic.validUntil!)>Date.now()&&Array.isArray(lic.devices)&&lic.devices.includes(s.deviceId);
-  if(allowed&&lic) await writeLicense(touchDevice(lic,s.deviceId,request,false));
+  if(allowed&&lic) await writeLicense(touchDevice(lic,s.deviceId,request,false,true));
   return Response.json({user:allowed?{email:s.email,isAdmin:norm(s.email)===norm(process.env.WAMI_ADMIN_EMAIL)}:null},{headers:{"Cache-Control":"no-store"}});
 }
 

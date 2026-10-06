@@ -3958,3 +3958,12 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
     display: block !important;
   }
 }
+
+
+/* V7.5.2 – Freunde: nur mobil sauber untereinander */
+@media (max-width: 700px) {
+  .social-mobile-stack { display: grid; gap: 10px; width: 100%; }
+  .social-mobile-stack > label.wide { display: grid; gap: 6px; width: 100%; font-weight: 700; }
+  .social-mobile-stack > label.wide > input { width: 100%; min-width: 0; box-sizing: border-box; }
+  .social-mobile-stack .data-backup-actions { width: 100%; }
+}
