@@ -31,8 +31,9 @@ export async function GET(request:Request){
       const devices=Array.from(new Set(old?.devices??[]));
       if(!devices.includes(p.deviceId)&&devices.length>=MAX_DEVICES)return page("Gerät nicht freigegeben",`Für dieses Konto sind bereits ${MAX_DEVICES} Geräte registriert. Entferne zuerst ein vorhandenes Gerät, bevor ein weiteres freigeschaltet wird.`,false);
       if(!devices.includes(p.deviceId))devices.push(p.deviceId);
-      const oldStillValid=old?.status==="active"&&Boolean(old.validUntil)&&Date.parse(old.validUntil)>Date.now();
-      const valid=oldStillValid?new Date(old!.validUntil!):new Date(now);
+      const oldValidUntil=old?.validUntil;
+      const oldStillValid=old?.status==="active"&&typeof oldValidUntil==="string"&&Date.parse(oldValidUntil)>Date.now();
+      const valid=oldStillValid?new Date(oldValidUntil):new Date(now);
       if(!oldStillValid)valid.setFullYear(valid.getFullYear()+1);
       await writeLicense({email:p.email,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()});
       await bindUser(p.email,p.dataUserId);
