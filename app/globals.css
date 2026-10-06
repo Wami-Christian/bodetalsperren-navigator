@@ -4000,3 +4000,12 @@ body:has(.forecast-activity-diagnostic[open]){overflow:hidden}
 @media (max-width: 700px) {
   .social-profile-stack > .data-backup-actions { grid-template-columns: 1fr; }
 }
+
+/* ---------- Rechtliches V7.7.2 ---------- */
+footer a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.legal-page { max-width: 860px; margin: 0 auto; }
+.legal-page h1 { margin-bottom: 22px; }
+.legal-page h3 { margin-top: 26px; margin-bottom: 8px; }
+.legal-page a { color: #087b68; }
+.legal-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.legal-actions a { display: inline-block; padding: 10px 14px; border: 1px solid #b9c8c2; border-radius: 9px; text-decoration: none; font-weight: 700; }
