@@ -4065,3 +4065,22 @@ footer a { color: inherit; text-decoration: underline; text-underline-offset: 2p
   font-weight: 900;
   cursor: pointer;
 }
+
+
+/* WamiFishing V7.8.3 – iPhone: Kartenansicht vollständig im sichtbaren Viewport halten.
+   svh berücksichtigt die eingeblendeten Safari-Leisten; die Safe Area bleibt frei. */
+@media (max-width: 430px) {
+  .map-shell.map-shell-fullscreen {
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100svh !important;
+    max-height: 100svh !important;
+    padding-bottom: env(safe-area-inset-bottom) !important;
+    box-sizing: border-box !important;
+  }
+
+  .map-shell.map-shell-fullscreen > .map {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+}
