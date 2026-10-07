@@ -1,10 +1,11 @@
+import { WAMIFISHING_VERSION_LABEL } from "@/lib/version";
 import Link from "next/link";
 
 export const metadata = { title: "Datenschutz · WamiFishing" };
 
 export default function DatenschutzPage() {
   return <main><section className="page narrow"><div className="panel legal-page">
-    <p className="eyebrow">V7.7.2</p>
+    <p className="eyebrow">{WAMIFISHING_VERSION_LABEL}</p>
     <h1>Datenschutzerklärung</h1>
     <p><strong>Verantwortlicher</strong><br/>CCW – Consulting Christian Wamser, Christian Wamser, Tenniswiese 1, 06493 Ballenstedt, Deutschland<br/>E-Mail: <a href="mailto:cw@myccw.de">cw@myccw.de</a> · Telefon: <a href="tel:+493948353402">+49 3948 353402</a></p>
 

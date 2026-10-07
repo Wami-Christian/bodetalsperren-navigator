@@ -1,10 +1,11 @@
+import { WAMIFISHING_VERSION_LABEL } from "@/lib/version";
 import Link from "next/link";
 
 export const metadata = { title: "Impressum · WamiFishing" };
 
 export default function ImpressumPage() {
   return <main><section className="page narrow"><div className="panel legal-page">
-    <p className="eyebrow">V7.7.2</p>
+    <p className="eyebrow">{WAMIFISHING_VERSION_LABEL}</p>
     <h1>Impressum</h1>
     <p><strong>Angaben zum Anbieter</strong></p>
     <p>CCW – Consulting Christian Wamser<br/>Christian Wamser<br/>Tenniswiese 1<br/>06493 Ballenstedt<br/>Deutschland</p>
