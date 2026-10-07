@@ -713,10 +713,43 @@ function distanceToWaterKm(water: FishingWater, latitude: number, longitude: num
 
 export default function FishingNavigator() {
   const mainNavRef = useRef<HTMLElement | null>(null);
+  const atlasStaticPageRef = useRef<HTMLElement | null>(null);
   const atlasCategoryRef = useRef<HTMLDivElement | null>(null);
   const atlasScrollRailTouchYRef = useRef<number | null>(null);
   const [view, setView] = useState<View>("dashboard");
   const [showIntroVideo, setShowIntroVideo] = useState(false);
+  const [atlasViewportHeight, setAtlasViewportHeight] = useState<number | null>(null);
+  useEffect(() => {
+    if (view !== "atlas") {
+      setAtlasViewportHeight(null);
+      return;
+    }
+
+    const updateAtlasHeight = () => {
+      if (window.innerWidth > 900 || !atlasStaticPageRef.current) {
+        setAtlasViewportHeight(null);
+        return;
+      }
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const top = atlasStaticPageRef.current.getBoundingClientRect().top;
+      setAtlasViewportHeight(Math.max(240, Math.floor(viewportHeight - top)));
+    };
+
+    updateAtlasHeight();
+    const viewport = window.visualViewport;
+    window.addEventListener("resize", updateAtlasHeight);
+    window.addEventListener("orientationchange", updateAtlasHeight);
+    viewport?.addEventListener("resize", updateAtlasHeight);
+    viewport?.addEventListener("scroll", updateAtlasHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateAtlasHeight);
+      window.removeEventListener("orientationchange", updateAtlasHeight);
+      viewport?.removeEventListener("resize", updateAtlasHeight);
+      viewport?.removeEventListener("scroll", updateAtlasHeight);
+    };
+  }, [view]);
+
   const [watersVisibleCount, setWatersVisibleCount] = useState(60);
   const [mobileSelectedWaterId, setMobileSelectedWaterId] = useState<string | null>(null);
   const [fish, setFish] = useState<Fish | "Alle">("Alle");
@@ -2448,7 +2481,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
       {view === "dashboard" && <button type="button" className="intro-video-button" onClick={()=>setShowIntroVideo(true)}>▶ Erklärungsvideo</button>}
       {showIntroVideo && typeof document !== "undefined" && createPortal(<div className="intro-video-overlay" role="dialog" aria-modal="true" aria-label="WamiFishing Erklärungsvideo" onClick={()=>setShowIntroVideo(false)}><div className="intro-video-dialog" onClick={e=>e.stopPropagation()}><button type="button" className="intro-video-close" aria-label="Video schließen" onClick={()=>setShowIntroVideo(false)}>✕</button><video src="/wamifishing-erklaervideo.mp4" controls autoPlay playsInline preload="metadata" onEnded={()=>setShowIntroVideo(false)} /></div></div>, document.body)}
 {view === "atlas" && (
-  <section className="atlas-static-page">
+  <section ref={atlasStaticPageRef} className="atlas-static-page" style={atlasViewportHeight ? { height: `${atlasViewportHeight}px` } : undefined}>
     <div className="atlas-static-filter">
       <strong>Aktueller Filter</strong>
       <span>
