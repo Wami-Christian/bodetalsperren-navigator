@@ -4029,11 +4029,12 @@ footer a { color: inherit; text-decoration: underline; text-underline-offset: 2p
 .intro-video-overlay {
   position: fixed;
   inset: 0;
-  z-index: 2000;
+  z-index: 2147483647;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px;
+  padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
   background: rgba(5, 25, 22, .78);
 }
 .intro-video-dialog {

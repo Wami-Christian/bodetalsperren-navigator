@@ -2362,7 +2362,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
           </div>
         </section>
         <button type="button" className="intro-video-button" onClick={()=>setShowIntroVideo(true)}>▶ Erklärungsvideo</button>
-        {showIntroVideo && <div className="intro-video-overlay" role="dialog" aria-modal="true" aria-label="WamiFishing Erklärungsvideo" onClick={()=>setShowIntroVideo(false)}><div className="intro-video-dialog" onClick={e=>e.stopPropagation()}><button type="button" className="intro-video-close" aria-label="Video schließen" onClick={()=>setShowIntroVideo(false)}>✕</button><video src="/wamifishing-erklaervideo.mp4" controls autoPlay playsInline preload="metadata" /></div></div>}
+        {showIntroVideo && typeof document !== "undefined" && createPortal(<div className="intro-video-overlay" role="dialog" aria-modal="true" aria-label="WamiFishing Erklärungsvideo" onClick={()=>setShowIntroVideo(false)}><div className="intro-video-dialog" onClick={e=>e.stopPropagation()}><button type="button" className="intro-video-close" aria-label="Video schließen" onClick={()=>setShowIntroVideo(false)}>✕</button><video src="/wamifishing-erklaervideo.mp4" controls autoPlay playsInline preload="metadata" onEnded={()=>setShowIntroVideo(false)} /></div></div>, document.body)}
       </main>
     );
   }
@@ -2446,7 +2446,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </div>
       </section>}
       {view === "dashboard" && <button type="button" className="intro-video-button" onClick={()=>setShowIntroVideo(true)}>▶ Erklärungsvideo</button>}
-      {showIntroVideo && <div className="intro-video-overlay" role="dialog" aria-modal="true" aria-label="WamiFishing Erklärungsvideo" onClick={()=>setShowIntroVideo(false)}><div className="intro-video-dialog" onClick={e=>e.stopPropagation()}><button type="button" className="intro-video-close" aria-label="Video schließen" onClick={()=>setShowIntroVideo(false)}>✕</button><video src="/wamifishing-erklaervideo.mp4" controls autoPlay playsInline preload="metadata" /></div></div>}
+      {showIntroVideo && typeof document !== "undefined" && createPortal(<div className="intro-video-overlay" role="dialog" aria-modal="true" aria-label="WamiFishing Erklärungsvideo" onClick={()=>setShowIntroVideo(false)}><div className="intro-video-dialog" onClick={e=>e.stopPropagation()}><button type="button" className="intro-video-close" aria-label="Video schließen" onClick={()=>setShowIntroVideo(false)}>✕</button><video src="/wamifishing-erklaervideo.mp4" controls autoPlay playsInline preload="metadata" onEnded={()=>setShowIntroVideo(false)} /></div></div>, document.body)}
 {view === "atlas" && (
   <section className="atlas-static-page">
     <div className="atlas-static-filter">
