@@ -23,7 +23,8 @@ type View =
   | "forecast"
   | "diary"
   | "settings"
-  | "friends";
+  | "friends"
+  | "news";
 
 type AtlasCategory =
   | "all"
@@ -806,6 +807,10 @@ const [atlasCategory, setAtlasCategory] =
   const [authOtpSent, setAuthOtpSent] = useState(false);
   const [authMessage, setAuthMessage] = useState("");
   const [authVerifyBusy, setAuthVerifyBusy] = useState(false);
+  const [newsPosts, setNewsPosts] = useState<Array<{key:string;type:string;date:string;entry:Record<string,unknown>;interaction:{likes:string[];petris:string[];comments:Array<{id:string;userId:string;name:string;text:string;at:string}>}}>>([]);
+  const [newsUserId, setNewsUserId] = useState("");
+  const [newsComments, setNewsComments] = useState<Record<string,string>>({});
+  const [newsError, setNewsError] = useState("");
   const [socialName, setSocialName] = useState("");
   const [friendCode, setFriendCode] = useState("");
   const [friendCodeDraft, setFriendCodeDraft] = useState("");
@@ -978,6 +983,15 @@ const [atlasCategory, setAtlasCategory] =
       setSharedCatches(data.catches ?? []); setSharedParkings(data.parkings ?? []); setSharedHotspots(data.hotspots ?? []);
     } catch (error) { console.error("Freigegebene Daten konnten nicht geladen werden:", error); }
   }
+  async function loadNews() {
+    try { const response=await fetch("/api/wamifishing-news",{headers:cloudUserHeaders(),cache:"no-store"}); const data=await response.json(); if(!response.ok)throw Error(data.error||"News nicht verfügbar");setNewsPosts(data.posts||[]);setNewsUserId(data.userId||"");setNewsError(""); }
+    catch(e){setNewsError(e instanceof Error?e.message:String(e));}
+  }
+  async function newsAction(key:string,action:string,extra:Record<string,string>={}) {
+    try {const response=await fetch("/api/wamifishing-news",{method:"POST",headers:cloudUserHeaders({"Content-Type":"application/json"}),body:JSON.stringify({key,action,...extra})});const data=await response.json();if(!response.ok)throw Error(data.error||"Aktion fehlgeschlagen");if(action==="comment")setNewsComments(old=>({...old,[key]:""}));await loadNews();}
+    catch(e){setNewsError(e instanceof Error?e.message:String(e));}
+  }
+  useEffect(()=>{if(view==="news"&&authEmail)void loadNews();},[view,authEmail]);
   function visibilityLabel(value?: ShareVisibility) { return value === "public" ? "🌍 Öffentlich" : value === "friends" ? "👥 Freunde" : "🔒 Privat"; }
   function setCatchVisibility(id:string, visibility:ShareVisibility) { setCatches(items=>items.map(item=>item.id===id?{...item,visibility}:item)); }
   function setParkingVisibility(id:string, visibility:ShareVisibility) { setUserParkings(items=>items.map(item=>item.id===id?{...item,visibility}:item)); }
@@ -2429,6 +2443,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
               ["forecast", "📈 Prognose"],
               ["diary", "📖 Fangbuch"],
               ["friends", "👥 Freunde"],
+              ["news", "📰 News"],
               ["settings", "⚙ Einstellungen"]
             ] as [View, string][]).map(([id, label]) => (
               <button
@@ -2821,6 +2836,8 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         </form>
       </div></div>}
 
+      {view === "news" && <section className="page narrow"><div className="panel"><h1>📰 News</h1><p>Neueste freigegebene Aktivitäten deiner Freunde zuerst.</p><button type="button" onClick={()=>void loadNews()}>↻ News aktualisieren</button>{newsError&&<p role="alert">⚠ {newsError}</p>}{newsPosts.length===0&&<p>Aktuell sind keine freigegebenen Aktivitäten vorhanden.</p>}
+        <div className="nav-list">{newsPosts.map(post=>{const e=post.entry;const i=post.interaction;const photo=typeof e.photo==="string"?e.photo:"";const label=post.type==="catch"?`🎣 Neuer Fang: ${String(e.fish??"Fisch")}${e.lengthCm?` · ${e.lengthCm} cm`:""}`:post.type==="hotspot"?`📍 Neuer Hotspot: ${String(e.name??"")}`:`🚗 Neuer Parkplatz: ${String(e.name??"")}`;return <article key={post.key} style={{marginBottom:16}}><strong>{String(e.ownerName??"Angler")}</strong><small>{post.date?new Date(post.date).toLocaleString("de-DE"):"Datum unbekannt"} · {e.visibility==="friends"?"👥 Freunde":"🌍 Öffentlich"}</small><h3>{label}</h3>{photo&&<button type="button" className="water-profile-photo-button" onClick={()=>openProfilePhoto(photo,label)}><img src={photo} alt={label} style={{maxHeight:320,objectFit:"contain"}}/></button>}<p>{String(e.note??e.waterName??"")}</p><div className="mini-actions"><button type="button" onClick={()=>void newsAction(post.key,"like")}>{i.likes.includes(newsUserId)?"👍 Gefällt dir":"👍 Like"} ({i.likes.length})</button><button type="button" onClick={()=>void newsAction(post.key,"petri")}>{i.petris.includes(newsUserId)?"🎣 Petri gesagt":"🎣 Petri Heil"} ({i.petris.length})</button></div><div style={{marginTop:12}}><strong>💬 Kommentare ({i.comments.length})</strong>{i.comments.map(c=><p key={c.id}><b>{c.name}:</b> {c.text} <small>{new Date(c.at).toLocaleString("de-DE")}</small>{c.userId===newsUserId&&<button type="button" onClick={()=>void newsAction(post.key,"delete-comment",{commentId:c.id})}>Löschen</button>}</p>)}<form onSubmit={ev=>{ev.preventDefault();void newsAction(post.key,"comment",{text:newsComments[post.key]??""})}}><input aria-label="Kommentar schreiben" placeholder="Kommentar schreiben …" maxLength={500} value={newsComments[post.key]??""} onChange={ev=>setNewsComments(old=>({...old,[post.key]:ev.target.value}))}/><button type="submit" disabled={!(newsComments[post.key]??"").trim()}>Kommentieren</button></form></div></article>})}</div></div></section>}
       {view === "friends" && <section className="page narrow"><div className="panel">        <h1>👥 Freunde</h1><p>Finde andere Angler, sende Anfragen und verwalte deine Freundschaften.</p><div className="social-profile-stack"><label>Anzeigename<input value={socialName} onChange={e=>setSocialName(e.target.value)} placeholder="z. B. Wami" maxLength={40}/></label><div className="data-backup-actions"><button type="button" onClick={()=>void saveSocialProfile()}>✓ Anzeigename speichern</button></div>
         </div>
         <div className="social-profile-stack"><h4>Registrierte Benutzer</h4><label>Benutzer suchen<input value={socialSearch} onChange={e=>setSocialSearch(e.target.value)} placeholder="Name suchen" /></label><div className="data-backup-actions"><button type="button" onClick={()=>void loadSocialProfile()}>↻ Benutzerliste aktualisieren</button></div></div>
