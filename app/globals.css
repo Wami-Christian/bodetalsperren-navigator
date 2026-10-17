@@ -4084,3 +4084,27 @@ footer a { color: inherit; text-decoration: underline; text-underline-offset: 2p
     min-height: 0 !important;
   }
 }
+
+/* Freunde & News: offene, nach unten wachsende Seiten */
+.social-open-page { width:100%; max-width:1100px; margin:0 auto; padding:24px 18px 70px; min-height:calc(100vh - 130px); }
+.social-open-content { width:100%; }
+.social-open-content > h1 { margin-top:0; }
+.social-open-content .nav-list { margin-top:20px; }
+.social-feed { display:grid; gap:24px; margin-top:24px; }
+.social-feed-post { padding:20px 0 24px; border-bottom:1px solid #cbdcd5; }
+.social-feed-head { display:flex; flex-wrap:wrap; gap:6px 18px; align-items:center; }
+.social-feed-head small { color:#60736e; }
+.social-feed-post h3 { margin:12px 0; }
+.social-feed-body { display:grid; grid-template-columns:minmax(0, 1fr) minmax(170px, 240px); gap:18px; align-items:start; }
+.social-feed-media img { display:block; width:100%; max-height:430px; object-fit:contain; border-radius:12px; }
+.social-feed-media .water-profile-photo-button { display:block; width:100%; padding:0; background:transparent; }
+.social-feed-placeholder { display:grid; place-items:center; min-height:160px; font-size:54px; background:#e3eee9; border-radius:12px; }
+.social-feed-side { display:flex; flex-direction:column; align-items:stretch; gap:10px; }
+.social-feed-side p { margin:0 0 8px; overflow-wrap:anywhere; }
+.social-feed-side button { width:100%; }
+.social-feed-side span { font-size:13px; color:#60736e; }
+.social-feed-comments { margin-top:18px; }
+.social-feed-comments p { overflow-wrap:anywhere; }
+.social-feed-comments form { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+.social-feed-comments form input { flex:1 1 210px; min-width:0; }
+@media(max-width:600px) { .social-open-page { padding:16px 12px 60px; } .social-feed-body { grid-template-columns:minmax(0,1fr) minmax(110px, 36%); gap:10px; } .social-feed-post { padding:14px 0 20px; } .social-feed-side button { padding:10px 5px; font-size:12px; } }
