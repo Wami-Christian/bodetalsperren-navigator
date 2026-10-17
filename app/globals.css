@@ -4122,3 +4122,16 @@ footer a { color: inherit; text-decoration: underline; text-underline-offset: 2p
   .social-feed-body { grid-template-columns: minmax(0, 1fr) minmax(140px, 32%); }
   .social-feed-media img { max-height: 260px; }
 }
+
+/* V7.9.4 – Mobile Kopfzeile auf Freunde/News beim Seitenscrollen fixieren.
+   Ueberschreibt die alte mobile Atlas-Regel mit position:relative. */
+@media (max-width: 900px) {
+  body:has(.social-open-page) .topbar {
+    position: sticky !important;
+    top: 0;
+    z-index: 3000;
+  }
+  body:has(.social-open-page) .main-nav-shell {
+    position: relative;
+  }
+}
