@@ -10,6 +10,15 @@ export async function PUT(r:Request){try{const identity=await requireWamiUser(r)
 export async function GET(r:Request){try{const identity=await requireWamiUser(r);if(!identity)return Response.json({error:"Bitte per E-Mail anmelden."},{status:401});const id=identity.dataUserId;const me=await read<Profile>(pp(id));if(!me)return Response.json({catches:[],parkings:[],hotspots:[]});const catches:any[]=[],parkings:any[]=[],hotspots:any[]=[];const friendIds=new Set((me.friends??[]).map(f=>f.userId));
   const seen=new Set<string>();
   async function addDoc(d:Doc|null){if(!d||d.userId===id||seen.has(d.userId))return;seen.add(d.userId);const isFriend=friendIds.has(d.userId);for(const x of d.catches??[])if(x.visibility==="public"||(isFriend&&x.visibility==="friends"))catches.push({...x,ownerId:d.userId,ownerName:d.ownerName});for(const x of d.parkings??[])if(x.visibility==="public"||(isFriend&&x.visibility==="friends"))parkings.push({...x,ownerId:d.userId,ownerName:d.ownerName});for(const x of d.hotspots??[])if(x.visibility==="public"||(isFriend&&x.visibility==="friends"))hotspots.push({...x,ownerId:d.userId,ownerName:d.ownerName})}
+  // Eigene freigegebene Einträge nur im Newsfeed ergänzen; private Daten bleiben ausgeschlossen.
+  if(new URL(r.url).searchParams.get("includeSelf")==="1"){
+    const own=await read<Doc>(sp(id));
+    if(own){
+      for(const x of own.catches??[])if(x.visibility==="friends"||x.visibility==="public")catches.push({...x,ownerId:id,ownerName:own.ownerName});
+      for(const x of own.parkings??[])if(x.visibility==="friends"||x.visibility==="public")parkings.push({...x,ownerId:id,ownerName:own.ownerName});
+      for(const x of own.hotspots??[])if(x.visibility==="friends"||x.visibility==="public")hotspots.push({...x,ownerId:id,ownerName:own.ownerName});
+    }
+  }
   for(const f of me.friends??[])await addDoc(await read<Doc>(sp(f.userId)));
   let cursor: string|undefined=undefined;do{const page=await list({prefix:"wamifishing/social/shared/",cursor,limit:100});for(const blob of page.blobs){const m=blob.pathname.match(/shared\/([^/]+)\.json$/);if(m&&!seen.has(m[1])&&m[1]!==id)await addDoc(await read<Doc>(blob.pathname))}cursor=page.hasMore?page.cursor:undefined}while(cursor);
   return Response.json({catches,parkings,hotspots},{headers:{"Cache-Control":"no-store"}})}catch(e){console.error(e);return Response.json({error:"Freigaben konnten nicht gelesen werden."},{status:500})}}
