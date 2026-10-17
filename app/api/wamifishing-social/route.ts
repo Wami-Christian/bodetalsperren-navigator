@@ -1,5 +1,5 @@
 import { requireWamiUser } from "../_wamifishing-auth";
-import { del, get, put } from "@vercel/blob";
+import { del, get, put, list } from "@vercel/blob";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,6 +34,25 @@ export async function GET(request: Request) {
     if (!identity) return Response.json({ error: "Bitte per E-Mail anmelden." }, { status: 401 });
     const userId = identity.dataUserId;
     const profile = await readJson<Profile>(profilePath(userId));
+    const url = new URL(request.url);
+    if (url.searchParams.get("directory") === "1") {
+      const users: Array<{userId:string;name:string;status:string}> = [];
+      let cursor: string | undefined;
+      do {
+        const page = await list({ prefix: "wamifishing/social/profiles/", limit: 1000, cursor });
+        for (const blob of page.blobs) {
+          const candidate = await readJson<Profile>(blob.pathname);
+          if (!candidate?.userId || !candidate.name || candidate.userId === userId) continue;
+          const isFriend = (profile?.friends ?? []).some(f => f.userId === candidate.userId);
+          const incoming = (profile?.incoming ?? []).some(f => f.fromUserId === candidate.userId);
+          const outgoing = (candidate.incoming ?? []).some(f => f.fromUserId === userId);
+          users.push({userId:candidate.userId,name:candidate.name,status:isFriend?"friends":incoming?"incoming":outgoing?"outgoing":"none"});
+        }
+        cursor = page.hasMore ? page.cursor : undefined;
+      } while (cursor && users.length < 5000);
+      users.sort((a,b)=>a.name.localeCompare(b.name,"de"));
+      return Response.json({profile,users},{headers:{"Cache-Control":"no-store"}});
+    }
     return Response.json({ profile }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Freundeprofil konnte nicht gelesen werden:", error);
@@ -72,19 +91,29 @@ export async function POST(request: Request) {
 
     if (action === "request") {
       const friendCode = cleanCode(body.friendCode);
-      if (!validCode(friendCode)) return Response.json({ error: "Der Freundescode ist ungültig." }, { status: 400 });
+      const targetUserId = String(body.targetUserId ?? "").trim();
+      if (!targetUserId && !validCode(friendCode)) return Response.json({ error: "Der Freundescode ist ungültig." }, { status: 400 });
       const me = await readJson<Profile>(profilePath(userId));
       if (!me) return Response.json({ error: "Bitte zuerst dein Profil / deinen Freundescode speichern." }, { status: 400 });
-      const owner = await readJson<{ userId: string }>(codePath(friendCode));
-      if (!owner) return Response.json({ error: "Freundescode nicht gefunden." }, { status: 404 });
+      const owner = targetUserId ? {userId:targetUserId} : await readJson<{ userId: string }>(codePath(friendCode));
+      if (!owner) return Response.json({ error: "Benutzer nicht gefunden." }, { status: 404 });
       if (owner.userId === userId) return Response.json({ error: "Du kannst dich nicht selbst hinzufügen." }, { status: 400 });
       const target = await readJson<Profile>(profilePath(owner.userId));
       if (!target) return Response.json({ error: "Freundeprofil nicht gefunden." }, { status: 404 });
-      if (target.friends.some(f => f.userId === userId)) return Response.json({ ok: true });
-      const incoming = target.incoming.filter(r => r.fromUserId !== userId);
+      if ((target.friends ?? []).some(f => f.userId === userId)) return Response.json({ ok: true });
+      const incoming = (target.incoming ?? []).filter(r => r.fromUserId !== userId);
       incoming.push({ fromUserId: userId, fromName: me.name, fromCode: me.friendCode, createdAt: new Date().toISOString() });
       await writeJson(profilePath(target.userId), { ...target, incoming, updatedAt: new Date().toISOString() });
       return Response.json({ ok: true });
+    }
+
+    if (action === "decline" || action === "cancel-request") {
+      const otherId = String(body.otherUserId ?? "").trim();
+      const other = await readJson<Profile>(profilePath(action === "decline" ? userId : otherId));
+      if (!other) return Response.json({error:"Profil nicht gefunden."},{status:404});
+      const sender = action === "decline" ? otherId : userId;
+      await writeJson(profilePath(other.userId), {...other,incoming:(other.incoming ?? []).filter(r=>r.fromUserId!==sender),updatedAt:new Date().toISOString()});
+      return Response.json({ok:true});
     }
 
     if (action === "accept") {
