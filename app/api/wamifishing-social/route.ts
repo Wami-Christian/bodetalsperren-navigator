@@ -1,4 +1,4 @@
-import { requireWamiUser } from "../_wamifishing-auth";
+import { requireWamiUser, readJson as readAuthJson, type License } from "../_wamifishing-auth";
 import { del, get, put, list } from "@vercel/blob";
 
 export const runtime = "nodejs";
@@ -33,20 +33,34 @@ export async function GET(request: Request) {
     const identity = await requireWamiUser(request);
     if (!identity) return Response.json({ error: "Bitte per E-Mail anmelden." }, { status: 401 });
     const userId = identity.dataUserId;
-    const profile = await readJson<Profile>(profilePath(userId));
+    let profile = await readJson<Profile>(profilePath(userId));
+    if (!profile) {
+      const license = await readAuthJson<License>(`wamifishing/auth/licenses/${(await import("../_wamifishing-auth")).sha(identity.email)}.json`);
+      profile = {userId,name:license?.name || "Angler",friendCode:`WAMI-${crypto.randomUUID().replace(/-/g,"").slice(0,12).toUpperCase()}`,friends:[],incoming:[],updatedAt:new Date().toISOString()};
+      await writeJson(profilePath(userId),profile);
+    }
     const url = new URL(request.url);
     if (url.searchParams.get("directory") === "1") {
       const users: Array<{userId:string;name:string;status:string}> = [];
       let cursor: string | undefined;
       do {
-        const page = await list({ prefix: "wamifishing/social/profiles/", limit: 1000, cursor });
+        const page = await list({ prefix: "wamifishing/auth/licenses/", limit: 1000, cursor });
         for (const blob of page.blobs) {
-          const candidate = await readJson<Profile>(blob.pathname);
-          if (!candidate?.userId || !candidate.name || candidate.userId === userId) continue;
-          const isFriend = (profile?.friends ?? []).some(f => f.userId === candidate.userId);
-          const incoming = (profile?.incoming ?? []).some(f => f.fromUserId === candidate.userId);
-          const outgoing = (candidate.incoming ?? []).some(f => f.fromUserId === userId);
-          users.push({userId:candidate.userId,name:candidate.name,status:isFriend?"friends":incoming?"incoming":outgoing?"outgoing":"none"});
+          const license = await readAuthJson<License>(blob.pathname);
+          if (!license || license.status !== "active" || !license.validUntil || Date.parse(license.validUntil) <= Date.now()) continue;
+          const binding = await readAuthJson<{dataUserId:string}>(`wamifishing/auth/users/${license.authUserId}.json`);
+          const candidateId = binding?.dataUserId;
+          if (!candidateId || candidateId === userId || users.some(u => u.userId === candidateId)) continue;
+          let candidate = await readJson<Profile>(profilePath(candidateId));
+          if (!candidate) {
+            candidate = {userId:candidateId,name:license.name || `Angler ${candidateId.slice(0,6)}`,friendCode:`WAMI-${crypto.randomUUID().replace(/-/g,"").slice(0,12).toUpperCase()}`,friends:[],incoming:[],updatedAt:new Date().toISOString()};
+            await writeJson(profilePath(candidateId),candidate);
+          }
+          const name = candidate?.name || license.name || `Angler ${candidateId.slice(0,6)}`;
+          const isFriend = (profile?.friends ?? []).some(f => f.userId === candidateId);
+          const incoming = (profile?.incoming ?? []).some(f => f.fromUserId === candidateId);
+          const outgoing = (candidate?.incoming ?? []).some(f => f.fromUserId === userId);
+          users.push({userId:candidateId,name,status:isFriend?"friends":incoming?"incoming":outgoing?"outgoing":"none"});
         }
         cursor = page.hasMore ? page.cursor : undefined;
       } while (cursor && users.length < 5000);
@@ -94,12 +108,12 @@ export async function POST(request: Request) {
       const targetUserId = String(body.targetUserId ?? "").trim();
       if (!targetUserId && !validCode(friendCode)) return Response.json({ error: "Der Freundescode ist ungültig." }, { status: 400 });
       const me = await readJson<Profile>(profilePath(userId));
-      if (!me) return Response.json({ error: "Bitte zuerst dein Profil / deinen Freundescode speichern." }, { status: 400 });
+      if (!me) return Response.json({ error: "Bitte die Freundeseite einmal neu laden." }, { status: 400 });
       const owner = targetUserId ? {userId:targetUserId} : await readJson<{ userId: string }>(codePath(friendCode));
       if (!owner) return Response.json({ error: "Benutzer nicht gefunden." }, { status: 404 });
       if (owner.userId === userId) return Response.json({ error: "Du kannst dich nicht selbst hinzufügen." }, { status: 400 });
       const target = await readJson<Profile>(profilePath(owner.userId));
-      if (!target) return Response.json({ error: "Freundeprofil nicht gefunden." }, { status: 404 });
+      if (!target) return Response.json({ error: "Freundeprofil nicht gefunden. Bitte die Benutzerliste aktualisieren." }, { status: 404 });
       if ((target.friends ?? []).some(f => f.userId === userId)) return Response.json({ ok: true });
       const incoming = (target.incoming ?? []).filter(r => r.fromUserId !== userId);
       incoming.push({ fromUserId: userId, fromName: me.name, fromCode: me.friendCode, createdAt: new Date().toISOString() });
