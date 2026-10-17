@@ -4108,3 +4108,17 @@ footer a { color: inherit; text-decoration: underline; text-underline-offset: 2p
 .social-feed-comments form { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
 .social-feed-comments form input { flex:1 1 210px; min-width:0; }
 @media(max-width:600px) { .social-open-page { padding:16px 12px 60px; } .social-feed-body { grid-template-columns:minmax(0,1fr) minmax(110px, 36%); gap:10px; } .social-feed-post { padding:14px 0 20px; } .social-feed-side button { padding:10px 5px; font-size:12px; } }
+
+/* V7.9.3: proportionaler Newsfeed auf Tablets und Desktop */
+@media (min-width: 601px) {
+  .social-open-page:has(.social-feed) { max-width: 980px; }
+  .social-feed-body { grid-template-columns: minmax(0, 460px) minmax(150px, 210px); justify-content: start; gap: 18px; }
+  .social-feed-media { width: 100%; min-width: 0; }
+  .social-feed-media img { width: 100%; height: auto; max-height: 290px; object-fit: contain; }
+  .social-feed-media .water-profile-photo-button { width: 100%; }
+  .social-feed-placeholder { min-height: 170px; }
+}
+@media (min-width: 601px) and (max-width: 850px) {
+  .social-feed-body { grid-template-columns: minmax(0, 1fr) minmax(140px, 32%); }
+  .social-feed-media img { max-height: 260px; }
+}

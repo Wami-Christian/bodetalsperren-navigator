@@ -2490,6 +2490,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
         <div className="dashboard-shortcuts">
           <button type="button" onClick={()=>setView("settings")}><span>👤</span><strong>Profil</strong><b>›</b></button>
           <button type="button" onClick={()=>setView("friends")}><span>👥</span><strong>Freunde</strong><b>›</b></button>
+          <button type="button" onClick={()=>setView("news")}><span>📰</span><strong>News</strong><b>›</b></button>
           <button type="button" onClick={()=>setView("settings")}><span>☁️</span><strong>Cloud</strong><b>›</b></button>
           <button type="button" onClick={()=>setView("settings")}><span>ⓘ</span><strong>Info</strong><b>›</b></button>
         </div>
