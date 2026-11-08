@@ -1,5 +1,5 @@
 import { randomBytes, randomInt, timingSafeEqual } from "crypto";
-import { authUserId, readJson, readLicense, sessionPath, sha, writeJson, writeLicense, type License } from "../_wamifishing-auth";
+import { authUserId, readJson, readLicense, sessionPath, sha, writeJson, writeLicense, type License, totalUsage } from "../_wamifishing-auth";
 
 export const runtime="nodejs"; export const dynamic="force-dynamic";
 const COOKIE="wami_session";
@@ -52,12 +52,12 @@ export async function GET(request:Request){
       const oldStillValid=old?.status==="active"&&typeof oldValidUntil==="string"&&Date.parse(oldValidUntil)>Date.now();
       const valid=oldStillValid?new Date(oldValidUntil):new Date(now);
       if(!oldStillValid)valid.setFullYear(valid.getFullYear()+1);
-      await writeLicense(touchDevice({email:p.email,name:p.name||old?.name,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,deviceInfo:old?.deviceInfo,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()},p.deviceId,request,true));
+      await writeLicense(touchDevice({email:p.email,name:p.name||old?.name,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,deviceInfo:old?.deviceInfo,totalUsageCount:old?totalUsage(old):0,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()},p.deviceId,request,true));
       await bindUser(p.email,p.dataUserId);
       try{await resend(p.email,"WamiFishing freigeschaltet",`<h2>Willkommen bei WamiFishing 🎣</h2><p>Dein Zugang ist bis <strong>${valid.toLocaleDateString("de-DE")}</strong> freigeschaltet.</p><p>Registrierte Geräte: <strong>${devices.length}/${MAX_DEVICES}</strong>.</p><p>Öffne WamiFishing auf dem beantragten Gerät und fordere deinen Anmeldecode an.</p>`)}catch{}
       return page("Freigabe erfolgreich",`Das Gerät wurde freigeschaltet. Die Jahreslizenz ist bis ${valid.toLocaleDateString("de-DE")} gültig. Registrierte Geräte: ${devices.length}/${MAX_DEVICES}.`);
     }
-    await writeLicense({email:p.email,name:p.name||old?.name,authUserId:id,status:"rejected",devices:old?.devices??[],createdAt:old?.createdAt??now.toISOString()});
+    await writeLicense({email:p.email,name:p.name||old?.name,authUserId:id,status:"rejected",devices:old?.devices??[],deviceInfo:old?.deviceInfo,totalUsageCount:old?totalUsage(old):0,createdAt:old?.createdAt??now.toISOString()});
     try{await resend(p.email,"WamiFishing Zugangsanfrage",`<p>Deine Zugangsanfrage wurde leider nicht freigegeben.</p>`)}catch{}
     return page("Anfrage abgelehnt","Die WamiFishing-Zugangsanfrage wurde abgelehnt.");
   }
@@ -72,7 +72,7 @@ export async function GET(request:Request){
   const headers=new Headers({"Cache-Control":"no-store"});
   // Sliding session renewal: renew only an already valid session on an authorized device.
   if(allowed&&lic){
-    await writeLicense(touchDevice(lic,s.deviceId,request,false,true));
+    await writeLicense({...touchDevice(lic,s.deviceId,request,false,true),totalUsageCount:totalUsage(lic)+1});
     if(Date.parse(s.expiresAt)-Date.now()<14*86400_000){
       const duration=30*86400;
       await writeJson(sessionPath(st),{...s,expiresAt:new Date(Date.now()+duration*1000).toISOString()});
@@ -158,7 +158,7 @@ export async function POST(request:Request){try{
       lastSeenAt:now,
       usageCount:usageBefore+1,
     };
-    lic={...lic,devices,deviceInfo:info};
+    lic={...lic,devices,deviceInfo:info,totalUsageCount:totalUsage(lic)+1};
     // Append-only audit: a replacement never resets the historical usage count.
     const auditPath=`wamifishing/auth/device-history/${authUserId(email)}.json`;
     const history=await readJson<DeviceHistoryEntry[]>(auditPath)??[];

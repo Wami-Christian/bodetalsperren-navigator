@@ -5,7 +5,7 @@ const COOKIE_SESSION = "wami_session";
 
 type Session = { email: string; authUserId: string; dataUserId: string; deviceId: string; expiresAt: string };
 export type DeviceInfo = { label?:string; registeredAt?:string; lastSeenAt?:string; usageCount?:number };
-export type License = { email:string; name?:string; authUserId:string; status:"pending"|"active"|"rejected"|"expired"; validUntil?:string; devices:string[]; deviceInfo?:Record<string,DeviceInfo>; createdAt:string; approvedAt?:string; reminderSent?:Record<string,string> };
+export type License = { email:string; name?:string; authUserId:string; status:"pending"|"active"|"rejected"|"expired"; validUntil?:string; devices:string[]; deviceInfo?:Record<string,DeviceInfo>; totalUsageCount?:number; createdAt:string; approvedAt?:string; reminderSent?:Record<string,string> };
 
 function cookieValue(request: Request, name: string) {
   const raw = request.headers.get("cookie") ?? "";
@@ -34,4 +34,10 @@ export async function requireWamiUser(request: Request) {
   const binding = await readJson<{dataUserId:string}>(`wamifishing/auth/users/${session.authUserId}.json`);
   const dataUserId = binding?.dataUserId || session.dataUserId || requested;
   return { authUserId:session.authUserId, email:session.email, dataUserId };
+}
+
+// Migration from legacy device counters; persist before deleting any device.
+export function totalUsage(lic:License):number {
+  if(typeof lic.totalUsageCount === "number" && Number.isFinite(lic.totalUsageCount)) return lic.totalUsageCount;
+  return Object.values(lic.deviceInfo??{}).reduce((n,d)=>n+Math.max(0,d.usageCount??0),0);
 }
