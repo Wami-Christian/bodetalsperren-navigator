@@ -8,6 +8,7 @@ type Pending={email:string;name:string;deviceId:string;dataUserId:string;adminTo
 type Otp={email:string;deviceId:string;dataUserId:string;hash:string;expiresAt:string};
 type Recovery={email:string;deviceId:string;dataUserId:string;expiresAt:string};
 type Session={email:string;authUserId:string;dataUserId:string;deviceId:string;expiresAt:string};
+type DeviceHistoryEntry={at:string;fromId:string;toId:string;usageBefore:number;usageAfter:number};
 function norm(v:unknown){return String(v??"").trim().toLowerCase()}
 function validEmail(v:string){return /^\S+@\S+\.\S+$/.test(v)}
 function cleanDevice(v:unknown){const s=String(v??"").trim();return /^[A-Za-z0-9_-]{8,120}$/.test(s)?s:""}
@@ -148,15 +149,20 @@ export async function POST(request:Request){try{
     const info={...(lic.deviceInfo??{})};
     const previous=info[replaceId];
     const current=info[deviceId];
+    const usageBefore=(previous?.usageCount??0)+(current?.usageCount??0);
     delete info[replaceId];
     const now=new Date().toISOString();
     info[deviceId]={
       label:current?.label||previous?.label||deviceLabel(request),
       registeredAt:previous?.registeredAt||current?.registeredAt||now,
       lastSeenAt:now,
-      usageCount:(previous?.usageCount??0)+(current?.usageCount??0)+1,
+      usageCount:usageBefore+1,
     };
     lic={...lic,devices,deviceInfo:info};
+    // Append-only audit: a replacement never resets the historical usage count.
+    const auditPath=`wamifishing/auth/device-history/${authUserId(email)}.json`;
+    const history=await readJson<DeviceHistoryEntry[]>(auditPath)??[];
+    await writeJson(auditPath,[...history,{at:now,fromId:replaceId,toId:deviceId,usageBefore,usageAfter:usageBefore+1}]);
     await writeLicense(lic);
     const data=await bindUser(email,dataUserId);const session=randomBytes(32).toString("hex");const expires=30*86400;
     await writeJson(sessionPath(session),{email,authUserId:authUserId(email),dataUserId:data,deviceId,expiresAt:new Date(Date.now()+expires*1000).toISOString()});
