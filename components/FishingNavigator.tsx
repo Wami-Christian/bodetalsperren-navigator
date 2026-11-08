@@ -805,6 +805,8 @@ const [atlasCategory, setAtlasCategory] =
   const [authNameDraft, setAuthNameDraft] = useState("");
   const [authOtp, setAuthOtp] = useState("");
   const [authOtpSent, setAuthOtpSent] = useState(false);
+  const [recoveryOptions, setRecoveryOptions] = useState<{id:string;label:string;lastSeenAt:string|null}[]>([]);
+  const [recoveryToken, setRecoveryToken] = useState("");
   const [authMessage, setAuthMessage] = useState("");
   const [authVerifyBusy, setAuthVerifyBusy] = useState(false);
   const [newsPosts, setNewsPosts] = useState<Array<{key:string;type:string;date:string;entry:Record<string,unknown>;interaction:{likes:string[];petris:string[];comments:Array<{id:string;userId:string;name:string;text:string;at:string}>}}>>([]);
@@ -908,7 +910,7 @@ const [atlasCategory, setAtlasCategory] =
     try {
       setAuthMessage("Code wird gesendet …");
       const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "send", email: authEmailDraft, deviceId: getDeviceId(), dataUserId: getCloudUserId() }) });
-      const data = await response.json() as { error?: string };
+      const data = await response.json() as { error?: string; recoveryRequired?: boolean };
       if (!response.ok) throw new Error(data.error || "Anmeldecode konnte nicht gesendet werden.");
       setAuthOtpSent(true); setAuthMessage("✓ 6-stelliger Code wurde per E-Mail gesendet.");
     } catch (error) { setAuthMessage(`⚠ ${error instanceof Error ? error.message : String(error)}`); }
@@ -920,12 +922,29 @@ const [atlasCategory, setAtlasCategory] =
       setAuthVerifyBusy(true);
       setAuthMessage("Code wird geprüft …");
       const response = await fetch("/api/wamifishing-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "verify", email: authEmailDraft, token: code, deviceId: getDeviceId(), dataUserId: getCloudUserId() }) });
-      const data = await response.json() as { error?: string };
+      const data = await response.json() as { error?: string; recoveryRequired?: boolean; recoveryToken?: string; devices?: {id:string;label:string;lastSeenAt:string|null}[] };
+      if (response.status === 409 && data.recoveryRequired && data.recoveryToken && data.devices) {
+        setRecoveryToken(data.recoveryToken);
+        setRecoveryOptions(data.devices);
+        setAuthMessage("⚠ Geräteplätze belegt. Wähle nach der E-Mail-Bestätigung das bisherige Gerät, das ersetzt werden soll. Andere Geräte bleiben angemeldet.");
+        return;
+      }
       if (!response.ok) throw new Error(data.error || "Anmeldung fehlgeschlagen.");
       setAuthMessage("✓ Angemeldet. WamiFishing wird neu geladen …");
       window.location.reload();
     } catch (error) { setAuthMessage(`⚠ ${error instanceof Error ? error.message : String(error)}`); }
     finally { setAuthVerifyBusy(false); }
+  }
+  async function replaceRegisteredDevice(replaceId:string) {
+    if (!window.confirm("Dieses bisherige Gerät aus der Lizenz entfernen und das aktuelle Gerät freischalten? Die Cloud-Daten bleiben erhalten.")) return;
+    try {
+      setAuthVerifyBusy(true);
+      const response=await fetch("/api/wamifishing-auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"replace",email:authEmailDraft,deviceId:getDeviceId(),dataUserId:getCloudUserId(),recoveryToken,replaceId})});
+      const data=await response.json() as {error?:string};
+      if(!response.ok)throw new Error(data.error||"Gerätewechsel fehlgeschlagen.");
+      window.location.reload();
+    }catch(error){setAuthMessage(`⚠ ${error instanceof Error?error.message:String(error)}`)}
+    finally{setAuthVerifyBusy(false)}
   }
   async function logoutEmail() {
     await fetch("/api/wamifishing-auth", { method: "DELETE" }).catch(() => undefined);
@@ -2412,6 +2431,7 @@ Aktuellen Datenbestand damit ersetzen?`)) return;
               </label>
               <p className="backup-status">{authVerifyBusy ? "Code wird automatisch geprüft …" : "Die Anmeldung startet automatisch mit der 6. Ziffer."}</p>
             </>}
+            {recoveryOptions.length>0 && <div className="data-backup-actions" style={{display:"block"}}><p><strong>Welches bisherige Gerät möchtest du ersetzen?</strong></p>{recoveryOptions.map(d=><button key={d.id} type="button" disabled={authVerifyBusy} onClick={()=>void replaceRegisteredDevice(d.id)} style={{display:"block",marginBottom:8,width:"100%"}}>♻️ {d.label} {d.lastSeenAt?`· zuletzt ${new Date(d.lastSeenAt).toLocaleDateString("de-DE")}`:""} ersetzen</button>)}</div>}
             {authMessage&&(!authOtpSent || authMessage.startsWith("⚠"))&&<p className="data-backup-message">{authMessage}</p>}
           </div>
         </section>

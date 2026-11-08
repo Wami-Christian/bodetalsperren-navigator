@@ -6,6 +6,7 @@ const COOKIE="wami_session";
 const MAX_DEVICES=3;
 type Pending={email:string;name:string;deviceId:string;dataUserId:string;adminTokenHash:string;createdAt:string;expiresAt:string};
 type Otp={email:string;deviceId:string;dataUserId:string;hash:string;expiresAt:string};
+type Recovery={email:string;deviceId:string;dataUserId:string;expiresAt:string};
 type Session={email:string;authUserId:string;dataUserId:string;deviceId:string;expiresAt:string};
 function norm(v:unknown){return String(v??"").trim().toLowerCase()}
 function validEmail(v:string){return /^\S+@\S+\.\S+$/.test(v)}
@@ -67,8 +68,17 @@ export async function GET(request:Request){
   const expired=Boolean(lic?.validUntil)&&Date.parse(lic!.validUntil!)<=Date.now();
   const effectiveStatus=expired&&lic?.status==="active"?"expired":lic?.status;
   const allowed=effectiveStatus==="active"&&Boolean(lic?.validUntil)&&Array.isArray(lic?.devices)&&lic!.devices.includes(s.deviceId);
-  if(allowed&&lic) await writeLicense(touchDevice(lic,s.deviceId,request,false,true));
-  return Response.json({user:allowed?{email:s.email,isAdmin:norm(s.email)===norm(process.env.WAMI_ADMIN_EMAIL),validUntil:lic?.validUntil}:null,access:lic?{email:s.email,status:effectiveStatus,validUntil:lic.validUntil}:null},{headers:{"Cache-Control":"no-store"}});
+  const headers=new Headers({"Cache-Control":"no-store"});
+  // Sliding session renewal: renew only an already valid session on an authorized device.
+  if(allowed&&lic){
+    await writeLicense(touchDevice(lic,s.deviceId,request,false,true));
+    if(Date.parse(s.expiresAt)-Date.now()<14*86400_000){
+      const duration=30*86400;
+      await writeJson(sessionPath(st),{...s,expiresAt:new Date(Date.now()+duration*1000).toISOString()});
+      headers.append("Set-Cookie",cookie(st,duration));
+    }
+  }
+  return Response.json({user:allowed?{email:s.email,isAdmin:norm(s.email)===norm(process.env.WAMI_ADMIN_EMAIL),validUntil:lic?.validUntil}:null,access:lic?{email:s.email,status:effectiveStatus,validUntil:lic.validUntil}:null},{headers});
 }
 
 export async function POST(request:Request){try{
@@ -92,7 +102,11 @@ export async function POST(request:Request){try{
     if(!lic.validUntil||Date.parse(lic.validUntil)<=Date.now())return Response.json({error:"Deine Jahreslizenz ist abgelaufen."},{status:403});
     const devices=Array.from(new Set(lic.devices??[]));
     if(!devices.includes(deviceId)){
-      if(devices.length>=MAX_DEVICES)return Response.json({error:`Für dieses Konto sind bereits ${MAX_DEVICES} Geräte registriert. Entferne zuerst ein vorhandenes Gerät.`},{status:409});
+      if(devices.length>=MAX_DEVICES){
+        // Allow email verification without allocating a fourth device.
+        await sendOtp(email,deviceId,dataUserId);
+        return Response.json({ok:true,recoveryRequired:true,message:"Anmeldecode gesendet. Nach Bestätigung kannst du ein altes Gerät ersetzen."});
+      }
       devices.push(deviceId);
       lic=touchDevice({...lic,devices},deviceId,request,true);
       await writeLicense(lic);
@@ -104,11 +118,38 @@ export async function POST(request:Request){try{
   if(action==="verify"){
     const code=String(b.token??"").trim();const otp=await readJson<Otp>(`wamifishing/auth/otp/${sha(email)}.json`);
     if(!otp||otp.deviceId!==deviceId||Date.parse(otp.expiresAt)<=Date.now()||!equalHash(otp.hash,sha(code)))return Response.json({error:"Der Code ist ungültig oder abgelaufen."},{status:400});
-    let lic=await readLicense(email);if(!lic||lic.status!=="active"||!lic.validUntil||Date.parse(lic.validUntil)<=Date.now()||!lic.devices.includes(deviceId))return Response.json({error:"Die Freigabe für dieses Gerät ist nicht mehr gültig."},{status:403});
+    let lic=await readLicense(email);if(!lic||lic.status!=="active"||!lic.validUntil||Date.parse(lic.validUntil)<=Date.now())return Response.json({error:"Die Lizenz ist nicht gültig."},{status:403});
+    if(!lic.devices.includes(deviceId)){
+      // Only a verified email code may reveal the replacement options.
+      const recoveryToken=randomBytes(32).toString("hex");
+      await writeJson(`wamifishing/auth/recovery/${sha(recoveryToken)}.json`,{email,deviceId,dataUserId,expiresAt:new Date(Date.now()+10*60_000).toISOString()} satisfies Recovery);
+      await writeJson(`wamifishing/auth/otp/${sha(email)}.json`,{...otp,expiresAt:new Date(0).toISOString()});
+      return Response.json({recoveryRequired:true,recoveryToken,devices:lic.devices.map((id,index)=>({id,label:lic.deviceInfo?.[id]?.label||`Gerät ${index+1}`,lastSeenAt:lic.deviceInfo?.[id]?.lastSeenAt||null}))},{status:409});
+    }
     lic=touchDevice(lic,deviceId,request,!lic.deviceInfo?.[deviceId]?.registeredAt);await writeLicense(lic);
     const data=await bindUser(email,dataUserId);const session=randomBytes(32).toString("hex");const expires=30*86400;
     await writeJson(sessionPath(session),{email,authUserId:authUserId(email),dataUserId:data,deviceId,expiresAt:new Date(Date.now()+expires*1000).toISOString()});
     const h=new Headers({"Cache-Control":"no-store"});h.append("Set-Cookie",cookie(session,expires));return Response.json({ok:true,user:{email}},{headers:h});
+  }
+  if(action==="replace"){
+    const recoveryToken=String(b.recoveryToken??"");const replaceId=cleanDevice(b.replaceId);
+    if(!/^[a-f0-9]{64}$/.test(recoveryToken)||!replaceId)return Response.json({error:"Ungültige Wiederherstellungsanfrage."},{status:400});
+    const path=`wamifishing/auth/recovery/${sha(recoveryToken)}.json`;
+    const recovery=await readJson<Recovery>(path);
+    if(!recovery||recovery.email!==email||recovery.deviceId!==deviceId||recovery.dataUserId!==dataUserId||Date.parse(recovery.expiresAt)<=Date.now())return Response.json({error:"Die Bestätigung ist abgelaufen. Bitte neuen Code anfordern."},{status:403});
+    let lic=await readLicense(email);
+    if(!lic||lic.status!=="active"||!lic.validUntil||Date.parse(lic.validUntil)<=Date.now()||!lic.devices.includes(replaceId))return Response.json({error:"Das bisherige Gerät wurde nicht gefunden."},{status:403});
+    // Invalidate the recovery token before changing device allocation.
+    await writeJson(path,{...recovery,expiresAt:new Date(0).toISOString()});
+    const devices=lic.devices.filter(id=>id!==replaceId);
+    if(!devices.includes(deviceId))devices.push(deviceId);
+    const info={...(lic.deviceInfo??{})};delete info[replaceId];
+    lic=touchDevice({...lic,devices,deviceInfo:info},deviceId,request,true);
+    await writeLicense(lic);
+    const data=await bindUser(email,dataUserId);const session=randomBytes(32).toString("hex");const expires=30*86400;
+    await writeJson(sessionPath(session),{email,authUserId:authUserId(email),dataUserId:data,deviceId,expiresAt:new Date(Date.now()+expires*1000).toISOString()});
+    const h=new Headers({"Cache-Control":"no-store"});h.append("Set-Cookie",cookie(session,expires));
+    return Response.json({ok:true,user:{email}},{headers:h});
   }
   return Response.json({error:"Unbekannte Aktion."},{status:400});
 }catch(e){console.error("WamiFishing Auth:",e);return Response.json({error:e instanceof Error?e.message:String(e)},{status:500})}}
