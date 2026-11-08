@@ -124,7 +124,8 @@ export async function POST(request:Request){try{
       const recoveryToken=randomBytes(32).toString("hex");
       await writeJson(`wamifishing/auth/recovery/${sha(recoveryToken)}.json`,{email,deviceId,dataUserId,expiresAt:new Date(Date.now()+10*60_000).toISOString()} satisfies Recovery);
       await writeJson(`wamifishing/auth/otp/${sha(email)}.json`,{...otp,expiresAt:new Date(0).toISOString()});
-      return Response.json({recoveryRequired:true,recoveryToken,devices:lic.devices.map((id,index)=>({id,label:lic.deviceInfo?.[id]?.label||`Gerät ${index+1}`,lastSeenAt:lic.deviceInfo?.[id]?.lastSeenAt||null}))},{status:409});
+      const deviceInfo = lic.deviceInfo;
+      return Response.json({recoveryRequired:true,recoveryToken,devices:lic.devices.map((id,index)=>({id,label:deviceInfo?.[id]?.label||`Gerät ${index+1}`,lastSeenAt:deviceInfo?.[id]?.lastSeenAt||null}))},{status:409});
     }
     lic=touchDevice(lic,deviceId,request,!lic.deviceInfo?.[deviceId]?.registeredAt);await writeLicense(lic);
     const data=await bindUser(email,dataUserId);const session=randomBytes(32).toString("hex");const expires=30*86400;
