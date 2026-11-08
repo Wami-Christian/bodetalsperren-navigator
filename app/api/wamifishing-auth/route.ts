@@ -144,8 +144,19 @@ export async function POST(request:Request){try{
     await writeJson(path,{...recovery,expiresAt:new Date(0).toISOString()});
     const devices=lic.devices.filter(id=>id!==replaceId);
     if(!devices.includes(deviceId))devices.push(deviceId);
-    const info={...(lic.deviceInfo??{})};delete info[replaceId];
-    lic=touchDevice({...lic,devices,deviceInfo:info},deviceId,request,true);
+    // Carry the replaced device's history forward to the newly registered ID.
+    const info={...(lic.deviceInfo??{})};
+    const previous=info[replaceId];
+    const current=info[deviceId];
+    delete info[replaceId];
+    const now=new Date().toISOString();
+    info[deviceId]={
+      label:current?.label||previous?.label||deviceLabel(request),
+      registeredAt:previous?.registeredAt||current?.registeredAt||now,
+      lastSeenAt:now,
+      usageCount:(previous?.usageCount??0)+(current?.usageCount??0)+1,
+    };
+    lic={...lic,devices,deviceInfo:info};
     await writeLicense(lic);
     const data=await bindUser(email,dataUserId);const session=randomBytes(32).toString("hex");const expires=30*86400;
     await writeJson(sessionPath(session),{email,authUserId:authUserId(email),dataUserId:data,deviceId,expiresAt:new Date(Date.now()+expires*1000).toISOString()});
