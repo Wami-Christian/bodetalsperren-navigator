@@ -40,6 +40,20 @@ export async function POST(request:Request){if(!await isAdmin(request))return Re
   await writeLicense({email:p.email,name:p.name||old?.name,authUserId:id,status:"active",validUntil:valid.toISOString(),devices,deviceInfo:info,totalUsageCount:old?totalUsage(old):0,createdAt:old?.createdAt??now.toISOString(),approvedAt:now.toISOString()});await bindUser(p.email,p.dataUserId);return Response.json({ok:true,validUntil:valid.toISOString()});
  }
  const email=norm(b.email);if(!email)return Response.json({error:"E-Mail fehlt."},{status:400});const lic=await readLicense(email);if(!lic)return Response.json({error:"Benutzer nicht gefunden."},{status:404});
+ if(action==="restore-legacy-iphone-47"){
+  // One-off historical correction; only the administrator may correct their own iPhone.
+  if(email!==norm(process.env.WAMI_ADMIN_EMAIL))return Response.json({error:"Nur für das Administratorkonto zulässig."},{status:403});
+  const deviceId=safeDevice(b.deviceId);
+  if(!deviceId||!lic.devices.includes(deviceId)||lic.deviceInfo?.[deviceId]?.label!=="iPhone")return Response.json({error:"Registriertes iPhone nicht gefunden."},{status:400});
+  const marker="legacy-iphone-47-2026-11-08";
+  const corrections=(lic as License & {usageCorrections?:Record<string,string>}).usageCorrections??{};
+  if(corrections[marker])return Response.json({error:"Die 47 Nutzungen wurden bereits nachgetragen."},{status:409});
+  const info={...(lic.deviceInfo??{})};
+  info[deviceId]={...info[deviceId],usageCount:(info[deviceId]?.usageCount??0)+47};
+  const updated={...lic,deviceInfo:info,totalUsageCount:totalUsage(lic)+47,usageCorrections:{...corrections,[marker]:new Date().toISOString()}};
+  await writeLicense(updated);
+  return Response.json({ok:true,deviceUsageCount:info[deviceId].usageCount,totalUsageCount:updated.totalUsageCount});
+ }
  if(action==="remove-device"){const deviceId=safeDevice(b.deviceId);if(!deviceId)return Response.json({error:"Geräte-ID fehlt."},{status:400});const info={...(lic.deviceInfo??{})};delete info[deviceId];await writeLicense({...lic,devices:(lic.devices??[]).filter(x=>x!==deviceId),deviceInfo:info,totalUsageCount:totalUsage(lic)});return Response.json({ok:true});}
  if(action==="extend-year"){const base=lic.validUntil&&Date.parse(lic.validUntil)>Date.now()?new Date(lic.validUntil):new Date();base.setFullYear(base.getFullYear()+1);await writeLicense({...lic,status:"active",validUntil:base.toISOString(),approvedAt:lic.approvedAt??new Date().toISOString()});return Response.json({ok:true});}
  if(action==="block"){await writeLicense({...lic,status:"rejected"});return Response.json({ok:true});}
